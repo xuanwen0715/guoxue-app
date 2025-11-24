@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" aria-label="Xiangyun tile">
+  <defs>
+    <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="1" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <rect width="600" height="600" fill="none"/>
+  <!-- Simple auspicious cloud curves, designed to tile softly -->
+  <g fill="none" stroke="#b8aee3" stroke-opacity="0.35" stroke-width="2.2" filter="url(#ink)">
+    <path d="M40 160 C 110 120 180 130 220 160 C 260 190 330 190 380 165"/>
+    <path d="M30 320 C 100 280 210 290 260 330 C 310 370 420 370 500 340"/>
+    <path d="M60 460 C 140 420 230 430 270 460 C 310 490 390 500 470 470"/>
+    <!-- Continuation to right/top edges for seamless tiling -->
+    <path d="M380 165 C 420 145 480 150 540 180"/>
+    <path d="M500 340 C 560 320 600 320 640 320"/>
+  </g>
+</svg>

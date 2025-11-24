@@ -1,0 +1,1036 @@
+/* 国风墨韵配色体系 */
+:root {
+  /* 基础色调 - 宣纸与墨韵 */
+  --bg: #fafafa;              /* 宣纸白 */
+  --card: #ffffff;            /* 纯白卡片 */
+  --text: #2d3436;            /* 墨黑文字 */
+  --muted: #636e72;           /* 淡墨灰 */
+  --border: #e8ebed;          /* 素雅边框 */
+
+  /* 国风色彩 */
+  --ink: #2c5f7d;             /* 深青墨 */
+  --ink-2: #1e4a61;           /* 浓墨 */
+  --accent: #5aa3cc;          /* 天青色 */
+  --secondary: #8db4d0;       /* 浅青色 */
+
+  /* 特殊效果色 */
+  --ring: rgba(92, 163, 204, 0.15);    /* 青色光晕 */
+  --shadow: rgba(45, 52, 54, 0.05);    /* 淡墨阴影 */
+  --gradient-start: rgba(176, 190, 197, 0.08);
+  --gradient-end: rgba(209, 196, 233, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1419;             /* 夜墨 */
+    --card: #1a1f2e;           /* 深青卡片 */
+    --text: #e8eaf0;           /* 月白文字 */
+    --muted: #a0aab5;          /* 银灰 */
+    --border: #2d3748;         /* 深青边框 */
+
+    --ink: #7bb3d9;            /* 夜青 */
+    --ink-2: #9ac7e4;          /* 浅夜青 */
+    --accent: #a8d0ea;         /* 月青 */
+    --secondary: #c5e4fd;      /* 淡月青 */
+
+    --ring: rgba(123, 179, 217, 0.2);
+    --shadow: rgba(0, 0, 0, 0.2);
+    --gradient-start: rgba(123, 136, 214, 0.08);
+    --gradient-end: rgba(145, 115, 200, 0.06);
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  /* 国风云韵背景渐变 */
+  background-image:
+    radial-gradient(1400px 1000px at 82% 20%, var(--gradient-start), transparent 65%),
+    radial-gradient(1200px 900px at 18% 85%, var(--gradient-end), transparent 70%),
+    radial-gradient(800px 600px at 50% 50%, rgba(92, 163, 204, 0.03), transparent 80%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "WenQuanYi Micro Hei", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Phoenix watermark overlay */
+/* Remove background-layer phoenix; we'll place them as positioned elements instead */
+body::after, html::after{ content: none; background: none; }
+
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 28px 16px 64px;
+  position: relative;
+  z-index: 1; /* keep content above decorative phoenix */
+}
+
+/* 国风典雅标题设计 */
+.header {
+  margin: 16px 0 32px;
+  text-align: center;
+  position: relative;
+}
+
+.header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 4.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ink);
+  position: relative;
+  z-index: 2;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+  text-align: center;
+  font-style: italic;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 标题下方装饰线 */
+.header::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--accent) 20%,
+    var(--ink) 50%,
+    var(--accent) 80%,
+    transparent 100%
+  );
+  border-radius: 1px;
+}
+
+/* 国风雅致标签设计 */
+.field-label {
+  display: block;
+  margin: 20px 0 12px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  position: relative;
+  padding-left: 12px;
+}
+
+/* 标签前装饰点 */
+.field-label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* 国风简雅输入框设计 */
+.field {
+  width: 100%;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 15px;
+  line-height: 1.6;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-sizing: border-box;
+  /* 雅致阴影 */
+  box-shadow:
+    0 2px 8px var(--shadow),
+    0 1px 2px rgba(0, 0, 0, 0.02);
+
+  /* 内部光晕效果 */
+  position: relative;
+}
+
+.field::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.field:focus-visible {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 3px var(--ring),
+    0 4px 16px var(--shadow),
+    0 2px 4px rgba(0, 0, 0, 0.03);
+  background: var(--card);
+}
+
+.field:hover {
+  border-color: var(--secondary);
+  box-shadow:
+    0 4px 12px var(--shadow),
+    0 2px 4px rgba(0, 0, 0, 0.03);
+}
+textarea.field { min-height: 140px; resize: vertical; }
+/* Center placeholder only (when empty), keep typed text left-aligned */
+#context-input {
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+#context-input:placeholder-shown { text-align: center; }
+#context-input::placeholder { font-size: 17px; color: color-mix(in oklab, var(--muted) 80%, transparent); }
+
+
+/* 古文原文上传工具栏 */
+.context-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.context-drop {
+  position: relative;
+}
+
+.context-tools.inside {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  margin-top: 0;
+  z-index: 10; /* 确保在最上层 */
+}
+
+.context-drop .field {
+  padding-bottom: 60px; /* 为上传按钮留出空间 */
+}
+
+/* 古文原文上传按钮样式 */
+#context-upload-button {
+  background: linear-gradient(135deg,
+    rgba(92, 163, 204, 0.9) 0%,
+    rgba(74, 144, 184, 0.85) 100%
+  );
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 2px 8px rgba(92, 163, 204, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+#context-upload-button:hover {
+  background: linear-gradient(135deg,
+    rgba(82, 153, 194, 0.95) 0%,
+    rgba(64, 134, 174, 0.9) 100%
+  );
+  box-shadow:
+    0 4px 16px rgba(92, 163, 204, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+#context-upload-button .icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+}
+
+/* 原文粘贴/拖拽区域高亮反馈 */
+.context-drop.dragover .field {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--ring);
+  background: linear-gradient(135deg,
+    rgba(92, 163, 204, 0.05) 0%,
+    rgba(248, 250, 252, 0.9) 100%
+  );
+}
+
+.inline-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px 16px;
+}
+/* 并排时保持两块卡片顶部对齐，并统一最小高度 */
+.inline-fields > .inline-field,
+.inline-fields > .uploader-wrapper { min-height: 70px; }
+/* 并排时保持上传框与输入框顶部对齐 */
+.inline-fields .uploader-wrapper { margin-top: 0; }
+/* 还原为容器内满宽显示 */
+/* 国风典雅卡片设计 */
+.inline-field {
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 250, 252, 0.8) 100%
+  );
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  box-shadow:
+    0 4px 20px var(--shadow),
+    0 1px 3px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.inline-field:hover {
+  border-color: var(--secondary);
+  box-shadow:
+    0 8px 32px var(--shadow),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+.inline-field .field-label { text-align: center; font-size: 16px; }
+.inline-field .field { border-color: transparent; background: transparent; }
+/* Ensure all form elements and result box have consistent width */
+.field,
+.context-drop,
+.inline-fields,
+.actions,
+.result-box {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+label[for="context-input"].field-label { max-width: 100%; margin-left: 0; margin-right: 0; display: block; text-align:center; font-size:16px; }
+/* Center the "古文原文" prompt and enlarge */
+label[for="context-input"].field-label { text-align: center; font-size: 16px; }
+@media (min-width: 760px) {
+  .inline-fields { grid-template-columns: 1fr 1fr; }
+  /* 桌面端使两卡片更紧凑，保持约 70px 高度 */
+  .inline-field .field-label { margin: 0; font-size: 16px; color: var(--muted); }
+  .inline-field .help { display: none; }
+  .inline-field .field { padding: 8px 12px; text-align: center; }
+}
+
+.help {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.inline-field .help { text-align: center; }
+
+.uploader-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 56px 56px 12px;
+  margin-top: 14px;
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--card) 96%, transparent);
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.03);
+  max-width: 100%;
+}
+.uploader-hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--muted); opacity: .6; font-size: 14px; pointer-events: none; text-align: center; }
+.uploader-wrapper.dragover .uploader-hint { opacity: .2; }
+.uploader-wrapper.has-file .uploader-hint { opacity: 0; }
+/* 将图标按钮固定在卡片右侧中线，避免与提示重叠 */
+.uploader-wrapper .icon-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+
+/* === Restore text-button look for right-side rare-character uploader === */
+#drop-zone .uploader-hint { display: none; }
+#upload-button { width: auto; height: auto; padding: 10px 16px; border-radius: 12px; }
+#upload-button .icon { display: none !important; }
+#upload-button .spinner { display: none !important; }
+#upload-button .sr-only { position: static; width: auto; height: auto; padding: 0; margin: 0; overflow: visible; clip: auto; white-space: nowrap; }
+#drop-zone .icon-btn { transform: none; }
+#drop-zone.uploader-wrapper { padding-right: 56px; padding-bottom: 56px; }
+
+/* 专用于右侧“上传生僻字截图”按钮的配色，不影响全局主题 */
+#drop-zone #upload-button{
+  background-color:#e6f7f8; /* 淡青 */
+  border-color:#d2eff2;
+  color:#0e5661;
+  position:absolute; right:14px; bottom:12px;
+}
+#drop-zone #upload-button:hover{ background-color:#d8f0f3; border-color:#c6e9ee; }
+#drop-zone #upload-button:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ring); }
+#drop-zone #upload-button:disabled{ background-color:#cfe8ec; border-color:#c2e1e6; opacity:.9; cursor:not-allowed; }
+
+@media (prefers-color-scheme: dark){
+  #drop-zone #upload-button{
+    background-color:#7dd4e0; /* 深色下淡青提高对比 */
+    border-color:#6fc9d6;
+    color:#081f23;
+  }
+  #drop-zone #upload-button:hover{ background-color:#8adbe6; border-color:#7fd2dd; }
+  #drop-zone #upload-button:disabled{ background-color:#6cc6d2; border-color:#63bcc8; }
+}
+.uploader-wrapper.dragover {
+  border-color: color-mix(in oklab, var(--ink) 45%, var(--border));
+  box-shadow: 0 0 0 6px var(--ring);
+}
+.upload-status { color: var(--muted); font-size: 13px; text-align: center; width: 100%; }
+
+/* Improved actions layout for better visual hierarchy */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.secondary-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--card);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform .06s ease, box-shadow .2s ease, border-color .2s ease, background-color .2s ease, color .2s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { box-shadow: 0 0 0 6px var(--ring); outline: none; }
+
+/* 国风典雅主按钮设计 */
+.btn-primary {
+  background: linear-gradient(135deg,
+    #2c5f7d 0%,     /* 深青墨 */
+    #3d7ea6 30%,    /* 湖青 */
+    #4a90b8 70%,    /* 天青 */
+    #5aa3cc 100%    /* 浅青 */
+  );
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 8px 24px rgba(44, 95, 125, 0.25),
+    0 4px 12px rgba(44, 95, 125, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 按钮内发光效果 */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.1)
+  );
+  border-radius: 20px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg,
+    #1e4a61 0%,
+    #2d6b8f 30%,
+    #3a7da4 70%,
+    #4990b8 100%
+  );
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 12px 32px rgba(44, 95, 125, 0.35),
+    0 6px 16px rgba(44, 95, 125, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0px);
+  box-shadow:
+    0 4px 16px rgba(44, 95, 125, 0.3),
+    0 2px 8px rgba(44, 95, 125, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary:disabled {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+  border-color: rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-style: dashed;
+}
+.btn-ghost:hover { background: color-mix(in oklab, var(--card) 92%, transparent); }
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: color-mix(in oklab, var(--ink) 85%, var(--text));
+  cursor: pointer;
+  font-size: 13px;
+}
+.link-button:hover { text-decoration: underline; }
+
+/* 图标按钮与微型加载动画 */
+.icon-btn { width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; }
+.icon-btn .icon { width: 18px; height: 18px; display: inline-block; color: currentColor; fill: currentColor; }
+.icon-btn .spinner { display: none; width: 16px; height: 16px; border: 2px solid currentColor; border-right-color: transparent; border-top-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; }
+.icon-btn.loading .icon { display: none; }
+.icon-btn.loading .spinner { display: inline-block; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* 仅屏幕阅读器可见的文本 */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,1px,1px); white-space: nowrap; border: 0; }
+
+/* 国风雅致结果框 */
+.result-box {
+  margin-top: 24px;
+  padding: 24px;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.9) 100%
+  );
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  min-height: 140px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-break: strict;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  /* 典雅阴影效果 */
+  box-shadow:
+    0 8px 32px var(--shadow),
+    0 2px 8px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  font-size: 15px;
+  line-height: 1.75;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.result-box:hover {
+  box-shadow:
+    0 12px 40px var(--shadow),
+    0 3px 12px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.result-box p { margin: 0; }
+
+/* Unified placeholder-style for empty result container */
+.result-box[data-empty="true"]::before{
+  content: "可直接粘贴文字，或粘贴/拖拽原文截图自动识别（例如：道可道，非常道……） / Paste text directly, or paste/drag a classical text screenshot to OCR (e.g., 道可道，非常道…)";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: calc(100% - 32px);
+  padding: 0 8px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: color-mix(in oklab, var(--muted) 85%, transparent);
+  pointer-events: none;
+}
+.result-box[data-empty="true"] #result-text,
+.result-box[data-empty="true"] #result-structured{ display: none; }
+
+/* Title subtle plum glow (above background, below text) */
+.header::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -45%);
+  width: clamp(220px, 46vw, 800px);
+  height: clamp(90px, 14vw, 260px);
+  /* brighter pink‑purple glow */
+  background: radial-gradient(65% 60% at 50% 50%,
+    rgba(247, 207, 227, 0.46) 0%,
+    rgba(203, 183, 245, 0.26) 42%,
+    rgba(247, 207, 227, 0.00) 72%);
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: 0;
+}
+@media (prefers-color-scheme: dark){
+  .header::after{ filter: blur(20px) brightness(1.02) saturate(1.12); opacity: .95; }
+}
+
+/* Title phoenix pattern beneath text */
+.header::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -52%);
+  width: clamp(260px, 42vw, 1000px);
+  height: clamp(120px, 18vw, 360px);
+  background: url('assets/banner-phoenix-gongbi.svg') no-repeat center / contain;
+  opacity: .18;
+  mix-blend-mode: multiply;
+  filter: saturate(1.06);
+  pointer-events: none;
+  z-index: 0;
+}
+@media (prefers-color-scheme: dark){
+  .header::before{ opacity: .18; mix-blend-mode: soft-light; filter: brightness(.94) saturate(1.08); }
+}
+
+/* 更舒适的滚动条（可选） */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--text) 10%, transparent);
+  border-radius: 999px;
+}
+
+/* === 结果结构化展示 === */
+.result-structured { display: grid; gap: 12px; }
+.result-heading { font-weight: 700; font-size: 16px; }
+.result-meta { color: var(--muted); font-size: 12px; }
+.result-section { padding-top: 6px; border-top: 1px dashed var(--border); }
+.result-section h3 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
+.result-section p { margin: 0; }
+.result-section ul { margin: 0; padding-left: 18px; }
+.result-section li { margin: 4px 0; }
+
+/* Structured result — enhanced layout */
+.result-header { display:flex; align-items:center; gap:10px; padding-top: 6px; }
+.result-header .term { font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }
+.result-header .badges { display:flex; gap:8px; flex-wrap:wrap; }
+.badge { display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border:1px solid var(--border); border-radius:999px; background: color-mix(in oklab, var(--card) 94%, transparent); font-size:12px; color: var(--muted); }
+.badge .label { color: var(--muted); }
+.badge .value { color: var(--text); font-weight: 600; }
+.chips { display:flex; gap:6px; flex-wrap:wrap; }
+.chip { display:inline-flex; align-items:center; padding:2px 8px; border:1px solid var(--border); border-radius:999px; background: color-mix(in oklab, var(--card) 96%, transparent); font-size:12px; color: var(--text); cursor: pointer; user-select: none; transition: background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.chip:hover { background: color-mix(in oklab, var(--card) 90%, transparent); }
+.chip:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--ring); }
+.chip.copied { background: var(--primary); color: #fff; border-color: color-mix(in oklab, var(--primary) 20%, var(--border)); box-shadow: 0 0 0 4px var(--ring); }
+
+.grid-2 { display:grid; grid-template-columns: 1fr; gap: 10px 16px; }
+@media (min-width: 760px){ .grid-2 { grid-template-columns: 1fr 1fr; } }
+.column h4 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
+.column .para { white-space: pre-wrap; word-break: break-word; }
+
+/* Emphasis inside results */
+.result-box b { font-weight: 800; color: color-mix(in oklab, var(--text) 92%, var(--ink)); }
+
+/* === 历史区域 === */
+.history { max-width: 920px; margin: 0 auto 64px; padding: 0 16px; }
+.history-header { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; margin-bottom: 10px; }
+.history-title { margin: 0; font-size: 16px; color: var(--muted); font-weight: 600; }
+.history-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.history-controls label{font-size:13px;color:var(--muted);} 
+.history-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.history-item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); cursor: pointer; }
+.history-item:hover { box-shadow: 0 2px 10px rgba(0,0,0,.05); }
+.history-term { font-weight: 600; }
+.history-meta { color: var(--muted); font-size: 12px; }
+
+/* 历史项布局：左侧信息 + 右侧收藏按钮 */
+.history-left { display: flex; align-items: baseline; gap: 10px; flex: 1 1 auto; min-width: 0; }
+.star-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 6px; border-radius: 8px; }
+.star-btn:hover { background: color-mix(in oklab, var(--card) 92%, transparent); }
+.star-btn.fav { color: #f2b01e; }
+
+
+/* === 追加：融合用户配色与可达性增强（不破坏现有结构） === */
+:root{
+  --bg:#f4f7f6;--card:#fff;--text:#333;--muted:#666;
+  --primary:#3498db; /* 主色按你的要求 */
+  --primary-hover:#2980b9;--border:#e6e6e6;--ring:rgba(52,152,219,.16);
+}
+body{
+  color:var(--text);background:var(--bg);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC","WenQuanYi Micro Hei","Helvetica Neue",Arial,sans-serif;
+}
+h1{font-size:clamp(1.8rem,3.8vw,2.4rem);margin:.25rem 0 .5rem;}
+.subtitle{font-size:15px;}
+#context-input,#word-input,#upload-button,#submit-button{
+  transition:box-shadow .2s ease,border-color .2s ease,background-color .2s ease,color .2s ease;
+}
+#context-input,#word-input{border-color:var(--border);background:var(--card);}
+#context-input:focus-visible,#word-input:focus-visible,#upload-button:focus-visible,#submit-button:focus-visible{
+  outline:none;border-color:var(--primary);box-shadow:0 0 0 4px var(--ring);
+}
+.uploader-wrapper{border:1px solid color-mix(in oklab, var(--border) 55%, transparent);border-radius:16px;padding:12px;max-width:100%;margin:14px 0 0;}
+.uploader-wrapper.dragover{border-color:var(--primary);box-shadow:0 0 0 4px var(--ring);} 
+#submit-button{background-color:var(--primary);} 
+#submit-button:hover{background-color:var(--primary-hover);} 
+#submit-button:disabled{background-color:#7aa7d9;cursor:not-allowed;opacity:.85;}
+#submit-button.loading{background-color:#555;cursor:not-allowed;}
+.result-box{word-break:break-word;line-break:strict;}
+/* 卡片阴影与层次微调 */
+.uploader-wrapper {
+  box-shadow: 0 2px 8px rgba(0,0,0,.03);
+  border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  border-radius: 16px;
+  padding: 12px;
+  max-width: 100%;
+  margin: 14px 0 0;
+}
+
+/* 操作区布局：主按钮优先，占满；辅助按钮自适应 */
+/* Already defined above */
+
+/* Compact actions menu */
+.split-menu{ position: relative; }
+.menu{ position: absolute; right: 0; top: calc(100% + 6px); min-width: 220px; border:1px solid var(--border); border-radius:12px; background: var(--card); box-shadow: 0 10px 24px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.06); padding:6px; z-index: 10; }
+.menu-item{ width:100%; text-align:left; background:transparent; border:none; border-radius:10px; padding:10px 12px; cursor:pointer; font-size:14px; color: var(--text); }
+.menu-item:hover, .menu-item:focus-visible{ background: color-mix(in oklab, var(--card) 92%, transparent); outline: none; }
+
+/* 国风简雅次级按钮 */
+.btn-secondary {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 250, 252, 0.8) 100%
+  );
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 2px 8px var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(240, 245, 248, 0.9) 100%
+  );
+  border-color: var(--secondary);
+  color: var(--ink-2);
+  box-shadow:
+    0 4px 16px var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+} 
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0b0b0b;--card:#111;--text:#eee;--muted:#a3a3a3;--border:#242424;--primary:#8ab4ff;--primary-hover:#a5c4ff;--ring:rgba(138,180,255,.18);} 
+  body{ background-image:
+    radial-gradient(1100px 760px at 85% 25%, rgba(158, 136, 214, 0.12), transparent 60%),
+    radial-gradient(900px 700px at 10% 80%, rgba(145, 115, 200, 0.10), transparent 65%);
+  }
+  body::after{ opacity: .065; filter: brightness(.92) saturate(1.06); mix-blend-mode: soft-light; }
+  body::before{ opacity: .025; mix-blend-mode: soft-light; }
+  html::after{ opacity: .10; filter: brightness(.96) saturate(1.06); mix-blend-mode: soft-light; }
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:0ms!important;scroll-behavior:auto!important;}
+}
+/* Repeating Xiangyun tile across page to enrich blank areas */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('assets/xiangyun-tile.svg') repeat;
+  background-size: 680px auto; /* subtle scale for large screens */
+  opacity: .035;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Ensure result box matches container width perfectly */
+.result-box {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+/* 凤凰飘逸动画效果 */
+@keyframes phoenix-float-top {
+  0%, 100% { transform: translateX(-50%) translateY(0px); }
+  50% { transform: translateX(-50%) translateY(-8px); }
+}
+
+@keyframes phoenix-float-left {
+  0%, 100% { transform: rotate(-5deg) translateY(0px); }
+  50% { transform: rotate(-5deg) translateY(-12px); }
+}
+
+@keyframes phoenix-float-right {
+  0%, 100% { transform: rotate(3deg) translateY(0px); }
+  50% { transform: rotate(3deg) translateY(8px); }
+}
+
+@keyframes phoenix-glow {
+  0%, 100% { filter: saturate(1.3) contrast(1.1) brightness(1.05) drop-shadow(0 0 20px rgba(92, 163, 204, 0.15)); }
+  50% { filter: saturate(1.4) contrast(1.15) brightness(1.08) drop-shadow(0 0 30px rgba(92, 163, 204, 0.25)); }
+}
+
+/* 古风凤凰装饰元素 - 典雅国风版 */
+.phoenix-decor { position: static; }
+.phoenix {
+  position: fixed;
+  display: block;
+  opacity: 0.6;           /* 进一步增加透明度 */
+  filter:
+    saturate(1.5)          /* 更高饱和度 */
+    contrast(1.4)
+    brightness(1.3)
+    sepia(0.3)             /* 增加金色调 */
+    hue-rotate(20deg)      /* 向金色偏移 */
+    blur(0.1px)            /* 更清晰 */
+    drop-shadow(3px 3px 12px rgba(60, 60, 60, 0.3))     /* 增强阴影 */
+    drop-shadow(0 0 30px rgba(218, 165, 32, 0.4))       /* 金色光晕 */
+    drop-shadow(0 0 50px rgba(255, 215, 0, 0.25))       /* 明亮金色光晕 */
+    drop-shadow(0 0 70px rgba(255, 223, 0, 0.15));      /* 外层金辉 */
+  pointer-events: none;
+  z-index: 0;
+  transition: all 1.5s ease;
+  /* 添加贵气金色呼吸动画 */
+  animation: golden-phoenix-breath 8s ease-in-out infinite;
+}
+
+/* 贵气金色凤凰呼吸动画 */
+@keyframes golden-phoenix-breath {
+  0%, 100% {
+    opacity: 0.6;
+    filter:
+      saturate(1.5)
+      contrast(1.4)
+      brightness(1.3)
+      sepia(0.3)
+      hue-rotate(20deg)
+      blur(0.1px)
+      drop-shadow(3px 3px 12px rgba(60, 60, 60, 0.3))
+      drop-shadow(0 0 30px rgba(218, 165, 32, 0.4))
+      drop-shadow(0 0 50px rgba(255, 215, 0, 0.25))
+      drop-shadow(0 0 70px rgba(255, 223, 0, 0.15));
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter:
+      saturate(1.8)
+      contrast(1.5)
+      brightness(1.4)
+      sepia(0.4)
+      hue-rotate(25deg)
+      blur(0.05px)
+      drop-shadow(4px 4px 15px rgba(60, 60, 60, 0.35))
+      drop-shadow(0 0 40px rgba(218, 165, 32, 0.5))
+      drop-shadow(0 0 65px rgba(255, 215, 0, 0.35))
+      drop-shadow(0 0 90px rgba(255, 223, 0, 0.2));
+    transform: scale(1.03);
+  }
+}
+
+/* 顶部凤凰 - 金色飞翔 */
+.phoenix-top {
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(320px, 36vw, 500px);
+  animation:
+    golden-float-top 10s ease-in-out infinite,
+    golden-phoenix-breath 8s ease-in-out infinite;
+}
+
+@keyframes golden-float-top {
+  0%, 100% { transform: translateX(-50%) translateY(0px) rotate(0deg) scale(1); }
+  25% { transform: translateX(-50%) translateY(-6px) rotate(1deg) scale(1.02); }
+  50% { transform: translateX(-50%) translateY(4px) rotate(0deg) scale(1.03); }
+  75% { transform: translateX(-50%) translateY(-3px) rotate(-1deg) scale(1.02); }
+}
+
+/* 左侧凤凰 - 金色顾盼 */
+.phoenix-left {
+  left: 25px;
+  top: 30vh;
+  width: clamp(260px, 32vw, 400px);
+  transform: rotate(-3deg);
+  animation:
+    golden-float-left 12s ease-in-out infinite,
+    golden-phoenix-breath 8s ease-in-out infinite 2s;
+}
+
+@keyframes golden-float-left {
+  0%, 100% { transform: rotate(-3deg) translateY(0px) translateX(0px) scale(1); }
+  30% { transform: rotate(-4deg) translateY(-8px) translateX(4px) scale(1.02); }
+  60% { transform: rotate(-2deg) translateY(6px) translateX(-2px) scale(1.03); }
+  90% { transform: rotate(-3deg) translateY(-4px) translateX(2px) scale(1.02); }
+}
+
+/* 右下凤凰 - 金色舞蹈 */
+.phoenix-right {
+  right: 35px;
+  bottom: 20vh;
+  width: clamp(240px, 30vw, 380px);
+  transform: rotate(6deg);
+  animation:
+    golden-float-right 14s ease-in-out infinite,
+    golden-phoenix-breath 8s ease-in-out infinite 4s;
+}
+
+@keyframes golden-float-right {
+  0%, 100% { transform: rotate(6deg) translateY(0px) translateX(0px) scale(1); }
+  20% { transform: rotate(7deg) translateY(-6px) translateX(-4px) scale(1.02); }
+  40% { transform: rotate(5deg) translateY(8px) translateX(2px) scale(1.03); }
+  60% { transform: rotate(6deg) translateY(-4px) translateX(3px) scale(1.02); }
+  80% { transform: rotate(7deg) translateY(4px) translateX(-2px) scale(1.02); }
+}
+
+/* 移动端适配 - 保持金色 */
+@media (max-width: 900px) {
+  .phoenix {
+    opacity: 0.5;
+  }
+
+  .phoenix-top {
+    width: clamp(220px, 42vw, 350px);
+    top: 20px;
+  }
+
+  .phoenix-left {
+    width: clamp(200px, 38vw, 300px);
+    left: 15px;
+    top: 25vh;
+  }
+
+  .phoenix-right {
+    width: clamp(180px, 34vw, 280px);
+    right: 20px;
+    bottom: 15vh;
+  }
+
+  /* 移动端保持金色动画 */
+  @keyframes golden-float-top {
+    0%, 100% { transform: translateX(-50%) translateY(0px) scale(1); }
+    50% { transform: translateX(-50%) translateY(-4px) scale(1.02); }
+  }
+
+  @keyframes golden-float-left {
+    0%, 100% { transform: rotate(-3deg) translateY(0px) scale(1); }
+    50% { transform: rotate(-4deg) translateY(-4px) scale(1.02); }
+  }
+
+  @keyframes golden-float-right {
+    0%, 100% { transform: rotate(6deg) translateY(0px) scale(1); }
+    50% { transform: rotate(7deg) translateY(-4px) scale(1.02); }
+  }
+}
+
+/* 深色模式优化 - 增强金辉 */
+@media (prefers-color-scheme: dark) {
+  .phoenix {
+    opacity: 0.7;
+    filter:
+      saturate(1.6)
+      contrast(1.5)
+      brightness(1.4)
+      sepia(0.35)
+      hue-rotate(22deg)
+      blur(0.05px)
+      drop-shadow(3px 3px 15px rgba(0, 0, 0, 0.5))
+      drop-shadow(0 0 35px rgba(218, 165, 32, 0.5))
+      drop-shadow(0 0 60px rgba(255, 215, 0, 0.3))
+      drop-shadow(0 0 80px rgba(255, 223, 0, 0.2));
+  }
+}
+
+/* 鼠标悬停增强金辉 */
+.container:hover .phoenix {
+  opacity: 0.9;
+  filter:
+    saturate(2.0)
+    contrast(1.6)
+    brightness(1.5)
+    sepia(0.45)
+    hue-rotate(30deg)
+    blur(0.05px)
+    drop-shadow(5px 5px 20px rgba(60, 60, 60, 0.4))
+    drop-shadow(0 0 50px rgba(218, 165, 32, 0.6))
+    drop-shadow(0 0 80px rgba(255, 215, 0, 0.4))
+    drop-shadow(0 0 100px rgba(255, 223, 0, 0.25));
+  animation-duration: 5s; /* 更快更贵气的动画 */
+}
+
+/* 性能优化 */
+@media (prefers-reduced-motion: reduce) {
+  .phoenix {
+    animation: none;
+    opacity: 0.2;
+  }
+}
+
+/* 减少动画对性能的影响 */
+@media (prefers-reduced-motion: reduce) {
+  .phoenix {
+    animation: none;
+  }
+}
+
+
+
+

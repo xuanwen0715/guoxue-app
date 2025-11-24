@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3840" height="2160" viewBox="0 0 3840 2160" role="img" aria-label="Gongbi phoenix banner">
+  <defs>
+    <!-- Paper grain for subtle guohua texture -->
+    <filter id="paper" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="1" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.6  0 0 0 0 0.6  0 0 0 0 0.65  0 0 0 0.08 0" result="grain"/>
+      <feBlend in="SourceGraphic" in2="grain" mode="multiply"/>
+    </filter>
+
+    <!-- Light ink wobble for lines -->
+    <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="2" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="1.1" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- Color palette -->
+    <linearGradient id="plum" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#cbb7f5"/>
+      <stop offset="60%" stop-color="#b39ddb"/>
+      <stop offset="100%" stop-color="#a389e3"/>
+    </linearGradient>
+    <linearGradient id="paleBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e7f3ff"/>
+      <stop offset="100%" stop-color="#cce7ff"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef2f4"/>
+      <stop offset="100%" stop-color="#d7dee2"/>
+    </linearGradient>
+
+    <!-- Feather gradient with subtle depth -->
+    <radialGradient id="feather" cx="50%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#dee7ff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#cbb7f5" stop-opacity="0.65"/>
+    </radialGradient>
+
+    <!-- Soft shadow -->
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6"/> 
+    </filter>
+  </defs>
+
+  <!-- Background auspicious clouds (Xiangyun) -->
+  <g stroke="#9aa7b3" stroke-opacity="0.35" stroke-width="2.2" fill="none" filter="url(#ink)">
+    <path d="M420 380 C 520 320 640 340 700 400 C 760 460 860 470 960 430"/>
+    <path d="M310 540 C 420 480 560 500 610 560 C 660 620 780 620 880 580"/>
+    <path d="M260 820 C 360 760 520 770 580 820 C 640 870 760 870 860 830"/>
+    <path d="M2840 300 C 2940 260 3040 260 3120 300 C 3200 340 3300 340 3400 300"/>
+    <path d="M2740 520 C 2860 480 2980 490 3040 540 C 3100 590 3220 590 3320 550"/>
+  </g>
+
+  <!-- Phoenix group on right side, leaving left safe space for text -->
+  <g transform="translate(2160,140)" filter="url(#paper)">
+    <!-- Tail washes (plum + pale blue) -->
+    <path fill="url(#plum)" opacity="0.35" d="M1180 980 C 980 1210 620 1350 220 1380 C 760 1300 1020 1180 1220 900 Z" filter="url(#soft)"/>
+    <path fill="url(#paleBlue)" opacity="0.35" d="M1100 1020 C 940 1200 640 1310 320 1340 C 700 1270 920 1170 1100 1020 Z" filter="url(#soft)"/>
+
+    <!-- Tail ink strokes -->
+    <g fill="none" stroke="#65707a" stroke-opacity="0.42" stroke-linecap="round" stroke-linejoin="round" filter="url(#ink)">
+      <path stroke-width="9" d="M1180 900 C 1120 1120 880 1320 520 1400"/>
+      <path stroke-width="7" d="M1140 920 C 1060 1120 820 1280 500 1360"/>
+      <path stroke-width="6" d="M1100 940 C 1000 1120 780 1240 480 1320"/>
+    </g>
+
+    <!-- Wing outline strokes (gongbi fine lines) -->
+    <g fill="none" stroke="#5c6470" stroke-opacity="0.55" stroke-linecap="round" stroke-linejoin="round" filter="url(#ink)">
+      <path stroke-width="3.2" d="M480 280 C 360 360 300 460 300 560"/>
+      <path stroke-width="3.0" d="M520 270 C 400 360 330 470 330 580"/>
+      <path stroke-width="2.8" d="M560 265 C 440 355 370 470 370 600"/>
+      <path stroke-width="2.6" d="M600 262 C 480 350 420 470 410 620"/>
+    </g>
+
+    <!-- Body wash -->
+    <path fill="url(#feather)" opacity="0.9" d="M600 320 C 900 330 1120 460 1160 580 C 1190 670 1150 800 1000 880 C 1060 800 1050 720 1030 700 C 940 760 800 750 690 690 C 620 650 580 600 590 540 C 610 430 710 360 780 350 C 810 345 830 340 850 320 C 890 285 940 285 980 300 C 945 280 900 270 860 272 C 830 287 740 305 600 320 Z" filter="url(#ink)"/>
+
+    <!-- Head and crest fine strokes -->
+    <g fill="none" stroke="#58606b" stroke-opacity="0.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#ink)">
+      <path stroke-width="2.6" d="M900 300 C 940 270 990 270 1030 288"/>
+      <path stroke-width="2.2" d="M892 310 C 924 290 968 290 996 302"/>
+      <path stroke-width="1.8" d="M885 320 C 910 305 940 305 962 316"/>
+    </g>
+
+    <!-- Feather rows (gongbi meticulous detailing) -->
+    <g filter="url(#ink)" stroke="#6a7380" stroke-opacity="0.55" stroke-linecap="round" stroke-linejoin="round">
+      <!-- row 1 -->
+      <path fill="url(#silver)" stroke-width="1.6" d="M700 520 q 60 -30 120 0 q -60 28 -120 0 z"/>
+      <path fill="url(#silver)" stroke-width="1.6" d="M760 540 q 60 -30 120 0 q -60 28 -120 0 z"/>
+      <path fill="url(#silver)" stroke-width="1.6" d="M820 560 q 60 -30 120 0 q -60 28 -120 0 z"/>
+      <!-- row 2 -->
+      <path fill="url(#paleBlue)" stroke-width="1.4" d="M660 560 q 56 -28 112 0 q -56 26 -112 0 z"/>
+      <path fill="url(#paleBlue)" stroke-width="1.4" d="M720 580 q 56 -28 112 0 q -56 26 -112 0 z"/>
+      <path fill="url(#paleBlue)" stroke-width="1.4" d="M780 600 q 56 -28 112 0 q -56 26 -112 0 z"/>
+      <!-- row 3 -->
+      <path fill="url(#plum)" stroke-width="1.2" d="M640 600 q 52 -24 104 0 q -52 22 -104 0 z"/>
+      <path fill="url(#plum)" stroke-width="1.2" d="M700 620 q 52 -24 104 0 q -52 22 -104 0 z"/>
+      <path fill="url(#plum)" stroke-width="1.2" d="M760 640 q 52 -24 104 0 q -52 22 -104 0 z"/>
+    </g>
+
+    <!-- Eye highlight -->
+    <circle cx="995" cy="302" r="3.2" fill="#445" opacity="0.65"/>
+    <circle cx="996.5" cy="300.5" r="1.4" fill="#fff" opacity="0.85"/>
+  </g>
+
+  <!-- Foreground soft cloud to blend into banner edges -->
+  <g opacity="0.22">
+    <path fill="url(#paleBlue)" d="M0 1720 C 520 1600 920 1680 1280 1750 L 1280 2160 L 0 2160 Z" filter="url(#soft)"/>
+  </g>
+</svg>
+

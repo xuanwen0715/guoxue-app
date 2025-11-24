@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>国学智能词典 · 墨韵极简</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="国学智能词典：以简驭繁 · 智解文义，支持古文上下文与单字查询，以及生僻字截图上传。">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>国学智能词典</h1>
+            <p class="subtitle">以简驭繁 · 智解文义</p>
+            <div id="mock-mode-notice" style="background: #fff3cd; border: 1px solid #ffd60e; border-radius: 6px; padding: 8px; margin: 10px 0; text-align: center; font-size: 14px; display: none;">
+                <strong>🔧 演示模式</strong> - 当前使用模拟数据，如需真实AI查询请配置API服务器
+            </div>
+        </header>
+
+        <!-- Phoenix decor placed in page blank areas (sides/top), not as background -->
+        <div class="phoenix-decor" aria-hidden="true">
+            <img class="phoenix phoenix-top" src="assets/banner-phoenix-gongbi.svg" alt="">
+            <img class="phoenix phoenix-left" src="assets/banner-phoenix-gongbi.svg" alt="">
+            <img class="phoenix phoenix-right" src="assets/banner-phoenix-gongbi-mirror.svg" alt="">
+        </div>
+
+        <label for="context-input" class="field-label">古文原文 / Classical Text</label>
+        <div class="context-drop" id="context-drop-zone" aria-label="粘贴/拖拽原文截图或点击上传">
+            <div class="context-tools inside">
+                <input type="file" id="context-image-uploader" accept="image/*" hidden>
+                <button id="context-upload-button" class="btn btn-secondary icon-btn" type="button" aria-controls="context-image-uploader" aria-label="上传原文截图" title="上传原文截图"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg><span class="spinner" aria-hidden="true"></span><span class="sr-only">上传原文截图</span></button>
+                <span id="context-upload-status" class="upload-status" aria-live="polite"></span>
+            </div>
+            <textarea id="context-input" class="field" placeholder="可直接粘贴文字，或粘贴/拖拽原文截图自动识别（例如：道可道，非常道……）" spellcheck="false"></textarea>
+        </div>
+
+        <div class="inline-fields">
+            <div class="inline-field">
+                <label for="word-input" class="field-label">字/词查询 / Character · Word</label>
+                <input type="text" id="word-input" class="field" inputmode="text" placeholder="输入字或词（例如：道、无为、仁义） / Enter a character or word (e.g., 道, 无为, 仁义)" aria-describedby="word-hint">
+                <div id="word-hint" class="help">支持多字/生僻字；按 Enter 快速查询 · Supports multiple/rare characters; press Enter</div>
+            </div>
+            <div class="uploader-wrapper" id="drop-zone" aria-label="拖拽图片到此处或点击上传">
+                <span class="uploader-hint">上传生僻字截图 · Upload rare‑character screenshot</span><input type="file" id="image-uploader" accept="image/*" hidden>
+                <button id="upload-button" class="btn btn-secondary icon-btn" type="button" aria-controls="image-uploader" aria-label="上传生僻字截图" title="上传生僻字截图"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg><span class="spinner" aria-hidden="true"></span><span class="sr-only">上传生僻字截图</span></button>
+                <span id="upload-status" class="upload-status" aria-live="polite"></span>
+            </div>
+        </div>
+
+
+        <div class="actions">
+            <button id="submit-button" class="btn btn-primary" type="button">AI 智能查询 · AI Smart Lookup</button>
+            <div class="secondary-group">
+                <button id="copy-button" class="btn btn-secondary" type="button" aria-label="复制查询结果 / Copy results">复制结果 · Copy</button>
+                <button id="clear-button" class="btn btn-secondary" type="button" aria-label="清空输入 / Clear inputs">清空输入 · Clear</button>
+            </div>
+        </div>
+
+        <section id="result-container" class="result-box" aria-live="polite" aria-busy="false">
+            <p id="result-text">查询结果将显示在这里...</p>
+            <div id="result-structured" class="result-structured" hidden></div>
+        </section>
+    </div>
+
+    <section class="history" aria-label="查询历史 / History">
+        <div class="history-header">
+            <h2 class="history-title">查询历史 · History</h2>
+            <div class="history-controls">
+                <label for="history-favs-only"><input type="checkbox" id="history-favs-only"> 仅看收藏 · Favourites only</label>
+                <button id="export-history" class="btn btn-secondary" type="button">导出历史 · Export</button>
+                <input type="file" id="import-history-input" accept="application/json" hidden>
+                <button id="import-history" class="btn btn-secondary" type="button">导入历史 · Import</button>
+                <button id="clear-history" class="btn btn-secondary" type="button">清空历史 · Clear</button>
+            </div>
+        </div>
+        <ul id="history-list" class="history-list" aria-live="polite"></ul>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
