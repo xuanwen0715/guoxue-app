@@ -1,14 +1,34 @@
 {
-  "buildCommand": "",
-  "outputDirectory": "",
-  "functions": {
-    "api/**/*.py": {
-      "runtime": "python3.12"
+  "builds": [
+    {
+      "src": "api/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
     }
-  },
-  "rewrites": [
-    { "source": "/api/test", "destination": "/api/test.py" },
-    { "source": "/api/translate", "destination": "/api/translate.py" },
-    { "source": "/api/ocr", "destination": "/api/ocr.py" }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
   ]
 }
