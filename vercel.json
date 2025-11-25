@@ -1,7 +1,14 @@
 {
+  "buildCommand": "",
+  "outputDirectory": "",
   "functions": {
-    "api/*.py": {
+    "api/**/*.py": {
       "runtime": "python3.12"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/api/test", "destination": "/api/test.py" },
+    { "source": "/api/translate", "destination": "/api/translate.py" },
+    { "source": "/api/ocr", "destination": "/api/ocr.py" }
+  ]
 }
