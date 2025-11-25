@@ -83,7 +83,18 @@ class handler(BaseHTTPRequestHandler):
             resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=60)
             resp.raise_for_status()
             data = resp.json()
+
+            # 调试：返回原始 API 响应
+            if not data:
+                self._send_json(200, {"debug": "API returned empty", "raw": str(data)})
+                return
+
             text = self._extract_text_from_msg(data)
+
+            # 如果提取失败，返回原始数据用于调试
+            if not text:
+                self._send_json(200, {"debug": "extract failed", "raw_response": data})
+                return
 
             # 尝试解析 JSON
             structured = None
@@ -96,7 +107,7 @@ class handler(BaseHTTPRequestHandler):
                 self._normalize_response(structured)
                 self._send_json(200, structured)
             else:
-                self._send_json(200, {"text": text or ""})
+                self._send_json(200, {"text": text})
 
         except Exception as e:
             import traceback
