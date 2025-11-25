@@ -67,10 +67,18 @@ def _build_prompt(context: str, term: str, use_ocr: bool = False) -> str:
 class handler(BaseHTTPRequestHandler):
     """Vercel Serverless Function handler using BaseHTTPRequestHandler"""
 
+    def do_GET(self):
+        """Handle GET requests for debugging"""
+        self._send_json(200, {
+            "status": "ok",
+            "message": "Translate API is working. Use POST to query.",
+            "has_api_key": bool(DASHSCOPE_API_KEY)
+        })
+
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
 
