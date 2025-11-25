@@ -1,8 +1,8 @@
 import os
 import json
 import traceback
-from http.server import BaseHTTPRequestHandler
 import requests
+from http.server import BaseHTTPRequestHandler
 
 
 DASHSCOPE_API_KEY = os.environ.get("DASHSCOPE_API_KEY", "")
@@ -10,21 +10,6 @@ DASHSCOPE_VL_URL = os.environ.get(
     "DASHSCOPE_VL_URL",
     "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
 )
-
-
-def _json_response(status: int, payload: dict):
-    """Create JSON response for Vercel"""
-    return {
-        "statusCode": status,
-        "headers": {
-            "Content-Type": "application/json; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Cache-Control": "no-store"
-        },
-        "body": json.dumps(payload, ensure_ascii=False)
-    }
 
 
 def _extract_text_from_msg(resp_json: dict) -> str:
@@ -41,72 +26,9 @@ def _extract_text_from_msg(resp_json: dict) -> str:
         return ""
 
 
-def handler(request):
-    """Main Vercel handler function"""
-    # Handle CORS preflight
-    if request.method == 'OPTIONS':
-        return _json_response(204, {})
+class handler(BaseHTTPRequestHandler):
+    """Vercel Serverless Function handler using BaseHTTPRequestHandler"""
 
-    if request.method != 'POST':
-        return _json_response(405, {"error": "Method not allowed"})
-
-    try:
-        # Get request body
-        if hasattr(request, 'get_json'):
-            body = request.get_json()
-        else:
-            import json
-            body_str = request.body.decode('utf-8') if hasattr(request, 'body') else ''
-            body = json.loads(body_str)
-
-        if not DASHSCOPE_API_KEY:
-            return _json_response(503, {"error": "API key not configured"})
-
-        image_url = body.get("image_url", "").strip()
-        if not image_url:
-            return _json_response(400, {"error": "Missing image_url field"})
-
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
-        }
-
-        payload = {
-            "model": "qwen-vl-max",
-            "input": {
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": [
-                            {"image": image_url},
-                            {"text": "请识别图像中的中文文字，准确提取所有汉字、标点符号和数字。要求：1）保持原有的换行和段落格式；2）不要添加任何解释或说明；3）只输出识别到的文字内容。"}
-                        ]
-                    }
-                ]
-            }
-        }
-
-        resp = requests.post(DASHSCOPE_VL_URL, headers=headers, json=payload, timeout=45)
-        resp.raise_for_status()
-        data = resp.json()
-        text = _extract_text_from_msg(data)
-
-        return _json_response(200, {"text": text.strip()})
-
-    except requests.HTTPError as http_err:
-        detail = ""
-        if hasattr(http_err, 'response') and http_err.response:
-            try:
-                detail = http_err.response.text
-            except Exception:
-                pass
-        return _json_response(502, {"error": str(http_err), "detail": detail})
-    except Exception as e:
-        return _json_response(500, {"error": str(e), "trace": traceback.format_exc()})
-
-
-# Keep backward compatibility with local development
-class OCRHandler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -118,28 +40,69 @@ class OCRHandler(BaseHTTPRequestHandler):
         try:
             content_length = int(self.headers.get("Content-Length", 0))
             body_bytes = self.rfile.read(content_length)
-            body = json.loads(body_bytes.decode("utf-8"))
+            body = json.loads(body_bytes.decode("utf-8")) if body_bytes else {}
 
-            # Create mock request object
-            mock_request = type('MockRequest', (), {
-                'method': 'POST',
-                'get_json': lambda: body,
-                'body': body_bytes
-            })()
+            if not DASHSCOPE_API_KEY:
+                self._send_json(503, {"error": "API key not configured"})
+                return
 
-            # Call Vercel handler
-            response = handler(mock_request)
+            # Support both image (base64 data URL) and image_url
+            image_data = body.get("image", "").strip()
+            image_url = body.get("image_url", "").strip()
 
-            # Send response
-            self.send_response(response['statusCode'])
-            for key, value in response['headers'].items():
-                self.send_header(key, value)
-            self.end_headers()
-            self.wfile.write(response['body'].encode('utf-8'))
+            # Use image data URL if provided, otherwise fall back to image_url
+            final_image = image_data if image_data else image_url
 
+            if not final_image:
+                self._send_json(400, {"error": "Missing image or image_url field"})
+                return
+
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
+            }
+
+            payload = {
+                "model": "qwen-vl-max",
+                "input": {
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": [
+                                {"image": final_image},
+                                {"text": "请识别图像中的中文文字，准确提取所有汉字、标点符号和数字。要求：1）保持原有的换行和段落格式；2）不要添加任何解释或说明；3）只输出识别到的文字内容。"}
+                            ]
+                        }
+                    ]
+                }
+            }
+
+            resp = requests.post(DASHSCOPE_VL_URL, headers=headers, json=payload, timeout=45)
+            resp.raise_for_status()
+            data = resp.json()
+            text = _extract_text_from_msg(data)
+
+            self._send_json(200, {"text": text.strip()})
+
+        except requests.HTTPError as http_err:
+            detail = ""
+            if hasattr(http_err, 'response') and http_err.response:
+                try:
+                    detail = http_err.response.text
+                except Exception:
+                    pass
+            self._send_json(502, {"error": str(http_err), "detail": detail})
         except Exception as e:
-            self.send_response(500)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            error_response = json.dumps({"error": str(e)})
-            self.wfile.write(error_response.encode('utf-8'))
+            self._send_json(500, {"error": str(e), "trace": traceback.format_exc()})
+
+    def _send_json(self, status: int, payload: dict):
+        """Send JSON response with proper headers"""
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        response_body = json.dumps(payload, ensure_ascii=False)
+        self.wfile.write(response_body.encode("utf-8"))

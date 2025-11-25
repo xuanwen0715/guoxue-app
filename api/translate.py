@@ -1,8 +1,8 @@
 import os
 import json
 import traceback
-from http.server import BaseHTTPRequestHandler
 import requests
+from http.server import BaseHTTPRequestHandler
 
 
 DASHSCOPE_API_KEY = os.environ.get("DASHSCOPE_API_KEY", "")
@@ -11,21 +11,6 @@ DASHSCOPE_TXT_URL = os.environ.get(
     "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation",
 )
 DEFAULT_TEXT_MODEL = os.environ.get("DASHSCOPE_TEXT_MODEL", "qwen-max")
-
-
-def _json_response(status: int, payload: dict):
-    """Create JSON response for Vercel"""
-    return {
-        "statusCode": status,
-        "headers": {
-            "Content-Type": "application/json; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Cache-Control": "no-store"
-        },
-        "body": json.dumps(payload, ensure_ascii=False)
-    }
 
 
 def _extract_text_from_msg(resp_json: dict) -> str:
@@ -79,92 +64,9 @@ def _build_prompt(context: str, term: str, use_ocr: bool = False) -> str:
     )
 
 
-def handler(request):
-    """Main Vercel handler function"""
-    # Handle CORS preflight
-    if request.method == 'OPTIONS':
-        return _json_response(204, {})
+class handler(BaseHTTPRequestHandler):
+    """Vercel Serverless Function handler using BaseHTTPRequestHandler"""
 
-    if request.method != 'POST':
-        return _json_response(405, {"error": "Method not allowed"})
-
-    try:
-        # Get request body
-        if hasattr(request, 'get_json'):
-            body = request.get_json()
-        else:
-            import json
-            body_str = request.body.decode('utf-8') if hasattr(request, 'body') else ''
-            body = json.loads(body_str)
-
-        if not DASHSCOPE_API_KEY:
-            return _json_response(503, {"error": "API key not configured"})
-
-        context = body.get("context", "").strip()
-        term = body.get("word", "").strip()
-        use_ocr = body.get("use_ocr", False)
-
-        if not term:
-            return _json_response(400, {"error": "Missing field: word"})
-
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
-        }
-        user_prompt = _build_prompt(context, term, use_ocr)
-        payload = {
-            "model": DEFAULT_TEXT_MODEL,
-            "input": {
-                "messages": [
-                    {"role": "system", "content": [{"text": "你是严谨的国学学者。"}]},
-                    {"role": "user", "content": [{"text": user_prompt}]},
-                ]
-            },
-        }
-
-        resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=45)
-        resp.raise_for_status()
-        data = resp.json()
-        text = _extract_text_from_msg(data)
-
-        # Try parse as JSON structure per instruction; otherwise fallback
-        structured = None
-        try:
-            structured = json.loads(text)
-        except Exception:
-            pass
-
-        # Normalize keys for frontend rendering
-        if isinstance(structured, dict):
-            # ensure arrays
-            for k in ["sources_zh", "sources_en", "examples_zh", "examples_en", "variants"]:
-                if k in structured and not isinstance(structured[k], list):
-                    structured[k] = [structured[k]] if structured[k] else []
-            # Backward compat fields if model didn't follow exactly
-            if "explanation" in structured and "explanation_zh" not in structured:
-                structured["explanation_zh"] = structured.pop("explanation")
-            # Normalize simple fields to string types
-            for k in ["pinyin", "traditional", "radical", "evolution_zh", "evolution_en"]:
-                if k in structured and structured[k] is None:
-                    structured[k] = ""
-            # Coerce strokes to int if numeric
-            if "strokes" in structured:
-                try:
-                    structured["strokes"] = int(structured["strokes"])  # may raise
-                except Exception:
-                    pass
-            return _json_response(200, structured)
-        else:
-            return _json_response(200, {"text": text or ""})
-
-    except requests.HTTPError as http_err:
-        return _json_response(502, {"error": str(http_err), "detail": getattr(http_err, "response", None).text if getattr(http_err, "response", None) else ""})
-    except Exception as e:
-        return _json_response(500, {"error": str(e), "trace": traceback.format_exc()})
-
-
-# Keep backward compatibility with local development
-class TranslateHandler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -176,28 +78,89 @@ class TranslateHandler(BaseHTTPRequestHandler):
         try:
             content_length = int(self.headers.get("Content-Length", 0))
             body_bytes = self.rfile.read(content_length)
-            body = json.loads(body_bytes.decode("utf-8"))
+            body = json.loads(body_bytes.decode("utf-8")) if body_bytes else {}
 
-            # Create mock request object
-            mock_request = type('MockRequest', (), {
-                'method': 'POST',
-                'get_json': lambda: body,
-                'body': body_bytes
-            })()
+            if not DASHSCOPE_API_KEY:
+                self._send_json(503, {"error": "API key not configured"})
+                return
 
-            # Call Vercel handler
-            response = handler(mock_request)
+            context = body.get("context", "").strip()
+            term = body.get("word", "").strip()
+            use_ocr = body.get("use_ocr", False)
 
-            # Send response
-            self.send_response(response['statusCode'])
-            for key, value in response['headers'].items():
-                self.send_header(key, value)
-            self.end_headers()
-            self.wfile.write(response['body'].encode('utf-8'))
+            if not term:
+                self._send_json(400, {"error": "Missing field: word"})
+                return
 
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
+            }
+            user_prompt = _build_prompt(context, term, use_ocr)
+            payload = {
+                "model": DEFAULT_TEXT_MODEL,
+                "input": {
+                    "messages": [
+                        {"role": "system", "content": [{"text": "你是严谨的国学学者。"}]},
+                        {"role": "user", "content": [{"text": user_prompt}]},
+                    ]
+                },
+            }
+
+            resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=45)
+            resp.raise_for_status()
+            data = resp.json()
+            text = _extract_text_from_msg(data)
+
+            # Try parse as JSON structure per instruction; otherwise fallback
+            structured = None
+            try:
+                structured = json.loads(text)
+            except Exception:
+                pass
+
+            # Normalize keys for frontend rendering
+            if isinstance(structured, dict):
+                # ensure arrays
+                for k in ["sources_zh", "sources_en", "examples_zh", "examples_en", "variants"]:
+                    if k in structured and not isinstance(structured[k], list):
+                        structured[k] = [structured[k]] if structured[k] else []
+                # Backward compat fields if model didn't follow exactly
+                if "explanation" in structured and "explanation_zh" not in structured:
+                    structured["explanation_zh"] = structured.pop("explanation")
+                # Normalize simple fields to string types
+                for k in ["pinyin", "traditional", "radical", "evolution_zh", "evolution_en"]:
+                    if k in structured and structured[k] is None:
+                        structured[k] = ""
+                # Coerce strokes to int if numeric
+                if "strokes" in structured:
+                    try:
+                        structured["strokes"] = int(structured["strokes"])
+                    except Exception:
+                        pass
+                self._send_json(200, structured)
+            else:
+                self._send_json(200, {"text": text or ""})
+
+        except requests.HTTPError as http_err:
+            detail = ""
+            if hasattr(http_err, 'response') and http_err.response:
+                try:
+                    detail = http_err.response.text
+                except Exception:
+                    pass
+            self._send_json(502, {"error": str(http_err), "detail": detail})
         except Exception as e:
-            self.send_response(500)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            error_response = json.dumps({"error": str(e)})
-            self.wfile.write(error_response.encode('utf-8'))
+            self._send_json(500, {"error": str(e), "trace": traceback.format_exc()})
+
+    def _send_json(self, status: int, payload: dict):
+        """Send JSON response with proper headers"""
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        response_body = json.dumps(payload, ensure_ascii=False)
+        self.wfile.write(response_body.encode("utf-8"))
