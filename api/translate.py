@@ -37,7 +37,16 @@ class handler(BaseHTTPRequestHandler):
 
             content_length = int(self.headers.get("Content-Length", 0))
             body_bytes = self.rfile.read(content_length)
-            body = json.loads(body_bytes.decode("utf-8")) if body_bytes else {}
+            # 尝试多种编码解码
+            body_str = ""
+            if body_bytes:
+                for encoding in ["utf-8", "latin-1", "gbk"]:
+                    try:
+                        body_str = body_bytes.decode(encoding)
+                        break
+                    except:
+                        continue
+            body = json.loads(body_str) if body_str else {}
 
             if not DASHSCOPE_API_KEY:
                 self._send_json(503, {"error": "API key not configured"})
