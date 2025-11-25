@@ -335,50 +335,25 @@
     const context = ctxInput.value;
     const word = wordInput.value;
 
-    console.log('=== 开始查询 ===');
-    console.log('上下文:', context);
-    console.log('查询词:', word);
-    console.log('模拟模式:', MOCK_MODE);
-
-    // 在页面上显示调试信息
-    resultText.textContent = `🔧 调试信息：开始查询 "${word}"...`;
-
     if (word !== ocrCache) { ocrCache = ''; }
     if (!word) {
-      resultText.textContent = '请输入要查询的字或词'
+      resultText.textContent = '请输入要查询的字或词';
       try { resultContainer.dataset.empty = 'true'; } catch (e) {}
       return;
     }
 
     setLoading(true);
-    submitButton.textContent = '查询中… / Querying…';
-    console.log('开始API请求...');
-
-    // 更新显示状态
-    resultText.textContent = `🔧 调试信息：正在${MOCK_MODE ? '模拟' : '真实'}模式下查询...`;
 
     try {
       let data;
 
       if (MOCK_MODE) {
-        // 使用模拟API
-        console.log('使用模拟模式进行查询');
-        resultText.textContent = '🔧 调试信息：使用模拟模式，等待1秒...';
         data = await mockTranslateAPI({
           context,
           word,
           useOcrResult: ocrCache === word
         });
-        console.log('模拟数据返回:', data);
-        resultText.textContent = '🔧 调试信息：模拟数据已返回，准备渲染...';
       } else {
-        // 使用真实API
-        console.log('使用真实API模式');
-        console.log('请求URL: /api/translate');
-        console.log('请求数据:', { context, word, useOcrResult: ocrCache === word });
-
-        resultText.textContent = '🔧 调试信息：发送API请求...';
-
         const response = await fetchApiJson('/api/translate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -389,60 +364,24 @@
           })
         });
 
-        console.log('API响应状态:', response.status);
-        console.log('API响应头:', response.headers);
-
-        resultText.textContent = `🔧 调试信息：收到API响应，状态码: ${response.status}`;
-
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('API错误响应:', errorText);
-          throw new Error(`翻译 API 出错了: ${response.status} - ${errorText}`);
+          throw new Error(`查询失败: ${response.status}`);
         }
 
-        resultText.textContent = '🔧 调试信息：正在解析API响应...';
         data = await response.json();
-        console.log('API返回数据:', data);
-        resultText.textContent = '🔧 调试信息：API数据解析完成，准备渲染...';
       }
-
-      console.log('准备渲染结果...');
-      console.log('数据类型:', typeof data);
-      console.log('数据内容:', JSON.stringify(data, null, 2));
-
-      resultText.textContent = '🔧 调试信息：开始渲染结果...';
 
       renderResult(data, { word, context });
       pushHistory({ word, context, data });
-      console.log('=== 查询完成 ===');
-
-      resultText.textContent = '🔧 调试信息：渲染完成！';
 
     } catch (err) {
-      console.error('=== 查询失败 ===');
-      console.error('错误详情:', err);
-      console.error('错误堆栈:', err.stack);
-
+      console.error('查询失败:', err);
       resultText.textContent = `❌ 查询失败：${err.message}`;
-
-      // 显示详细错误信息
       if (resultStructured) {
-        resultStructured.innerHTML = `
-          <div style="color: red; padding: 20px; border: 1px solid red; border-radius: 8px;">
-            <h3>调试信息 - 查询失败</h3>
-            <p><strong>错误:</strong> ${err.message}</p>
-            <p><strong>模式:</strong> ${MOCK_MODE ? '模拟模式' : '真实API模式'}</p>
-            <p><strong>查询词:</strong> "${word}"</p>
-            <p><strong>上下文:</strong> "${context}"</p>
-            <details>
-              <summary>详细错误信息</summary>
-              <pre>${err.stack}</pre>
-            </details>
-          </div>
-        `;
-        resultStructured.hidden = false;
+        resultStructured.innerHTML = '';
+        resultStructured.hidden = true;
       }
-
       try { resultContainer.dataset.empty = 'false'; } catch (e) {}
     } finally {
       setLoading(false);

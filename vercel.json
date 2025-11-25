@@ -23,10 +23,6 @@
   ],
   "routes": [
     {
-      "src": "/api/test",
-      "dest": "/api/test.py"
-    },
-    {
       "src": "/api/translate",
       "dest": "/api/translate.py"
     },
