@@ -139,10 +139,17 @@ class handler(BaseHTTPRequestHandler):
 
     def _extract_text_from_msg(self, resp_json):
         try:
-            content = resp_json["output"]["choices"][0]["message"]["content"]
-            if isinstance(content, list):
-                return "".join(p.get("text", "") for p in content if isinstance(p, dict))
-            return content or ""
+            output = resp_json.get("output", {})
+            # 优先尝试 output.text 格式
+            if "text" in output:
+                return output["text"] or ""
+            # 备用：尝试 output.choices[0].message.content 格式
+            if "choices" in output:
+                content = output["choices"][0]["message"]["content"]
+                if isinstance(content, list):
+                    return "".join(p.get("text", "") for p in content if isinstance(p, dict))
+                return content or ""
+            return ""
         except:
             return ""
 
