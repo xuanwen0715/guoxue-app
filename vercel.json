@@ -1,13 +1,4 @@
 {
-  "version": 2,
-  "name": "guoxue-app",
-  "functions": {
-    "api/*.py": {
-      "runtime": "python3.9",
-      "maxDuration": 60,
-      "memory": 1024
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
