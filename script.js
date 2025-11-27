@@ -422,7 +422,8 @@
     uploadStatus.textContent = bi('', '');
     if (ctxUploadStatus) ctxUploadStatus.textContent = bi('', '');
     // Reset result box
-    resultText.textContent = '查询结果将显示在这里...'
+    resultText.textContent = '查询结果将显示在这里...';
+    resultText.hidden = false;
     if (resultStructured) { resultStructured.innerHTML = ''; resultStructured.hidden = true; }
     resultContainer.setAttribute('aria-busy', 'false'); try { resultContainer.dataset.empty = 'true'; } catch (e) {}
     wordInput.focus();
@@ -484,13 +485,14 @@
 
       resultStructured.innerHTML = `${headerHtml}${readingHtml}${explainHtml}${sourcesHtml}${examplesHtml}`;
       resultStructured.hidden = false;
-      resultText.textContent = '查询结果将显示在这里...'
+      resultText.hidden = true;
       resultContainer.dataset.empty = 'false';
       
     } else {
       // Fallback: plain text with [b] support
       const text = String(data?.text || '（无内容）');
       resultText.innerHTML = toHtmlWithBB(text);
+      resultText.hidden = false;
       if (resultStructured) { resultStructured.innerHTML = ''; resultStructured.hidden = true; }
       resultContainer.dataset.empty = text.trim() ? 'false' : 'true';
       
