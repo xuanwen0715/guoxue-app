@@ -642,7 +642,7 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
   );
   border: 1px solid var(--border);
   border-radius: 16px;
-  min-height: 140px;
+  min-height: 60px;
   white-space: pre-wrap;
   word-break: break-word;
   line-break: strict;
@@ -1171,7 +1171,7 @@ body::before{
 .result-box.scroll-style {
   position: relative;
   margin-top: 24px;
-  padding: 32px 40px;
+  padding: 24px 32px;
   background: linear-gradient(135deg,
     #fffef8 0%,
     #f8f5f0 50%,
@@ -1179,7 +1179,7 @@ body::before{
   );
   border: 2px solid var(--border);
   border-radius: 4px;
-  min-height: 160px;
+  min-height: 80px;
   box-shadow:
     0 8px 32px var(--shadow),
     inset 0 0 60px rgba(212, 165, 116, 0.05);
