@@ -677,21 +677,7 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
   display: none !important;
 }
 
-/* Unified placeholder-style for empty result container */
-.result-box[data-empty="true"]::before{
-  content: "可直接粘贴文字，或粘贴/拖拽原文截图自动识别（例如：道可道，非常道……） / Paste text directly, or paste/drag a classical text screenshot to OCR (e.g., 道可道，非常道…)";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  width: calc(100% - 32px);
-  padding: 0 8px;
-  font-size: 17px;
-  line-height: 1.7;
-  color: color-mix(in oklab, var(--muted) 85%, transparent);
-  pointer-events: none;
-}
+/* 空状态不显示占位提示 - 提示已移至输入框 */
 .result-box[data-empty="true"] #result-text,
 .result-box[data-empty="true"] #result-structured{ display: none; }
 
