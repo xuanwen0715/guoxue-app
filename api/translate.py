@@ -190,8 +190,11 @@ class handler(BaseHTTPRequestHandler):
             '  "examples_zh": ["例句1", "例句2"],\n'
             '  "examples_en": ["Example1", "Example2"],\n'
             '  "variants": ["异体字1"],\n'
-            '  "evolution_zh": "字形演变",\n'
-            '  "evolution_en": "Evolution"\n'
+            '  "evolution_zh": "字形演变描述（从甲骨文到楷书的演变过程）",\n'
+            '  "evolution_en": "Evolution description",\n'
+            '  "glyph_oracle": "甲骨文字形描述（如有）",\n'
+            '  "glyph_bronze": "金文字形描述（如有）",\n'
+            '  "glyph_seal": "小篆字形描述（如有）"\n'
             "}\n"
             "只输出 JSON，不要其他内容。"
         )

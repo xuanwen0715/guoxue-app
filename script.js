@@ -521,8 +521,20 @@
       const examplesEn = Array.isArray(data.examples_en) ? data.examples_en : [];
 
       const headerHtml = term ? `<div class="result-header"><div class="term">${term}</div>${(pinyin || traditional || data.radical || data.strokes) ? `<div class="badges">${pinyin ? `<span class="badge"><span class="label">拼音</span><span class="value">${pinyin}</span></span>` : ''}${traditional ? `<span class="badge"><span class="label">繁体</span><span class="value">${traditional}</span></span>` : ''}${data.radical ? `<span class="badge"><span class="label">部首</span><span class="value">${escapeHtml(String(data.radical))}</span></span>` : ''}${(data.strokes||data.strokes===0) ? `<span class="badge"><span class="label">笔画</span><span class="value">${escapeHtml(String(data.strokes))}</span></span>` : ''}</div>` : ''}</div>` : '';
-      const readingHtml = (pinyin || traditional || data.radical || data.strokes || (Array.isArray(data.variants) && data.variants.length) || data.evolution_zh || data.evolution_en)
-        ? `<div class="result-section" data-kind="reading"><h3>读音与字形 · Pronunciation & Glyphs</h3><div class="grid-2">${pinyin ? `<div class="column"><h4>拼音</h4><div class="para">${pinyin}</div></div>` : ''}${traditional ? `<div class="column"><h4>繁体</h4><div class="para">${traditional}</div></div>` : ''}${data.radical ? `<div class="column"><h4>部首 · Radical</h4><div class="para">${escapeHtml(String(data.radical))}</div></div>` : ''}${data.strokes ? `<div class="column"><h4>笔画 · Strokes</h4><div class="para">${escapeHtml(String(data.strokes))}</div></div>` : ''}${(Array.isArray(data.variants) && data.variants.length) ? `<div class="column"><h4>异体 · Variants</h4><div class="chips">${data.variants.map(v=>`<span class="chip" role="button" tabindex="0">${escapeHtml(String(v))}</span>`).join('')}</div></div>` : ''}${data.evolution_zh ? `<div class="column"><h4>字形演变</h4><div class="para">${toHtmlWithBB(String(data.evolution_zh))}</div></div>` : ''}${data.evolution_en ? `<div class="column"><h4>Evolution</h4><div class="para">${toHtmlWithBB(String(data.evolution_en))}</div></div>` : ''}</div></div>`
+      // 构建古字形显示区域
+      const glyphOracle = data.glyph_oracle || '';
+      const glyphBronze = data.glyph_bronze || '';
+      const glyphSeal = data.glyph_seal || '';
+      const hasGlyphs = glyphOracle || glyphBronze || glyphSeal || data.evolution_zh || data.evolution_en;
+
+      // 生成 hanziyuan.net 链接（用于查看真实古字形图片）
+      const firstChar = (data.term || ctx?.word || '').charAt(0);
+      const etymologyUrl = firstChar ? `https://hanziyuan.net/#${encodeURIComponent(firstChar)}` : '';
+
+      const glyphsHtml = hasGlyphs ? `<div class="result-section" data-kind="glyphs"><h3>字形演变 · Character Evolution</h3><div class="glyph-cards">${glyphOracle ? `<div class="glyph-card"><div class="glyph-label">甲骨文<span class="glyph-en">Oracle</span></div><div class="glyph-desc">${toHtmlWithBB(String(glyphOracle))}</div></div>` : ''}${glyphBronze ? `<div class="glyph-card"><div class="glyph-label">金文<span class="glyph-en">Bronze</span></div><div class="glyph-desc">${toHtmlWithBB(String(glyphBronze))}</div></div>` : ''}${glyphSeal ? `<div class="glyph-card"><div class="glyph-label">小篆<span class="glyph-en">Seal</span></div><div class="glyph-desc">${toHtmlWithBB(String(glyphSeal))}</div></div>` : ''}</div>${data.evolution_zh ? `<div class="evolution-summary"><div class="para">${toHtmlWithBB(String(data.evolution_zh))}</div></div>` : ''}${etymologyUrl ? `<div class="glyph-link"><a href="${etymologyUrl}" target="_blank" rel="noopener noreferrer" class="btn-etymology">🔍 查看「${escapeHtml(firstChar)}」古字形图片 · View Ancient Glyphs</a></div>` : ''}</div>` : '';
+
+      const readingHtml = (pinyin || traditional || data.radical || data.strokes || (Array.isArray(data.variants) && data.variants.length))
+        ? `<div class="result-section" data-kind="reading"><h3>读音与字形 · Pronunciation & Glyphs</h3><div class="grid-2">${pinyin ? `<div class="column"><h4>拼音</h4><div class="para">${pinyin}</div></div>` : ''}${traditional ? `<div class="column"><h4>繁体</h4><div class="para">${traditional}</div></div>` : ''}${data.radical ? `<div class="column"><h4>部首 · Radical</h4><div class="para">${escapeHtml(String(data.radical))}</div></div>` : ''}${data.strokes ? `<div class="column"><h4>笔画 · Strokes</h4><div class="para">${escapeHtml(String(data.strokes))}</div></div>` : ''}${(Array.isArray(data.variants) && data.variants.length) ? `<div class="column"><h4>异体 · Variants</h4><div class="chips">${data.variants.map(v=>`<span class="chip" role="button" tabindex="0">${escapeHtml(String(v))}</span>`).join('')}</div></div>` : ''}</div></div>`
         : '';
 
       const expZhCol = exZh ? `<div class="column"><h4>释义</h4><div class="para">${exZh}</div></div>` : '';
@@ -537,7 +549,7 @@
       const exsEn = examplesEn.length ? `<div class="column"><h4>Examples</h4><ul>${examplesEn.map(s=>`<li>${toHtmlWithBB(String(s))}</li>`).join('')}</ul></div>` : '';
       const examplesHtml = (exsZh || exsEn) ? `<div class="result-section" data-kind="examples"><div class="grid-2">${exsZh}${exsEn}</div></div>` : '';
 
-      resultStructured.innerHTML = `${headerHtml}${readingHtml}${explainHtml}${sourcesHtml}${examplesHtml}`;
+      resultStructured.innerHTML = `${headerHtml}${readingHtml}${glyphsHtml}${explainHtml}${sourcesHtml}${examplesHtml}`;
       resultStructured.hidden = false;
       resultText.hidden = true;
       resultContainer.dataset.empty = 'false';

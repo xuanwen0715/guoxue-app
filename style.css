@@ -1765,8 +1765,154 @@ body::before{
   opacity: 0.7;
 }
 
+/* ===== 古字形演变卡片 ===== */
+.glyph-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.glyph-card {
+  background: linear-gradient(135deg,
+    rgba(255, 254, 248, 0.95) 0%,
+    rgba(248, 245, 240, 0.9) 100%
+  );
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.glyph-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow);
+  border-color: var(--secondary);
+}
+
+.glyph-label {
+  font-family: var(--font-calligraphy);
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.glyph-label .glyph-en {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.glyph-desc {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.evolution-summary {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(248, 245, 240, 0.5);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+.evolution-summary .para {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.glyph-link {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.btn-etymology {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg,
+    rgba(107, 91, 138, 0.1) 0%,
+    rgba(139, 123, 170, 0.15) 100%
+  );
+  border: 1px solid var(--secondary);
+  border-radius: 20px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-etymology:hover {
+  background: linear-gradient(135deg,
+    rgba(107, 91, 138, 0.2) 0%,
+    rgba(139, 123, 170, 0.25) 100%
+  );
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(107, 91, 138, 0.2);
+}
+
+/* 深色模式古字形卡片 */
+@media (prefers-color-scheme: dark) {
+  .glyph-card {
+    background: linear-gradient(135deg,
+      rgba(37, 32, 24, 0.95) 0%,
+      rgba(26, 21, 16, 0.9) 100%
+    );
+  }
+
+  .evolution-summary {
+    background: rgba(37, 32, 24, 0.5);
+  }
+
+  .btn-etymology {
+    background: linear-gradient(135deg,
+      rgba(184, 168, 216, 0.15) 0%,
+      rgba(200, 184, 232, 0.2) 100%
+    );
+    color: var(--gold);
+    border-color: var(--secondary);
+  }
+
+  .btn-etymology:hover {
+    background: linear-gradient(135deg,
+      rgba(184, 168, 216, 0.25) 0%,
+      rgba(200, 184, 232, 0.3) 100%
+    );
+  }
+}
+
 /* ===== 移动端历史区域优化 ===== */
 @media (max-width: 640px) {
+  .glyph-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .glyph-card {
+    padding: 12px;
+  }
+
+  .glyph-label {
+    font-size: 16px;
+  }
+
+  .btn-etymology {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
   .history-card {
     padding: 16px;
     border-radius: 12px;
