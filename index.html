@@ -48,13 +48,17 @@
             <span class="label-icon">卷</span>
             古文原文 / Classical Text
         </label>
-        <div class="context-drop" id="context-drop-zone" aria-label="粘贴/拖拽原文截图或点击上传">
-            <div class="context-tools inside">
+        <div class="context-drop upload-zone" id="context-drop-zone" aria-label="粘贴/拖拽原文截图或点击上传">
+            <textarea id="context-input" class="field" placeholder="粘贴文字或截图，支持拖拽上传" spellcheck="false"></textarea>
+            <div class="upload-tools">
                 <input type="file" id="context-image-uploader" accept="image/*" hidden>
-                <button id="context-upload-button" class="btn btn-secondary icon-btn" type="button" aria-controls="context-image-uploader" aria-label="上传原文截图" title="上传原文截图"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg><span class="spinner" aria-hidden="true"></span><span class="sr-only">上传原文截图</span></button>
+                <button id="context-upload-button" class="btn-upload" type="button" aria-label="上传原文截图" title="上传原文截图">
+                    <svg class="upload-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg>
+                    <span class="upload-text">识别截图</span>
+                    <span class="spinner" aria-hidden="true"></span>
+                </button>
                 <span id="context-upload-status" class="upload-status" aria-live="polite"></span>
             </div>
-            <textarea id="context-input" class="field" placeholder="可直接粘贴文字，或粘贴/拖拽原文截图自动识别（例如：道可道，非常道……）" spellcheck="false"></textarea>
         </div>
 
         <div class="inline-fields">
@@ -63,12 +67,19 @@
                     <span class="label-icon">字</span>
                     字/词查询 / Character · Word
                 </label>
-                <input type="text" id="word-input" class="field" inputmode="text" placeholder="输入字或词（例如：道、无为、仁义） / Enter a character or word (e.g., 道, 无为, 仁义)" aria-describedby="word-hint">
-                <div id="word-hint" class="help">支持多字/生僻字；按 Enter 快速查询 · Supports multiple/rare characters; press Enter</div>
+                <input type="text" id="word-input" class="field" inputmode="text" placeholder="输入字或词（例如：道、无为、仁义）" aria-describedby="word-hint">
+                <div id="word-hint" class="help">支持多字/生僻字；按 Enter 快速查询</div>
             </div>
-            <div class="uploader-wrapper" id="drop-zone" aria-label="拖拽图片到此处或点击上传">
-                <span class="uploader-hint">上传生僻字截图 · Upload rare‑character screenshot</span><input type="file" id="image-uploader" accept="image/*" hidden>
-                <button id="upload-button" class="btn btn-secondary icon-btn" type="button" aria-controls="image-uploader" aria-label="上传生僻字截图" title="上传生僻字截图"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg><span class="spinner" aria-hidden="true"></span><span class="sr-only">上传生僻字截图</span></button>
+            <div class="upload-zone" id="drop-zone" aria-label="拖拽图片到此处或点击上传">
+                <div class="upload-zone-content">
+                    <span class="upload-hint">生僻字？上传截图识别</span>
+                    <input type="file" id="image-uploader" accept="image/*" hidden>
+                    <button id="upload-button" class="btn-upload" type="button" aria-label="上传生僻字截图" title="上传生僻字截图">
+                        <svg class="upload-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg>
+                        <span class="upload-text">上传截图</span>
+                        <span class="spinner" aria-hidden="true"></span>
+                    </button>
+                </div>
                 <span id="upload-status" class="upload-status" aria-live="polite"></span>
             </div>
         </div>

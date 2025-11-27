@@ -1765,6 +1765,207 @@ body::before{
   opacity: 0.7;
 }
 
+/* ===== 统一上传区域样式 ===== */
+.upload-zone {
+  position: relative;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: linear-gradient(135deg,
+    rgba(255, 254, 248, 0.6) 0%,
+    rgba(248, 245, 240, 0.4) 100%
+  );
+  transition: all 0.3s ease;
+}
+
+.upload-zone.dragover {
+  border-color: var(--accent);
+  border-style: solid;
+  background: linear-gradient(135deg,
+    rgba(107, 91, 138, 0.08) 0%,
+    rgba(139, 123, 170, 0.05) 100%
+  );
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* 古文原文上传区域 */
+.context-drop.upload-zone {
+  border: none;
+  background: transparent;
+}
+
+.context-drop.upload-zone .field {
+  padding-bottom: 50px;
+}
+
+.upload-tools {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+/* 生僻字上传区域 */
+#drop-zone.upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  min-height: 100px;
+}
+
+.upload-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.upload-hint {
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* 统一上传按钮样式 */
+.btn-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg,
+    rgba(107, 91, 138, 0.12) 0%,
+    rgba(139, 123, 170, 0.08) 100%
+  );
+  border: 1px solid var(--secondary);
+  border-radius: 20px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-upload:hover {
+  background: linear-gradient(135deg,
+    rgba(107, 91, 138, 0.2) 0%,
+    rgba(139, 123, 170, 0.15) 100%
+  );
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(107, 91, 138, 0.15);
+}
+
+.btn-upload:active {
+  transform: translateY(0);
+}
+
+.btn-upload:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.btn-upload .upload-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.btn-upload .upload-text {
+  font-weight: 500;
+}
+
+.btn-upload .spinner {
+  display: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.btn-upload.loading .upload-icon,
+.btn-upload.loading .upload-text {
+  display: none;
+}
+
+.btn-upload.loading .spinner {
+  display: inline-block;
+}
+
+/* 上传状态文字 */
+.upload-status {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-serif);
+}
+
+/* 深色模式上传区域 */
+@media (prefers-color-scheme: dark) {
+  .upload-zone {
+    background: linear-gradient(135deg,
+      rgba(37, 32, 24, 0.6) 0%,
+      rgba(26, 21, 16, 0.4) 100%
+    );
+  }
+
+  .upload-zone.dragover {
+    background: linear-gradient(135deg,
+      rgba(184, 168, 216, 0.1) 0%,
+      rgba(200, 184, 232, 0.08) 100%
+    );
+  }
+
+  .btn-upload {
+    background: linear-gradient(135deg,
+      rgba(184, 168, 216, 0.15) 0%,
+      rgba(200, 184, 232, 0.1) 100%
+    );
+    color: var(--gold);
+    border-color: var(--secondary);
+  }
+
+  .btn-upload:hover {
+    background: linear-gradient(135deg,
+      rgba(184, 168, 216, 0.25) 0%,
+      rgba(200, 184, 232, 0.2) 100%
+    );
+  }
+}
+
+/* 移动端上传区域优化 */
+@media (max-width: 640px) {
+  .upload-tools {
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .btn-upload {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .btn-upload .upload-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  #drop-zone.upload-zone {
+    padding: 16px 12px;
+    min-height: 80px;
+  }
+
+  .upload-hint {
+    font-size: 13px;
+  }
+}
+
 /* ===== 古字形演变卡片 ===== */
 .glyph-cards {
   display: grid;
