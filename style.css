@@ -1353,14 +1353,15 @@ body::before{
 /* ===== 国风主按钮优化 ===== */
 .btn-primary {
   background: linear-gradient(135deg,
-    #5c3317 0%,      /* 深褐 */
-    #8b4513 30%,     /* 赭石 */
-    #a0522d 70%,     /* 棕色 */
-    #c4a574 100%     /* 古铜 */
+    #6b5b8a 0%,      /* 暗紫 */
+    #8b7baa 25%,     /* 淡紫 */
+    #9d8dc0 50%,     /* 藤紫 */
+    #b8a8d8 75%,     /* 浅紫 */
+    #c8b8e8 100%     /* 淡藤色 */
   );
   color: #fffef8;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   padding: 14px 36px;
   font-family: var(--font-serif);
   font-size: 16px;
@@ -1369,23 +1370,24 @@ body::before{
   position: relative;
   overflow: hidden;
   box-shadow:
-    0 8px 24px rgba(92, 51, 23, 0.3),
-    0 4px 12px rgba(92, 51, 23, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 8px 24px rgba(107, 91, 138, 0.35),
+    0 4px 12px rgba(139, 123, 170, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .btn-primary:hover {
   background: linear-gradient(135deg,
-    #4a2810 0%,
-    #7a3a0f 30%,
-    #8b4513 70%,
-    #b8956a 100%
+    #5a4a79 0%,
+    #7a6a99 25%,
+    #8d7db0 50%,
+    #a898c8 75%,
+    #b8a8d8 100%
   );
   box-shadow:
-    0 12px 32px rgba(92, 51, 23, 0.4),
-    0 6px 16px rgba(92, 51, 23, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 12px 32px rgba(107, 91, 138, 0.45),
+    0 6px 16px rgba(139, 123, 170, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
