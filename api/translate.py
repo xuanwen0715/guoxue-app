@@ -32,12 +32,10 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
-            # 导入 requests（延迟导入以便调试）
             import requests
 
             content_length = int(self.headers.get("Content-Length", 0))
             body_bytes = self.rfile.read(content_length)
-            # 尝试多种编码解码
             body_str = ""
             if body_bytes:
                 for encoding in ["utf-8", "latin-1", "gbk"]:
@@ -55,12 +53,12 @@ class handler(BaseHTTPRequestHandler):
             context = body.get("context", "").strip()
             term = body.get("word", "").strip()
             use_ocr = body.get("use_ocr", False)
+            stream = body.get("stream", False)
 
             if not term:
                 self._send_json(400, {"error": "Missing field: word"})
                 return
 
-            # 调用阿里云 DashScope API
             DASHSCOPE_TXT_URL = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
             DEFAULT_TEXT_MODEL = os.environ.get("DASHSCOPE_TEXT_MODEL", "qwen-max")
 
@@ -70,44 +68,107 @@ class handler(BaseHTTPRequestHandler):
             }
 
             user_prompt = self._build_prompt(context, term, use_ocr)
-            payload = {
-                "model": DEFAULT_TEXT_MODEL,
-                "input": {
-                    "messages": [
-                        {"role": "system", "content": [{"text": "你是严谨的国学学者。"}]},
-                        {"role": "user", "content": [{"text": user_prompt}]},
-                    ]
-                },
-            }
 
-            resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=60)
-            resp.raise_for_status()
-            data = resp.json()
+            if stream:
+                # 流式输出模式
+                headers["Accept"] = "text/event-stream"
+                payload = {
+                    "model": DEFAULT_TEXT_MODEL,
+                    "input": {
+                        "messages": [
+                            {"role": "system", "content": [{"text": "你是严谨的国学学者。"}]},
+                            {"role": "user", "content": [{"text": user_prompt}]},
+                        ]
+                    },
+                    "parameters": {
+                        "incremental_output": True
+                    }
+                }
 
-            # 调试：返回原始 API 响应
-            if not data:
-                self._send_json(200, {"debug": "API returned empty", "raw": str(data)})
-                return
+                self.send_response(200)
+                self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Cache-Control", "no-cache")
+                self.send_header("Connection", "keep-alive")
+                self.end_headers()
 
-            text = self._extract_text_from_msg(data)
+                full_text = ""
+                try:
+                    resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=120, stream=True)
+                    resp.raise_for_status()
 
-            # 如果提取失败，返回原始数据用于调试
-            if not text:
-                self._send_json(200, {"debug": "extract failed", "raw_response": data})
-                return
+                    for line in resp.iter_lines():
+                        if line:
+                            line_str = line.decode('utf-8')
+                            if line_str.startswith('data:'):
+                                data_str = line_str[5:].strip()
+                                if data_str:
+                                    try:
+                                        chunk_data = json.loads(data_str)
+                                        chunk_text = self._extract_text_from_msg(chunk_data)
+                                        if chunk_text:
+                                            full_text += chunk_text
+                                            # 发送增量文本
+                                            event_data = json.dumps({"chunk": chunk_text, "full": full_text}, ensure_ascii=False)
+                                            self.wfile.write(f"data: {event_data}\n\n".encode('utf-8'))
+                                            self.wfile.flush()
+                                    except json.JSONDecodeError:
+                                        pass
 
-            # 尝试解析 JSON
-            structured = None
-            try:
-                structured = json.loads(text)
-            except:
-                pass
+                    # 发送完成事件，尝试解析完整 JSON
+                    structured = None
+                    try:
+                        structured = json.loads(full_text)
+                        if isinstance(structured, dict):
+                            self._normalize_response(structured)
+                    except:
+                        structured = {"text": full_text}
 
-            if isinstance(structured, dict):
-                self._normalize_response(structured)
-                self._send_json(200, structured)
+                    done_data = json.dumps({"done": True, "result": structured}, ensure_ascii=False)
+                    self.wfile.write(f"data: {done_data}\n\n".encode('utf-8'))
+                    self.wfile.flush()
+
+                except Exception as e:
+                    error_data = json.dumps({"error": str(e)}, ensure_ascii=False)
+                    self.wfile.write(f"data: {error_data}\n\n".encode('utf-8'))
+                    self.wfile.flush()
             else:
-                self._send_json(200, {"text": text})
+                # 非流式模式（保持原有逻辑）
+                payload = {
+                    "model": DEFAULT_TEXT_MODEL,
+                    "input": {
+                        "messages": [
+                            {"role": "system", "content": [{"text": "你是严谨的国学学者。"}]},
+                            {"role": "user", "content": [{"text": user_prompt}]},
+                        ]
+                    },
+                }
+
+                resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=60)
+                resp.raise_for_status()
+                data = resp.json()
+
+                if not data:
+                    self._send_json(200, {"debug": "API returned empty", "raw": str(data)})
+                    return
+
+                text = self._extract_text_from_msg(data)
+
+                if not text:
+                    self._send_json(200, {"debug": "extract failed", "raw_response": data})
+                    return
+
+                structured = None
+                try:
+                    structured = json.loads(text)
+                except:
+                    pass
+
+                if isinstance(structured, dict):
+                    self._normalize_response(structured)
+                    self._send_json(200, structured)
+                else:
+                    self._send_json(200, {"text": text})
 
         except Exception as e:
             import traceback
@@ -140,10 +201,8 @@ class handler(BaseHTTPRequestHandler):
     def _extract_text_from_msg(self, resp_json):
         try:
             output = resp_json.get("output", {})
-            # 优先尝试 output.text 格式
             if "text" in output:
                 return output["text"] or ""
-            # 备用：尝试 output.choices[0].message.content 格式
             if "choices" in output:
                 content = output["choices"][0]["message"]["content"]
                 if isinstance(content, list):

@@ -324,11 +324,26 @@
   importHistoryBtn?.addEventListener('click', () => importHistoryInput?.click());
   importHistoryInput?.addEventListener('change', handleImportHistory);
 
-  function setLoading(loading) {
+  function setLoading(loading, streaming = false) {
     resultContainer.setAttribute('aria-busy', String(!!loading));
     submitButton.disabled = !!loading;
     submitButton.classList.toggle('loading', !!loading);
-    submitButton.textContent = loading ? '查询中…' : 'AI 智能查询';
+    if (streaming) {
+      submitButton.textContent = '正在输出…';
+    } else {
+      submitButton.textContent = loading ? '查询中…' : 'AI 智能查询';
+    }
+  }
+
+  // 显示流式输出的原始文本
+  function showStreamingText(text) {
+    resultText.innerHTML = text + '<span class="streaming-cursor">|</span>';
+    resultText.hidden = false;
+    if (resultStructured) {
+      resultStructured.innerHTML = '';
+      resultStructured.hidden = true;
+    }
+    resultContainer.dataset.empty = 'false';
   }
 
   async function handleSubmit() {
@@ -353,27 +368,77 @@
           word,
           useOcrResult: ocrCache === word
         });
+        renderResult(data, { word, context });
+        pushHistory({ word, context, data });
       } else {
-        const response = await fetchApiJson('/api/translate', {
+        // 使用流式输出
+        const response = await fetch('/api/translate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             context,
             word,
-            useOcrResult: ocrCache === word
+            useOcrResult: ocrCache === word,
+            stream: true
           })
         });
 
         if (!response.ok) {
-          const errorText = await response.text();
           throw new Error(`查询失败: ${response.status}`);
         }
 
-        data = await response.json();
-      }
+        // 检查是否是流式响应
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('text/event-stream')) {
+          // 处理 SSE 流式响应
+          setLoading(true, true);
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
 
-      renderResult(data, { word, context });
-      pushHistory({ word, context, data });
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                const dataStr = line.slice(6).trim();
+                if (dataStr) {
+                  try {
+                    const eventData = JSON.parse(dataStr);
+                    if (eventData.error) {
+                      throw new Error(eventData.error);
+                    }
+                    if (eventData.full) {
+                      // 显示流式文本
+                      showStreamingText(eventData.full);
+                    }
+                    if (eventData.done && eventData.result) {
+                      // 完成，渲染结构化结果
+                      data = eventData.result;
+                      renderResult(data, { word, context });
+                      pushHistory({ word, context, data });
+                    }
+                  } catch (e) {
+                    if (e.message !== 'Unexpected end of JSON input') {
+                      console.error('Parse error:', e);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          // 非流式响应，使用原有逻辑
+          data = await response.json();
+          renderResult(data, { word, context });
+          pushHistory({ word, context, data });
+        }
+      }
 
     } catch (err) {
       console.error('查询失败:', err);

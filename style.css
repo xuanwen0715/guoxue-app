@@ -686,6 +686,28 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
   padding: 20px 0;
 }
 
+/* 流式输出打字机光标效果 */
+.streaming-cursor {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: bold;
+  animation: cursor-blink 0.8s ease-in-out infinite;
+  margin-left: 2px;
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* 流式输出时的文本样式 */
+#result-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-serif);
+  line-height: 1.8;
+}
+
 /* Title subtle plum glow (above background, below text) */
 .header::after{
   content: "";
