@@ -95,9 +95,9 @@ body {
 body::after, html::after{ content: none; background: none; }
 
 .container {
-  max-width: 920px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 28px 16px 64px;
+  padding: 28px 20px 64px;
   position: relative;
   z-index: 1; /* keep content above decorative phoenix */
 }
@@ -677,9 +677,14 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
   display: none !important;
 }
 
-/* 空状态不显示占位提示 - 提示已移至输入框 */
-.result-box[data-empty="true"] #result-text,
+/* 空状态时隐藏结构化结果，但显示默认提示文字 */
 .result-box[data-empty="true"] #result-structured{ display: none; }
+.result-box[data-empty="true"] #result-text {
+  display: block;
+  text-align: center;
+  color: var(--muted);
+  padding: 20px 0;
+}
 
 /* Title subtle plum glow (above background, below text) */
 .header::after{
@@ -763,7 +768,7 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
 .result-box b { font-weight: 800; color: color-mix(in oklab, var(--text) 92%, var(--ink)); }
 
 /* === 历史区域 === */
-.history { max-width: 920px; margin: 0 auto 64px; padding: 0 16px; }
+.history { max-width: 1000px; margin: 0 auto 64px; padding: 0 20px; }
 .history-header { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; margin-bottom: 10px; }
 .history-title { margin: 0; font-size: 16px; color: var(--muted); font-weight: 600; }
 .history-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
@@ -1137,8 +1142,8 @@ body::before{
   align-items: center;
   justify-content: center;
   margin: 40px auto 30px;
-  max-width: 920px;
-  padding: 0 16px;
+  max-width: 1000px;
+  padding: 0 20px;
 }
 
 .history-divider::before,
@@ -1452,9 +1457,9 @@ body::before{
 
 /* ===== 历史记录区域 - 古典卡片风格 ===== */
 .history {
-  max-width: 920px;
+  max-width: 1000px;
   margin: 0 auto 40px;
-  padding: 0 16px;
+  padding: 0 20px;
 }
 
 .history-card {
