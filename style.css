@@ -635,14 +635,14 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
 /* 国风雅致结果框 */
 .result-box {
   margin-top: 24px;
-  padding: 24px;
+  padding: 16px 20px;
   background: linear-gradient(135deg,
     rgba(255, 255, 255, 0.95) 0%,
     rgba(248, 250, 252, 0.9) 100%
   );
   border: 1px solid var(--border);
   border-radius: 16px;
-  min-height: 60px;
+  min-height: auto;
   white-space: pre-wrap;
   word-break: break-word;
   line-break: strict;
@@ -1177,7 +1177,7 @@ body::before{
 .result-box.scroll-style {
   position: relative;
   margin-top: 24px;
-  padding: 20px 28px;
+  padding: 16px 20px;
   background: linear-gradient(135deg,
     #fffef8 0%,
     #f8f5f0 50%,
@@ -1195,39 +1195,40 @@ body::before{
 /* 卷轴装饰角 */
 .scroll-corner {
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border: 2px solid var(--secondary);
-  opacity: 0.6;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .scroll-corner.top-left {
-  top: 8px;
-  left: 8px;
+  top: 4px;
+  left: 4px;
   border-right: none;
   border-bottom: none;
   border-radius: 4px 0 0 0;
 }
 
 .scroll-corner.top-right {
-  top: 8px;
-  right: 8px;
+  top: 4px;
+  right: 4px;
   border-left: none;
   border-bottom: none;
   border-radius: 0 4px 0 0;
 }
 
 .scroll-corner.bottom-left {
-  bottom: 8px;
-  left: 8px;
+  bottom: 4px;
+  left: 4px;
   border-right: none;
   border-top: none;
   border-radius: 0 0 0 4px;
 }
 
 .scroll-corner.bottom-right {
-  bottom: 8px;
-  right: 8px;
+  bottom: 4px;
+  right: 4px;
   border-left: none;
   border-top: none;
   border-radius: 0 0 4px 0;
