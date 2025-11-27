@@ -672,7 +672,8 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
 .result-box p { margin: 0; }
 
 /* 隐藏的结果文本不占空间 */
-#result-text[hidden] {
+#result-text[hidden],
+#result-structured[hidden] {
   display: none !important;
 }
 
