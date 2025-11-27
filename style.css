@@ -1787,34 +1787,19 @@ body::before{
   box-shadow: 0 0 0 3px var(--ring);
 }
 
-/* 古文原文上传区域 */
-.context-drop.upload-zone {
-  border: none;
-  background: transparent;
+/* 古文原文上传区域 - 独立卡片 */
+#context-upload-zone {
+  margin-top: 12px;
 }
 
-.context-drop.upload-zone .field {
-  padding-bottom: 50px;
-}
-
-.upload-tools {
-  position: absolute;
-  bottom: 10px;
-  right: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 10;
-}
-
-/* 生僻字上传区域 */
-#drop-zone.upload-zone {
+/* 统一上传卡片布局 */
+.upload-zone {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px 16px;
-  min-height: 100px;
+  min-height: 90px;
 }
 
 .upload-zone-content {

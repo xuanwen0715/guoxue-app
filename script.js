@@ -154,7 +154,7 @@
     await handleContextOCR(file);
   });
 
-  // Drag & drop on the context drop zone
+  // Drag & drop on the context drop zone (textarea area)
   ['dragenter','dragover'].forEach(t => ctxDropZone?.addEventListener(t, (e) => {
     e.preventDefault(); e.stopPropagation();
     ctxDropZone.classList.add('dragover');
@@ -164,6 +164,23 @@
     ctxDropZone.classList.remove('dragover');
   }));
   ctxDropZone?.addEventListener('drop', async (e) => {
+    const files = e.dataTransfer?.files;
+    if (files && files.length) {
+      await handleContextOCR(files[0]);
+    }
+  });
+
+  // Drag & drop on the context upload zone (new card)
+  const ctxUploadZone = document.getElementById('context-upload-zone');
+  ['dragenter','dragover'].forEach(t => ctxUploadZone?.addEventListener(t, (e) => {
+    e.preventDefault(); e.stopPropagation();
+    ctxUploadZone.classList.add('dragover');
+  }));
+  ['dragleave','drop'].forEach(t => ctxUploadZone?.addEventListener(t, (e) => {
+    e.preventDefault(); e.stopPropagation();
+    ctxUploadZone.classList.remove('dragover');
+  }));
+  ctxUploadZone?.addEventListener('drop', async (e) => {
     const files = e.dataTransfer?.files;
     if (files && files.length) {
       await handleContextOCR(files[0]);

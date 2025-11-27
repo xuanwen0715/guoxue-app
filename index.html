@@ -48,17 +48,20 @@
             <span class="label-icon">卷</span>
             古文原文 / Classical Text
         </label>
-        <div class="context-drop upload-zone" id="context-drop-zone" aria-label="粘贴/拖拽原文截图或点击上传">
-            <textarea id="context-input" class="field" placeholder="粘贴文字或截图，支持拖拽上传" spellcheck="false"></textarea>
-            <div class="upload-tools">
+        <div class="context-drop" id="context-drop-zone" aria-label="粘贴/拖拽原文截图或点击上传">
+            <textarea id="context-input" class="field" placeholder="粘贴古文原文，或输入需要查询的上下文..." spellcheck="false"></textarea>
+        </div>
+        <div class="upload-zone" id="context-upload-zone">
+            <div class="upload-zone-content">
+                <span class="upload-hint">有古文截图？上传自动识别</span>
                 <input type="file" id="context-image-uploader" accept="image/*" hidden>
                 <button id="context-upload-button" class="btn-upload" type="button" aria-label="上传原文截图" title="上传原文截图">
                     <svg class="upload-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg>
-                    <span class="upload-text">识别截图</span>
+                    <span class="upload-text">识别原文截图</span>
                     <span class="spinner" aria-hidden="true"></span>
                 </button>
-                <span id="context-upload-status" class="upload-status" aria-live="polite"></span>
             </div>
+            <span id="context-upload-status" class="upload-status" aria-live="polite"></span>
         </div>
 
         <div class="inline-fields">
