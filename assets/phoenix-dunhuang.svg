@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" fill="none">
+  <defs>
+    <!-- 渐变定义 -->
+    <linearGradient id="redGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e63946"/>
+      <stop offset="50%" stop-color="#ff6b35"/>
+      <stop offset="100%" stop-color="#f7b801"/>
+    </linearGradient>
+    <linearGradient id="orangeYellow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff6b35"/>
+      <stop offset="100%" stop-color="#ffd60a"/>
+    </linearGradient>
+    <linearGradient id="bluePurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4361ee"/>
+      <stop offset="50%" stop-color="#7209b7"/>
+      <stop offset="100%" stop-color="#3a0ca3"/>
+    </linearGradient>
+    <linearGradient id="tealBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06d6a0"/>
+      <stop offset="100%" stop-color="#118ab2"/>
+    </linearGradient>
+    <linearGradient id="fireGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ffd60a"/>
+      <stop offset="40%" stop-color="#ff6b35"/>
+      <stop offset="100%" stop-color="#e63946"/>
+    </linearGradient>
+
+    <!-- 羽毛纹理 -->
+    <pattern id="featherPattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0 4 Q2 2 4 4 Q6 6 8 4" stroke="rgba(255,255,255,0.3)" stroke-width="0.5" fill="none"/>
+    </pattern>
+  </defs>
+
+  <!-- 凤凰主体 -->
+  <g transform="translate(50, 30)">
+
+    <!-- 火焰尾羽装饰 - 左侧飘逸 -->
+    <g opacity="0.9">
+      <path d="M120 380 Q80 420 60 480 Q40 520 70 540 Q90 500 100 460 Q110 420 130 390"
+            fill="url(#orangeYellow)" opacity="0.8"/>
+      <path d="M140 400 Q100 450 90 510 Q80 560 120 570 Q130 520 140 470 Q150 430 160 400"
+            fill="url(#fireGrad)" opacity="0.7"/>
+      <path d="M100 360 Q50 400 30 460 Q10 510 50 530 Q70 480 90 430 Q110 380 120 360"
+            fill="#ffd60a" opacity="0.6"/>
+    </g>
+
+    <!-- 长尾羽 - 主羽毛 -->
+    <path d="M200 280
+             Q180 350 160 420
+             Q140 490 180 560
+             Q220 520 200 450
+             Q190 380 220 320
+             Q240 280 200 280"
+          fill="url(#redGold)"/>
+
+    <!-- 尾羽蓝紫色装饰 -->
+    <path d="M220 300
+             Q200 380 190 450
+             Q180 520 230 580
+             Q260 530 240 460
+             Q230 390 250 320
+             Q270 280 220 300"
+          fill="url(#bluePurple)" opacity="0.85"/>
+
+    <!-- 尾羽青色羽毛 -->
+    <path d="M240 320
+             Q230 400 220 470
+             Q210 540 270 590
+             Q300 540 280 470
+             Q260 400 280 330
+             Q290 290 240 320"
+          fill="url(#tealBlue)" opacity="0.8"/>
+
+    <!-- 孔雀眼纹装饰 -->
+    <ellipse cx="230" cy="550" rx="25" ry="35" fill="#1a1a2e"/>
+    <ellipse cx="230" cy="550" rx="18" ry="26" fill="#16213e"/>
+    <ellipse cx="230" cy="548" rx="12" ry="18" fill="url(#tealBlue)"/>
+    <ellipse cx="230" cy="545" rx="6" ry="10" fill="#ffd60a"/>
+    <ellipse cx="230" cy="542" rx="3" ry="5" fill="#fff"/>
+
+    <!-- 身体 -->
+    <ellipse cx="250" cy="220" rx="45" ry="70" fill="url(#redGold)"/>
+    <ellipse cx="250" cy="220" rx="35" ry="55" fill="url(#fireGrad)" opacity="0.7"/>
+
+    <!-- 胸部羽毛纹理 -->
+    <g opacity="0.5">
+      <path d="M220 200 Q250 210 280 200" stroke="#fff" stroke-width="1" fill="none"/>
+      <path d="M225 220 Q250 230 275 220" stroke="#fff" stroke-width="1" fill="none"/>
+      <path d="M230 240 Q250 250 270 240" stroke="#fff" stroke-width="1" fill="none"/>
+    </g>
+
+    <!-- 颈部 -->
+    <path d="M250 150 Q230 130 240 100 Q250 80 270 90 Q280 110 270 140 Q260 160 250 150"
+          fill="url(#redGold)"/>
+
+    <!-- 头部 -->
+    <ellipse cx="255" cy="75" rx="28" ry="25" fill="url(#fireGrad)"/>
+
+    <!-- 眼睛 -->
+    <ellipse cx="245" cy="70" rx="6" ry="7" fill="#1a1a2e"/>
+    <ellipse cx="244" cy="68" rx="2" ry="3" fill="#fff"/>
+
+    <!-- 喙 -->
+    <path d="M225 75 L210 72 L225 80 Z" fill="#ff6b35"/>
+    <path d="M225 75 L210 72 L220 75 Z" fill="#ffd60a"/>
+
+    <!-- 头冠羽毛 -->
+    <g>
+      <path d="M260 50 Q270 20 265 5 Q260 15 255 45" fill="url(#redGold)" stroke="#e63946" stroke-width="1"/>
+      <circle cx="265" cy="5" r="4" fill="#1a1a2e"/>
+
+      <path d="M270 55 Q285 30 275 10 Q270 25 265 50" fill="url(#orangeYellow)" stroke="#ff6b35" stroke-width="1"/>
+      <circle cx="275" cy="10" r="3" fill="#1a1a2e"/>
+
+      <path d="M275 60 Q295 40 282 18 Q278 35 272 58" fill="#ffd60a" stroke="#f7b801" stroke-width="1"/>
+      <circle cx="282" cy="18" r="3" fill="#1a1a2e"/>
+    </g>
+
+    <!-- 左翅膀 - 展开 -->
+    <g>
+      <!-- 翅膀主体 -->
+      <path d="M200 180
+               Q120 150 60 100
+               Q30 80 20 120
+               Q40 140 80 160
+               Q130 180 180 200
+               Q200 210 200 180"
+            fill="url(#redGold)"/>
+
+      <!-- 翅膀橙色层 -->
+      <path d="M190 190
+               Q130 165 80 130
+               Q50 110 45 145
+               Q70 160 110 175
+               Q150 190 185 205"
+            fill="url(#orangeYellow)" opacity="0.9"/>
+
+      <!-- 翅膀蓝色羽毛 -->
+      <path d="M180 200
+               Q140 180 100 155
+               Q70 140 70 170
+               Q100 180 140 195
+               Q170 210 180 210"
+            fill="url(#bluePurple)" opacity="0.7"/>
+
+      <!-- 翅尖白色 -->
+      <path d="M60 100 Q40 95 20 120 Q35 115 55 105" fill="#fff" opacity="0.6"/>
+    </g>
+
+    <!-- 右翅膀 - 展开 -->
+    <g>
+      <!-- 翅膀主体 -->
+      <path d="M300 180
+               Q380 150 440 100
+               Q470 80 480 120
+               Q460 140 420 160
+               Q370 180 320 200
+               Q300 210 300 180"
+            fill="url(#redGold)"/>
+
+      <!-- 翅膀橙色层 -->
+      <path d="M310 190
+               Q370 165 420 130
+               Q450 110 455 145
+               Q430 160 390 175
+               Q350 190 315 205"
+            fill="url(#orangeYellow)" opacity="0.9"/>
+
+      <!-- 翅膀蓝色羽毛 -->
+      <path d="M320 200
+               Q360 180 400 155
+               Q430 140 430 170
+               Q400 180 360 195
+               Q330 210 320 210"
+            fill="url(#bluePurple)" opacity="0.7"/>
+
+      <!-- 翅尖白色 -->
+      <path d="M440 100 Q460 95 480 120 Q465 115 445 105" fill="#fff" opacity="0.6"/>
+    </g>
+
+    <!-- 飘逸火焰装饰 - 右侧 -->
+    <g opacity="0.8">
+      <path d="M320 350 Q360 380 380 430 Q400 480 370 500 Q360 460 350 420 Q340 380 320 360"
+            fill="url(#orangeYellow)"/>
+      <path d="M340 370 Q390 410 410 470 Q430 530 390 540 Q380 490 360 440 Q340 400 340 370"
+            fill="url(#fireGrad)" opacity="0.7"/>
+    </g>
+
+    <!-- 飘带装饰 -->
+    <g opacity="0.6">
+      <path d="M150 250 Q100 300 80 360 Q60 400 90 420 Q100 380 120 340 Q140 290 160 260"
+            fill="url(#orangeYellow)" stroke="#ffd60a" stroke-width="1"/>
+      <path d="M350 250 Q400 300 420 360 Q440 400 410 420 Q400 380 380 340 Q360 290 340 260"
+            fill="url(#orangeYellow)" stroke="#ffd60a" stroke-width="1"/>
+    </g>
+
+  </g>
+</svg>

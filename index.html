@@ -4,28 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <title>国学智能词典 · 墨韵极简</title>
+    <title>国学智能词典 · 墨韵书香</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
     <meta name="description" content="国学智能词典：以简驭繁 · 智解文义，支持古文上下文与单字查询，以及生僻字截图上传。">
 </head>
 <body>
+    <!-- 古典纸纹背景层 -->
+    <div class="paper-texture" aria-hidden="true"></div>
+
     <div class="container">
         <header class="header">
-            <h1>国学智能词典</h1>
+            <!-- 印章装饰 -->
+            <img class="seal-decor" src="assets/seal.svg" alt="" aria-hidden="true">
+
+            <h1 class="title-calligraphy">国学智能词典</h1>
             <p class="subtitle">以简驭繁 · 智解文义</p>
+
+            <!-- 标题下方古典分隔线 -->
+            <div class="title-divider" aria-hidden="true">
+                <span class="divider-line"></span>
+                <span class="divider-dot"></span>
+                <span class="divider-line"></span>
+            </div>
+
             <div id="mock-mode-notice" style="background: #fff3cd; border: 1px solid #ffd60e; border-radius: 6px; padding: 8px; margin: 10px 0; text-align: center; font-size: 14px; display: none;">
-                <strong>🔧 演示模式</strong> - 当前使用模拟数据，如需真实AI查询请配置API服务器
+                <strong>演示模式</strong> - 当前使用模拟数据，如需真实AI查询请配置API服务器
             </div>
         </header>
 
-        <!-- Phoenix decor placed in page blank areas (sides/top), not as background -->
+        <!-- Phoenix decor - 绚丽凤凰装饰 -->
         <div class="phoenix-decor" aria-hidden="true">
-            <img class="phoenix phoenix-top" src="assets/banner-phoenix-gongbi.svg" alt="">
-            <img class="phoenix phoenix-left" src="assets/banner-phoenix-gongbi.svg" alt="">
-            <img class="phoenix phoenix-right" src="assets/banner-phoenix-gongbi-mirror.svg" alt="">
+            <img class="phoenix phoenix-left" src="assets/phoenix-colorful.png" alt="">
+            <img class="phoenix phoenix-right" src="assets/phoenix-colorful.png" alt="">
         </div>
 
-        <label for="context-input" class="field-label">古文原文 / Classical Text</label>
+        <label for="context-input" class="field-label">
+            <span class="label-icon">卷</span>
+            古文原文 / Classical Text
+        </label>
         <div class="context-drop" id="context-drop-zone" aria-label="粘贴/拖拽原文截图或点击上传">
             <div class="context-tools inside">
                 <input type="file" id="context-image-uploader" accept="image/*" hidden>
@@ -37,7 +56,10 @@
 
         <div class="inline-fields">
             <div class="inline-field">
-                <label for="word-input" class="field-label">字/词查询 / Character · Word</label>
+                <label for="word-input" class="field-label">
+                    <span class="label-icon">字</span>
+                    字/词查询 / Character · Word
+                </label>
                 <input type="text" id="word-input" class="field" inputmode="text" placeholder="输入字或词（例如：道、无为、仁义） / Enter a character or word (e.g., 道, 无为, 仁义)" aria-describedby="word-hint">
                 <div id="word-hint" class="help">支持多字/生僻字；按 Enter 快速查询 · Supports multiple/rare characters; press Enter</div>
             </div>
@@ -49,6 +71,13 @@
         </div>
 
 
+        <!-- 古典分隔装饰 -->
+        <div class="section-divider" aria-hidden="true">
+            <span class="divider-wing left"></span>
+            <span class="divider-center">❖</span>
+            <span class="divider-wing right"></span>
+        </div>
+
         <div class="actions">
             <button id="submit-button" class="btn btn-primary" type="button">AI 智能查询 · AI Smart Lookup</button>
             <div class="secondary-group">
@@ -57,25 +86,73 @@
             </div>
         </div>
 
-        <section id="result-container" class="result-box" aria-live="polite" aria-busy="false">
+        <section id="result-container" class="result-box scroll-style" aria-live="polite" aria-busy="false">
+            <!-- 卷轴装饰角 -->
+            <div class="scroll-corner top-left" aria-hidden="true"></div>
+            <div class="scroll-corner top-right" aria-hidden="true"></div>
+            <div class="scroll-corner bottom-left" aria-hidden="true"></div>
+            <div class="scroll-corner bottom-right" aria-hidden="true"></div>
+
             <p id="result-text">查询结果将显示在这里...</p>
             <div id="result-structured" class="result-structured" hidden></div>
         </section>
     </div>
 
+    <!-- 古典分隔线 -->
+    <div class="history-divider" aria-hidden="true">
+        <span class="divider-ornament">◆</span>
+    </div>
+
     <section class="history" aria-label="查询历史 / History">
-        <div class="history-header">
-            <h2 class="history-title">查询历史 · History</h2>
-            <div class="history-controls">
-                <label for="history-favs-only"><input type="checkbox" id="history-favs-only"> 仅看收藏 · Favourites only</label>
-                <button id="export-history" class="btn btn-secondary" type="button">导出历史 · Export</button>
-                <input type="file" id="import-history-input" accept="application/json" hidden>
-                <button id="import-history" class="btn btn-secondary" type="button">导入历史 · Import</button>
-                <button id="clear-history" class="btn btn-secondary" type="button">清空历史 · Clear</button>
+        <div class="history-card">
+            <div class="history-header">
+                <h2 class="history-title">
+                    <span class="history-icon">册</span>
+                    查询历史
+                    <span class="history-subtitle">History</span>
+                </h2>
+            </div>
+
+            <div class="history-toolbar">
+                <label class="history-filter" for="history-favs-only">
+                    <input type="checkbox" id="history-favs-only">
+                    <span class="filter-icon">★</span>
+                    <span class="filter-text">仅看收藏</span>
+                </label>
+                <div class="history-actions">
+                    <button id="export-history" class="btn btn-history" type="button" title="导出历史记录">
+                        <span class="btn-icon">↓</span>
+                        <span class="btn-text">导出</span>
+                    </button>
+                    <input type="file" id="import-history-input" accept="application/json" hidden>
+                    <button id="import-history" class="btn btn-history" type="button" title="导入历史记录">
+                        <span class="btn-icon">↑</span>
+                        <span class="btn-text">导入</span>
+                    </button>
+                    <button id="clear-history" class="btn btn-history btn-danger" type="button" title="清空所有历史">
+                        <span class="btn-icon">✕</span>
+                        <span class="btn-text">清空</span>
+                    </button>
+                </div>
+            </div>
+
+            <ul id="history-list" class="history-list" aria-live="polite">
+                <!-- 历史记录项会在这里动态生成 -->
+            </ul>
+
+            <div class="history-empty" id="history-empty">
+                <span class="empty-icon">📜</span>
+                <p>暂无查询记录</p>
+                <p class="empty-hint">查询的字词会自动保存在这里</p>
             </div>
         </div>
-        <ul id="history-list" class="history-list" aria-live="polite"></ul>
     </section>
+
+    <!-- 页脚装饰 -->
+    <footer class="footer" aria-hidden="true">
+        <div class="footer-divider"></div>
+        <p class="footer-text">国学智能词典 · 以简驭繁 · 智解文义</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>

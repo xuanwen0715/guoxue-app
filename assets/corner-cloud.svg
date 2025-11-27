@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40">
+  <!-- 古典角落装饰 - 如意云纹 -->
+  <defs>
+    <linearGradient id="cornerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="currentColor" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="currentColor" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 主如意云纹 -->
+  <g fill="url(#cornerGrad)">
+    <!-- 第一朵云 -->
+    <path d="M10 35
+             Q5 30 10 25
+             Q15 20 25 22
+             Q30 15 40 18
+             Q50 12 55 20
+             Q60 15 70 18
+             Q80 10 90 15
+             Q100 12 105 20
+             Q110 15 115 25
+             L115 40 L10 40 Z" opacity="0.4"/>
+
+    <!-- 装饰线条 -->
+    <path d="M20 32 Q30 25 45 28 Q60 22 75 26 Q90 20 105 28"
+          fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  </g>
+
+  <!-- 小装饰点 -->
+  <circle cx="35" cy="26" r="2" fill="currentColor" opacity="0.3"/>
+  <circle cx="65" cy="23" r="2" fill="currentColor" opacity="0.3"/>
+  <circle cx="95" cy="22" r="2" fill="currentColor" opacity="0.3"/>
+</svg>
