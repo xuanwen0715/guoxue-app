@@ -457,18 +457,7 @@
 
       const headerHtml = term ? `<div class="result-header"><div class="term">${term}</div>${(pinyin || traditional || data.radical || data.strokes) ? `<div class="badges">${pinyin ? `<span class="badge"><span class="label">拼音</span><span class="value">${pinyin}</span></span>` : ''}${traditional ? `<span class="badge"><span class="label">繁体</span><span class="value">${traditional}</span></span>` : ''}${data.radical ? `<span class="badge"><span class="label">部首</span><span class="value">${escapeHtml(String(data.radical))}</span></span>` : ''}${(data.strokes||data.strokes===0) ? `<span class="badge"><span class="label">笔画</span><span class="value">${escapeHtml(String(data.strokes))}</span></span>` : ''}</div>` : ''}</div>` : '';
       const readingHtml = (pinyin || traditional || data.radical || data.strokes || (Array.isArray(data.variants) && data.variants.length) || data.evolution_zh || data.evolution_en)
-        ? `<div class="result-section" data-kind="reading">
-            <h3>读音与字形 · Pronunciation & Glyphs</h3>
-            <div class="grid-2">
-              ${pinyin ? `<div class="column"><h4>拼音</h4><div class="para">${pinyin}</div></div>` : ''}
-              ${traditional ? `<div class="column"><h4>繁体</h4><div class="para">${traditional}</div></div>` : ''}
-              ${data.radical ? `<div class="column"><h4>部首 · Radical</h4><div class="para">${escapeHtml(String(data.radical))}</div></div>` : ''}
-              ${data.strokes ? `<div class="column"><h4>笔画 · Strokes</h4><div class="para">${escapeHtml(String(data.strokes))}</div></div>` : ''}
-              ${(Array.isArray(data.variants) && data.variants.length) ? `<div class="column"><h4>异体 · Variants</h4><div class="chips">${data.variants.map(v=>`<span class="chip" role="button" tabindex="0">${escapeHtml(String(v))}</span>`).join('')}</div></div>` : ''}
-              ${data.evolution_zh ? `<div class="column"><h4>字形演变</h4><div class="para">${toHtmlWithBB(String(data.evolution_zh))}</div></div>` : ''}
-              ${data.evolution_en ? `<div class="column"><h4>Evolution</h4><div class="para">${toHtmlWithBB(String(data.evolution_en))}</div></div>` : ''}
-            </div>
-          </div>`
+        ? `<div class="result-section" data-kind="reading"><h3>读音与字形 · Pronunciation & Glyphs</h3><div class="grid-2">${pinyin ? `<div class="column"><h4>拼音</h4><div class="para">${pinyin}</div></div>` : ''}${traditional ? `<div class="column"><h4>繁体</h4><div class="para">${traditional}</div></div>` : ''}${data.radical ? `<div class="column"><h4>部首 · Radical</h4><div class="para">${escapeHtml(String(data.radical))}</div></div>` : ''}${data.strokes ? `<div class="column"><h4>笔画 · Strokes</h4><div class="para">${escapeHtml(String(data.strokes))}</div></div>` : ''}${(Array.isArray(data.variants) && data.variants.length) ? `<div class="column"><h4>异体 · Variants</h4><div class="chips">${data.variants.map(v=>`<span class="chip" role="button" tabindex="0">${escapeHtml(String(v))}</span>`).join('')}</div></div>` : ''}${data.evolution_zh ? `<div class="column"><h4>字形演变</h4><div class="para">${toHtmlWithBB(String(data.evolution_zh))}</div></div>` : ''}${data.evolution_en ? `<div class="column"><h4>Evolution</h4><div class="para">${toHtmlWithBB(String(data.evolution_en))}</div></div>` : ''}</div></div>`
         : '';
 
       const expZhCol = exZh ? `<div class="column"><h4>释义</h4><div class="para">${exZh}</div></div>` : '';
