@@ -1,27 +1,28 @@
 /* 国风墨韵配色体系 - 古典增强版 */
 :root {
   /* 基础色调 - 宣纸与淡紫墨韵 */
-  --bg: #f8f5f2;              /* 米白宣纸带淡紫 */
-  --card: #fffef9;            /* 暖白卡片 */
-  --text: #3d3226;            /* 深褐墨字 */
-  --muted: #7a6f5d;           /* 淡墨褐 */
-  --border: #e5ddd0;          /* 素雅边框 */
+  --bg: #f5f3f8;              /* 淡紫宣纸 */
+  --card: #fdfcff;            /* 微紫白卡片 */
+  --text: #3d3246;            /* 深紫墨字 */
+  --muted: #6a5d7a;           /* 淡紫墨 */
+  --border: #e0d8e8;          /* 淡紫边框 */
 
-  /* 国风色彩 - 古典增强 */
-  --ink: #2c4a3e;             /* 松绿墨 */
-  --ink-2: #1e3a30;           /* 浓墨绿 */
-  --accent: #8b4513;          /* 赭石色 */
-  --secondary: #c4a574;       /* 古铜色 */
+  /* 国风色彩 - 青紫搭配 */
+  --ink: #2c4a5e;             /* 青墨色 */
+  --ink-2: #1e3a4d;           /* 深青墨 */
+  --accent: #6b5b8a;          /* 藤紫色 */
+  --secondary: #8b7baa;       /* 淡藤紫 */
   --vermilion: #c53d43;       /* 朱红 - 印章 */
-  --gold: #d4a574;            /* 金色 */
-  --purple-mist: rgba(180, 160, 200, 0.12);  /* 淡紫云雾 */
-  --purple-glow: rgba(160, 140, 190, 0.08);  /* 紫霞光晕 */
+  --gold: #b8a8d8;            /* 淡紫金 */
+  --purple-mist: rgba(160, 140, 200, 0.18);  /* 紫云雾 */
+  --purple-glow: rgba(140, 120, 180, 0.12);  /* 紫霞光晕 */
+  --cyan-mist: rgba(100, 160, 180, 0.12);    /* 青云雾 */
 
   /* 特殊效果色 */
-  --ring: rgba(139, 69, 19, 0.15);     /* 赭石光晕 */
-  --shadow: rgba(61, 50, 38, 0.08);    /* 淡墨阴影 */
-  --gradient-start: rgba(180, 160, 200, 0.1);   /* 淡紫渐变 */
-  --gradient-end: rgba(200, 180, 220, 0.08);    /* 浅紫渐变 */
+  --ring: rgba(107, 91, 138, 0.2);     /* 紫色光晕 */
+  --shadow: rgba(61, 50, 70, 0.1);     /* 淡紫阴影 */
+  --gradient-start: rgba(160, 140, 200, 0.15);   /* 紫渐变 */
+  --gradient-end: rgba(100, 160, 180, 0.12);     /* 青渐变 */
 
   /* 古典字体 */
   --font-calligraphy: 'Ma Shan Zheng', 'ZCOOL XiaoWei', 'STKaiti', 'KaiTi', cursive;
@@ -31,25 +32,26 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1a1518;             /* 夜墨紫 */
-    --card: #252020;           /* 深紫褐卡片 */
-    --text: #e8e2d8;           /* 月白文字 */
-    --muted: #a09585;          /* 银褐 */
-    --border: #3d352a;         /* 深褐边框 */
+    --bg: #18151d;             /* 夜墨紫 */
+    --card: #221e28;           /* 深紫卡片 */
+    --text: #e8e2f0;           /* 月白文字 */
+    --muted: #a095b0;          /* 银紫 */
+    --border: #3d3548;         /* 深紫边框 */
 
-    --ink: #8fb8a8;            /* 月松绿 */
-    --ink-2: #a8c8b8;          /* 浅松绿 */
-    --accent: #d4a574;         /* 暖金色 */
-    --secondary: #e8c89c;      /* 淡金 */
+    --ink: #7bb8c8;            /* 月青色 */
+    --ink-2: #98d0e0;          /* 浅青色 */
+    --accent: #b8a8d8;         /* 亮藤紫 */
+    --secondary: #c8b8e8;      /* 淡紫 */
     --vermilion: #e85a5a;      /* 亮朱红 */
-    --gold: #e8c89c;           /* 月金 */
-    --purple-mist: rgba(140, 120, 180, 0.15);  /* 暗紫云雾 */
-    --purple-glow: rgba(160, 140, 200, 0.12);  /* 紫霞光晕 */
+    --gold: #c8b8e8;           /* 月紫 */
+    --purple-mist: rgba(140, 120, 180, 0.2);   /* 暗紫云雾 */
+    --purple-glow: rgba(160, 140, 200, 0.15);  /* 紫霞光晕 */
+    --cyan-mist: rgba(100, 160, 180, 0.15);    /* 青云雾 */
 
-    --ring: rgba(212, 165, 116, 0.2);
-    --shadow: rgba(0, 0, 0, 0.25);
-    --gradient-start: rgba(140, 120, 180, 0.12);
-    --gradient-end: rgba(160, 140, 200, 0.1);
+    --ring: rgba(184, 168, 216, 0.25);
+    --shadow: rgba(0, 0, 0, 0.3);
+    --gradient-start: rgba(140, 120, 180, 0.18);
+    --gradient-end: rgba(100, 160, 180, 0.15);
   }
 }
 
@@ -59,13 +61,14 @@ html, body { height: 100%; }
 body {
   margin: 0;
   background: var(--bg);
-  /* 古典宣纸纹理背景 - 淡紫云雾 */
+  /* 古典宣纸纹理背景 - 青紫云雾 */
   background-image:
-    radial-gradient(1400px 1000px at 82% 20%, var(--gradient-start), transparent 65%),
-    radial-gradient(1200px 900px at 18% 85%, var(--gradient-end), transparent 70%),
-    radial-gradient(1000px 800px at 50% 50%, var(--purple-mist), transparent 75%),
-    radial-gradient(600px 400px at 75% 60%, rgba(200, 180, 220, 0.06), transparent 70%),
-    radial-gradient(500px 350px at 25% 30%, rgba(180, 160, 210, 0.05), transparent 65%);
+    radial-gradient(1400px 1000px at 82% 20%, var(--gradient-start), transparent 60%),
+    radial-gradient(1200px 900px at 18% 85%, var(--gradient-end), transparent 65%),
+    radial-gradient(1000px 800px at 50% 50%, var(--purple-mist), transparent 70%),
+    radial-gradient(800px 600px at 75% 60%, rgba(160, 140, 200, 0.12), transparent 65%),
+    radial-gradient(700px 500px at 25% 30%, var(--cyan-mist), transparent 60%),
+    radial-gradient(600px 400px at 60% 80%, rgba(100, 160, 180, 0.08), transparent 55%);
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--text);
@@ -695,13 +698,13 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
   transform: translate(-50%, -45%);
   width: clamp(220px, 46vw, 800px);
   height: clamp(90px, 14vw, 260px);
-  /* 淡紫粉霞光晕 */
+  /* 青紫霞光晕 */
   background: radial-gradient(65% 60% at 50% 50%,
-    rgba(220, 200, 240, 0.5) 0%,
-    rgba(190, 170, 230, 0.3) 35%,
-    rgba(230, 210, 245, 0.15) 55%,
-    rgba(220, 200, 240, 0.00) 75%);
-  filter: blur(20px);
+    rgba(180, 160, 220, 0.55) 0%,
+    rgba(140, 120, 200, 0.35) 30%,
+    rgba(100, 160, 180, 0.2) 55%,
+    rgba(180, 160, 220, 0.00) 75%);
+  filter: blur(22px);
   pointer-events: none;
   z-index: 0;
 }
