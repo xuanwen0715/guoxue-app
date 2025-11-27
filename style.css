@@ -916,7 +916,7 @@ body::before{
 .phoenix {
   position: fixed;
   display: block;
-  opacity: 0.5;
+  opacity: 0.65;
   filter:
     drop-shadow(0 0 15px rgba(230, 57, 70, 0.2))
     drop-shadow(0 0 30px rgba(255, 107, 53, 0.15))
@@ -957,7 +957,7 @@ body::before{
 /* 绚丽凤凰呼吸动画 */
 @keyframes colorful-phoenix-breath {
   0%, 100% {
-    opacity: 0.45;
+    opacity: 0.6;
     filter:
       drop-shadow(0 0 15px rgba(230, 57, 70, 0.2))
       drop-shadow(0 0 30px rgba(255, 107, 53, 0.15))
@@ -965,7 +965,7 @@ body::before{
     transform: scale(1);
   }
   50% {
-    opacity: 0.6;
+    opacity: 0.75;
     filter:
       drop-shadow(0 0 25px rgba(230, 57, 70, 0.25))
       drop-shadow(0 0 50px rgba(255, 107, 53, 0.2))
@@ -976,9 +976,9 @@ body::before{
 
 /* 左侧凤凰 */
 .phoenix-left {
-  left: -50px;
+  left: -30px;
   top: 8vh;
-  width: clamp(280px, 35vw, 450px);
+  width: clamp(220px, 28vw, 350px);
   transform: rotate(0deg);
   animation:
     colorful-float-left 15s ease-in-out infinite,
@@ -993,9 +993,9 @@ body::before{
 
 /* 右侧凤凰 - 镜像 */
 .phoenix-right {
-  right: -50px;
+  right: -30px;
   bottom: 5vh;
-  width: clamp(260px, 32vw, 420px);
+  width: clamp(200px, 25vw, 320px);
   transform: scaleX(-1);
   animation:
     colorful-float-right 18s ease-in-out infinite,
@@ -1012,18 +1012,18 @@ body::before{
 /* 移动端适配 - 绚丽凤凰 */
 @media (max-width: 900px) {
   .phoenix {
-    opacity: 0.4;
+    opacity: 0.5;
   }
 
   .phoenix-left {
-    width: clamp(200px, 50vw, 320px);
-    left: -40px;
+    width: clamp(160px, 40vw, 260px);
+    left: -30px;
     top: 5vh;
   }
 
   .phoenix-right {
-    width: clamp(180px, 45vw, 300px);
-    right: -40px;
+    width: clamp(140px, 35vw, 240px);
+    right: -30px;
     bottom: 3vh;
   }
 
