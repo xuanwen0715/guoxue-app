@@ -3,91 +3,72 @@ import json
 import base64
 import traceback
 import requests
-import hmac
-import hashlib
-import time
-import uuid
-from datetime import datetime, timezone
-from urllib.parse import quote, urlencode
 from http.server import BaseHTTPRequestHandler
 
+# 阿里云 OCR SDK
+try:
+    from alibabacloud_ocr_api20210707.client import Client as OcrClient
+    from alibabacloud_tea_openapi import models as open_api_models
+    from alibabacloud_ocr_api20210707 import models as ocr_models
+    from alibabacloud_tea_util import models as util_models
+    ALIYUN_SDK_AVAILABLE = True
+except ImportError:
+    ALIYUN_SDK_AVAILABLE = False
 
 # 阿里云 OCR 配置
 ACCESS_KEY_ID = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_ID", "")
 ACCESS_KEY_SECRET = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_SECRET", "")
 
-# 备用：DashScope 视觉模型（如果专业OCR不可用则回退）
+# 备用：DashScope 视觉模型
 DASHSCOPE_API_KEY = os.environ.get("DASHSCOPE_API_KEY", "")
 DASHSCOPE_VL_URL = os.environ.get(
     "DASHSCOPE_VL_URL",
     "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
 )
 
+# 阿里云 OCR 客户端（单例）
+_ocr_client = None
 
-def _sign_request(params: dict, access_key_secret: str) -> str:
-    """生成阿里云 API 签名"""
-    # 1. 按参数名排序
-    sorted_params = sorted(params.items())
-    # 2. 构造待签名字符串
-    query_string = urlencode(sorted_params, quote_via=quote)
-    string_to_sign = f"POST&%2F&{quote(query_string, safe='')}"
-    # 3. HMAC-SHA1 签名
-    key = (access_key_secret + "&").encode("utf-8")
-    signature = hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha1).digest()
-    return base64.b64encode(signature).decode("utf-8")
+def _get_ocr_client():
+    """获取阿里云 OCR 客户端"""
+    global _ocr_client
+    if _ocr_client is None and ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
+        config = open_api_models.Config(
+            access_key_id=ACCESS_KEY_ID,
+            access_key_secret=ACCESS_KEY_SECRET
+        )
+        config.endpoint = "ocr-api.cn-hangzhou.aliyuncs.com"
+        _ocr_client = OcrClient(config)
+    return _ocr_client
 
 
 def _call_aliyun_ocr(image_base64: str) -> str:
     """调用阿里云专业 OCR API"""
-    endpoint = "ocr-api.cn-hangzhou.aliyuncs.com"
-
-    # 公共参数
-    params = {
-        "Action": "RecognizeGeneral",
-        "Version": "2021-07-07",
-        "Format": "JSON",
-        "AccessKeyId": ACCESS_KEY_ID,
-        "SignatureMethod": "HMAC-SHA1",
-        "Timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "SignatureVersion": "1.0",
-        "SignatureNonce": str(uuid.uuid4()),
-    }
-
-    # 生成签名
-    params["Signature"] = _sign_request(params, ACCESS_KEY_SECRET)
-
-    # 构造请求 URL
-    url = f"https://{endpoint}/"
+    client = _get_ocr_client()
+    if not client:
+        raise Exception("Aliyun OCR client not available")
 
     # 解析 base64 图片数据
     if "," in image_base64:
         image_base64 = image_base64.split(",", 1)[1]
 
+    # 使用 body 方式传递图片
+    from io import BytesIO
     image_bytes = base64.b64decode(image_base64)
+    body_stream = BytesIO(image_bytes)
 
-    # 发送请求（使用 body 传输图片二进制）
-    headers = {
-        "Content-Type": "application/octet-stream",
-    }
+    request = ocr_models.RecognizeGeneralRequest(body=body_stream)
+    runtime = util_models.RuntimeOptions()
+    runtime.read_timeout = 30000
+    runtime.connect_timeout = 10000
 
-    response = requests.post(
-        url,
-        params=params,
-        data=image_bytes,
-        headers=headers,
-        timeout=30
-    )
-    response.raise_for_status()
+    response = client.recognize_general_with_options(request, runtime)
 
-    result = response.json()
-
-    if "Data" in result:
-        data = result["Data"]
+    if response.body and response.body.data:
+        data = response.body.data
         if isinstance(data, str):
             data = json.loads(data)
         return data.get("content", "")
-    elif "Code" in result:
-        raise Exception(f"OCR Error: {result.get('Code')} - {result.get('Message', '')}")
 
     return ""
 
@@ -170,7 +151,7 @@ class handler(BaseHTTPRequestHandler):
             ocr_method = "unknown"
 
             # 优先使用阿里云专业 OCR
-            if ACCESS_KEY_ID and ACCESS_KEY_SECRET:
+            if ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
                 try:
                     text = _call_aliyun_ocr(final_image)
                     ocr_method = "aliyun_ocr"
