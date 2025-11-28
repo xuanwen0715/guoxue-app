@@ -1891,6 +1891,70 @@ body::before{
   font-family: var(--font-serif);
 }
 
+/* OCR 识别技巧提示 */
+.ocr-tips {
+  width: 100%;
+  margin-top: 10px;
+  font-family: var(--font-serif);
+}
+
+.ocr-tips-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.ocr-tips-toggle:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.ocr-tips-toggle::before {
+  content: "💡";
+  font-size: 11px;
+}
+
+.ocr-tips[open] .ocr-tips-toggle {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.ocr-tips-list {
+  margin: 8px 0 0;
+  padding: 10px 14px;
+  list-style: none;
+  background: linear-gradient(135deg,
+    rgba(107, 91, 138, 0.06) 0%,
+    rgba(139, 123, 170, 0.04) 100%
+  );
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.ocr-tips-list li {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  padding: 3px 0;
+}
+
+.ocr-tips-list li strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ocr-tips-list li + li {
+  border-top: 1px dashed var(--border);
+  margin-top: 3px;
+  padding-top: 6px;
+}
+
 /* 深色模式上传区域 */
 @media (prefers-color-scheme: dark) {
   .upload-zone {
