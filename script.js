@@ -31,6 +31,90 @@
 
   const API_BASE = resolveApiBase();
 
+  // OCR 对比对话框：显示原始识别和 AI 建议供用户选择
+  function showOcrCompareDialog(original, corrected, suggestions, onSelect) {
+    // 创建遮罩层
+    const overlay = document.createElement('div');
+    overlay.className = 'ocr-dialog-overlay';
+
+    // 创建对话框
+    const dialog = document.createElement('div');
+    dialog.className = 'ocr-dialog';
+
+    // 构建建议列表 HTML
+    let suggestionsHtml = '';
+    if (suggestions && suggestions.length > 0) {
+      suggestionsHtml = `
+        <div class="ocr-suggestions">
+          <h4>纠错建议 · Suggestions</h4>
+          <ul>
+            ${suggestions.map(s => `
+              <li>
+                <span class="suggestion-original">${escapeHtml(s.original)}</span>
+                <span class="suggestion-arrow">→</span>
+                <span class="suggestion-new">${escapeHtml(s.suggested)}</span>
+                <span class="suggestion-reason">${escapeHtml(s.reason)}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    dialog.innerHTML = `
+      <div class="ocr-dialog-header">
+        <h3>OCR 识别结果对比</h3>
+        <p class="ocr-dialog-hint">AI 检测到可能的识别错误，请选择使用哪个版本</p>
+      </div>
+      <div class="ocr-dialog-content">
+        <div class="ocr-compare-panel ocr-original">
+          <div class="ocr-panel-header">
+            <span class="ocr-panel-icon">📄</span>
+            <span class="ocr-panel-title">原始识别结果</span>
+          </div>
+          <div class="ocr-panel-text">${escapeHtml(original)}</div>
+          <button class="btn ocr-select-btn" data-choice="original">使用原始结果</button>
+        </div>
+        <div class="ocr-compare-panel ocr-corrected">
+          <div class="ocr-panel-header">
+            <span class="ocr-panel-icon">✨</span>
+            <span class="ocr-panel-title">AI 建议版本</span>
+          </div>
+          <div class="ocr-panel-text">${escapeHtml(corrected)}</div>
+          ${suggestionsHtml}
+          <button class="btn btn-primary ocr-select-btn" data-choice="corrected">使用 AI 建议</button>
+        </div>
+      </div>
+      <button class="ocr-dialog-close" aria-label="关闭">&times;</button>
+    `;
+
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    // 绑定事件
+    const closeDialog = () => {
+      overlay.classList.add('closing');
+      setTimeout(() => overlay.remove(), 200);
+    };
+
+    dialog.querySelector('.ocr-dialog-close').addEventListener('click', closeDialog);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeDialog();
+    });
+
+    dialog.querySelectorAll('.ocr-select-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.choice;
+        const text = choice === 'original' ? original : corrected;
+        onSelect(text);
+        closeDialog();
+      });
+    });
+
+    // 动画显示
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+  }
+
   async function fetchApiJson(path, options) {
     const primary = (API_BASE ? API_BASE : '') + path;
     try {
@@ -215,9 +299,22 @@
         data = await response.json();
       }
 
-      wordInput.value = data.text || '';
-      ocrCache = data.text || '';
-      uploadStatus.textContent = bi('识别成功！', 'Success!');
+      const recognized = (data.text || '').trim();
+      const aiCorrected = (data.ai_corrected || '').trim();
+      const aiSuggestions = data.ai_suggestions || [];
+
+      // 如果有 AI 建议且与原文不同，显示对比选择
+      if (recognized && aiSuggestions.length > 0 && aiCorrected && aiCorrected !== recognized) {
+        showOcrCompareDialog(recognized, aiCorrected, aiSuggestions, (chosen) => {
+          wordInput.value = chosen;
+          ocrCache = chosen;
+        });
+        uploadStatus.textContent = bi('请选择识别结果', 'Choose result');
+      } else {
+        wordInput.value = recognized;
+        ocrCache = recognized;
+        uploadStatus.textContent = bi('识别成功！', 'Success!');
+      }
     } catch (err) {
       console.error('OCR Error:', err);
       uploadStatus.textContent = bi('识别失败', 'Failed');
@@ -293,13 +390,28 @@
       }
 
       const recognized = (data.text || '').trim();
+      const aiCorrected = (data.ai_corrected || '').trim();
+      const aiSuggestions = data.ai_suggestions || [];
+
       if (recognized) {
-        const caret = ctxInput.selectionStart ?? ctxInput.value.length;
-        const before = ctxInput.value.slice(0, caret);
-        const needsNewline = before.length > 0 && !before.endsWith('\n');
-        const insert = (needsNewline ? '\n' : '') + recognized;
-        insertAtCursor(ctxInput, insert);
-        ctxUploadStatus.textContent = bi('识别成功！', 'Recognition successful!');
+        // 如果有 AI 建议且与原文不同，显示对比选择
+        if (aiSuggestions.length > 0 && aiCorrected && aiCorrected !== recognized) {
+          showOcrCompareDialog(recognized, aiCorrected, aiSuggestions, (chosen) => {
+            const caret = ctxInput.selectionStart ?? ctxInput.value.length;
+            const before = ctxInput.value.slice(0, caret);
+            const needsNewline = before.length > 0 && !before.endsWith('\n');
+            const insert = (needsNewline ? '\n' : '') + chosen;
+            insertAtCursor(ctxInput, insert);
+          });
+          ctxUploadStatus.textContent = bi('请选择识别结果', 'Choose result');
+        } else {
+          const caret = ctxInput.selectionStart ?? ctxInput.value.length;
+          const before = ctxInput.value.slice(0, caret);
+          const needsNewline = before.length > 0 && !before.endsWith('\n');
+          const insert = (needsNewline ? '\n' : '') + recognized;
+          insertAtCursor(ctxInput, insert);
+          ctxUploadStatus.textContent = bi('识别成功！', 'Recognition successful!');
+        }
       } else {
         ctxUploadStatus.textContent = bi('未识别到文字', 'No text recognized');
       }

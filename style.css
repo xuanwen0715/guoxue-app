@@ -2289,6 +2289,236 @@ body::before{
   }
 }
 
+/* ==========================================
+   OCR 对比对话框样式
+   ========================================== */
+
+.ocr-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.ocr-dialog-overlay.visible {
+  opacity: 1;
+}
+
+.ocr-dialog-overlay.closing {
+  opacity: 0;
+}
+
+.ocr-dialog {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 900px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+.ocr-dialog-overlay.visible .ocr-dialog {
+  transform: scale(1);
+}
+
+.ocr-dialog-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.ocr-dialog-header h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--text);
+}
+
+.ocr-dialog-hint {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.ocr-dialog-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 20px;
+}
+
+@media (max-width: 700px) {
+  .ocr-dialog-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ocr-compare-panel {
+  background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(248,245,252,0.6));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ocr-compare-panel.ocr-corrected {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(107,91,138,0.08), rgba(139,123,170,0.04));
+}
+
+.ocr-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ocr-panel-icon {
+  font-size: 18px;
+}
+
+.ocr-panel-title {
+  font-size: 15px;
+}
+
+.ocr-panel-text {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-all;
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.ocr-suggestions {
+  background: rgba(107,91,138,0.06);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.ocr-suggestions h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ocr-suggestions ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ocr-suggestions li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.ocr-suggestions li:last-child {
+  border-bottom: none;
+}
+
+.suggestion-original {
+  color: var(--vermilion);
+  font-weight: 600;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+.suggestion-arrow {
+  color: var(--muted);
+}
+
+.suggestion-new {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.suggestion-reason {
+  color: var(--muted);
+  font-size: 12px;
+  flex-basis: 100%;
+  padding-left: 4px;
+}
+
+.ocr-select-btn {
+  margin-top: auto;
+  width: 100%;
+}
+
+.ocr-dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ocr-dialog-close:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .ocr-dialog {
+    background: var(--card);
+  }
+
+  .ocr-compare-panel {
+    background: linear-gradient(135deg, rgba(30,28,35,0.8), rgba(40,36,48,0.6));
+  }
+
+  .ocr-compare-panel.ocr-corrected {
+    background: linear-gradient(135deg, rgba(107,91,138,0.15), rgba(139,123,170,0.08));
+  }
+
+  .ocr-panel-text {
+    background: rgba(0,0,0,0.2);
+  }
+
+  .ocr-suggestions {
+    background: rgba(107,91,138,0.12);
+  }
+}
+
 
 
 

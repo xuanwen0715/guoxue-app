@@ -25,6 +25,10 @@ DASHSCOPE_VL_URL = os.environ.get(
     "DASHSCOPE_VL_URL",
     "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
 )
+DASHSCOPE_TXT_URL = os.environ.get(
+    "DASHSCOPE_TXT_URL",
+    "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation",
+)
 
 # 阿里云 OCR 客户端（单例）
 _ocr_client = None
@@ -129,6 +133,91 @@ def _call_dashscope_ocr(image_data: str) -> str:
         return ""
 
 
+def _get_ai_suggestions(ocr_text: str) -> dict:
+    """调用 AI 大模型对 OCR 结果进行纠错建议"""
+    if not DASHSCOPE_API_KEY or not ocr_text.strip():
+        return {"corrected": "", "suggestions": []}
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
+    }
+
+    payload = {
+        "model": "qwen-max",
+        "input": {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": (
+                        "你是一位精通古汉语、训诂学和版本学的资深专家。"
+                        "你的任务是审校OCR识别的古籍文本，找出可能的识别错误并给出纠正建议。"
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": f"""以下是OCR识别的古籍文本，请审校并给出纠错建议：
+
+【OCR识别结果】
+{ocr_text}
+
+【任务要求】
+1. 仔细检查是否有OCR误识的字（如形近字混淆：道/遺、已/己、末/未等）
+2. 检查是否有因图片模糊导致的错字或漏字
+3. 根据古籍文义和上下文判断可能的正确字
+4. 注意：异体字、通假字、古字形不算错误，请保留
+
+【输出格式】请严格按以下JSON格式返回：
+{{
+  "corrected": "纠正后的完整文本（如无错误则与原文相同）",
+  "suggestions": [
+    {{
+      "original": "原字/词",
+      "suggested": "建议改为",
+      "reason": "简短理由"
+    }}
+  ]
+}}
+
+如果没有发现明显错误，suggestions 返回空数组 []。
+只返回JSON，不要其他文字。"""
+                }
+            ]
+        }
+    }
+
+    try:
+        resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+
+        content = data.get("output", {}).get("text", "")
+        if not content:
+            choices = data.get("output", {}).get("choices", [])
+            if choices:
+                content = choices[0].get("message", {}).get("content", "")
+
+        # 尝试解析 JSON
+        if content:
+            # 清理可能的 markdown 代码块
+            content = content.strip()
+            if content.startswith("```"):
+                content = content.split("\n", 1)[-1]
+            if content.endswith("```"):
+                content = content.rsplit("```", 1)[0]
+            content = content.strip()
+
+            result = json.loads(content)
+            return {
+                "corrected": result.get("corrected", ocr_text),
+                "suggestions": result.get("suggestions", [])
+            }
+    except Exception as e:
+        print(f"[OCR] AI suggestion failed: {e}")
+
+    return {"corrected": ocr_text, "suggestions": []}
+
+
 class handler(BaseHTTPRequestHandler):
     """Vercel Serverless Function handler"""
 
@@ -178,7 +267,15 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(503, {"error": "No OCR API configured"})
                 return
 
-            self._send_json(200, {"text": text.strip(), "method": ocr_method})
+            # 获取 AI 纠错建议
+            ai_result = _get_ai_suggestions(text.strip())
+
+            self._send_json(200, {
+                "text": text.strip(),
+                "method": ocr_method,
+                "ai_corrected": ai_result.get("corrected", ""),
+                "ai_suggestions": ai_result.get("suggestions", [])
+            })
 
         except requests.HTTPError as http_err:
             detail = ""
