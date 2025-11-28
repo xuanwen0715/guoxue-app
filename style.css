@@ -2694,6 +2694,204 @@ body::before{
    OCR 对比对话框样式
    ========================================== */
 
+/* ===== 用户认证相关样式 ===== */
+.auth-bar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+}
+
+.auth-section {
+  display: flex;
+  gap: 8px;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-auth {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.btn-login {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--secondary);
+}
+
+.btn-login:hover {
+  background: rgba(122, 104, 166, 0.1);
+  border-color: var(--accent);
+}
+
+.btn-register {
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  color: white;
+  border: none;
+}
+
+.btn-register:hover {
+  box-shadow: 0 4px 12px rgba(122, 104, 166, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-logout {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--border);
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.btn-logout:hover {
+  background: rgba(197, 61, 67, 0.1);
+  border-color: var(--vermilion);
+  color: var(--vermilion);
+}
+
+.user-email {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--text);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quota-display {
+  font-size: 12px;
+}
+
+.badge-premium {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: linear-gradient(135deg, #f0c14b, #e8a030);
+  color: #6a4a00;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.badge-credits {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: linear-gradient(135deg, rgba(122, 104, 166, 0.15), rgba(154, 136, 192, 0.1));
+  color: var(--accent);
+  border-radius: 12px;
+  font-size: 11px;
+  border: 1px solid rgba(122, 104, 166, 0.3);
+}
+
+/* 配额用完弹窗 */
+.quota-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.quota-modal-overlay.visible {
+  opacity: 1;
+}
+
+.quota-modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+.quota-modal-overlay.visible .quota-modal {
+  transform: scale(1);
+}
+
+.quota-modal-header {
+  margin-bottom: 20px;
+}
+
+.quota-modal-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.quota-modal-header h3 {
+  margin: 0;
+  font-family: var(--font-calligraphy);
+  font-size: 24px;
+  color: var(--ink);
+}
+
+.quota-modal-body {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.quota-modal-body p {
+  margin: 6px 0;
+}
+
+.quota-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* 移动端认证区域适配 */
+@media (max-width: 640px) {
+  .auth-bar {
+    position: relative;
+    top: 0;
+    right: 0;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .user-email {
+    max-width: 100px;
+    font-size: 12px;
+  }
+
+  .btn-auth {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+
+
 .ocr-dialog-overlay {
   position: fixed;
   inset: 0;

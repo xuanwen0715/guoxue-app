@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
     <meta name="description" content="国学智能词典：以简驭繁 · 智解文义，支持古文上下文与单字查询，以及生僻字截图上传。">
+    <!-- Supabase Auth JS -->
+    <script src="auth.js" defer></script>
 </head>
 <body>
     <!-- 古典纸纹背景层 -->
@@ -17,6 +19,19 @@
 
     <div class="container">
         <header class="header">
+            <!-- 用户认证区域 -->
+            <div class="auth-bar">
+                <div id="auth-section" class="auth-section">
+                    <a href="login.html" class="btn-auth btn-login">登录</a>
+                    <a href="login.html?mode=register" class="btn-auth btn-register">注册</a>
+                </div>
+                <div id="user-section" class="user-section" style="display: none;">
+                    <span id="quota-display" class="quota-display"></span>
+                    <span id="user-email" class="user-email"></span>
+                    <button id="logout-btn" class="btn-auth btn-logout" onclick="window.GxAuth && window.GxAuth.logout()">退出</button>
+                </div>
+            </div>
+
             <!-- 标题凤凰装饰 -->
             <img class="phoenix-header" src="assets/phoenix-colorful.png" alt="" aria-hidden="true">
 

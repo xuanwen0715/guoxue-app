@@ -5,6 +5,12 @@ import traceback
 import requests
 from http.server import BaseHTTPRequestHandler
 
+# 导入认证工具
+from .auth_utils import (
+    verify_token, check_user_quota, deduct_credit,
+    AuthError, QuotaError
+)
+
 # 阿里云 OCR SDK
 try:
     from alibabacloud_ocr_api20210707.client import Client as OcrClient
@@ -219,7 +225,7 @@ def _get_ai_suggestions(ocr_text: str) -> dict:
 
 
 class handler(BaseHTTPRequestHandler):
-    """Vercel Serverless Function handler"""
+    """Vercel Serverless Function handler with authentication"""
 
     def do_OPTIONS(self):
         self.send_response(204)
@@ -230,6 +236,23 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
+            # ========== 第一步：检查"门票"（验证 Token） ==========
+            auth_header = self.headers.get("Authorization", "")
+            try:
+                user_info = verify_token(auth_header)
+                user_id = user_info["user_id"]
+            except AuthError as e:
+                self._send_json(e.code, {"error": e.message, "code": "AUTH_ERROR"})
+                return
+
+            # ========== 第二步：检查"余额"（用户额度） ==========
+            try:
+                quota_info = check_user_quota(user_id)
+            except QuotaError as e:
+                self._send_json(e.code, {"error": e.message, "code": "QUOTA_EXCEEDED"})
+                return
+
+            # ========== 开始处理业务逻辑 ==========
             content_length = int(self.headers.get("Content-Length", 0))
             body_bytes = self.rfile.read(content_length)
             body = json.loads(body_bytes.decode("utf-8")) if body_bytes else {}
@@ -270,11 +293,19 @@ class handler(BaseHTTPRequestHandler):
             # 获取 AI 纠错建议
             ai_result = _get_ai_suggestions(text.strip())
 
+            # ========== 第三步：扣除积分（仅在 API 调用成功后） ==========
+            if quota_info.get("should_deduct"):
+                deduct_credit(user_id)
+
             self._send_json(200, {
                 "text": text.strip(),
                 "method": ocr_method,
                 "ai_corrected": ai_result.get("corrected", ""),
-                "ai_suggestions": ai_result.get("suggestions", [])
+                "ai_suggestions": ai_result.get("suggestions", []),
+                "_quota": {
+                    "is_premium": quota_info.get("is_premium", False),
+                    "credits_remaining": quota_info.get("credits_remaining", 0) - (1 if quota_info.get("should_deduct") else 0)
+                }
             })
 
         except requests.HTTPError as http_err:

@@ -3,10 +3,17 @@ import json
 import sys
 from http.server import BaseHTTPRequestHandler
 
+# 导入认证工具
+from .auth_utils import (
+    verify_token, check_user_quota, deduct_credit,
+    AuthError, QuotaError
+)
+
 DASHSCOPE_API_KEY = os.environ.get("DASHSCOPE_API_KEY", "")
 
+
 class handler(BaseHTTPRequestHandler):
-    """Vercel Serverless Function handler"""
+    """Vercel Serverless Function handler with authentication"""
 
     def do_GET(self):
         """Handle GET requests for debugging"""
@@ -19,7 +26,8 @@ class handler(BaseHTTPRequestHandler):
             "status": "ok",
             "message": "Translate API is working. Use POST to query.",
             "has_api_key": bool(DASHSCOPE_API_KEY),
-            "python_version": sys.version
+            "python_version": sys.version,
+            "auth_required": True
         }
         self.wfile.write(json.dumps(response, ensure_ascii=False).encode("utf-8"))
 
@@ -34,6 +42,23 @@ class handler(BaseHTTPRequestHandler):
         try:
             import requests
 
+            # ========== 第一步：检查"门票"（验证 Token） ==========
+            auth_header = self.headers.get("Authorization", "")
+            try:
+                user_info = verify_token(auth_header)
+                user_id = user_info["user_id"]
+            except AuthError as e:
+                self._send_json(e.code, {"error": e.message, "code": "AUTH_ERROR"})
+                return
+
+            # ========== 第二步：检查"余额"（用户额度） ==========
+            try:
+                quota_info = check_user_quota(user_id)
+            except QuotaError as e:
+                self._send_json(e.code, {"error": e.message, "code": "QUOTA_EXCEEDED"})
+                return
+
+            # ========== 开始处理业务逻辑 ==========
             content_length = int(self.headers.get("Content-Length", 0))
             body_bytes = self.rfile.read(content_length)
             body_str = ""
@@ -93,6 +118,7 @@ class handler(BaseHTTPRequestHandler):
                 self.end_headers()
 
                 full_text = ""
+                api_success = False
                 try:
                     resp = requests.post(DASHSCOPE_TXT_URL, headers=headers, json=payload, timeout=120, stream=True)
                     resp.raise_for_status()
@@ -127,11 +153,17 @@ class handler(BaseHTTPRequestHandler):
                     done_data = json.dumps({"done": True, "result": structured}, ensure_ascii=False)
                     self.wfile.write(f"data: {done_data}\n\n".encode('utf-8'))
                     self.wfile.flush()
+                    api_success = True
 
                 except Exception as e:
                     error_data = json.dumps({"error": str(e)}, ensure_ascii=False)
                     self.wfile.write(f"data: {error_data}\n\n".encode('utf-8'))
                     self.wfile.flush()
+
+                # ========== 第三步：扣除积分（仅在 API 调用成功后） ==========
+                if api_success and quota_info.get("should_deduct"):
+                    deduct_credit(user_id)
+
             else:
                 # 非流式模式（保持原有逻辑）
                 payload = {
@@ -164,8 +196,17 @@ class handler(BaseHTTPRequestHandler):
                 except:
                     pass
 
+                # ========== 第三步：扣除积分（仅在 API 调用成功后） ==========
+                if quota_info.get("should_deduct"):
+                    deduct_credit(user_id)
+
                 if isinstance(structured, dict):
                     self._normalize_response(structured)
+                    # 添加用户配额信息到响应
+                    structured["_quota"] = {
+                        "is_premium": quota_info.get("is_premium", False),
+                        "credits_remaining": quota_info.get("credits_remaining", 0) - (1 if quota_info.get("should_deduct") else 0)
+                    }
                     self._send_json(200, structured)
                 else:
                     self._send_json(200, {"text": text})

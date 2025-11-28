@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>登录 · 国学智能词典</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="auth.js" defer></script>
+    <style>
+        .login-container {
+            max-width: 440px;
+            margin: 60px auto;
+            padding: 40px 32px;
+            background: linear-gradient(145deg,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(252, 250, 255, 0.95) 50%,
+                rgba(248, 252, 255, 0.92) 100%
+            );
+            border: 1.5px solid var(--border);
+            border-radius: 24px;
+            box-shadow:
+                0 20px 60px rgba(122, 104, 166, 0.15),
+                0 8px 24px rgba(90, 120, 168, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo {
+            font-family: var(--font-calligraphy);
+            font-size: 36px;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #6a50a0 0%, #8668c0 50%, #5a80b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .login-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 28px;
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            font-family: var(--font-serif);
+            font-size: 16px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .login-tab.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .login-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .login-tab:hover {
+            color: var(--ink);
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-family: var(--font-serif);
+            font-size: 14px;
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .form-input {
+            padding: 14px 18px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: var(--font-serif);
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(122, 104, 166, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .login-btn {
+            margin-top: 8px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg,
+                #6a58a0 0%,
+                #7a68b8 30%,
+                #5a78a8 70%,
+                #4a88b8 100%
+            );
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-family: var(--font-serif);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 8px 28px rgba(106, 88, 160, 0.3),
+                0 4px 14px rgba(90, 120, 168, 0.2);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 12px 36px rgba(106, 88, 160, 0.4),
+                0 6px 18px rgba(90, 120, 168, 0.3);
+        }
+
+        .login-btn:disabled {
+            background: linear-gradient(135deg, #9090a0, #b0b0c0);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-error {
+            background: linear-gradient(135deg, #fef5f5, #fce8e8);
+            border: 1px solid rgba(197, 61, 67, 0.3);
+            color: var(--vermilion);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .login-error.visible {
+            display: block;
+        }
+
+        .login-success {
+            background: linear-gradient(135deg, #f0faf0, #e0f5e0);
+            border: 1px solid rgba(67, 160, 71, 0.3);
+            color: #2e7d32;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .login-success.visible {
+            display: block;
+        }
+
+        .login-footer {
+            margin-top: 28px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .login-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .login-container {
+                background: linear-gradient(135deg,
+                    rgba(37, 32, 24, 0.98) 0%,
+                    rgba(26, 21, 16, 0.95) 100%
+                );
+            }
+
+            .form-input {
+                background: rgba(40, 35, 30, 0.8);
+                color: var(--text);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="paper-texture" aria-hidden="true"></div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← 返回词典</a>
+
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo">国学智能词典</div>
+                <p class="login-subtitle">以简驭繁 · 智解文义</p>
+            </div>
+
+            <div class="login-tabs">
+                <button class="login-tab active" data-mode="login">登录</button>
+                <button class="login-tab" data-mode="register">注册</button>
+            </div>
+
+            <div id="login-error" class="login-error"></div>
+            <div id="login-success" class="login-success"></div>
+
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="email">邮箱地址</label>
+                    <input type="email" id="email" class="form-input" placeholder="请输入您的邮箱" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">密码</label>
+                    <input type="password" id="password" class="form-input" placeholder="请输入密码（至少6位）" required minlength="6">
+                </div>
+
+                <button type="submit" id="submit-btn" class="login-btn">登 录</button>
+            </form>
+
+            <div class="login-footer">
+                <p>登录即表示您同意我们的 <a href="#">服务条款</a> 和 <a href="#">隐私政策</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (() => {
+        'use strict';
+
+        const form = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const submitBtn = document.getElementById('submit-btn');
+        const errorDiv = document.getElementById('login-error');
+        const successDiv = document.getElementById('login-success');
+        const tabs = document.querySelectorAll('.login-tab');
+
+        let mode = 'login';
+
+        // 根据 URL 参数设置初始模式
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('mode') === 'register') {
+            mode = 'register';
+            updateTabs();
+        }
+
+        // 如果已登录，跳转回首页
+        if (window.GxAuth && window.GxAuth.isLoggedIn()) {
+            window.location.href = 'index.html';
+        }
+
+        // 切换登录/注册模式
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                mode = tab.dataset.mode;
+                updateTabs();
+                hideMessages();
+            });
+        });
+
+        function updateTabs() {
+            tabs.forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.mode === mode);
+            });
+            submitBtn.textContent = mode === 'login' ? '登 录' : '注 册';
+        }
+
+        function showError(msg) {
+            errorDiv.textContent = msg;
+            errorDiv.classList.add('visible');
+            successDiv.classList.remove('visible');
+        }
+
+        function showSuccess(msg) {
+            successDiv.textContent = msg;
+            successDiv.classList.add('visible');
+            errorDiv.classList.remove('visible');
+        }
+
+        function hideMessages() {
+            errorDiv.classList.remove('visible');
+            successDiv.classList.remove('visible');
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                showError('请填写邮箱和密码');
+                return;
+            }
+
+            if (password.length < 6) {
+                showError('密码至少需要6位');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = mode === 'login' ? '登录中...' : '注册中...';
+
+            try {
+                let result;
+                if (mode === 'login') {
+                    result = await window.GxAuth.login(email, password);
+                } else {
+                    result = await window.GxAuth.register(email, password);
+                }
+
+                if (result.success) {
+                    if (result.needsConfirmation) {
+                        showSuccess(result.message);
+                    } else {
+                        showSuccess(mode === 'login' ? '登录成功！正在跳转...' : '注册成功！正在跳转...');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    }
+                } else {
+                    showError(result.error || '操作失败，请稍后重试');
+                }
+            } catch (e) {
+                showError(e.message || '网络错误，请检查连接');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = mode === 'login' ? '登 录' : '注 册';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

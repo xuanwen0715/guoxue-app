@@ -115,7 +115,11 @@
     requestAnimationFrame(() => overlay.classList.add('visible'));
   }
 
-  async function fetchApiJson(path, options) {
+  async function fetchApiJson(path, options = {}) {
+    // 添加认证头
+    const authHeaders = window.GxAuth ? window.GxAuth.getAuthHeader() : {};
+    options.headers = { ...options.headers, ...authHeaders };
+
     const primary = (API_BASE ? API_BASE : '') + path;
     try {
       const resp = await fetch(primary, options);
@@ -131,6 +135,15 @@
       }
       throw e;
     }
+  }
+
+  // 检查是否需要登录
+  function requireLogin() {
+    if (window.GxAuth && !window.GxAuth.isLoggedIn()) {
+      window.GxAuth.showLoginPrompt('请先登录后使用查询功能');
+      return false;
+    }
+    return true;
   }
   const ctxInput = $('context-input');
   const ctxDropZone = document.getElementById('context-drop-zone');
@@ -478,6 +491,11 @@
   }
 
   async function handleSubmit() {
+    // 检查是否需要登录（模拟模式下跳过）
+    if (!MOCK_MODE && !requireLogin()) {
+      return;
+    }
+
     const context = ctxInput.value;
     const word = wordInput.value;
 
@@ -503,9 +521,10 @@
         pushHistory({ word, context, data });
       } else {
         // 使用流式输出
+        const authHeaders = window.GxAuth ? window.GxAuth.getAuthHeader() : {};
         const response = await fetch('/api/translate', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...authHeaders },
           body: JSON.stringify({
             context,
             word,
@@ -515,7 +534,18 @@
         });
 
         if (!response.ok) {
-          throw new Error(`查询失败: ${response.status}`);
+          // 尝试解析错误响应
+          try {
+            const errorData = await response.json();
+            // 处理认证/配额错误
+            if (window.GxAuth && window.GxAuth.handleApiError(errorData)) {
+              return;
+            }
+            throw new Error(errorData.error || `查询失败: ${response.status}`);
+          } catch (e) {
+            if (e.message.includes('查询失败')) throw e;
+            throw new Error(`查询失败: ${response.status}`);
+          }
         }
 
         // 检查是否是流式响应
@@ -551,6 +581,10 @@
                     if (eventData.done && eventData.result) {
                       // 完成，渲染结构化结果
                       data = eventData.result;
+                      // 更新配额信息
+                      if (data._quota && window.GxAuth) {
+                        window.GxAuth.updateQuota(data._quota);
+                      }
                       renderResult(data, { word, context });
                       pushHistory({ word, context, data });
                     }
@@ -566,6 +600,10 @@
         } else {
           // 非流式响应，使用原有逻辑
           data = await response.json();
+          // 更新配额信息
+          if (data._quota && window.GxAuth) {
+            window.GxAuth.updateQuota(data._quota);
+          }
           renderResult(data, { word, context });
           pushHistory({ word, context, data });
         }
