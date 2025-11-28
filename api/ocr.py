@@ -43,7 +43,7 @@ def _get_ocr_client():
 
 
 def _call_aliyun_ocr(image_base64: str) -> str:
-    """调用阿里云专业 OCR API"""
+    """调用阿里云高精 OCR API (RecognizeAdvanced)"""
     client = _get_ocr_client()
     if not client:
         raise Exception("Aliyun OCR client not available")
@@ -57,12 +57,19 @@ def _call_aliyun_ocr(image_base64: str) -> str:
     image_bytes = base64.b64decode(image_base64)
     body_stream = BytesIO(image_bytes)
 
-    request = ocr_models.RecognizeGeneralRequest(body=body_stream)
+    # 使用 RecognizeAdvanced（全文高精识别）
+    # 支持生僻字、自动旋转、去印章等功能
+    request = ocr_models.RecognizeAdvancedRequest(
+        body=body_stream,
+        need_rotate=True,      # 自动旋转校正
+        output_char_info=False, # 不需要单字信息
+        no_stamp=True,         # 去除印章干扰
+    )
     runtime = util_models.RuntimeOptions()
     runtime.read_timeout = 30000
     runtime.connect_timeout = 10000
 
-    response = client.recognize_general_with_options(request, runtime)
+    response = client.recognize_advanced_with_options(request, runtime)
 
     if response.body and response.body.data:
         data = response.body.data
