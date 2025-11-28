@@ -1901,6 +1901,261 @@ body::before{
   background-clip: text;
 }
 
+/* ===== 使用指南按钮与面板 ===== */
+.help-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px 18px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.1) 0%,
+    rgba(90, 128, 176, 0.08) 100%
+  );
+  border: 1.5px solid rgba(122, 104, 166, 0.3);
+  border-radius: 20px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.help-toggle-btn:hover {
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.18) 0%,
+    rgba(90, 128, 176, 0.12) 100%
+  );
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(122, 104, 166, 0.15);
+}
+
+.help-toggle-btn .help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.help-panel {
+  margin-top: 20px;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(252, 250, 255, 0.95) 50%,
+    rgba(248, 252, 255, 0.92) 100%
+  );
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  box-shadow:
+    0 10px 40px rgba(122, 104, 166, 0.12),
+    0 4px 16px rgba(90, 120, 168, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  animation: help-slide-down 0.3s ease;
+}
+
+@keyframes help-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.help-panel[hidden] {
+  display: none;
+}
+
+.help-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.08) 0%,
+    rgba(90, 128, 176, 0.05) 100%
+  );
+  border-bottom: 1px solid rgba(122, 104, 166, 0.1);
+}
+
+.help-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--font-calligraphy);
+  font-size: 20px;
+  color: var(--ink);
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.help-panel-icon {
+  font-size: 22px;
+}
+
+.help-close-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.help-close-btn:hover {
+  background: rgba(122, 104, 166, 0.1);
+  border-color: rgba(122, 104, 166, 0.2);
+  color: var(--text);
+}
+
+.help-panel-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 24px;
+}
+
+.help-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.help-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  color: white;
+  font-family: var(--font-calligraphy);
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 6px;
+}
+
+.help-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.help-list li {
+  position: relative;
+  padding: 6px 0 6px 16px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.help-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.help-list li strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.help-panel-footer {
+  padding: 14px 24px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.05) 0%,
+    rgba(90, 128, 176, 0.03) 100%
+  );
+  border-top: 1px solid rgba(122, 104, 166, 0.08);
+}
+
+.help-tip {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ===== 拖拽覆盖层 ===== */
+.context-drop {
+  position: relative;
+}
+
+.drop-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.15) 0%,
+    rgba(90, 128, 176, 0.1) 100%
+  );
+  border: 3px dashed var(--accent);
+  border-radius: 14px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.context-drop.dragover .drop-overlay {
+  display: flex;
+  animation: drop-pulse 1s ease-in-out infinite;
+}
+
+@keyframes drop-pulse {
+  0%, 100% {
+    border-color: var(--accent);
+    background: rgba(122, 104, 166, 0.12);
+  }
+  50% {
+    border-color: var(--secondary);
+    background: rgba(122, 104, 166, 0.18);
+  }
+}
+
+.drop-overlay-icon {
+  font-size: 48px;
+  animation: drop-bounce 0.6s ease infinite;
+}
+
+@keyframes drop-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.drop-overlay-text {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
 /* ===== 统一上传区域样式 - 青紫仙韵 ===== */
 .upload-zone {
   position: relative;

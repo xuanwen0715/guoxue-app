@@ -914,6 +914,42 @@
   loadPrefs();
   loadHistory();
   initializeModeNotice();
+  initHelpPanel();
+
+  // 初始化帮助面板
+  function initHelpPanel() {
+    const helpToggle = document.getElementById('help-toggle');
+    const helpPanel = document.getElementById('help-panel');
+    const helpClose = document.getElementById('help-close');
+
+    if (!helpToggle || !helpPanel) return;
+
+    helpToggle.addEventListener('click', () => {
+      const isHidden = helpPanel.hidden;
+      helpPanel.hidden = !isHidden;
+      helpToggle.setAttribute('aria-expanded', String(isHidden));
+
+      if (isHidden) {
+        // 展开时滚动到面板
+        helpPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+
+    helpClose?.addEventListener('click', () => {
+      helpPanel.hidden = true;
+      helpToggle.setAttribute('aria-expanded', 'false');
+    });
+
+    // 点击面板外部关闭
+    document.addEventListener('click', (e) => {
+      if (!helpPanel.hidden &&
+          !helpPanel.contains(e.target) &&
+          !helpToggle.contains(e.target)) {
+        helpPanel.hidden = true;
+        helpToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
   function flashButton(btn, tempText) {
     const old = btn.textContent;

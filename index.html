@@ -33,10 +33,64 @@
                 <span class="divider-line"></span>
             </div>
 
+            <!-- 功能说明按钮 -->
+            <button id="help-toggle" class="help-toggle-btn" type="button" aria-expanded="false" aria-controls="help-panel">
+                <span class="help-icon">?</span>
+                <span class="help-text">使用指南</span>
+            </button>
+
             <div id="mock-mode-notice" style="background: #fff3cd; border: 1px solid #ffd60e; border-radius: 6px; padding: 8px; margin: 10px 0; text-align: center; font-size: 14px; display: none;">
                 <strong>演示模式</strong> - 当前使用模拟数据，如需真实AI查询请配置API服务器
             </div>
         </header>
+
+        <!-- 功能说明面板 -->
+        <div id="help-panel" class="help-panel" hidden>
+            <div class="help-panel-header">
+                <h3 class="help-panel-title">
+                    <span class="help-panel-icon">📖</span>
+                    使用指南 · User Guide
+                </h3>
+                <button id="help-close" class="help-close-btn" type="button" aria-label="关闭">×</button>
+            </div>
+            <div class="help-panel-content">
+                <div class="help-section">
+                    <h4><span class="help-num">壹</span> 古文原文输入</h4>
+                    <ul class="help-list">
+                        <li><strong>直接输入</strong>：在文本框中粘贴或输入古文段落</li>
+                        <li><strong>截图识别</strong>：点击「识别原文截图」按钮上传图片</li>
+                        <li><strong>拖拽上传</strong>：直接将图片拖入文本框区域</li>
+                        <li><strong>粘贴图片</strong>：复制图片后在文本框按 Ctrl+V</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4><span class="help-num">贰</span> 字词查询</h4>
+                    <ul class="help-list">
+                        <li><strong>输入查询</strong>：输入要查询的字或词，按 Enter 快速查询</li>
+                        <li><strong>生僻字识别</strong>：遇到难以输入的字，上传截图自动识别</li>
+                        <li><strong>上下文理解</strong>：结合原文语境，AI 给出更准确的释义</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4><span class="help-num">叁</span> OCR 智能纠错</h4>
+                    <ul class="help-list">
+                        <li>系统会自动检测 OCR 可能的识别错误</li>
+                        <li>提供原始结果与 AI 建议两个版本供选择</li>
+                        <li>支持古籍竖排、繁体字、生僻字识别</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4><span class="help-num">肆</span> 历史记录</h4>
+                    <ul class="help-list">
+                        <li>查询记录自动保存，点击可快速回顾</li>
+                        <li>支持收藏、导出、导入功能</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="help-panel-footer">
+                <p class="help-tip">💡 提示：高质量的图片能显著提升识别准确率</p>
+            </div>
+        </div>
 
         <!-- Phoenix decor - 绚丽凤凰装饰 -->
         <div class="phoenix-decor" aria-hidden="true">
@@ -49,7 +103,11 @@
             古文原文 / Classical Text
         </label>
         <div class="context-drop" id="context-drop-zone" aria-label="粘贴/拖拽原文截图或点击上传">
-            <textarea id="context-input" class="field" placeholder="粘贴古文原文，或输入需要查询的上下文..." spellcheck="false"></textarea>
+            <textarea id="context-input" class="field" placeholder="粘贴古文原文，或输入需要查询的上下文...&#10;&#10;💡 支持：直接拖拽图片到此处 / 粘贴截图 (Ctrl+V)" spellcheck="false"></textarea>
+            <div class="drop-overlay" aria-hidden="true">
+                <span class="drop-overlay-icon">📷</span>
+                <span class="drop-overlay-text">松开鼠标，开始识别</span>
+            </div>
         </div>
         <div class="upload-zone" id="context-upload-zone">
             <div class="upload-zone-content">
