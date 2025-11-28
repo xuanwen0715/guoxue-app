@@ -1,28 +1,28 @@
-/* 国风墨韵配色体系 - 古典增强版 */
+/* 国风墨韵配色体系 - 明亮青紫版 */
 :root {
-  /* 基础色调 - 宣纸与淡紫墨韵 */
-  --bg: #f5f3f8;              /* 淡紫宣纸 */
-  --card: #fdfcff;            /* 微紫白卡片 */
+  /* 基础色调 - 明亮宣纸 */
+  --bg: #f8f6fb;              /* 更亮的淡紫宣纸 */
+  --card: #ffffff;            /* 纯白卡片 */
   --text: #3d3246;            /* 深紫墨字 */
   --muted: #6a5d7a;           /* 淡紫墨 */
-  --border: #e0d8e8;          /* 淡紫边框 */
+  --border: #e8e0f0;          /* 淡紫边框 */
 
-  /* 国风色彩 - 青紫搭配 */
-  --ink: #2c4a5e;             /* 青墨色 */
-  --ink-2: #1e3a4d;           /* 深青墨 */
-  --accent: #6b5b8a;          /* 藤紫色 */
-  --secondary: #8b7baa;       /* 淡藤紫 */
-  --vermilion: #c53d43;       /* 朱红 - 印章 */
-  --gold: #b8a8d8;            /* 淡紫金 */
-  --purple-mist: rgba(160, 140, 200, 0.18);  /* 紫云雾 */
-  --purple-glow: rgba(140, 120, 180, 0.12);  /* 紫霞光晕 */
-  --cyan-mist: rgba(100, 160, 180, 0.12);    /* 青云雾 */
+  /* 国风色彩 - 饱和青紫 */
+  --ink: #3a6080;             /* 更饱和的青墨色 */
+  --ink-2: #2a5070;           /* 深青墨 */
+  --accent: #7a68a6;          /* 更饱和的藤紫色 */
+  --secondary: #9a88c0;       /* 更饱和的淡藤紫 */
+  --vermilion: #d64550;       /* 更亮的朱红 */
+  --gold: #c8b0e8;            /* 更亮的淡紫金 */
+  --purple-mist: rgba(140, 100, 200, 0.22);  /* 更饱和紫云雾 */
+  --purple-glow: rgba(120, 90, 180, 0.15);   /* 紫霞光晕 */
+  --cyan-mist: rgba(80, 150, 200, 0.15);     /* 更饱和青云雾 */
 
   /* 特殊效果色 */
-  --ring: rgba(107, 91, 138, 0.2);     /* 紫色光晕 */
-  --shadow: rgba(61, 50, 70, 0.1);     /* 淡紫阴影 */
-  --gradient-start: rgba(160, 140, 200, 0.15);   /* 紫渐变 */
-  --gradient-end: rgba(100, 160, 180, 0.12);     /* 青渐变 */
+  --ring: rgba(122, 104, 166, 0.25);   /* 紫色光晕 */
+  --shadow: rgba(61, 50, 70, 0.12);    /* 淡紫阴影 */
+  --gradient-start: rgba(140, 100, 200, 0.18);  /* 紫渐变 */
+  --gradient-end: rgba(80, 150, 200, 0.15);     /* 青渐变 */
 
   /* 古典字体 */
   --font-calligraphy: 'Ma Shan Zheng', 'ZCOOL XiaoWei', 'STKaiti', 'KaiTi', cursive;
@@ -129,28 +129,33 @@ body::after, html::after{ content: none; background: none; }
   opacity: 1;
 }
 
-/* 书法风格标题 */
+/* 书法风格标题 - 紫色渐变 */
 .title-calligraphy {
   margin: 0 0 12px;
   font-family: var(--font-calligraphy);
-  font-size: clamp(32px, 6vw, 52px);
+  font-size: clamp(38px, 7vw, 60px);
   font-weight: 400;
-  letter-spacing: 8px;
-  color: var(--ink);
+  letter-spacing: 10px;
+  background: linear-gradient(135deg, #6a50a0 0%, #8668c0 50%, #5a80b0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   position: relative;
   z-index: 2;
-  text-shadow:
-    2px 2px 4px rgba(0, 0, 0, 0.1),
-    -1px -1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: none;
+  filter: drop-shadow(2px 2px 4px rgba(100, 80, 160, 0.2));
 }
 
 .header h1 {
   margin: 0 0 12px;
   font-family: var(--font-calligraphy);
-  font-size: clamp(32px, 6vw, 52px);
+  font-size: clamp(38px, 7vw, 60px);
   font-weight: 400;
-  letter-spacing: 8px;
-  color: var(--ink);
+  letter-spacing: 10px;
+  background: linear-gradient(135deg, #6a50a0 0%, #8668c0 50%, #5a80b0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   position: relative;
   z-index: 2;
 }
