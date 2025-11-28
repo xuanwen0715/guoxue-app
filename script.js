@@ -833,50 +833,77 @@
 
   function handleExportHistory() {
     try {
-      // 简化导出格式，只保留用户关心的内容
+      // 简化导出格式，只保留有内容的字段
       const exportItems = history.map(item => {
         const data = item.data || {};
-        return {
-          // 基本信息
-          查询词: item.word || '',
-          查询时间: new Date(item.ts).toLocaleString('zh-CN'),
-          收藏: item.favorite ? '是' : '否',
+        const result = {};
 
-          // 上下文（如有）
-          ...(item.context ? { 古文原文: item.context } : {}),
+        // 基本信息（必有）
+        result['【查询词】'] = item.word || '';
+        result['【时间】'] = new Date(item.ts).toLocaleString('zh-CN');
 
-          // 查询结果 - 简化版
-          拼音: data.pinyin || '',
-          繁体: data.traditional || '',
-          部首: data.radical || '',
-          笔画: data.strokes || '',
+        // 可选字段，只在有内容时添加
+        if (item.favorite) result['【收藏】'] = '★';
+        if (item.context) result['【古文原文】'] = item.context;
+        if (data.pinyin) result['【拼音】'] = data.pinyin;
+        if (data.traditional && data.traditional !== item.word) result['【繁体】'] = data.traditional;
+        if (data.radical) result['【部首】'] = data.radical;
+        if (data.strokes) result['【笔画】'] = String(data.strokes);
 
-          // 释义
-          中文释义: data.explanation_zh || data.explanation || '',
-          英文释义: data.explanation_en || '',
+        // 释义
+        const zhExp = data.explanation_zh || data.explanation || '';
+        if (zhExp) result['【释义】'] = zhExp.replace(/\[b\]/g, '').replace(/\[\/b\]/g, '');
 
-          // 出处和例句（合并为文本）
-          出处: Array.isArray(data.sources_zh) ? data.sources_zh.join('；') : '',
-          例句: Array.isArray(data.examples_zh) ? data.examples_zh.join('；') : '',
+        // 出处
+        const sources = Array.isArray(data.sources_zh) ? data.sources_zh : [];
+        if (sources.length) {
+          result['【出处】'] = sources.map(s => s.replace(/\[b\]/g, '').replace(/\[\/b\]/g, '')).join('\n');
+        }
 
-          // 字形演变
-          ...(data.evolution_zh ? { 字形演变: data.evolution_zh } : {}),
-        };
+        // 例句
+        const examples = Array.isArray(data.examples_zh) ? data.examples_zh : [];
+        if (examples.length) {
+          result['【例句】'] = examples.map(s => s.replace(/\[b\]/g, '').replace(/\[\/b\]/g, '')).join('\n');
+        }
+
+        return result;
       });
 
-      const exportData = {
-        导出时间: new Date().toLocaleString('zh-CN'),
-        来源: '国学智能词典',
-        记录数: exportItems.length,
-        历史记录: exportItems
-      };
+      // 生成更易读的文本格式
+      let textContent = `═══════════════════════════════════════\n`;
+      textContent += `        国学智能词典 · 查询记录\n`;
+      textContent += `═══════════════════════════════════════\n`;
+      textContent += `导出时间：${new Date().toLocaleString('zh-CN')}\n`;
+      textContent += `记录数量：${exportItems.length} 条\n`;
+      textContent += `═══════════════════════════════════════\n\n`;
 
-      const data = JSON.stringify(exportData, null, 2);
-      const blob = new Blob([data], { type: 'application/json' });
+      exportItems.forEach((item, index) => {
+        textContent += `┌─────── 第 ${index + 1} 条 ───────┐\n`;
+        for (const [key, value] of Object.entries(item)) {
+          if (value) {
+            const lines = String(value).split('\n');
+            if (lines.length === 1) {
+              textContent += `${key} ${value}\n`;
+            } else {
+              textContent += `${key}\n`;
+              lines.forEach(line => {
+                textContent += `  · ${line}\n`;
+              });
+            }
+          }
+        }
+        textContent += `└────────────────────────┘\n\n`;
+      });
+
+      textContent += `═══════════════════════════════════════\n`;
+      textContent += `        ~ 以简驭繁 · 智解文义 ~\n`;
+      textContent += `═══════════════════════════════════════\n`;
+
+      const blob = new Blob([textContent], { type: 'text/plain; charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       const now = new Date();
-      const name = `国学词典-查询记录-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.json`;
+      const name = `国学词典-查询记录-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.txt`;
       a.href = url; a.download = name; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
       flashButton(exportHistoryBtn, '已导出');
     } catch {
