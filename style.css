@@ -172,33 +172,48 @@ body::after, html::after{ content: none; background: none; }
   z-index: 2;
 }
 
-/* 标题下方古典分隔线 */
+/* 标题下方古典分隔线 - 青紫仙韵 */
 .title-divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-top: 20px;
+  gap: 14px;
+  margin-top: 24px;
 }
 
 .title-divider .divider-line {
-  width: 80px;
-  height: 1px;
+  width: 100px;
+  height: 2px;
+  border-radius: 1px;
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--secondary) 30%,
-    var(--accent) 50%,
-    var(--secondary) 70%,
+    rgba(154, 136, 192, 0.5) 30%,
+    rgba(122, 104, 166, 0.7) 50%,
+    rgba(154, 136, 192, 0.5) 70%,
     transparent 100%
   );
 }
 
 .title-divider .divider-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
   transform: rotate(45deg);
-  box-shadow: 0 0 8px rgba(139, 69, 19, 0.3);
+  box-shadow:
+    0 0 12px rgba(122, 104, 166, 0.4),
+    0 0 20px rgba(122, 104, 166, 0.2);
+  animation: dot-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% {
+    transform: rotate(45deg) scale(1);
+    box-shadow: 0 0 12px rgba(122, 104, 166, 0.4);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.1);
+    box-shadow: 0 0 18px rgba(122, 104, 166, 0.6);
+  }
 }
 
 /* 国风雅致标签设计 */
@@ -232,48 +247,57 @@ body::after, html::after{ content: none; background: none; }
   box-shadow: 0 2px 6px rgba(139, 69, 19, 0.25);
 }
 
-/* 国风简雅输入框设计 */
+/* 国风简雅输入框设计 - 青紫仙韵 */
 .field {
   width: 100%;
-  background: var(--card);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(252, 250, 255, 0.95) 100%
+  );
   color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
   padding: 16px 20px;
   font-size: 15px;
-  line-height: 1.6;
+  font-family: var(--font-serif);
+  line-height: 1.7;
   outline: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-sizing: border-box;
-  /* 雅致阴影 */
+  /* 雅致阴影 - 紫色调 */
   box-shadow:
-    0 2px 8px var(--shadow),
-    0 1px 2px rgba(0, 0, 0, 0.02);
-
-  /* 内部光晕效果 */
+    0 3px 12px rgba(122, 104, 166, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   position: relative;
 }
 
 .field::placeholder {
   color: var(--muted);
-  opacity: 0.7;
-  font-style: italic;
+  opacity: 0.65;
+  font-style: normal;
+  letter-spacing: 0.5px;
 }
 
 .field:focus-visible {
   border-color: var(--accent);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(250, 248, 255, 0.98) 100%
+  );
   box-shadow:
-    0 0 0 3px var(--ring),
-    0 4px 16px var(--shadow),
-    0 2px 4px rgba(0, 0, 0, 0.03);
-  background: var(--card);
+    0 0 0 4px rgba(122, 104, 166, 0.15),
+    0 6px 20px rgba(122, 104, 166, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .field:hover {
   border-color: var(--secondary);
   box-shadow:
-    0 4px 12px var(--shadow),
-    0 2px 4px rgba(0, 0, 0, 0.03);
+    0 5px 16px rgba(122, 104, 166, 0.1),
+    0 2px 5px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 textarea.field { min-height: 140px; resize: vertical; }
 /* Center placeholder only (when empty), keep typed text left-aligned */
@@ -368,7 +392,7 @@ textarea.field { min-height: 140px; resize: vertical; }
 /* 并排时保持上传框与输入框顶部对齐 */
 .inline-fields .uploader-wrapper { margin-top: 0; }
 /* 还原为容器内满宽显示 */
-/* 国风典雅卡片设计 */
+/* 国风典雅卡片设计 - 青紫仙韵 */
 .inline-field {
   max-width: 100%;
   margin-left: 0;
@@ -377,30 +401,53 @@ textarea.field { min-height: 140px; resize: vertical; }
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: linear-gradient(135deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(248, 250, 252, 0.8) 100%
+  padding: 22px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(252, 250, 255, 0.88) 50%,
+    rgba(248, 252, 255, 0.85) 100%
   );
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   justify-content: center;
   align-items: center;
   box-shadow:
-    0 4px 20px var(--shadow),
-    0 1px 3px rgba(0, 0, 0, 0.02),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    0 6px 24px rgba(122, 104, 166, 0.1),
+    0 2px 8px rgba(90, 120, 168, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(122, 104, 166, 0.03);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 卡片微光效果 */
+.inline-field::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 20%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.8) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .inline-field:hover {
-  border-color: var(--secondary);
+  border-color: rgba(122, 104, 166, 0.35);
   box-shadow:
-    0 8px 32px var(--shadow),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
+    0 10px 36px rgba(122, 104, 166, 0.14),
+    0 4px 12px rgba(90, 120, 168, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(122, 104, 166, 0.05);
+  transform: translateY(-2px);
 }
 .inline-field .field-label { text-align: center; font-size: 16px; }
 .inline-field .field { border-color: transparent; background: transparent; }
@@ -530,27 +577,27 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
 .btn:active { transform: translateY(1px); }
 .btn:focus-visible { box-shadow: 0 0 0 6px var(--ring); outline: none; }
 
-/* 国风典雅主按钮设计 */
+/* 国风典雅主按钮设计 - 青紫渐变 */
 .btn-primary {
   background: linear-gradient(135deg,
-    #2c5f7d 0%,     /* 深青墨 */
-    #3d7ea6 30%,    /* 湖青 */
-    #4a90b8 70%,    /* 天青 */
-    #5aa3cc 100%    /* 浅青 */
+    #6a58a0 0%,     /* 藤紫 */
+    #7a68b8 30%,    /* 亮紫 */
+    #5a78a8 70%,    /* 青紫 */
+    #4a88b8 100%    /* 天青 */
   );
   color: #ffffff;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 14px 32px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 14px 36px;
   font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   position: relative;
   overflow: hidden;
   box-shadow:
-    0 8px 24px rgba(44, 95, 125, 0.25),
-    0 4px 12px rgba(44, 95, 125, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 8px 28px rgba(106, 88, 160, 0.3),
+    0 4px 14px rgba(90, 120, 168, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -563,11 +610,11 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
   right: -2px;
   bottom: -2px;
   background: linear-gradient(45deg,
-    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.15),
     rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0.1)
+    rgba(255, 255, 255, 0.15)
   );
-  border-radius: 20px;
+  border-radius: 25px;
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -575,17 +622,17 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
 
 .btn-primary:hover {
   background: linear-gradient(135deg,
-    #1e4a61 0%,
-    #2d6b8f 30%,
-    #3a7da4 70%,
-    #4990b8 100%
+    #5a48a0 0%,
+    #6a58b8 30%,
+    #4a68a8 70%,
+    #3a78b8 100%
   );
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.35);
   box-shadow:
-    0 12px 32px rgba(44, 95, 125, 0.35),
-    0 6px 16px rgba(44, 95, 125, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
+    0 12px 36px rgba(106, 88, 160, 0.4),
+    0 6px 18px rgba(90, 120, 168, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
 }
 
 .btn-primary:hover::before {
@@ -595,13 +642,13 @@ label[for="context-input"].field-label { text-align: center; font-size: 16px; }
 .btn-primary:active {
   transform: translateY(0px);
   box-shadow:
-    0 4px 16px rgba(44, 95, 125, 0.3),
-    0 2px 8px rgba(44, 95, 125, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 4px 16px rgba(106, 88, 160, 0.35),
+    0 2px 8px rgba(90, 120, 168, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary:disabled {
-  background: linear-gradient(135deg, #6b7280, #9ca3af);
+  background: linear-gradient(135deg, #9090a0, #b0b0c0);
   border-color: rgba(255, 255, 255, 0.1);
   cursor: not-allowed;
   opacity: 0.7;
@@ -1131,23 +1178,26 @@ body::before{
   }
 }
 
-/* ===== 古典分隔线装饰 ===== */
+/* ===== 古典分隔线装饰 - 青紫仙韵 ===== */
 .section-divider {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin: 28px 0;
+  margin: 32px 0;
   padding: 0 20px;
 }
 
 .section-divider .divider-wing {
   flex: 1;
-  max-width: 120px;
-  height: 1px;
+  max-width: 140px;
+  height: 2px;
+  border-radius: 1px;
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--secondary) 50%,
+    rgba(154, 136, 192, 0.4) 30%,
+    rgba(122, 104, 166, 0.6) 50%,
+    rgba(154, 136, 192, 0.4) 70%,
     transparent 100%
   );
 }
@@ -1155,29 +1205,38 @@ body::before{
 .section-divider .divider-wing.left {
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--secondary) 100%
+    rgba(90, 128, 176, 0.3) 40%,
+    rgba(122, 104, 166, 0.5) 100%
   );
 }
 
 .section-divider .divider-wing.right {
   background: linear-gradient(90deg,
-    var(--secondary) 0%,
+    rgba(122, 104, 166, 0.5) 0%,
+    rgba(90, 128, 176, 0.3) 60%,
     transparent 100%
   );
 }
 
 .section-divider .divider-center {
   color: var(--accent);
-  font-size: 14px;
-  opacity: 0.7;
+  font-size: 16px;
+  opacity: 0.8;
+  text-shadow: 0 0 8px rgba(122, 104, 166, 0.3);
+  animation: divider-glow 3s ease-in-out infinite;
 }
 
-/* 历史区域分隔线 */
+@keyframes divider-glow {
+  0%, 100% { opacity: 0.6; text-shadow: 0 0 8px rgba(122, 104, 166, 0.2); }
+  50% { opacity: 1; text-shadow: 0 0 12px rgba(122, 104, 166, 0.4); }
+}
+
+/* 历史区域分隔线 - 青紫仙韵 */
 .history-divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 40px auto 30px;
+  margin: 48px auto 36px;
   max-width: 1000px;
   padding: 0 20px;
 }
@@ -1186,79 +1245,93 @@ body::before{
 .history-divider::after {
   content: '';
   flex: 1;
-  height: 1px;
+  height: 2px;
+  border-radius: 1px;
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--border) 50%,
+    rgba(122, 104, 166, 0.25) 30%,
+    rgba(154, 136, 192, 0.35) 50%,
+    rgba(122, 104, 166, 0.25) 70%,
     transparent 100%
   );
 }
 
 .history-divider .divider-ornament {
-  padding: 0 20px;
-  color: var(--secondary);
-  font-size: 12px;
+  padding: 0 24px;
+  color: var(--accent);
+  font-size: 14px;
+  opacity: 0.8;
+  text-shadow: 0 0 6px rgba(122, 104, 166, 0.3);
 }
 
-/* ===== 卷轴风格结果框 ===== */
+/* ===== 卷轴风格结果框 - 青紫仙韵 ===== */
 .result-box.scroll-style {
   position: relative;
-  margin-top: 24px;
-  padding: 16px 20px;
-  background: linear-gradient(135deg,
-    #fffef8 0%,
-    #f8f5f0 50%,
-    #fffef8 100%
+  margin-top: 28px;
+  padding: 24px 28px;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(252, 250, 255, 0.95) 30%,
+    rgba(248, 252, 255, 0.92) 70%,
+    rgba(255, 255, 255, 0.98) 100%
   );
   border: 2px solid var(--border);
-  border-radius: 4px;
+  border-radius: 8px;
   min-height: auto;
   box-shadow:
-    0 8px 32px var(--shadow),
-    inset 0 0 60px rgba(212, 165, 116, 0.05);
+    0 12px 40px rgba(122, 104, 166, 0.12),
+    0 4px 16px rgba(90, 120, 168, 0.06),
+    inset 0 0 80px rgba(122, 104, 166, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   font-family: var(--font-serif);
 }
 
-/* 卷轴装饰角 */
+/* 卷轴装饰角 - 青紫仙韵 */
 .scroll-corner {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border: 2px solid var(--secondary);
-  opacity: 0.5;
+  opacity: 0.6;
   pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.result-box.scroll-style:hover .scroll-corner {
+  opacity: 0.8;
+  border-color: var(--accent);
 }
 
 .scroll-corner.top-left {
-  top: 4px;
-  left: 4px;
+  top: 6px;
+  left: 6px;
   border-right: none;
   border-bottom: none;
-  border-radius: 4px 0 0 0;
+  border-radius: 6px 0 0 0;
 }
 
 .scroll-corner.top-right {
-  top: 4px;
-  right: 4px;
+  top: 6px;
+  right: 6px;
   border-left: none;
   border-bottom: none;
-  border-radius: 0 4px 0 0;
+  border-radius: 0 6px 0 0;
 }
 
 .scroll-corner.bottom-left {
-  bottom: 4px;
-  left: 4px;
+  bottom: 6px;
+  left: 6px;
   border-right: none;
   border-top: none;
-  border-radius: 0 0 0 4px;
+  border-radius: 0 0 0 6px;
 }
 
 .scroll-corner.bottom-right {
-  bottom: 4px;
-  right: 4px;
+  bottom: 6px;
+  right: 6px;
   border-left: none;
   border-top: none;
-  border-radius: 0 0 4px 0;
+  border-radius: 0 0 6px 0;
 }
 
 /* 深色模式卷轴 */
@@ -1491,68 +1564,96 @@ body::before{
   }
 }
 
-/* ===== 历史记录区域 - 古典卡片风格 ===== */
+/* ===== 历史记录区域 - 古典卡片风格 青紫仙韵 ===== */
 .history {
   max-width: 1000px;
-  margin: 0 auto 40px;
+  margin: 0 auto 48px;
   padding: 0 20px;
 }
 
 .history-card {
-  background: linear-gradient(135deg,
-    rgba(255, 254, 248, 0.95) 0%,
-    rgba(248, 245, 240, 0.9) 100%
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(252, 250, 255, 0.9) 50%,
+    rgba(248, 252, 255, 0.88) 100%
   );
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
   box-shadow:
-    0 8px 32px var(--shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    0 10px 40px rgba(122, 104, 166, 0.1),
+    0 4px 16px rgba(90, 120, 168, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 历史卡片顶部光晕 */
+.history-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.9) 20%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.9) 80%,
+    transparent 100%
+  );
 }
 
 .history-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1.5px solid rgba(122, 104, 166, 0.15);
 }
 
 .history-title {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin: 0;
   font-family: var(--font-calligraphy);
-  font-size: 24px;
+  font-size: 26px;
   color: var(--ink);
   font-weight: 400;
-  letter-spacing: 4px;
+  letter-spacing: 5px;
+  background: linear-gradient(135deg, #5a6080 0%, #7a68a6 50%, #5a80b0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .history-subtitle {
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--muted);
   font-weight: 400;
   letter-spacing: 1px;
-  margin-left: 8px;
+  margin-left: 10px;
+  -webkit-text-fill-color: var(--muted);
 }
 
 .history-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 50%, #5a80b0 100%);
   color: white;
   font-family: var(--font-calligraphy);
-  font-size: 18px;
-  border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(139, 69, 19, 0.25);
+  font-size: 20px;
+  border-radius: 10px;
+  box-shadow:
+    0 4px 14px rgba(122, 104, 166, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* 工具栏 */
@@ -1655,46 +1756,60 @@ body::before{
   border-color: var(--vermilion);
 }
 
-/* 历史列表 */
+/* 历史列表 - 青紫仙韵 */
 .history-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .history-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
-  border: 1px solid var(--border);
+  gap: 14px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--border);
   border-left: 4px solid var(--secondary);
-  border-radius: 0 12px 12px 0;
-  background: var(--card);
+  border-radius: 0 14px 14px 0;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(252, 250, 255, 0.9) 100%
+  );
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   font-family: var(--font-serif);
+  box-shadow:
+    0 2px 8px rgba(122, 104, 166, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .history-item:hover {
   border-left-color: var(--accent);
-  background: linear-gradient(135deg, #fffef8, #f8f5f0);
-  box-shadow: 0 4px 16px var(--shadow);
-  transform: translateX(4px);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(250, 248, 255, 0.95) 100%
+  );
+  box-shadow:
+    0 6px 20px rgba(122, 104, 166, 0.12),
+    0 2px 8px rgba(90, 120, 168, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transform: translateX(6px);
 }
 
 .history-term {
   font-family: var(--font-calligraphy);
-  font-size: 20px;
+  font-size: 22px;
   color: var(--ink);
+  letter-spacing: 1px;
 }
 
 .history-meta {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
+  opacity: 0.85;
 }
 
 /* 收藏按钮 */
@@ -1753,52 +1868,61 @@ body::before{
   opacity: 0.7;
 }
 
-/* 页脚 */
+/* 页脚 - 青紫仙韵 */
 .footer {
   text-align: center;
-  padding: 24px 16px 40px;
+  padding: 28px 16px 48px;
   color: var(--muted);
 }
 
 .footer-divider {
-  width: 120px;
-  height: 1px;
+  width: 160px;
+  height: 2px;
+  border-radius: 1px;
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--border) 50%,
+    rgba(122, 104, 166, 0.25) 30%,
+    rgba(154, 136, 192, 0.35) 50%,
+    rgba(122, 104, 166, 0.25) 70%,
     transparent 100%
   );
-  margin: 0 auto 20px;
+  margin: 0 auto 24px;
 }
 
 .footer-text {
   margin: 0;
   font-family: var(--font-serif);
-  font-size: 13px;
-  letter-spacing: 2px;
-  opacity: 0.7;
+  font-size: 14px;
+  letter-spacing: 3px;
+  opacity: 0.65;
+  background: linear-gradient(135deg, var(--muted) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* ===== 统一上传区域样式 ===== */
+/* ===== 统一上传区域样式 - 青紫仙韵 ===== */
 .upload-zone {
   position: relative;
-  border: 1px dashed var(--border);
-  border-radius: 12px;
-  background: linear-gradient(135deg,
-    rgba(255, 254, 248, 0.6) 0%,
-    rgba(248, 245, 240, 0.4) 100%
+  border: 2px dashed rgba(122, 104, 166, 0.35);
+  border-radius: 16px;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(252, 250, 255, 0.5) 50%,
+    rgba(248, 252, 255, 0.4) 100%
   );
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .upload-zone.dragover {
   border-color: var(--accent);
   border-style: solid;
-  background: linear-gradient(135deg,
-    rgba(107, 91, 138, 0.08) 0%,
-    rgba(139, 123, 170, 0.05) 100%
+  background: linear-gradient(145deg,
+    rgba(122, 104, 166, 0.08) 0%,
+    rgba(154, 136, 192, 0.05) 50%,
+    rgba(90, 128, 176, 0.04) 100%
   );
-  box-shadow: 0 0 0 3px var(--ring);
+  box-shadow: 0 0 0 4px rgba(122, 104, 166, 0.15);
 }
 
 /* 古文原文上传区域 - 独立卡片 */
@@ -1831,33 +1955,41 @@ body::before{
   opacity: 0.8;
 }
 
-/* 统一上传按钮样式 */
+/* 统一上传按钮样式 - 青紫仙韵 */
 .btn-upload {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
+  gap: 8px;
+  padding: 10px 18px;
   background: linear-gradient(135deg,
-    rgba(107, 91, 138, 0.12) 0%,
-    rgba(139, 123, 170, 0.08) 100%
+    rgba(122, 104, 166, 0.15) 0%,
+    rgba(154, 136, 192, 0.1) 50%,
+    rgba(90, 128, 176, 0.08) 100%
   );
-  border: 1px solid var(--secondary);
-  border-radius: 20px;
+  border: 1.5px solid var(--secondary);
+  border-radius: 24px;
   color: var(--accent);
   font-family: var(--font-serif);
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow:
+    0 2px 8px rgba(122, 104, 166, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .btn-upload:hover {
   background: linear-gradient(135deg,
-    rgba(107, 91, 138, 0.2) 0%,
-    rgba(139, 123, 170, 0.15) 100%
+    rgba(122, 104, 166, 0.25) 0%,
+    rgba(154, 136, 192, 0.18) 50%,
+    rgba(90, 128, 176, 0.12) 100%
   );
   border-color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(107, 91, 138, 0.15);
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 16px rgba(122, 104, 166, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .btn-upload:active {
@@ -1866,7 +1998,7 @@ body::before{
 
 .btn-upload:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--ring);
+  box-shadow: 0 0 0 4px rgba(122, 104, 166, 0.2);
 }
 
 .btn-upload .upload-icon {
