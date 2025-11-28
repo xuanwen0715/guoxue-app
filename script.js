@@ -154,6 +154,7 @@
   const importHistoryBtn = document.getElementById('import-history');
   const importHistoryInput = document.getElementById('import-history-input');
   const clearButton = $('clear-button');
+  const backupHistoryBtn = document.getElementById('backup-history');
   let ocrCache = '';
   const HISTORY_KEY = 'gx_dict_history_v1';
   const PREFS_KEY = 'gx_dict_prefs_v1';
@@ -452,6 +453,7 @@
   exportHistoryBtn?.addEventListener('click', handleExportHistory);
   importHistoryBtn?.addEventListener('click', () => importHistoryInput?.click());
   importHistoryInput?.addEventListener('change', handleImportHistory);
+  backupHistoryBtn?.addEventListener('click', handleBackupHistory);
 
   function setLoading(loading, streaming = false) {
     resultContainer.setAttribute('aria-busy', String(!!loading));
@@ -831,16 +833,75 @@
 
   function handleExportHistory() {
     try {
-      const data = JSON.stringify({ version: 1, items: history }, null, 2);
+      // 简化导出格式，只保留用户关心的内容
+      const exportItems = history.map(item => {
+        const data = item.data || {};
+        return {
+          // 基本信息
+          查询词: item.word || '',
+          查询时间: new Date(item.ts).toLocaleString('zh-CN'),
+          收藏: item.favorite ? '是' : '否',
+
+          // 上下文（如有）
+          ...(item.context ? { 古文原文: item.context } : {}),
+
+          // 查询结果 - 简化版
+          拼音: data.pinyin || '',
+          繁体: data.traditional || '',
+          部首: data.radical || '',
+          笔画: data.strokes || '',
+
+          // 释义
+          中文释义: data.explanation_zh || data.explanation || '',
+          英文释义: data.explanation_en || '',
+
+          // 出处和例句（合并为文本）
+          出处: Array.isArray(data.sources_zh) ? data.sources_zh.join('；') : '',
+          例句: Array.isArray(data.examples_zh) ? data.examples_zh.join('；') : '',
+
+          // 字形演变
+          ...(data.evolution_zh ? { 字形演变: data.evolution_zh } : {}),
+        };
+      });
+
+      const exportData = {
+        导出时间: new Date().toLocaleString('zh-CN'),
+        来源: '国学智能词典',
+        记录数: exportItems.length,
+        历史记录: exportItems
+      };
+
+      const data = JSON.stringify(exportData, null, 2);
       const blob = new Blob([data], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       const now = new Date();
-      const name = `guoxue-history-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}.json`;
+      const name = `国学词典-查询记录-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.json`;
       a.href = url; a.download = name; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
       flashButton(exportHistoryBtn, '已导出');
     } catch {
       flashButton(exportHistoryBtn, '导出失败');
+    }
+  }
+
+  // 完整备份（用于导入恢复）
+  function handleBackupHistory() {
+    try {
+      const backupData = {
+        version: 2,
+        backupTime: new Date().toISOString(),
+        items: history
+      };
+      const data = JSON.stringify(backupData, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const now = new Date();
+      const name = `国学词典-备份-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.json`;
+      a.href = url; a.download = name; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+      flashButton(backupHistoryBtn, '已备份');
+    } catch {
+      flashButton(backupHistoryBtn, '备份失败');
     }
   }
 

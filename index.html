@@ -203,14 +203,18 @@
                     <span class="filter-text">仅看收藏</span>
                 </label>
                 <div class="history-actions">
-                    <button id="export-history" class="btn btn-history" type="button" title="导出历史记录">
+                    <button id="export-history" class="btn btn-history" type="button" title="导出查询记录（简洁格式，便于阅读）">
                         <span class="btn-icon">↓</span>
                         <span class="btn-text">导出</span>
                     </button>
                     <input type="file" id="import-history-input" accept="application/json" hidden>
-                    <button id="import-history" class="btn btn-history" type="button" title="导入历史记录">
+                    <button id="import-history" class="btn btn-history" type="button" title="导入备份的历史记录">
                         <span class="btn-icon">↑</span>
                         <span class="btn-text">导入</span>
+                    </button>
+                    <button id="backup-history" class="btn btn-history" type="button" title="完整备份（可用于导入恢复）">
+                        <span class="btn-icon">💾</span>
+                        <span class="btn-text">备份</span>
                     </button>
                     <button id="clear-history" class="btn btn-history btn-danger" type="button" title="清空所有历史">
                         <span class="btn-icon">✕</span>
