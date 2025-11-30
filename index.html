@@ -251,6 +251,30 @@
         </div>
     </section>
 
+    <!-- 用户留言浮动按钮 -->
+    <div class="feedback-widget">
+        <button class="feedback-toggle" id="feedback-toggle" type="button" aria-label="用户留言" title="意见反馈">
+            <span class="feedback-icon">📝</span>
+        </button>
+        <div class="feedback-panel" id="feedback-panel" hidden>
+            <div class="feedback-header">
+                <h4>意见反馈</h4>
+                <button class="feedback-close" id="feedback-close" type="button" aria-label="关闭">×</button>
+            </div>
+            <form id="feedback-form" class="feedback-form">
+                <textarea id="feedback-message" class="feedback-textarea" placeholder="您的建议或反馈..." rows="4" required></textarea>
+                <div class="feedback-footer">
+                    <input type="email" id="feedback-email" class="feedback-email" placeholder="邮箱（选填，便于回复）">
+                    <button type="submit" class="feedback-submit">提交</button>
+                </div>
+            </form>
+            <div id="feedback-success" class="feedback-success" hidden>
+                <span class="success-icon">✓</span>
+                <span>感谢您的反馈！</span>
+            </div>
+        </div>
+    </div>
+
     <!-- 页脚装饰 -->
     <footer class="footer" aria-hidden="true">
         <div class="footer-divider"></div>

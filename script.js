@@ -1041,6 +1041,7 @@
   loadHistory();
   initializeModeNotice();
   initHelpPanel();
+  initFeedback();
 
   // 初始化帮助面板
   function initHelpPanel() {
@@ -1073,6 +1074,98 @@
           !helpToggle.contains(e.target)) {
         helpPanel.hidden = true;
         helpToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // 初始化用户反馈功能
+  function initFeedback() {
+    const feedbackToggle = document.getElementById('feedback-toggle');
+    const feedbackPanel = document.getElementById('feedback-panel');
+    const feedbackClose = document.getElementById('feedback-close');
+    const feedbackForm = document.getElementById('feedback-form');
+    const feedbackSuccess = document.getElementById('feedback-success');
+    const feedbackMessage = document.getElementById('feedback-message');
+    const feedbackEmail = document.getElementById('feedback-email');
+
+    if (!feedbackToggle || !feedbackPanel) return;
+
+    // 切换面板显示
+    feedbackToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = feedbackPanel.hidden;
+      feedbackPanel.hidden = !isHidden;
+
+      // 重置状态
+      if (isHidden) {
+        feedbackForm.hidden = false;
+        feedbackSuccess.hidden = true;
+      }
+    });
+
+    // 关闭按钮
+    feedbackClose?.addEventListener('click', () => {
+      feedbackPanel.hidden = true;
+    });
+
+    // 点击外部关闭
+    document.addEventListener('click', (e) => {
+      if (!feedbackPanel.hidden &&
+          !feedbackPanel.contains(e.target) &&
+          !feedbackToggle.contains(e.target)) {
+        feedbackPanel.hidden = true;
+      }
+    });
+
+    // 提交反馈
+    feedbackForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const message = feedbackMessage.value.trim();
+      const email = feedbackEmail.value.trim();
+
+      if (!message) return;
+
+      const submitBtn = feedbackForm.querySelector('.feedback-submit');
+      const oldText = submitBtn.textContent;
+      submitBtn.textContent = '提交中...';
+      submitBtn.disabled = true;
+
+      try {
+        // 发送到 Supabase 或其他后端
+        // 这里先用本地存储模拟
+        const feedback = {
+          id: Date.now(),
+          message,
+          email: email || null,
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        };
+
+        // 存储到本地（后续可改为发送到服务器）
+        const feedbacks = JSON.parse(localStorage.getItem('gx_feedbacks') || '[]');
+        feedbacks.push(feedback);
+        localStorage.setItem('gx_feedbacks', JSON.stringify(feedbacks));
+
+        // 显示成功状态
+        feedbackForm.hidden = true;
+        feedbackSuccess.hidden = false;
+
+        // 清空表单
+        feedbackMessage.value = '';
+        feedbackEmail.value = '';
+
+        // 3秒后自动关闭
+        setTimeout(() => {
+          feedbackPanel.hidden = true;
+        }, 2000);
+
+      } catch (err) {
+        console.error('Feedback submit error:', err);
+        alert('提交失败，请稍后重试');
+      } finally {
+        submitBtn.textContent = oldText;
+        submitBtn.disabled = false;
       }
     });
   }
