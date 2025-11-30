@@ -110,14 +110,20 @@ body::after, html::after{ content: none; background: none; }
   padding-top: 20px;
 }
 
-/* 印章装饰 */
+/* 标题容器 */
+.title-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* 印章装饰 - 放在标题右下角 */
 .seal-decor {
   position: absolute;
-  top: 50px;
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  opacity: 0.85;
+  bottom: -5px;
+  right: -55px;
+  width: 50px;
+  height: 50px;
+  opacity: 0.9;
   transform: rotate(8deg);
   filter: drop-shadow(2px 2px 4px rgba(139, 26, 26, 0.3));
   transition: all 0.5s ease;
@@ -1537,10 +1543,10 @@ body::before{
 /* ===== 移动端适配 ===== */
 @media (max-width: 768px) {
   .seal-decor {
-    width: 45px;
-    height: 45px;
-    right: 10px;
-    top: 5px;
+    width: 40px;
+    height: 40px;
+    right: -45px;
+    bottom: -3px;
   }
 
   .title-calligraphy,
