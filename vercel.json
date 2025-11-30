@@ -5,7 +5,7 @@
       "use": "@vercel/python"
     },
     {
-      "src": "index.html",
+      "src": "*.html",
       "use": "@vercel/static"
     },
     {
@@ -33,6 +33,14 @@
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
+    },
+    {
+      "src": "/login.html",
+      "dest": "/login.html"
+    },
+    {
+      "src": "/auth.js",
+      "dest": "/auth.js"
     },
     {
       "src": "/script.js",
