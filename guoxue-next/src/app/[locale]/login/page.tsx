@@ -60,7 +60,8 @@ export default function LoginPage() {
 
       if (result.success) {
         if ('needsConfirmation' in result && result.needsConfirmation) {
-          setSuccess(result.message || t('login.confirmEmail'));
+          const msg = 'message' in result ? (result as any).message : t('login.confirmEmail');
+          setSuccess(msg);
         } else {
           setSuccess(mode === 'login' ? t('login.successLogin') : t('login.successRegister'));
           setTimeout(() => {
