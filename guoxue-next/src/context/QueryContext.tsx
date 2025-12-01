@@ -205,13 +205,12 @@ export function QueryProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // 处理最终结果
+      // 处理最终结果 - 直接使用流式输出的原始文本，不做格式化
       if (finalResult) {
         setResult(finalResult);
-        // 获取当前语言（从 URL 判断）
-        const locale = typeof window !== 'undefined' && window.location.pathname.startsWith('/en') ? 'en' : 'zh';
-        setResultText(formatResultText(finalResult, locale));
-      } else if (fullText) {
+      }
+      // 保持 fullText 作为最终显示（流式输出已经在过程中更新了 resultText）
+      if (fullText) {
         setResultText(fullText);
       }
 
