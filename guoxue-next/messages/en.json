@@ -18,7 +18,7 @@
     "wordHint": "Supports multiple characters / rare characters; Press Enter to search"
   },
   "ocr": {
-    "uploadContext": "OCR Screenshot",
+    "uploadContext": "Upload Screenshot",
     "uploadWord": "Upload Image",
     "uploadHint": "Have a screenshot? Upload for auto-recognition",
     "rareCharHint": "Rare character? Upload screenshot",
@@ -88,7 +88,7 @@
     "section1": {
       "title": "Classical Text Input",
       "item1": { "title": "Direct Input", "desc": ": Paste or type classical text in the text box" },
-      "item2": { "title": "Screenshot OCR", "desc": ": Click 'OCR Screenshot' to upload an image" },
+      "item2": { "title": "Upload Screenshot", "desc": ": Click 'Upload Screenshot' to recognize text from images" },
       "item3": { "title": "Drag & Drop", "desc": ": Drag images directly into the text area" },
       "item4": { "title": "Paste Image", "desc": ": Copy an image and press Ctrl+V in the text box" }
     },
