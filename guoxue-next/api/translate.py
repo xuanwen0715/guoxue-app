@@ -160,9 +160,13 @@ class handler(BaseHTTPRequestHandler):
                     self.wfile.write(f"data: {error_data}\n\n".encode('utf-8'))
                     self.wfile.flush()
 
-                # ========== 第三步：扣除积分（仅在 API 调用成功后） ==========
+                # ========== 第三步：扣除积分（在响应发送后异步执行） ==========
+                # 注意：这里不再阻塞，积分扣除失败不影响用户体验
                 if api_success and quota_info.get("should_deduct"):
-                    deduct_credit(user_id)
+                    try:
+                        deduct_credit(user_id)
+                    except Exception as e:
+                        print(f"[Quota] Deduct failed: {e}")
 
             else:
                 # 非流式模式（保持原有逻辑）

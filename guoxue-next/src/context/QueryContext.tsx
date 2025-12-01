@@ -200,8 +200,12 @@ export function QueryProvider({ children }: { children: ReactNode }) {
                   setResultText(fullText);
                 }
 
+                // 收到完成事件时立即设置结果，触发结构化渲染
                 if (data.done && data.result) {
                   finalResult = data.result;
+                  setResult(finalResult);
+                  // 添加到历史记录
+                  pushHistory({ word, context, data: finalResult });
                 }
               } catch (e) {
                 // 忽略解析错误
@@ -211,12 +215,6 @@ export function QueryProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // 处理最终结果 - 直接使用流式输出的原始文本，不做格式化
-      if (finalResult) {
-        setResult(finalResult);
-        // 添加到历史记录
-        pushHistory({ word, context, data: finalResult });
-      }
       // 保持 fullText 作为最终显示（流式输出已经在过程中更新了 resultText）
       if (fullText) {
         setResultText(fullText);
