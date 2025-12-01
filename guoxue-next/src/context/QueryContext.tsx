@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
+import { useHistory } from './HistoryContext';
 
 interface QueryResult {
   term?: string;
@@ -123,6 +124,7 @@ export function QueryProvider({ children }: { children: ReactNode }) {
   const [resultText, setResultText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { getAuthHeader } = useAuth();
+  const { pushHistory } = useHistory();
 
   const handleQuery = async () => {
     if (!word.trim()) {
@@ -212,6 +214,8 @@ export function QueryProvider({ children }: { children: ReactNode }) {
       // 处理最终结果 - 直接使用流式输出的原始文本，不做格式化
       if (finalResult) {
         setResult(finalResult);
+        // 添加到历史记录
+        pushHistory({ word, context, data: finalResult });
       }
       // 保持 fullText 作为最终显示（流式输出已经在过程中更新了 resultText）
       if (fullText) {
