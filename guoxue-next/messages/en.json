@@ -1,0 +1,136 @@
+{
+  "site": {
+    "title": "Classical Chinese Dictionary",
+    "subtitle": "Simplify Complexity · Understand Meaning",
+    "description": "Classical Chinese Dictionary: AI-powered lookup for ancient texts with context understanding and rare character recognition."
+  },
+  "nav": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "guide": "User Guide"
+  },
+  "input": {
+    "contextLabel": "Classical Text",
+    "contextPlaceholder": "Paste classical Chinese text or enter context for your query...\n\n💡 Supports: Drag & drop images here / Paste screenshots (Ctrl+V)",
+    "wordLabel": "Character / Word Query",
+    "wordPlaceholder": "Enter character or word (e.g., 道, 无为, 仁义)",
+    "wordHint": "Supports multiple characters / rare characters; Press Enter to search"
+  },
+  "ocr": {
+    "uploadContext": "OCR Screenshot",
+    "uploadWord": "Upload Image",
+    "uploadHint": "Have a screenshot? Upload for auto-recognition",
+    "rareCharHint": "Rare character? Upload screenshot",
+    "dropHint": "Release to start recognition",
+    "recognizing": "Recognizing...",
+    "success": "Recognition successful!",
+    "failed": "Recognition failed",
+    "chooseResult": "Choose recognition result",
+    "tips": "OCR Tips",
+    "tipCropTitle": "Crop: ",
+    "tipCrop": "Keep only text area, remove extra background",
+    "tipCropShort": "Keep only text area",
+    "tipContrastTitle": "High contrast: ",
+    "tipContrast": "Ensure clear black text on white background",
+    "tipContrastShort": "Black on white is best",
+    "tipShadowTitle": "No shadows: ",
+    "tipShadow": "Shoot in even lighting, avoid phone shadows",
+    "tipAlignTitle": "Align properly: ",
+    "tipAlign": "Keep phone parallel to page, avoid tilting",
+    "tipAlignShort": "Shoot straight on"
+  },
+  "actions": {
+    "query": "AI Smart Query",
+    "querying": "Querying...",
+    "copy": "Copy Result",
+    "clear": "Clear Input",
+    "copied": "Copied",
+    "cleared": "Cleared"
+  },
+  "result": {
+    "placeholder": "Query results will appear here...",
+    "pinyin": "Pinyin",
+    "traditional": "Traditional",
+    "radical": "Radical",
+    "strokes": "Strokes",
+    "explanation": "Explanation",
+    "sources": "Sources",
+    "examples": "Examples",
+    "evolution": "Character Evolution",
+    "viewGlyphs": "View ancient glyphs"
+  },
+  "history": {
+    "title": "Query History",
+    "favsOnly": "Favorites Only",
+    "export": "Export",
+    "import": "Import",
+    "backup": "Backup",
+    "clear": "Clear",
+    "empty": "No query history",
+    "emptyHint": "Your queries will be saved here automatically",
+    "context": "Context",
+    "noContext": "None"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "placeholder": "Your suggestions or feedback...",
+    "emailPlaceholder": "Email (optional, for reply)",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "success": "Thank you for your feedback!"
+  },
+  "footer": {
+    "text": "Classical Chinese Dictionary · Simplify Complexity · Understand Meaning"
+  },
+  "guide": {
+    "title": "User Guide",
+    "section1": {
+      "title": "Classical Text Input",
+      "item1": { "title": "Direct Input", "desc": ": Paste or type classical text in the text box" },
+      "item2": { "title": "Screenshot OCR", "desc": ": Click 'OCR Screenshot' to upload an image" },
+      "item3": { "title": "Drag & Drop", "desc": ": Drag images directly into the text area" },
+      "item4": { "title": "Paste Image", "desc": ": Copy an image and press Ctrl+V in the text box" }
+    },
+    "section2": {
+      "title": "Character/Word Query",
+      "item1": { "title": "Input Query", "desc": ": Enter the character or word you want to look up" },
+      "item2": { "title": "Rare Characters", "desc": ": Click 'Upload Image' for rare character recognition" }
+    },
+    "section3": {
+      "title": "AI Smart Query",
+      "item1": "Click the 'AI Smart Query' button to get detailed explanations",
+      "item2": "With context provided, AI gives more accurate interpretations"
+    },
+    "section4": {
+      "title": "History",
+      "item1": "Query history is saved automatically for quick review",
+      "item2": "Supports favorites, export, and import features"
+    },
+    "tip": "💡 Tip: High-quality images significantly improve recognition accuracy"
+  },
+  "login": {
+    "backToDict": "Back to Dictionary",
+    "tabLogin": "Login",
+    "tabRegister": "Register",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter password (at least 6 characters)",
+    "btnLogin": "Login",
+    "btnRegister": "Register",
+    "loggingIn": "Logging in...",
+    "registering": "Registering...",
+    "successLogin": "Login successful! Redirecting...",
+    "successRegister": "Registration successful! Redirecting...",
+    "confirmEmail": "Registration successful! Please check your email to verify.",
+    "errorEmpty": "Please enter email and password",
+    "errorPasswordShort": "Password must be at least 6 characters",
+    "errorGeneric": "Operation failed, please try again",
+    "errorNetwork": "Network error, please check connection",
+    "agreeTerms": "By logging in, you agree to our",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy"
+  }
+}

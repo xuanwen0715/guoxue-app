@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 20" preserveAspectRatio="none">
+  <!-- 古典分隔线 - 回纹装饰 -->
+  <defs>
+    <!-- 回纹图案 -->
+    <pattern id="huiwen" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0 10 h4 v-4 h4 v4 h4 v-4 h-4 v-8 h8 v8 h-4 v4 h4 v-4"
+            fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+    </pattern>
+
+    <!-- 渐变 -->
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="currentColor" stop-opacity="0"/>
+      <stop offset="15%" stop-color="currentColor" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="currentColor" stop-opacity="0.8"/>
+      <stop offset="85%" stop-color="currentColor" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 主线条 -->
+  <line x1="0" y1="10" x2="400" y2="10" stroke="url(#lineGrad)" stroke-width="1"/>
+
+  <!-- 中间装饰菱形 -->
+  <g transform="translate(200, 10)">
+    <path d="M-6 0 L0 -5 L6 0 L0 5 Z" fill="currentColor" opacity="0.5"/>
+    <path d="M-3 0 L0 -2.5 L3 0 L0 2.5 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.8"/>
+  </g>
+
+  <!-- 两侧小圆点 -->
+  <circle cx="160" cy="10" r="1.5" fill="currentColor" opacity="0.4"/>
+  <circle cx="240" cy="10" r="1.5" fill="currentColor" opacity="0.4"/>
+</svg>

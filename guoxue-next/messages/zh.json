@@ -1,0 +1,136 @@
+{
+  "site": {
+    "title": "国学智能词典",
+    "subtitle": "以简驭繁 · 智解文义",
+    "description": "国学智能词典：以简驭繁 · 智解文义，支持古文上下文与单字查询，以及生僻字截图上传。"
+  },
+  "nav": {
+    "login": "登录",
+    "register": "注册",
+    "logout": "退出",
+    "guide": "使用指南"
+  },
+  "input": {
+    "contextLabel": "古文原文",
+    "contextPlaceholder": "粘贴古文原文，或输入需要查询的上下文...\n\n💡 支持：直接拖拽图片到此处 / 粘贴截图 (Ctrl+V)",
+    "wordLabel": "字/词查询",
+    "wordPlaceholder": "输入字或词（例如：道、无为、仁义）",
+    "wordHint": "支持多字/生僻字；按 Enter 快速查询"
+  },
+  "ocr": {
+    "uploadContext": "识别原文截图",
+    "uploadWord": "上传截图",
+    "uploadHint": "有古文截图？上传自动识别",
+    "rareCharHint": "生僻字？上传截图识别",
+    "dropHint": "松开鼠标，开始识别",
+    "recognizing": "正在识别...",
+    "success": "识别成功！",
+    "failed": "识别失败",
+    "chooseResult": "请选择识别结果",
+    "tips": "识别技巧",
+    "tipCropTitle": "裁剪聚焦：",
+    "tipCrop": "只保留文字区域，去除多余背景",
+    "tipCropShort": "只保留文字区域",
+    "tipContrastTitle": "高对比度：",
+    "tipContrast": "确保白纸黑字，避免灰暗模糊",
+    "tipContrastShort": "白纸黑字最佳",
+    "tipShadowTitle": "无阴影：",
+    "tipShadow": "在光线均匀处拍摄，避免手机投影",
+    "tipAlignTitle": "摆正拍摄：",
+    "tipAlign": "手机与书面平行，避免倾斜变形",
+    "tipAlignShort": "正对拍摄"
+  },
+  "actions": {
+    "query": "AI 智能查询",
+    "querying": "查询中...",
+    "copy": "复制结果",
+    "clear": "清空输入",
+    "copied": "已复制",
+    "cleared": "已清空"
+  },
+  "result": {
+    "placeholder": "查询结果将显示在这里...",
+    "pinyin": "拼音",
+    "traditional": "繁体",
+    "radical": "部首",
+    "strokes": "笔画",
+    "explanation": "释义",
+    "sources": "出处",
+    "examples": "例句",
+    "evolution": "字形演变",
+    "viewGlyphs": "查看古字形图片"
+  },
+  "history": {
+    "title": "查询历史",
+    "favsOnly": "仅看收藏",
+    "export": "导出",
+    "import": "导入",
+    "backup": "备份",
+    "clear": "清空",
+    "empty": "暂无查询记录",
+    "emptyHint": "查询的字词会自动保存在这里",
+    "context": "上下文",
+    "noContext": "无"
+  },
+  "feedback": {
+    "title": "意见反馈",
+    "placeholder": "您的建议或反馈...",
+    "emailPlaceholder": "邮箱（选填，便于回复）",
+    "submit": "提交",
+    "submitting": "提交中...",
+    "success": "感谢您的反馈！"
+  },
+  "footer": {
+    "text": "国学智能词典 · 以简驭繁 · 智解文义"
+  },
+  "guide": {
+    "title": "使用指南 · User Guide",
+    "section1": {
+      "title": "古文原文输入",
+      "item1": { "title": "直接输入", "desc": "：在文本框中粘贴或输入古文段落" },
+      "item2": { "title": "截图识别", "desc": "：点击「识别原文截图」按钮上传图片" },
+      "item3": { "title": "拖拽上传", "desc": "：直接将图片拖入文本框区域" },
+      "item4": { "title": "粘贴图片", "desc": "：复制图片后在文本框按 Ctrl+V" }
+    },
+    "section2": {
+      "title": "字/词查询",
+      "item1": { "title": "输入查询", "desc": "：在查询框输入想要查询的字或词" },
+      "item2": { "title": "生僻字", "desc": "：点击「上传截图」识别生僻字" }
+    },
+    "section3": {
+      "title": "AI智能查询",
+      "item1": "点击「AI智能查询」按钮，获取详细释义",
+      "item2": "结合上下文，AI会给出更准确的解释"
+    },
+    "section4": {
+      "title": "历史记录",
+      "item1": "查询记录自动保存，点击可快速回顾",
+      "item2": "支持收藏、导出、导入功能"
+    },
+    "tip": "💡 提示：高质量的图片能显著提升识别准确率"
+  },
+  "login": {
+    "backToDict": "返回词典",
+    "tabLogin": "登录",
+    "tabRegister": "注册",
+    "emailLabel": "邮箱地址",
+    "emailPlaceholder": "请输入您的邮箱",
+    "passwordLabel": "密码",
+    "passwordPlaceholder": "请输入密码（至少6位）",
+    "btnLogin": "登 录",
+    "btnRegister": "注 册",
+    "loggingIn": "登录中...",
+    "registering": "注册中...",
+    "successLogin": "登录成功！正在跳转...",
+    "successRegister": "注册成功！正在跳转...",
+    "confirmEmail": "注册成功！请检查您的邮箱完成验证。",
+    "errorEmpty": "请填写邮箱和密码",
+    "errorPasswordShort": "密码至少需要6位",
+    "errorGeneric": "操作失败，请稍后重试",
+    "errorNetwork": "网络错误，请检查连接",
+    "agreeTerms": "登录即表示您同意我们的",
+    "termsOfService": "服务条款",
+    "and": "和",
+    "privacyPolicy": "隐私政策"
+  }
+}

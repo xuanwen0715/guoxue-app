@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 400" preserveAspectRatio="none">
+  <!-- 卷轴边缘装饰 - 左侧 -->
+  <defs>
+    <linearGradient id="scrollGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b4513" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#d4a574" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#8b4513" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <!-- 回纹边框图案 -->
+    <pattern id="borderPattern" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 8 h3 v-3 h3 v3 h3 v-3 h-3 v-5 h5 v5 h-3 v3 h3"
+            fill="none" stroke="#8b4513" stroke-width="0.8" opacity="0.4"/>
+    </pattern>
+  </defs>
+
+  <!-- 主卷轴纹理 -->
+  <rect x="0" y="0" width="60" height="400" fill="url(#scrollGrad)"/>
+
+  <!-- 木纹线条 -->
+  <g stroke="#6b3510" stroke-width="0.3" opacity="0.3">
+    <line x1="8" y1="0" x2="8" y2="400"/>
+    <line x1="20" y1="0" x2="20" y2="400"/>
+    <line x1="35" y1="0" x2="35" y2="400"/>
+    <line x1="48" y1="0" x2="48" y2="400"/>
+  </g>
+
+  <!-- 顶部卷轴头 -->
+  <ellipse cx="30" cy="15" rx="28" ry="12" fill="#5c3317" opacity="0.8"/>
+  <ellipse cx="30" cy="15" rx="24" ry="9" fill="#8b5a2b" opacity="0.6"/>
+  <ellipse cx="30" cy="15" rx="18" ry="6" fill="#c4a574" opacity="0.4"/>
+
+  <!-- 底部卷轴头 -->
+  <ellipse cx="30" cy="385" rx="28" ry="12" fill="#5c3317" opacity="0.8"/>
+  <ellipse cx="30" cy="385" rx="24" ry="9" fill="#8b5a2b" opacity="0.6"/>
+  <ellipse cx="30" cy="385" rx="18" ry="6" fill="#c4a574" opacity="0.4"/>
+</svg>
