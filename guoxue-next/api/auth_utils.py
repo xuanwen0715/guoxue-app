@@ -10,7 +10,8 @@ from functools import wraps
 
 # Supabase 配置（从环境变量读取）
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://dckeajeazaxbxlqlkicl.supabase.co")
-SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
+# anon key 是公开的，可以硬编码作为默认值
+SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRja2VhamVhemF4YnhscWxraWNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyOTI3NjUsImV4cCI6MjA3OTg2ODc2NX0.kv1oVXsO9gnB3XLCFGlJiX2I9PAbn80XD1irzCDNRfI")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
 
 # JWT 密钥（用于验证 token，从 Supabase Dashboard -> Settings -> API -> JWT Secret）
