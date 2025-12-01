@@ -5,14 +5,18 @@ import { useAuth } from './AuthContext';
 
 interface QueryResult {
   term?: string;
+  title?: string;
   pinyin?: string;
   traditional?: string;
   radical?: string;
   strokes?: number;
+  explanation?: string;
   explanation_zh?: string;
   explanation_en?: string;
+  sources?: string[];
   sources_zh?: string[];
   sources_en?: string[];
+  examples?: string[];
   examples_zh?: string[];
   examples_en?: string[];
   variants?: string[];

@@ -19,11 +19,11 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
 
   const pinyin = result.pinyin;
   const traditional = result.traditional;
-  const exZh = result.explanation_zh;
-  const exEn = result.explanation_en;
-  const sourcesZh = Array.isArray(result.sources_zh) ? result.sources_zh : [];
+  const exZh = result.explanation_zh || result.explanation || result.text || '';
+  const exEn = result.explanation_en || '';
+  const sourcesZh = Array.isArray(result.sources_zh) ? result.sources_zh : (Array.isArray(result.sources) ? result.sources : []);
   const sourcesEn = Array.isArray(result.sources_en) ? result.sources_en : [];
-  const examplesZh = Array.isArray(result.examples_zh) ? result.examples_zh : [];
+  const examplesZh = Array.isArray(result.examples_zh) ? result.examples_zh : (Array.isArray(result.examples) ? result.examples : []);
   const examplesEn = Array.isArray(result.examples_en) ? result.examples_en : [];
   const glyphOracle = result.glyph_oracle;
   const glyphBronze = result.glyph_bronze;
@@ -40,7 +40,7 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
       )}
 
       {/* 读音与字形 */}
-      {(pinyin || traditional || result.radical || result.strokes) && (
+      {(pinyin || traditional || result.radical || result.strokes || (Array.isArray(result.variants) && result.variants.length > 0)) && (
         <div className="result-section" data-kind="reading">
           <h3>读音与字形 · Pronunciation & Form</h3>
           <div className="grid-2">
@@ -66,6 +66,16 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
               <div className="column">
                 <h4>笔画 · Strokes</h4>
                 <div className="para">{result.strokes}</div>
+              </div>
+            )}
+            {Array.isArray(result.variants) && result.variants.length > 0 && (
+              <div className="column">
+                <h4>异体 · Variants</h4>
+                <div className="chips">
+                  {result.variants.map((v: string, i: number) => (
+                    <span key={i} className="chip" role="button" tabIndex={0}>{v}</span>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -194,14 +204,10 @@ export default function ResultBox() {
   const t = useTranslations();
   const { resultText, result, word, isLoading } = useQuery();
 
-  // 判断是否有结构化结果
+  // 判断是否有结构化结果 (与原版 script.js 保持一致)
   const hasStructuredResult = result && (
-    result.term ||
-    result.pinyin ||
-    result.explanation_zh ||
-    result.explanation_en ||
-    (result.sources_zh && result.sources_zh.length > 0) ||
-    (result.examples_zh && result.examples_zh.length > 0)
+    result.explanation || result.sources || result.examples || result.term || result.title ||
+    result.explanation_zh || result.explanation_en || result.pinyin || result.traditional
   );
 
   return (
