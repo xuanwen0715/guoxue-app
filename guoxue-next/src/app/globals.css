@@ -139,10 +139,10 @@ body::after, html::after{ content: none; background: none; }
 /* 书法风格标题 - 紫色渐变 */
 .title-calligraphy {
   margin: 0 0 12px;
-  font-family: var(--font-calligraphy);
-  font-size: clamp(38px, 7vw, 60px);
-  font-weight: 400;
-  letter-spacing: 10px;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: clamp(32px, 6vw, 48px);
+  font-weight: 700;
+  letter-spacing: 6px;
   background: linear-gradient(135deg, #6a50a0 0%, #8668c0 50%, #5a80b0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1635,15 +1635,22 @@ body::before{
   align-items: center;
   gap: 14px;
   margin: 0;
-  font-family: var(--font-calligraphy);
-  font-size: 26px;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-size: 22px;
   color: var(--ink);
-  font-weight: 400;
-  letter-spacing: 5px;
+  font-weight: 600;
+  letter-spacing: 3px;
   background: linear-gradient(135deg, #5a6080 0%, #7a68a6 50%, #5a80b0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* 英文版历史标题 */
+.history-title[data-locale="en"] {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 20px;
+  letter-spacing: 1px;
 }
 
 .history-subtitle {

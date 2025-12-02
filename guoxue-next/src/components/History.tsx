@@ -1,12 +1,13 @@
 'use client';
 
 import { useRef } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useHistory, HistoryItem } from '@/context/HistoryContext';
 import { useQuery } from '@/context/QueryContext';
 
 export default function History() {
   const t = useTranslations();
+  const locale = useLocale();
   const {
     history,
     favsOnly,
@@ -68,10 +69,9 @@ export default function History() {
     <section className="history" aria-label="查询历史 / History">
       <div className="history-card">
         <div className="history-header">
-          <h2 className="history-title">
+          <h2 className="history-title" data-locale={locale}>
             <span className="history-icon">册</span>
             {t('history.title')}
-            <span className="history-subtitle">History</span>
           </h2>
         </div>
 
