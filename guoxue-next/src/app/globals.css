@@ -153,6 +153,15 @@ body::after, html::after{ content: none; background: none; }
   filter: drop-shadow(2px 2px 4px rgba(100, 80, 160, 0.2));
 }
 
+/* 英文版标题 - 优雅紧凑风格 */
+.title-calligraphy[data-locale="en"] {
+  font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-style: italic;
+}
+
 .header h1 {
   margin: 0 0 12px;
   font-family: var(--font-calligraphy);

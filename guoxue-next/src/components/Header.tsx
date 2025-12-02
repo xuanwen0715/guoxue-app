@@ -83,7 +83,7 @@ export default function Header() {
       />
 
       <div className="title-wrapper">
-        <h1 className="title-calligraphy">{t('site.title')}</h1>
+        <h1 className="title-calligraphy" data-locale={locale}>{t('site.title')}</h1>
         <Image
           className="seal-decor"
           src="/assets/seal.svg"
