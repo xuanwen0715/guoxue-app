@@ -29,10 +29,11 @@ interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (email: string, password: string) => Promise<{ success: boolean; error?: string; needsConfirmation?: boolean; message?: string }>;
+  register: (email: string, password: string, username?: string) => Promise<{ success: boolean; error?: string; needsConfirmation?: boolean; message?: string }>;
   logout: () => void;
   getAuthHeader: () => Record<string, string>;
   updateQuota: (quotaInfo: Quota) => void;
+  getDisplayName: () => string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -132,7 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   // 注册
-  async function register(email: string, password: string) {
+  async function register(email: string, password: string, username?: string) {
     try {
       const resp = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
         method: 'POST',
@@ -140,7 +141,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           'Content-Type': 'application/json',
           'apikey': SUPABASE_ANON_KEY
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({
+          email,
+          password,
+          data: {
+            username: username || email.split('@')[0]
+          }
+        })
       });
 
       const data = await resp.json();
@@ -160,11 +167,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       // 直接登录成功
       if (data.access_token) {
+        const userWithUsername = {
+          ...data.user,
+          user_metadata: {
+            ...data.user?.user_metadata,
+            username: username || email.split('@')[0]
+          }
+        };
         setToken(data.access_token);
-        setUser(data.user);
+        setUser(userWithUsername);
 
         localStorage.setItem(AUTH_TOKEN_KEY, data.access_token);
-        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
+        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(userWithUsername));
       }
 
       return { success: true };
@@ -201,6 +215,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  // 获取显示名称（优先用户名，其次邮箱前缀）
+  function getDisplayName(): string {
+    if (!user) return '';
+    // 尝试从 user_metadata 获取用户名
+    const username = user.user_metadata?.username;
+    if (username) return username;
+    // 回退到邮箱前缀
+    if (user.email) return user.email.split('@')[0];
+    return '';
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -214,6 +239,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         getAuthHeader,
         updateQuota,
+        getDisplayName,
       }}
     >
       {children}

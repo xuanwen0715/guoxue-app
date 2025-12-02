@@ -14,7 +14,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
-  const { isLoggedIn, user, logout, isLoading } = useAuth();
+  const { isLoggedIn, logout, isLoading, getDisplayName } = useAuth();
 
   const switchLocale = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale });
@@ -56,7 +56,7 @@ export default function Header() {
           </div>
         ) : isLoggedIn ? (
           <div className="user-section">
-            <span className="user-email">{user?.email}</span>
+            <span className="user-name">{getDisplayName()}</span>
             <button onClick={handleLogout} className="btn-auth btn-logout">
               {t('nav.logout')}
             </button>
@@ -121,9 +121,10 @@ export default function Header() {
           gap: 12px;
         }
 
-        .user-email {
+        .user-name {
           font-size: 13px;
-          color: var(--muted);
+          color: var(--accent);
+          font-weight: 500;
           max-width: 150px;
           overflow: hidden;
           text-overflow: ellipsis;

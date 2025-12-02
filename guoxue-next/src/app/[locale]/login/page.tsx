@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,6 +44,11 @@ export default function LoginPage() {
       return;
     }
 
+    if (mode === 'register' && !username.trim()) {
+      setError(t('login.errorUsernameEmpty'));
+      return;
+    }
+
     if (password.length < 6) {
       setError(t('login.errorPasswordShort'));
       return;
@@ -55,7 +61,7 @@ export default function LoginPage() {
       if (mode === 'login') {
         result = await login(email, password);
       } else {
-        result = await register(email, password);
+        result = await register(email, password, username.trim());
       }
 
       if (result.success) {
@@ -114,6 +120,24 @@ export default function LoginPage() {
           {success && <div className="login-success visible">{success}</div>}
 
           <form className="login-form" onSubmit={handleSubmit}>
+            {mode === 'register' && (
+              <div className="form-group">
+                <label className="form-label" htmlFor="username">
+                  {t('login.usernameLabel')}
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  className="form-input"
+                  placeholder={t('login.usernamePlaceholder')}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  maxLength={20}
+                />
+              </div>
+            )}
+
             <div className="form-group">
               <label className="form-label" htmlFor="email">
                 {t('login.emailLabel')}
