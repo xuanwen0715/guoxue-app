@@ -108,7 +108,7 @@ body::after, html::after{ content: none; background: none; }
   margin: 16px 0 40px;
   text-align: center;
   position: relative;
-  padding-top: 20px;
+  padding-top: 50px;
 }
 
 /* 标题容器 */
@@ -2713,17 +2713,18 @@ body::before{
 /* ===== 用户认证相关样式 ===== */
 .auth-bar {
   position: absolute;
-  top: 12px;
+  top: 8px;
   right: 15px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(8px);
-  padding: 6px 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 246, 252, 0.85) 100%);
+  backdrop-filter: blur(12px);
+  padding: 8px 14px;
   border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(122, 104, 166, 0.1);
+  border: 1px solid rgba(122, 104, 166, 0.15);
+  box-shadow: 0 2px 12px rgba(122, 104, 166, 0.1);
 }
 
 .auth-section {
