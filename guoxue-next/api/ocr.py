@@ -97,6 +97,16 @@ def _call_dashscope_ocr(image_data: str) -> str:
         "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
     }
 
+    # 确保图片是完整的 data URI 格式
+    if not image_data.startswith("data:"):
+        # 尝试检测图片类型并添加前缀
+        if image_data.startswith("/9j/"):
+            image_data = f"data:image/jpeg;base64,{image_data}"
+        elif image_data.startswith("iVBOR"):
+            image_data = f"data:image/png;base64,{image_data}"
+        else:
+            image_data = f"data:image/png;base64,{image_data}"
+
     payload = {
         "model": "qwen-vl-max",
         "input": {
@@ -135,7 +145,8 @@ def _call_dashscope_ocr(image_data: str) -> str:
                     texts.append(part["text"])
             return "".join(texts)
         return content or ""
-    except (KeyError, IndexError, TypeError):
+    except (KeyError, IndexError, TypeError) as e:
+        print(f"[OCR] DashScope parse error: {e}, response: {data}")
         return ""
 
 
@@ -268,6 +279,7 @@ class handler(BaseHTTPRequestHandler):
 
             text = ""
             ocr_method = "unknown"
+            ocr_error = None
 
             # 优先使用阿里云专业 OCR
             if ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
@@ -275,19 +287,29 @@ class handler(BaseHTTPRequestHandler):
                     text = _call_aliyun_ocr(final_image)
                     ocr_method = "aliyun_ocr"
                 except Exception as e:
+                    ocr_error = f"Aliyun: {str(e)}"
                     print(f"[OCR] Aliyun OCR failed: {e}, falling back to DashScope")
                     # 回退到 DashScope
                     if DASHSCOPE_API_KEY:
-                        text = _call_dashscope_ocr(final_image)
-                        ocr_method = "dashscope_fallback"
+                        try:
+                            text = _call_dashscope_ocr(final_image)
+                            ocr_method = "dashscope_fallback"
+                            ocr_error = None
+                        except Exception as e2:
+                            ocr_error = f"Aliyun: {ocr_error}, DashScope: {str(e2)}"
+                            raise Exception(ocr_error)
                     else:
                         raise e
             # 否则使用 DashScope
             elif DASHSCOPE_API_KEY:
-                text = _call_dashscope_ocr(final_image)
-                ocr_method = "dashscope"
+                try:
+                    text = _call_dashscope_ocr(final_image)
+                    ocr_method = "dashscope"
+                except Exception as e:
+                    ocr_error = f"DashScope: {str(e)}"
+                    raise Exception(ocr_error)
             else:
-                self._send_json(503, {"error": "No OCR API configured"})
+                self._send_json(503, {"error": "No OCR API configured (missing ALIBABA_CLOUD or DASHSCOPE keys)"})
                 return
 
             # 获取 AI 纠错建议
