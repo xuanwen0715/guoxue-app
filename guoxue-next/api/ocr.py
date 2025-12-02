@@ -281,35 +281,36 @@ class handler(BaseHTTPRequestHandler):
             ocr_method = "unknown"
             ocr_error = None
 
-            # 优先使用阿里云专业 OCR
-            if ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
-                try:
-                    text = _call_aliyun_ocr(final_image)
-                    ocr_method = "aliyun_ocr"
-                except Exception as e:
-                    ocr_error = f"Aliyun: {str(e)}"
-                    print(f"[OCR] Aliyun OCR failed: {e}, falling back to DashScope")
-                    # 回退到 DashScope
-                    if DASHSCOPE_API_KEY:
-                        try:
-                            text = _call_dashscope_ocr(final_image)
-                            ocr_method = "dashscope_fallback"
-                            ocr_error = None
-                        except Exception as e2:
-                            ocr_error = f"Aliyun: {ocr_error}, DashScope: {str(e2)}"
-                            raise Exception(ocr_error)
-                    else:
-                        raise e
-            # 否则使用 DashScope
-            elif DASHSCOPE_API_KEY:
+            # 对于古籍和生僻字，优先使用 DashScope qwen-vl-max（视觉语言模型更擅长复杂文字）
+            # 阿里云 OCR 作为备用
+            if DASHSCOPE_API_KEY:
                 try:
                     text = _call_dashscope_ocr(final_image)
                     ocr_method = "dashscope"
                 except Exception as e:
                     ocr_error = f"DashScope: {str(e)}"
+                    print(f"[OCR] DashScope failed: {e}, trying Aliyun OCR")
+                    # 回退到阿里云 OCR
+                    if ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
+                        try:
+                            text = _call_aliyun_ocr(final_image)
+                            ocr_method = "aliyun_fallback"
+                            ocr_error = None
+                        except Exception as e2:
+                            ocr_error = f"DashScope: {ocr_error}, Aliyun: {str(e2)}"
+                            raise Exception(ocr_error)
+                    else:
+                        raise e
+            # 如果没有 DashScope，使用阿里云
+            elif ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
+                try:
+                    text = _call_aliyun_ocr(final_image)
+                    ocr_method = "aliyun_ocr"
+                except Exception as e:
+                    ocr_error = f"Aliyun: {str(e)}"
                     raise Exception(ocr_error)
             else:
-                self._send_json(503, {"error": "No OCR API configured (missing ALIBABA_CLOUD or DASHSCOPE keys)"})
+                self._send_json(503, {"error": "No OCR API configured (missing DASHSCOPE or ALIBABA_CLOUD keys)"})
                 return
 
             # 获取 AI 纠错建议
