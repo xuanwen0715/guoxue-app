@@ -1,10 +1,11 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@/context/QueryContext';
 import { useAuth } from '@/context/AuthContext';
 import OcrResultModal from './OcrResultModal';
+import Link from 'next/link';
 
 interface OcrSuggestion {
   original: string;
@@ -21,6 +22,7 @@ interface OcrResponse {
 
 export default function WordInput() {
   const t = useTranslations();
+  const locale = useLocale();
   const { word, setWord, handleQuery } = useQuery();
   const { token, getAuthHeader } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
@@ -127,23 +129,31 @@ export default function WordInput() {
 
   return (
     <>
-      <div className="inline-field">
-        <label htmlFor="word-input" className="field-label">
-          <span className="label-icon">字</span>
-          {t('input.wordLabel')}
-        </label>
-        <input
-          type="text"
-          id="word-input"
-          className="field"
-          value={word}
-          onChange={(e) => setWord(e.target.value)}
-          onKeyDown={handleKeyDown}
-          inputMode="text"
-          placeholder={t('input.wordPlaceholder')}
-          aria-describedby="word-hint"
-        />
-        <div id="word-hint" className="help">{t('input.wordHint')}</div>
+      <div className="word-input-wrapper">
+        <div className="inline-field">
+          <label htmlFor="word-input" className="field-label">
+            <span className="label-icon">字</span>
+            {t('input.wordLabel')}
+          </label>
+          <div className="input-with-dict">
+            <input
+              type="text"
+              id="word-input"
+              className="field"
+              value={word}
+              onChange={(e) => setWord(e.target.value)}
+              onKeyDown={handleKeyDown}
+              inputMode="text"
+              placeholder={t('input.wordPlaceholder')}
+              aria-describedby="word-hint"
+            />
+            <Link href={`/${locale}/dictionary`} className="dict-shortcut" title={t('nav.dictionary')}>
+              <span className="dict-icon">典</span>
+              <span className="dict-label">{t('nav.dictionary')}</span>
+            </Link>
+          </div>
+          <div id="word-hint" className="help">{t('input.wordHint')}</div>
+        </div>
       </div>
 
       <div className="upload-zone" id="drop-zone">
@@ -202,6 +212,83 @@ export default function WordInput() {
       )}
 
       <style jsx>{`
+        .word-input-wrapper {
+          width: 100%;
+        }
+
+        .word-input-wrapper :global(.inline-field) {
+          flex: 1;
+        }
+
+        .input-with-dict {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .input-with-dict :global(.field) {
+          flex: 1;
+        }
+
+        .dict-shortcut {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 14px;
+          background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.98) 0%,
+            rgba(248, 245, 252, 0.95) 100%
+          );
+          border: 1.5px solid rgba(122, 104, 166, 0.25);
+          border-radius: 10px;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+          box-shadow: 0 2px 6px rgba(122, 104, 166, 0.08);
+        }
+
+        .dict-shortcut:hover {
+          background: linear-gradient(135deg, var(--accent), var(--secondary));
+          border-color: transparent;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(122, 104, 166, 0.25);
+        }
+
+        .dict-shortcut:hover .dict-icon,
+        .dict-shortcut:hover .dict-label {
+          color: white;
+        }
+
+        .dict-icon {
+          font-family: 'Noto Serif SC', 'KaiTi', serif;
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--accent);
+          transition: color 0.3s ease;
+        }
+
+        .dict-label {
+          font-family: var(--font-serif);
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--accent);
+          transition: color 0.3s ease;
+          white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+          .dict-label {
+            display: none;
+          }
+          .dict-shortcut {
+            padding: 10px 12px;
+          }
+          .dict-icon {
+            font-size: 20px;
+          }
+        }
+
         .btn-upload.uploading .spinner {
           display: inline-block;
         }

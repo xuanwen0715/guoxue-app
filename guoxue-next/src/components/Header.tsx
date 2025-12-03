@@ -101,16 +101,18 @@ export default function Header() {
         <span className="divider-line"></span>
       </div>
 
-      <button
-        className="help-toggle-btn"
-        type="button"
-        onClick={() => setIsHelpOpen(true)}
-        aria-expanded={isHelpOpen}
-        aria-controls="help-panel"
-      >
-        <span className="help-icon">?</span>
-        <span className="help-text">{t('nav.guide')}</span>
-      </button>
+      <div className="nav-buttons">
+        <button
+          className="help-toggle-btn"
+          type="button"
+          onClick={() => setIsHelpOpen(true)}
+          aria-expanded={isHelpOpen}
+          aria-controls="help-panel"
+        >
+          <span className="help-icon">?</span>
+          <span className="help-text">{t('nav.guide')}</span>
+        </button>
+      </div>
 
       <HelpPanel isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
 
@@ -145,6 +147,14 @@ export default function Header() {
         .btn-logout:hover {
           color: var(--vermilion);
           border-color: var(--vermilion);
+        }
+
+        .nav-buttons {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-top: 16px;
         }
       `}</style>
     </header>

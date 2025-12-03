@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@/context/QueryContext';
+import DictQuickCard from './DictQuickCard';
 
 // 转换 [b]...[/b] 为 <strong>
 function toHtmlWithBB(text: string): string {
@@ -224,6 +225,10 @@ export default function ResultBox() {
           {resultText || t('result.placeholder')}
         </p>
       )}
+
+      {/* 字典速查卡片 - 当有查询词时显示 */}
+      {word && !isLoading && <DictQuickCard word={word} />}
+
       <div className="scroll-corner top-left" aria-hidden="true"></div>
       <div className="scroll-corner top-right" aria-hidden="true"></div>
       <div className="scroll-corner bottom-left" aria-hidden="true"></div>
