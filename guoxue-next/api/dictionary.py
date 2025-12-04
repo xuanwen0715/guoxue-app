@@ -87,8 +87,9 @@ class handler(BaseHTTPRequestHandler):
             # 支持简体或繁体查询
             params["or"] = f"(char.eq.{query},traditional.eq.{query})"
         elif search_by == "pinyin":
-            # 拼音模糊匹配
-            params["pinyin"] = f"ilike.*{query}*"
+            # 拼音模糊匹配 - 将无声调拼音转换为可匹配带声调的正则
+            pinyin_pattern = self._pinyin_to_pattern(query.lower())
+            params["pinyin"] = f"ilike.{pinyin_pattern}"
         elif search_by == "radical":
             # 部首精确匹配
             params["radical"] = f"eq.{query}"
@@ -281,3 +282,23 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control", "public, max-age=300")  # 缓存5分钟
         self.end_headers()
         self.wfile.write(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
+
+    def _pinyin_to_pattern(self, pinyin):
+        """将无声调拼音转换为可匹配带声调拼音的 ILIKE 模式
+
+        由于 ILIKE 不支持字符类，使用单字符通配符 _ 代替元音
+        例如: dao -> *d_o* (匹配 dào, dǎo, dāo 等)
+        """
+        # 元音字母（可能带声调）
+        vowels = set('aeiouü')
+
+        pattern = '*'
+        for char in pinyin:
+            if char in vowels:
+                # 用 _ 通配符匹配任意单字符（包括带声调的元音）
+                pattern += '_'
+            else:
+                pattern += char
+        pattern += '*'
+
+        return pattern
