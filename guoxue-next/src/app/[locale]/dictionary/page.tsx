@@ -172,12 +172,34 @@ export default function DictionaryPage() {
   };
 
   // Select radical
-  const handleRadicalSelect = (radical: string) => {
+  const handleRadicalSelect = async (radical: string) => {
     setQuery(radical);
     setSearchBy('radical');
     setShowRadicalPicker(false);
-    // Auto search
-    setTimeout(() => handleSearch(), 100);
+
+    // 直接执行搜索，不依赖状态更新
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams({
+        q: radical,
+        type: searchType,
+        by: 'radical',
+        limit: '50'
+      });
+
+      const resp = await fetch(`/api/dictionary?${params}`);
+      const data = await resp.json();
+
+      if (resp.ok) {
+        setCharResults(data.chars || []);
+        setIdiomResults(data.idioms || []);
+        setWordResults(data.words || []);
+      }
+    } catch (err) {
+      console.error('Radical search failed:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Click char for details
