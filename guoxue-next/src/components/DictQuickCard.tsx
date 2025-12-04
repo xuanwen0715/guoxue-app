@@ -69,14 +69,13 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
         </div>
         <div className="header-right">
           <Link
-            href={`/${locale}/dictionary?q=${encodeURIComponent(word)}`}
+            href={`//dictionary?q=&type=word&by=text`}
             className="more-link"
             onClick={(e) => e.stopPropagation()}
           >
-            {t('dictionary.viewMore')} â†’
-          </Link>
+            {t('dictionary.viewMore')} â†?          </Link>
           <button className="expand-btn">
-            {isExpanded ? 'âˆ’' : '+'}
+            {isExpanded ? 'âˆ? : '+'}
           </button>
         </div>
       </div>
