@@ -24,7 +24,7 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // 提取单个汉字进行查询
+  // Extract single Chinese characters for lookup
   const chars = word.split('').filter((c) => /[\u4e00-\u9fff]/.test(c)).slice(0, 5);
 
   useEffect(() => {
@@ -64,18 +64,19 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
     <div className="dict-quick-card">
       <div className="card-header" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="header-left">
-          <span className="card-icon">📖</span>
+          <span className="card-icon">&#128214;</span>
           <span className="card-title">{t('dictionary.quickLookup')}</span>
         </div>
         <div className="header-right">
           <Link
-            href={`//dictionary?q=&type=word&by=text`}
+            href={`/${locale}/dictionary?q=${encodeURIComponent(word)}&type=word&by=text`}
             className="more-link"
             onClick={(e) => e.stopPropagation()}
           >
-            {t('dictionary.viewMore')} �?          </Link>
+            {t('dictionary.viewMore')} &rarr;
+          </Link>
           <button className="expand-btn">
-            {isExpanded ? '�? : '+'}
+            {isExpanded ? '\u2212' : '+'}
           </button>
         </div>
       </div>
