@@ -280,6 +280,30 @@ export default function DictionaryPage() {
           <p className="dict-subtitle">{t('dictionary.subtitle')}</p>
         </header>
 
+        {/* Help: Dictionary feature highlights */}
+        <div className="dict-help" role="note">
+          <div className="help-title">{locale === 'zh' ? '字典功能简介' : 'Dictionary Highlights'}</div>
+          <ul className="help-points">
+            {(
+              locale === 'zh'
+                ? [
+                    '支持简繁同查（字级）',
+                    '按部首（含常见偏旁别名：讠=言、氵=水、忄=心、扌=手、礻=示 等）',
+                    '按拼音（无声调亦可），支持首字母',
+                    '按笔画数，配合部首更精确'
+                  ]
+                : [
+                    'Char-level Simplified/Traditional matching',
+                    'By Radical (with common side-form aliases: 讠=言, 氵=水, 忄=心, 扌=手, 礻=示, etc.)',
+                    'By Pinyin (tones optional), supports initials',
+                    'By Stroke Count, combine with radical for precision'
+                  ]
+            ).map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
+          </ul>
+        </div>
+
         {/* Search Section */}
         <div className="search-section">
           {/* Tab bar */}
@@ -579,6 +603,26 @@ export default function DictionaryPage() {
           align-items: center;
           justify-content: center;
           gap: 12px;
+        }
+
+        .dict-help {
+          margin: 8px 0 16px;
+          padding: 10px 12px;
+          background: rgba(122,104,166,0.06);
+          border: 1px solid var(--border);
+          border-radius: 12px;
+        }
+        .dict-help .help-title {
+          font-size: 13px;
+          color: var(--muted);
+          margin-bottom: 6px;
+        }
+        .dict-help .help-points {
+          margin: 0;
+          padding-left: 18px;
+          color: var(--text);
+          line-height: 1.6;
+          font-size: 14px;
         }
 
         .dict-phoenix {

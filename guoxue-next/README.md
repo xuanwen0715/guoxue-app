@@ -60,3 +60,23 @@ curl -sS -X POST 'https://dict.gsw277.today/api/dictionary' -H 'Content-Type: ap
 Notes:
 - Char-level lookup now matches both Simplified (`char`) and Traditional (`traditional`) and includes OpenCC-generated variants.
 - Ensure the following env vars are configured on Vercel: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`.
+
+## Dictionary Overview
+
+- Char-level S/T matching: input Simplified or Traditional and get the same entry.
+- Multi-search: by Text, by Pinyin (tones optional), by Radical, by Strokes.
+- Radical aliases: supports common side-form/simplified shapes in the picker.
+- Quick Card on homepage: shows per-character info for up to 5 chars.
+
+## Radical Alias List (UI)
+
+The radical picker accepts these common aliases and maps them to their Kangxi canonical radicals when searching:
+
+- 讠 = 言, 氵 = 水, 扌 = 手, 忄 = 心, 礻 = 示
+- 纟 = 糸, 钅 = 金, 饣 = 食, 犭 = 犬, 刂 = 刀
+- 门 = 門, 车 = 車, 马 = 馬, 鸟 = 鳥, 鱼 = 魚
+- 页 = 頁, 风 = 風, 艹 = 艸, 亻 = 人, 阝 ≈ 阜（右侧多作 邑 U+9091）
+- 灬 = 火, 牜 = 牛, 衤 = 衣, 爫 = 爪, 辶 = 辵
+- 釒 = 金, 糹 = 糸, 飠 = 食, 氺 = 水, 攵 = 攴
+
+Note: The canonical set follows Kangxi radicals; aliases are UI conveniences only.
