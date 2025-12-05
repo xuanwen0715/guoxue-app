@@ -29,6 +29,7 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
         </button>
       </div>
       <div className="help-panel-content">
+        <div className="help-grid">
         <div className="help-section">
           <h4><span className="help-num">壹</span> {t('section1.title')}</h4>
           <ul className="help-list">
@@ -59,10 +60,60 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
             <li>{t('section4.item2')}</li>
           </ul>
         </div>
+        </div>
       </div>
       <div className="help-panel-footer">
         <p className="help-tip">{t('tip')}</p>
       </div>
+      <style jsx>{`
+        .help-panel-content {
+          padding: 12px 16px;
+        }
+        .help-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+          counter-reset: helpstep;
+        }
+        @media (min-width: 768px) {
+          .help-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .help-section {
+          counter-increment: helpstep;
+          background: linear-gradient(145deg, rgba(248, 245, 252, 0.9), rgba(252, 250, 255, 0.85));
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          padding: 14px;
+        }
+        .help-section h4 {
+          margin: 0 0 8px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          color: var(--ink);
+        }
+        .help-num {
+          width: 24px;
+          height: 24px;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--accent);
+          color: #fff;
+          font-weight: 700;
+          font-size: 12px;
+        }
+        .help-num::before { content: counter(helpstep); }
+        .help-list {
+          margin: 0;
+          padding-left: 18px;
+          color: var(--text);
+          line-height: 1.6;
+          font-size: 14px;
+        }
+      `}</style>
     </div>
   );
 }
