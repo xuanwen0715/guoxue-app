@@ -95,7 +95,7 @@
     },
     "section2": {
       "title": "Character/Word Query",
-      "item1": { "title": "Input Query", "desc": ": Enter the character or word you want to look up" },
+      "item1": { "title": "Input Query", "desc": ": Enter the character or word you want to look up (Dictionary supports By Radical / Pinyin / Strokes, with char-level Simplified-Traditional matching)" },
       "item2": { "title": "Rare Characters", "desc": ": Click 'Upload Image' for rare character recognition" }
     },
     "section3": {
