@@ -8,6 +8,35 @@ SUPABASE_URL = os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "")
 SUPABASE_ANON_KEY = os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")
 
 
+# OpenCC 简繁转换（用于字级变体扩展，最小侵入式集成）
+try:
+    from opencc import OpenCC  # type: ignore
+    _CC_S2T = OpenCC('s2t')
+    _CC_T2S = OpenCC('t2s')
+except Exception:
+    _CC_S2T = None
+    _CC_T2S = None
+
+
+def _expand_char_variants(ch: str) -> set:
+    """返回输入单字的简体/繁体变体集合（仅单字符）。
+
+    - 优先包含原字符
+    - 若 OpenCC 可用，则加入 s2t/t2s 形态
+    - 仅保留长度为 1 的结果，避免多字符替换
+    """
+    forms = {ch}
+    try:
+        if _CC_T2S is not None:
+            forms.add(_CC_T2S.convert(ch))
+        if _CC_S2T is not None:
+            forms.add(_CC_S2T.convert(ch))
+    except Exception:
+        # 若转换失败则忽略，保持降级
+        pass
+    return {f for f in forms if isinstance(f, str) and len(f) == 1}
+
+
 class handler(BaseHTTPRequestHandler):
     """字典查询 API - 支持汉字、成语、词语检索"""
 
@@ -259,13 +288,28 @@ class handler(BaseHTTPRequestHandler):
             "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
         }
 
-        # 构建 OR 查询
-        or_conditions = ",".join([f"char.eq.{c}" for c in chars])
+        # 构建 OR 查询（同时匹配简体字段 char 及繁体字段 traditional，并加入 OpenCC 扩展变体）
+        expanded = set()
+        for c in chars:
+            expanded.update(_expand_char_variants(c))
+
+        # 确保至少包含原始输入（即使 OpenCC 不可用）
+        for c in chars:
+            if isinstance(c, str) and len(c) == 1:
+                expanded.add(c)
+
+        # 生成 OR 条件：char.eq.X 与 traditional.eq.X 都纳入
+        conditions = []
+        for v in sorted(expanded):
+            conditions.append(f"char.eq.{v}")
+            conditions.append(f"traditional.eq.{v}")
+        or_conditions = ",".join(conditions)
         base_url = f"{SUPABASE_URL}/rest/v1/dictionary"
         params = {
             "select": "char,traditional,pinyin,radical,total_strokes,explanation",
             "or": f"({or_conditions})",
-            "limit": len(chars)
+            # 按变体规模放宽限制，避免漏掉仅以变体命中的字符
+            "limit": max(len(expanded), len(chars))
         }
 
         resp = requests.get(base_url, headers=headers, params=params, timeout=10)
