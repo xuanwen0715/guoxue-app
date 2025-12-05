@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useTranslations } from 'next-intl';
 
@@ -15,18 +15,9 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
   return (
     <div className="help-panel" role="dialog" aria-modal="true">
       <div className="help-panel-header">
-        <h3 className="help-panel-title">
-          <span className="help-panel-icon">馃摉</span>
-          {t('title')}
-        </h3>
+        <h3 className="help-panel-title">{t('title')}</h3>
         <button
-          className="help-close-btn"
-          type="button"
-          aria-label="鍏抽棴"
-          onClick={onClose}
-        >
-          脳
-        </button>
+          className="help-close-btn" type="button" aria-label="关闭" onClick={onClose}>×</button>
       </div>
       <div className="help-panel-content">
         <div className="help-grid">
@@ -66,6 +57,32 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
         <p className="help-tip">{t('tip')}</p>
       </div>
       <style jsx>{`
+        .help-panel-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 16px 0;
+        }
+        .help-panel-title {
+          margin: 0;
+          font-family: var(--font-calligraphy), var(--font-serif), serif;
+          font-weight: 600;
+          letter-spacing: 0.6px;
+          font-size: 20px;
+          color: var(--ink);
+        }
+        .help-close-btn {
+          width: 28px;
+          height: 28px;
+          background: transparent;
+          border: none;
+          color: var(--muted);
+          font-size: 20px;
+          line-height: 1;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+        .help-close-btn:hover { background: rgba(0,0,0,0.06); color: var(--text); }
         .help-panel-content {
           padding: 12px 16px;
         }
