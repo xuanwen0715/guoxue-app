@@ -265,7 +265,7 @@ export default function WordInput() {
 
         .dict-icon {
           font-family: var(--font-calligraphy), 'Noto Serif SC', 'KaiTi', serif;
-          font-size: 18px;
+          font-size: 20px;
           font-weight: 700;
           color: #2c4a78;
           transition: color 0.25s ease;
@@ -274,7 +274,7 @@ export default function WordInput() {
 
         .dict-label {
           font-family: var(--font-serif);
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 700;
           color: #2c4a78;
           transition: color 0.25s ease;
