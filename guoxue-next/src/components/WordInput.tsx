@@ -236,24 +236,24 @@ export default function WordInput() {
           gap: 8px;
           padding: 9px 14px;
           background: linear-gradient(135deg,
-            rgba(122, 104, 166, 0.14) 0%,
-            rgba(90, 128, 176, 0.14) 100%
+            rgba(90, 128, 176, 0.32) 0%,
+            rgba(110, 165, 211, 0.28) 100%
           );
-          border: 1.5px solid rgba(122, 104, 166, 0.38);
+          border: 1.5px solid rgba(90, 128, 176, 0.55);
           border-radius: 12px;
           text-decoration: none;
           cursor: pointer;
           transition: all 0.25s ease;
           flex-shrink: 0;
-          box-shadow: 0 3px 10px rgba(122, 104, 166, 0.16);
+          box-shadow: 0 6px 16px rgba(90, 128, 176, 0.22), 0 0 0 2px rgba(90, 128, 176, 0.10);
           backdrop-filter: saturate(120%);
         }
 
         .dict-shortcut:hover {
-          background: linear-gradient(135deg, var(--accent), var(--secondary));
+          background: linear-gradient(135deg, #5a80b0, #6ea5d3);
           border-color: transparent;
           transform: translateY(-1px);
-          box-shadow: 0 8px 18px rgba(122, 104, 166, 0.28);
+          box-shadow: 0 10px 22px rgba(90, 128, 176, 0.32);
           color: #fff;
         }
 
@@ -267,7 +267,7 @@ export default function WordInput() {
           font-family: var(--font-calligraphy), 'Noto Serif SC', 'KaiTi', serif;
           font-size: 18px;
           font-weight: 700;
-          color: var(--accent);
+          color: #2c4a78;
           transition: color 0.25s ease;
           text-shadow: 0 1px 0 rgba(255,255,255,0.35);
         }
@@ -275,8 +275,8 @@ export default function WordInput() {
         .dict-label {
           font-family: var(--font-serif);
           font-size: 13px;
-          font-weight: 600;
-          color: var(--accent);
+          font-weight: 700;
+          color: #2c4a78;
           transition: color 0.25s ease;
           white-space: nowrap;
           letter-spacing: 0.2px;
