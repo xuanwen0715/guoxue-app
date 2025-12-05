@@ -233,48 +233,53 @@ export default function WordInput() {
         .dict-shortcut {
           display: flex;
           align-items: center;
-          gap: 6px;
-          padding: 8px 14px;
-          background: linear-gradient(145deg,
-            rgba(255, 255, 255, 0.98) 0%,
-            rgba(248, 245, 252, 0.95) 100%
+          gap: 8px;
+          padding: 9px 14px;
+          background: linear-gradient(135deg,
+            rgba(122, 104, 166, 0.14) 0%,
+            rgba(90, 128, 176, 0.14) 100%
           );
-          border: 1.5px solid rgba(122, 104, 166, 0.25);
-          border-radius: 10px;
+          border: 1.5px solid rgba(122, 104, 166, 0.38);
+          border-radius: 12px;
           text-decoration: none;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.25s ease;
           flex-shrink: 0;
-          box-shadow: 0 2px 6px rgba(122, 104, 166, 0.08);
+          box-shadow: 0 3px 10px rgba(122, 104, 166, 0.16);
+          backdrop-filter: saturate(120%);
         }
 
         .dict-shortcut:hover {
           background: linear-gradient(135deg, var(--accent), var(--secondary));
           border-color: transparent;
           transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(122, 104, 166, 0.25);
+          box-shadow: 0 8px 18px rgba(122, 104, 166, 0.28);
+          color: #fff;
         }
 
         .dict-shortcut:hover .dict-icon,
         .dict-shortcut:hover .dict-label {
-          color: white;
+          color: #fff;
+          text-shadow: none;
         }
 
         .dict-icon {
-          font-family: 'Noto Serif SC', 'KaiTi', serif;
+          font-family: var(--font-calligraphy), 'Noto Serif SC', 'KaiTi', serif;
           font-size: 18px;
           font-weight: 700;
           color: var(--accent);
-          transition: color 0.3s ease;
+          transition: color 0.25s ease;
+          text-shadow: 0 1px 0 rgba(255,255,255,0.35);
         }
 
         .dict-label {
           font-family: var(--font-serif);
           font-size: 13px;
-          font-weight: 500;
+          font-weight: 600;
           color: var(--accent);
-          transition: color 0.3s ease;
+          transition: color 0.25s ease;
           white-space: nowrap;
+          letter-spacing: 0.2px;
         }
 
         @media (max-width: 480px) {
