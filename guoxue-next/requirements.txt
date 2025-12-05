@@ -3,4 +3,4 @@ urllib3>=1.26.0
 alibabacloud_ocr_api20210707>=3.0.0
 alibabacloud_tea_openapi>=0.3.0
 alibabacloud_tea_util>=0.3.0
-
+opencc-python-reimplemented>=0.1.7
