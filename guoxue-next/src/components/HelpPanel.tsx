@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useTranslations } from 'next-intl';
 
@@ -16,22 +16,22 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
     <div className="help-panel" role="dialog" aria-modal="true">
       <div className="help-panel-header">
         <h3 className="help-panel-title">
-          <span className="help-panel-icon">📖</span>
+          <span className="help-panel-icon">馃摉</span>
           {t('title')}
         </h3>
         <button
           className="help-close-btn"
           type="button"
-          aria-label="关闭"
+          aria-label="鍏抽棴"
           onClick={onClose}
         >
-          ×
+          脳
         </button>
       </div>
       <div className="help-panel-content">
         <div className="help-grid">
         <div className="help-section">
-          <h4><span className="help-num">壹</span> {t('section1.title')}</h4>
+          <h4>{t('section1.title')}</h4>
           <ul className="help-list">
             <li><strong>{t('section1.item1.title')}</strong>{t('section1.item1.desc')}</li>
             <li><strong>{t('section1.item2.title')}</strong>{t('section1.item2.desc')}</li>
@@ -40,21 +40,21 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
           </ul>
         </div>
         <div className="help-section">
-          <h4><span className="help-num">贰</span> {t('section2.title')}</h4>
+          <h4>{t('section2.title')}</h4>
           <ul className="help-list">
             <li><strong>{t('section2.item1.title')}</strong>{t('section2.item1.desc')}</li>
             <li><strong>{t('section2.item2.title')}</strong>{t('section2.item2.desc')}</li>
           </ul>
         </div>
         <div className="help-section">
-          <h4><span className="help-num">叁</span> {t('section3.title')}</h4>
+          <h4>{t('section3.title')}</h4>
           <ul className="help-list">
             <li>{t('section3.item1')}</li>
             <li>{t('section3.item2')}</li>
           </ul>
         </div>
         <div className="help-section">
-          <h4><span className="help-num">肆</span> {t('section4.title')}</h4>
+          <h4>{t('section4.title')}</h4>
           <ul className="help-list">
             <li>{t('section4.item1')}</li>
             <li>{t('section4.item2')}</li>
@@ -73,47 +73,37 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
           display: grid;
           grid-template-columns: 1fr;
           gap: 12px;
-          counter-reset: helpstep;
         }
         @media (min-width: 768px) {
           .help-grid { grid-template-columns: repeat(2, 1fr); }
         }
         .help-section {
-          counter-increment: helpstep;
-          background: linear-gradient(145deg, rgba(248, 245, 252, 0.9), rgba(252, 250, 255, 0.85));
-          border: 1px solid var(--border);
-          border-radius: 12px;
-          padding: 14px;
+          background: linear-gradient(135deg, rgba(122,104,166,0.06), rgba(90,128,176,0.04));
+          border: 1px solid rgba(122,104,166,0.18);
+          border-radius: 14px;
+          padding: 14px 16px;
+          box-shadow: 0 2px 6px rgba(122,104,166,0.08);
         }
         .help-section h4 {
           margin: 0 0 8px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 14px;
-          color: var(--ink);
+          font-family: var(--font-serif);
+          font-weight: 600;
+          letter-spacing: 0.2px;
+          font-size: 15px;
+          color: var(--accent);
         }
-        .help-num {
-          width: 24px;
-          height: 24px;
-          border-radius: 999px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--accent);
-          color: #fff;
-          font-weight: 700;
-          font-size: 12px;
-        }
-        .help-num::before { content: counter(helpstep); }
         .help-list {
           margin: 0;
           padding-left: 18px;
           color: var(--text);
           line-height: 1.6;
-          font-size: 14px;
+          font-size: 13.5px;
         }
       `}</style>
     </div>
   );
 }
+
+
+
+
