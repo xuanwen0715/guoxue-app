@@ -24,8 +24,19 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Extract single Chinese characters for lookup
-  const chars = word.split('').filter((c) => /[\u4e00-\u9fff]/.test(c)).slice(0, 5);
+  // Extract single Chinese characters for lookup (support rare/ext chars)
+  const HAN_REGEX: RegExp = (() => {
+    try {
+      return new RegExp('\\p{Script=Han}', 'u');
+    } catch {
+      // Fallback: BMP CJK + CJK Compatibility Ideographs
+      return /[\u3400-\u9FFF\uF900-\uFAFF]/;
+    }
+  })();
+
+  const chars = Array.from(word)
+    .filter((c) => HAN_REGEX.test(c))
+    .slice(0, 5);
 
   useEffect(() => {
     if (chars.length === 0) return;
