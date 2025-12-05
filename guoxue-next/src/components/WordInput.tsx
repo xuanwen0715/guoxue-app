@@ -234,7 +234,7 @@ export default function WordInput() {
           display: flex;
           align-items: center;
           gap: 8px;
-          padding: 9px 14px;
+          padding: 9px 16px;
           background: linear-gradient(135deg,
             rgba(90, 128, 176, 0.32) 0%,
             rgba(110, 165, 211, 0.28) 100%
@@ -287,7 +287,7 @@ export default function WordInput() {
             display: none;
           }
           .dict-shortcut {
-            padding: 10px 12px;
+            padding: 10px 14px;
           }
           .dict-icon {
             font-size: 20px;
