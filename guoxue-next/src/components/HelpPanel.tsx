@@ -78,26 +78,41 @@ export default function HelpPanel({ isOpen, onClose }: HelpPanelProps) {
           .help-grid { grid-template-columns: repeat(2, 1fr); }
         }
         .help-section {
-          background: linear-gradient(135deg, rgba(122,104,166,0.06), rgba(90,128,176,0.04));
-          border: 1px solid rgba(122,104,166,0.18);
+          background: linear-gradient(135deg, rgba(246, 242, 233, 0.96), rgba(252, 248, 240, 0.94));
+          border: 1px solid rgba(187, 160, 120, 0.22);
           border-radius: 14px;
           padding: 14px 16px;
-          box-shadow: 0 2px 6px rgba(122,104,166,0.08);
+          box-shadow: 0 2px 6px rgba(187, 160, 120, 0.10);
         }
         .help-section h4 {
           margin: 0 0 8px;
-          font-family: var(--font-serif);
+          font-family: var(--font-calligraphy), var(--font-serif), serif;
           font-weight: 600;
-          letter-spacing: 0.2px;
-          font-size: 15px;
-          color: var(--accent);
+          letter-spacing: 0.3px;
+          font-size: 16px;
+          color: var(--ink);
         }
         .help-list {
+          list-style: none;
           margin: 0;
-          padding-left: 18px;
+          padding: 0;
           color: var(--text);
-          line-height: 1.6;
+          line-height: 1.65;
           font-size: 13.5px;
+        }
+        .help-list li {
+          position: relative;
+          padding-left: 16px;
+        }
+        .help-list li + li { margin-top: 4px; }
+        .help-list li::before {
+          content: '·';
+          position: absolute;
+          left: 4px;
+          top: 0;
+          color: var(--accent);
+          font-size: 18px;
+          line-height: 1;
         }
       `}</style>
     </div>
