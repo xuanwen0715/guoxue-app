@@ -34,3 +34,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Dictionary Health Check (cURL)
+
+After deploying, use these quick checks to verify the dictionary API (replace the domain as needed, e.g. `http://localhost:3000`):
+
+```bash
+# 1) Char lookup (Traditional) – should return the same entry as Simplified
+curl -sS 'https://dict.gsw277.today/api/dictionary?q=國&type=char&by=text'
+
+# 2) Char lookup (Simplified)
+curl -sS 'https://dict.gsw277.today/api/dictionary?q=国&type=char&by=text'
+
+# 3) Batch lookup for the homepage quick card (includes OpenCC variants)
+curl -sS -X POST 'https://dict.gsw277.today/api/dictionary' \
+  -H 'Content-Type: application/json' \
+  -d '{"action":"batch_lookup","chars":["國","複","臺"]}'
+
+# Optional pretty print if jq is available
+curl -sS 'https://dict.gsw277.today/api/dictionary?q=國&type=char&by=text' | jq .
+curl -sS -X POST 'https://dict.gsw277.today/api/dictionary' -H 'Content-Type: application/json' \
+  -d '{"action":"batch_lookup","chars":["國","複","臺"]}' | jq '.results'
+```
+
+Notes:
+- Char-level lookup now matches both Simplified (`char`) and Traditional (`traditional`) and includes OpenCC-generated variants.
+- Ensure the following env vars are configured on Vercel: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`.

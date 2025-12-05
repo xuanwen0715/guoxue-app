@@ -33,7 +33,7 @@ interface WordResult {
   explanation: string | null;
 }
 
-// Common radicals list
+// Common radicals list (Kangxi radicals)
 const COMMON_RADICALS = [
   '\u4e00', '\u4e28', '\u4e36', '\u4e3f', '\u4e59', '\u4e85', '\u4e8c', '\u4ea0', '\u4eba', '\u513f',
   '\u5165', '\u516b', '\u5182', '\u5196', '\u51ab', '\u5200', '\u529b', '\u52f9', '\u5315', '\u5341',
@@ -56,6 +56,33 @@ const COMMON_RADICALS = [
   '\u9adf', '\u9b25', '\u9b2f', '\u9b3c', '\u9b5a', '\u9ce5', '\u9e75', '\u9e7f', '\u9ea5', '\u9ebb',
   '\u9ec3', '\u9ecd', '\u9ed2', '\u9ef9', '\u9f0e', '\u9f13', '\u9f20', '\u9f3b', '\u9f50', '\u9f52'
 ];
+
+// Extra simplified/side-form radicals for better discoverability in UI
+// These map to their canonical Kangxi radicals when searching.
+const RADICAL_ALIAS_MAP: Record<string, string> = {
+  '\u8ba0': '\u8a00', // 讠 -> 言
+  '\u6c35': '\u6c34', // 氵 -> 水
+  '\u624c': '\u624b', // 扌 -> 手
+  '\u5fc4': '\u5fc3', // 忄 -> 心
+  '\u793b': '\u793a', // 礻 -> 示
+  '\u7e9f': '\u7cf8', // 纟 -> 糸
+  '\u9485': '\u91d1', // 钅 -> 金
+  '\u9963': '\u98df', // 饣 -> 食
+  '\u72ad': '\u72ac', // 犭 -> 犬
+  '\u5202': '\u5200', // 刂 -> 刀
+  '\u95e8': '\u9580', // 门 -> 門
+  '\u8f66': '\u8eca', // 车 -> 車
+  '\u9a6c': '\u99ac', // 马 -> 馬
+  '\u9e1f': '\u9ce5', // 鸟 -> 鳥
+  '\u9c7c': '\u9b5a', // 鱼 -> 魚
+  '\u9875': '\u9801', // 页 -> 頁
+  '\u98ce': '\u98a8', // 风 -> 風
+  '\u8279': '\u8278', // 艹 -> 艸
+};
+
+// Merge extra radicals into the grid (UI only)
+const EXTRA_RADICALS = Object.keys(RADICAL_ALIAS_MAP);
+const RADICALS_FOR_GRID = Array.from(new Set([...EXTRA_RADICALS, ...COMMON_RADICALS]));
 
 export default function DictionaryPage() {
   const t = useTranslations();
@@ -173,7 +200,9 @@ export default function DictionaryPage() {
 
   // Select radical
   const handleRadicalSelect = async (radical: string) => {
-    setQuery(radical);
+    // Map side-form/simplified radical to canonical Kangxi radical for searching
+    const canonical = RADICAL_ALIAS_MAP[radical] || radical;
+    setQuery(canonical);
     setSearchBy('radical');
     setShowRadicalPicker(false);
 
@@ -181,7 +210,7 @@ export default function DictionaryPage() {
     setIsLoading(true);
     try {
       const params = new URLSearchParams({
-        q: radical,
+        q: canonical,
         type: searchType,
         by: 'radical',
         limit: '50'
@@ -343,7 +372,7 @@ export default function DictionaryPage() {
                 </button>
               </div>
               <div className="radical-grid">
-                {COMMON_RADICALS.map((r) => (
+                {RADICALS_FOR_GRID.map((r) => (
                   <button
                     key={r}
                     className="radical-item"
