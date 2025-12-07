@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "import:dict": "node scripts/import-dict.js"
+    "import:dict": "node scripts/import-dict.js",
+    "import:unihan": "node scripts/import-unihan.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.86.0",
