@@ -116,9 +116,13 @@ class handler(BaseHTTPRequestHandler):
             # 支持简体或繁体查询
             params["or"] = f"(char.eq.{query},traditional.eq.{query})"
         elif search_by == "pinyin":
-            # 拼音模糊匹配 - 将无声调拼音转换为可匹配带声调的正则
-            pinyin_pattern = self._pinyin_to_pattern(query.lower())
-            params["pinyin"] = f"ilike.{pinyin_pattern}"
+            # 拼音精确匹配 - 生成所有声调变体的 OR 条件
+            variants = self._get_pinyin_variants(query.lower())
+            # 构建 OR 条件：pinyin.eq.qū,pinyin.eq.qú,pinyin.eq.qǔ,pinyin.eq.qù
+            or_conditions = ",".join([f"pinyin.eq.{v}" for v in variants])
+            params["or"] = f"({or_conditions})"
+            # 按笔画数排序，让常用简单字优先显示
+            params["order"] = "total_strokes.asc"
         elif search_by == "radical":
             # 部首精确匹配
             params["radical"] = f"eq.{query}"
@@ -330,19 +334,74 @@ class handler(BaseHTTPRequestHandler):
     def _pinyin_to_pattern(self, pinyin):
         """将无声调拼音转换为可匹配带声调拼音的 ILIKE 模式
 
-        由于 ILIKE 不支持字符类，使用单字符通配符 _ 代替元音
-        例如: dao -> *d_o* (匹配 dào, dǎo, dāo 等)
+        改进逻辑：精确匹配拼音长度，只替换元音为通配符
+        例如: qu -> q_ (精确匹配 qū, qú, qǔ, qù)
+        例如: dao -> d_o (精确匹配 dào, dǎo, dāo, dáo)
         """
         # 元音字母（可能带声调）
         vowels = set('aeiouü')
 
-        pattern = '*'
+        # 构建精确匹配模式（不加前后通配符，精确匹配拼音长度）
+        pattern = ''
         for char in pinyin:
             if char in vowels:
                 # 用 _ 通配符匹配任意单字符（包括带声调的元音）
                 pattern += '_'
             else:
                 pattern += char
-        pattern += '*'
 
         return pattern
+
+    def _get_pinyin_variants(self, pinyin):
+        """将无声调拼音转换为所有可能的声调变体列表
+
+        例如: qu -> ['qū', 'qú', 'qǔ', 'qù', 'qu']
+        例如: dao -> ['dāo', 'dáo', 'dǎo', 'dào', 'dao']
+        """
+        # 元音到声调变体的映射
+        tone_map = {
+            'a': ['ā', 'á', 'ǎ', 'à', 'a'],
+            'e': ['ē', 'é', 'ě', 'è', 'e'],
+            'i': ['ī', 'í', 'ǐ', 'ì', 'i'],
+            'o': ['ō', 'ó', 'ǒ', 'ò', 'o'],
+            'u': ['ū', 'ú', 'ǔ', 'ù', 'u'],
+            'ü': ['ǖ', 'ǘ', 'ǚ', 'ǜ', 'ü'],
+            'v': ['ǖ', 'ǘ', 'ǚ', 'ǜ', 'ü'],  # v 作为 ü 的替代输入
+        }
+
+        # 找到拼音中需要加声调的元音位置
+        # 声调规则：有 a/e 则在 a/e 上，有 ou 则在 o 上，否则在后面的元音上
+        pinyin = pinyin.lower()
+
+        # 找主元音位置
+        main_vowel_idx = -1
+        for i, char in enumerate(pinyin):
+            if char in 'ae':
+                main_vowel_idx = i
+                break
+            elif char == 'o' and i + 1 < len(pinyin) and pinyin[i + 1] == 'u':
+                main_vowel_idx = i
+                break
+
+        if main_vowel_idx == -1:
+            # 找最后一个元音
+            for i in range(len(pinyin) - 1, -1, -1):
+                if pinyin[i] in 'iouüv':
+                    main_vowel_idx = i
+                    break
+
+        if main_vowel_idx == -1:
+            # 没有元音，返回原样
+            return [pinyin]
+
+        # 生成所有声调变体
+        main_vowel = pinyin[main_vowel_idx]
+        if main_vowel not in tone_map:
+            return [pinyin]
+
+        variants = []
+        for toned_vowel in tone_map[main_vowel]:
+            variant = pinyin[:main_vowel_idx] + toned_vowel + pinyin[main_vowel_idx + 1:]
+            variants.append(variant)
+
+        return variants

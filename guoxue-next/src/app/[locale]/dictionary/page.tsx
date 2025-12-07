@@ -136,7 +136,7 @@ export default function DictionaryPage() {
           q: qParam,
           type: nextType,
           by: nextBy,
-          limit: '50'
+          limit: '100'  // 增加限制以显示更多结果
         });
 
         const resp = await fetch(`/api/dictionary?${params}`);
@@ -185,7 +185,7 @@ export default function DictionaryPage() {
         q: query.trim(),
         type: searchType,
         by: searchBy,
-        limit: '50'
+        limit: '100'  // 增加限制以显示更多结果
       });
 
       const resp = await fetch(`/api/dictionary?${params}`);
@@ -225,7 +225,7 @@ export default function DictionaryPage() {
         q: canonical,
         type: searchType,
         by: 'radical',
-        limit: '50'
+        limit: '100'  // 增加限制以显示更多结果
       });
 
       const resp = await fetch(`/api/dictionary?${params}`);
