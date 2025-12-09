@@ -137,7 +137,7 @@ export default function PricingModal({ onClose }: PricingProps) {
                 <span className="price-period">/{isZh ? '年' : 'yr'}</span>
               </div>
               <div className="plan-savings">
-                {isZh ? '相当于 $6.67/月' : 'Only $6.67/month'}
+                {isZh ? '相当于 $4.08/月' : 'Only $4.08/month'}
               </div>
             </div>
 

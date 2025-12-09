@@ -7,7 +7,7 @@ export const SUBSCRIPTION_PLANS = {
     name: '月度会员',
     nameEn: 'Monthly Premium',
     priceId: process.env.NEXT_PUBLIC_PADDLE_MONTHLY_PRICE_ID || '',
-    price: 9.99,
+    price: 7,
     currency: 'USD',
     interval: 'month' as const,
     features: [
@@ -27,7 +27,7 @@ export const SUBSCRIPTION_PLANS = {
     name: '年度会员',
     nameEn: 'Yearly Premium',
     priceId: process.env.NEXT_PUBLIC_PADDLE_YEARLY_PRICE_ID || '',
-    price: 79.99,
+    price: 49,
     currency: 'USD',
     interval: 'year' as const,
     features: [
@@ -35,14 +35,14 @@ export const SUBSCRIPTION_PLANS = {
       '无限次 OCR 识别',
       '完整字典访问',
       '优先客服支持',
-      '节省 33%',
+      '节省 42%',
     ],
     featuresEn: [
       'Unlimited translations',
       'Unlimited OCR recognition',
       'Full dictionary access',
       'Priority support',
-      'Save 33%',
+      'Save 42%',
     ],
   },
 } as const;
