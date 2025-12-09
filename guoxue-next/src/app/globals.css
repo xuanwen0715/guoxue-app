@@ -1924,6 +1924,33 @@ body::before{
   background-clip: text;
 }
 
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.footer-link {
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.footer-link:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.footer-separator {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
 /* ===== 使用指南按钮与面板 ===== */
 .help-toggle-btn {
   display: inline-flex;
@@ -3386,6 +3413,546 @@ body::before{
   }
 }
 
+/* ===== 定价弹窗样式 - 青紫仙韵 ===== */
+.pricing-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
+.pricing-modal {
+  position: relative;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(252, 250, 255, 0.96) 50%,
+    rgba(248, 252, 255, 0.94) 100%
+  );
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  box-shadow:
+    0 24px 80px rgba(122, 104, 166, 0.25),
+    0 8px 24px rgba(90, 120, 168, 0.15);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
 
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pricing-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(122, 104, 166, 0.1);
+  color: var(--muted);
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.pricing-close:hover {
+  background: rgba(122, 104, 166, 0.2);
+  color: var(--text);
+}
+
+.pricing-header {
+  text-align: center;
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(122, 104, 166, 0.1);
+}
+
+.pricing-title {
+  margin: 0 0 8px;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #5a6080 0%, #7a68a6 50%, #5a80b0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricing-subtitle {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.pricing-plans {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 24px;
+}
+
+@media (max-width: 640px) {
+  .pricing-plans {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pricing-card {
+  position: relative;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(252, 250, 255, 0.9) 100%
+  );
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 16px rgba(122, 104, 166, 0.08);
+}
+
+.pricing-card:hover {
+  border-color: var(--secondary);
+  box-shadow: 0 8px 32px rgba(122, 104, 166, 0.15);
+  transform: translateY(-4px);
+}
+
+.pricing-card.selected {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 4px rgba(122, 104, 166, 0.15),
+    0 12px 40px rgba(122, 104, 166, 0.2);
+}
+
+.pricing-card.recommended {
+  background: linear-gradient(145deg,
+    rgba(122, 104, 166, 0.08) 0%,
+    rgba(154, 136, 192, 0.05) 50%,
+    rgba(90, 128, 176, 0.04) 100%
+  );
+  border-color: var(--accent);
+}
+
+.plan-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 16px;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  color: white;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(122, 104, 166, 0.3);
+}
+
+.plan-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.plan-name {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+}
+
+.price-currency {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.price-amount {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.price-period {
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.plan-savings {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.plan-features {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 14px;
+  color: var(--text);
+  border-bottom: 1px dashed rgba(122, 104, 166, 0.1);
+}
+
+.plan-features li:last-child {
+  border-bottom: none;
+}
+
+.feature-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.btn-subscribe {
+  width: 100%;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.15) 0%,
+    rgba(154, 136, 192, 0.1) 100%
+  );
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1.5px solid var(--secondary);
+}
+
+.btn-subscribe:hover {
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.25) 0%,
+    rgba(154, 136, 192, 0.2) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(122, 104, 166, 0.2);
+}
+
+.btn-subscribe-primary {
+  background: linear-gradient(135deg,
+    #6a58a0 0%,
+    #7a68b8 30%,
+    #5a78a8 70%,
+    #4a88b8 100%
+  );
+  color: white;
+  border: none;
+  box-shadow: 0 6px 20px rgba(106, 88, 160, 0.3);
+}
+
+.btn-subscribe-primary:hover {
+  background: linear-gradient(135deg,
+    #5a48a0 0%,
+    #6a58b8 30%,
+    #4a68a8 70%,
+    #3a78b8 100%
+  );
+  box-shadow: 0 10px 30px rgba(106, 88, 160, 0.4);
+}
+
+.btn-subscribe:disabled {
+  background: var(--border);
+  color: var(--muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.pricing-footer {
+  text-align: center;
+  padding: 20px 24px 28px;
+  border-top: 1px solid rgba(122, 104, 166, 0.1);
+}
+
+.pricing-guarantee {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.pricing-terms {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 深色模式定价弹窗 */
+@media (prefers-color-scheme: dark) {
+  .pricing-modal {
+    background: linear-gradient(145deg,
+      rgba(30, 28, 35, 0.98) 0%,
+      rgba(35, 32, 42, 0.96) 100%
+    );
+  }
+
+  .pricing-card {
+    background: linear-gradient(145deg,
+      rgba(40, 36, 48, 0.95) 0%,
+      rgba(35, 32, 42, 0.9) 100%
+    );
+  }
+
+  .pricing-card.recommended {
+    background: linear-gradient(145deg,
+      rgba(122, 104, 166, 0.15) 0%,
+      rgba(154, 136, 192, 0.1) 100%
+    );
+  }
+
+  .btn-subscribe:not(.btn-subscribe-primary) {
+    background: linear-gradient(135deg,
+      rgba(184, 168, 216, 0.2) 0%,
+      rgba(200, 184, 232, 0.15) 100%
+    );
+    color: var(--gold);
+  }
+}
+
+/* ===== 法律页面样式 - 青紫仙韵 ===== */
+.legal-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 40px 20px 80px;
+}
+
+.legal-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.legal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.1) 0%,
+    rgba(154, 136, 192, 0.08) 100%
+  );
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.legal-back:hover {
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.18) 0%,
+    rgba(154, 136, 192, 0.12) 100%
+  );
+  transform: translateX(-4px);
+  box-shadow: 0 4px 12px rgba(122, 104, 166, 0.15);
+}
+
+.legal-content {
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(252, 250, 255, 0.96) 50%,
+    rgba(248, 252, 255, 0.94) 100%
+  );
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow:
+    0 12px 48px rgba(122, 104, 166, 0.12),
+    0 4px 16px rgba(90, 120, 168, 0.06);
+}
+
+.legal-content h1 {
+  margin: 0 0 8px;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(135deg, #5a6080 0%, #7a68a6 50%, #5a80b0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.legal-date {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(122, 104, 166, 0.15);
+}
+
+.legal-intro {
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 32px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.06) 0%,
+    rgba(154, 136, 192, 0.04) 100%
+  );
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.legal-content section {
+  margin-bottom: 28px;
+}
+
+.legal-content h2 {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(122, 104, 166, 0.2);
+}
+
+.legal-content p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.9;
+}
+
+.legal-content strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.legal-contact {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(122, 104, 166, 0.08);
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.legal-footer {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.legal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.12) 0%,
+    rgba(154, 136, 192, 0.08) 100%
+  );
+  border: 1px solid var(--secondary);
+  border-radius: 24px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.legal-link:hover {
+  background: linear-gradient(135deg,
+    rgba(122, 104, 166, 0.2) 0%,
+    rgba(154, 136, 192, 0.15) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(122, 104, 166, 0.2);
+}
+
+/* 深色模式法律页面 */
+@media (prefers-color-scheme: dark) {
+  .legal-content {
+    background: linear-gradient(145deg,
+      rgba(30, 28, 35, 0.98) 0%,
+      rgba(35, 32, 42, 0.96) 100%
+    );
+  }
+
+  .legal-intro {
+    background: linear-gradient(135deg,
+      rgba(184, 168, 216, 0.1) 0%,
+      rgba(200, 184, 232, 0.06) 100%
+    );
+  }
+}
+
+/* 移动端法律页面 */
+@media (max-width: 640px) {
+  .legal-page {
+    padding: 24px 16px 60px;
+  }
+
+  .legal-content {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+
+  .legal-content h1 {
+    font-size: 26px;
+  }
+
+  .legal-content h2 {
+    font-size: 16px;
+  }
+
+  .legal-content p {
+    font-size: 14px;
+  }
+}

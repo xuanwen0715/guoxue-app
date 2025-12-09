@@ -11,6 +11,7 @@
     "import:unihan": "node scripts/import-unihan.js"
   },
   "dependencies": {
+    "@paddle/paddle-js": "^1.6.1",
     "@supabase/supabase-js": "^2.86.0",
     "dotenv": "^17.2.3",
     "next": "^16.0.5",
