@@ -1,15 +1,26 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // Supabase 管理员客户端（服务端使用）
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-});
+// 延迟初始化，避免构建时报错
+let _supabaseAdmin: SupabaseClient | null = null;
+
+function getSupabaseAdmin(): SupabaseClient {
+  if (!_supabaseAdmin) {
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new Error('Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.');
+    }
+    _supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+  }
+  return _supabaseAdmin;
+}
 
 // 用户订阅状态
 export interface UserSubscription {
@@ -27,7 +38,7 @@ export interface UserSubscription {
 
 // 获取用户订阅信息
 export async function getUserSubscription(userId: string): Promise<UserSubscription | null> {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getSupabaseAdmin()
     .from('profiles')
     .select('*')
     .eq('id', userId)
@@ -48,7 +59,7 @@ export async function updateUserToPremium(
   paddleSubscriptionId: string,
   currentPeriodEnd: Date
 ) {
-  const { error } = await supabaseAdmin
+  const { error } = await getSupabaseAdmin()
     .from('profiles')
     .upsert({
       id: userId,
@@ -68,7 +79,7 @@ export async function updateUserToPremium(
 
 // 取消用户订阅
 export async function cancelUserSubscription(paddleSubscriptionId: string) {
-  const { error } = await supabaseAdmin
+  const { error } = await getSupabaseAdmin()
     .from('profiles')
     .update({
       is_premium: false,
@@ -85,7 +96,7 @@ export async function cancelUserSubscription(paddleSubscriptionId: string) {
 
 // 根据 Paddle Customer ID 获取用户
 export async function getUserByPaddleCustomerId(paddleCustomerId: string) {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getSupabaseAdmin()
     .from('profiles')
     .select('*')
     .eq('paddle_customer_id', paddleCustomerId)
@@ -101,7 +112,7 @@ export async function getUserByPaddleCustomerId(paddleCustomerId: string) {
 
 // 根据 Paddle Subscription ID 获取用户
 export async function getUserByPaddleSubscriptionId(paddleSubscriptionId: string) {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getSupabaseAdmin()
     .from('profiles')
     .select('*')
     .eq('paddle_subscription_id', paddleSubscriptionId)
@@ -131,7 +142,7 @@ export async function updateSubscriptionStatus(
     updateData.current_period_end = currentPeriodEnd.toISOString();
   }
 
-  const { error } = await supabaseAdmin
+  const { error } = await getSupabaseAdmin()
     .from('profiles')
     .update(updateData)
     .eq('paddle_subscription_id', paddleSubscriptionId);
