@@ -1,33 +1,67 @@
 'use client';
 
-import { useState } from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import { useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
 import { usePaddle } from '@/hooks/usePaddle';
 import { useAuth } from '@/context/AuthContext';
-import { SUBSCRIPTION_PLANS, PlanType } from '@/lib/paddle';
+import { SUBSCRIPTION_PLANS, PlanType, PADDLE_CONFIG } from '@/lib/paddle';
 
 interface PricingProps {
   onClose?: () => void;
 }
 
 export default function PricingModal({ onClose }: PricingProps) {
-  const t = useTranslations();
   const locale = useLocale();
   const { paddle, isLoading: paddleLoading } = usePaddle();
   const { user, isLoggedIn } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('monthly');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<string>('');
 
   const isZh = locale === 'zh';
 
+  // 调试：检查配置
+  useEffect(() => {
+    const info = [
+      `Paddle loaded: ${!!paddle}`,
+      `Paddle loading: ${paddleLoading}`,
+      `Client token: ${PADDLE_CONFIG.clientToken ? 'set' : 'NOT SET'}`,
+      `Environment: ${PADDLE_CONFIG.environment}`,
+      `Monthly price ID: ${SUBSCRIPTION_PLANS.monthly.priceId || 'NOT SET'}`,
+      `Yearly price ID: ${SUBSCRIPTION_PLANS.yearly.priceId || 'NOT SET'}`,
+      `User logged in: ${isLoggedIn}`,
+      `User email: ${user?.email || 'N/A'}`,
+    ];
+    setDebugInfo(info.join('\n'));
+    console.log('[PricingModal] Debug info:', info);
+  }, [paddle, paddleLoading, isLoggedIn, user]);
+
   const handleSubscribe = async (planType: PlanType) => {
+    console.log('[PricingModal] handleSubscribe called with:', planType);
+    console.log('[PricingModal] paddle:', paddle);
+    console.log('[PricingModal] isLoggedIn:', isLoggedIn);
+    console.log('[PricingModal] user:', user);
+
     if (!paddle) {
-      alert(isZh ? '支付系统加载中，请稍后重试' : 'Payment system loading, please try again');
+      const msg = isZh ? '支付系统加载中，请稍后重试' : 'Payment system loading, please try again';
+      console.error('[PricingModal] Paddle not loaded');
+      alert(msg);
       return;
     }
 
     if (!isLoggedIn || !user) {
-      alert(isZh ? '请先登录再订阅' : 'Please login before subscribing');
+      const msg = isZh ? '请先登录再订阅' : 'Please login before subscribing';
+      console.error('[PricingModal] User not logged in');
+      alert(msg);
+      return;
+    }
+
+    const plan = SUBSCRIPTION_PLANS[planType];
+
+    if (!plan.priceId) {
+      const msg = isZh ? '价格配置错误，请联系管理员' : 'Price configuration error, please contact admin';
+      console.error('[PricingModal] Price ID not set for plan:', planType);
+      alert(msg);
       return;
     }
 
@@ -35,9 +69,13 @@ export default function PricingModal({ onClose }: PricingProps) {
     setSelectedPlan(planType);
 
     try {
-      const plan = SUBSCRIPTION_PLANS[planType];
+      console.log('[PricingModal] Opening checkout with:', {
+        priceId: plan.priceId,
+        email: user.email,
+        userId: user.id,
+      });
 
-      paddle.Checkout.open({
+      await paddle.Checkout.open({
         items: [{ priceId: plan.priceId, quantity: 1 }],
         customer: {
           email: user.email,
@@ -53,8 +91,9 @@ export default function PricingModal({ onClose }: PricingProps) {
           successUrl: `${window.location.origin}/${locale}?subscription=success`,
         },
       });
+      console.log('[PricingModal] Checkout opened successfully');
     } catch (error) {
-      console.error('[Paddle] Checkout error:', error);
+      console.error('[PricingModal] Checkout error:', error);
       alert(isZh ? '打开支付页面失败，请重试' : 'Failed to open checkout, please try again');
     } finally {
       setIsProcessing(false);
@@ -80,6 +119,13 @@ export default function PricingModal({ onClose }: PricingProps) {
               : 'Unlock unlimited translations and OCR recognition'}
           </p>
         </div>
+
+        {/* 调试信息 - 生产环境可删除 */}
+        {process.env.NODE_ENV !== 'production' && (
+          <pre style={{ fontSize: '10px', background: '#f0f0f0', padding: '8px', margin: '8px', whiteSpace: 'pre-wrap', borderRadius: '4px' }}>
+            {debugInfo}
+          </pre>
+        )}
 
         <div className="pricing-plans">
           {/* 月度计划 */}
@@ -109,12 +155,17 @@ export default function PricingModal({ onClose }: PricingProps) {
 
             <button
               className="btn-subscribe"
-              onClick={() => handleSubscribe('monthly')}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSubscribe('monthly');
+              }}
               disabled={isProcessing || paddleLoading}
             >
-              {isProcessing && selectedPlan === 'monthly'
-                ? (isZh ? '处理中...' : 'Processing...')
-                : (isZh ? '立即订阅' : 'Subscribe Now')}
+              {paddleLoading
+                ? (isZh ? '加载中...' : 'Loading...')
+                : isProcessing && selectedPlan === 'monthly'
+                  ? (isZh ? '处理中...' : 'Processing...')
+                  : (isZh ? '立即订阅' : 'Subscribe Now')}
             </button>
           </div>
 
@@ -152,12 +203,17 @@ export default function PricingModal({ onClose }: PricingProps) {
 
             <button
               className="btn-subscribe btn-subscribe-primary"
-              onClick={() => handleSubscribe('yearly')}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSubscribe('yearly');
+              }}
               disabled={isProcessing || paddleLoading}
             >
-              {isProcessing && selectedPlan === 'yearly'
-                ? (isZh ? '处理中...' : 'Processing...')
-                : (isZh ? '立即订阅' : 'Subscribe Now')}
+              {paddleLoading
+                ? (isZh ? '加载中...' : 'Loading...')
+                : isProcessing && selectedPlan === 'yearly'
+                  ? (isZh ? '处理中...' : 'Processing...')
+                  : (isZh ? '立即订阅' : 'Subscribe Now')}
             </button>
           </div>
         </div>
