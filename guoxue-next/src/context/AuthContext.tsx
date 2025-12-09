@@ -28,6 +28,7 @@ interface AuthContextType {
   quota: Quota | null;
   isLoggedIn: boolean;
   isLoading: boolean;
+  isPremium: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   register: (email: string, password: string, username?: string) => Promise<{ success: boolean; error?: string; needsConfirmation?: boolean; message?: string }>;
   logout: () => void;
@@ -234,6 +235,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         quota,
         isLoggedIn: !!token && !!user,
         isLoading,
+        isPremium: quota?.is_premium ?? false,
         login,
         register,
         logout,

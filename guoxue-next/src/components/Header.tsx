@@ -6,6 +6,7 @@ import { useRouter, usePathname } from '@/i18n/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import HelpPanel from './HelpPanel';
+import PricingModal from './PricingModal';
 import { useAuth } from '@/context/AuthContext';
 
 export default function Header() {
@@ -14,7 +15,10 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
-  const { isLoggedIn, logout, isLoading, getDisplayName } = useAuth();
+  const [isPricingOpen, setIsPricingOpen] = useState(false);
+  const { isLoggedIn, logout, isLoading, getDisplayName, isPremium } = useAuth();
+
+  const isZh = locale === 'zh';
 
   const switchLocale = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale });
@@ -22,6 +26,16 @@ export default function Header() {
 
   const handleLogout = () => {
     logout();
+  };
+
+  const handleUpgradeClick = () => {
+    if (!isLoggedIn) {
+      // 未登录时跳转到登录页
+      router.push('/login');
+    } else {
+      // 已登录时打开定价弹窗
+      setIsPricingOpen(true);
+    }
   };
 
   return (
@@ -56,6 +70,15 @@ export default function Header() {
           </div>
         ) : isLoggedIn ? (
           <div className="user-section">
+            {isPremium ? (
+              <span className="premium-badge">
+                {isZh ? '会员' : 'Premium'}
+              </span>
+            ) : (
+              <button onClick={handleUpgradeClick} className="btn-upgrade">
+                {isZh ? '升级会员' : 'Upgrade'}
+              </button>
+            )}
             <span className="user-name">{getDisplayName()}</span>
             <button onClick={handleLogout} className="btn-auth btn-logout">
               {t('nav.logout')}
@@ -116,6 +139,10 @@ export default function Header() {
 
       <HelpPanel isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
 
+      {isPricingOpen && (
+        <PricingModal onClose={() => setIsPricingOpen(false)} />
+      )}
+
       <style jsx>{`
         .user-section {
           display: flex;
@@ -147,6 +174,34 @@ export default function Header() {
         .btn-logout:hover {
           color: var(--vermilion);
           border-color: var(--vermilion);
+        }
+
+        .btn-upgrade {
+          padding: 4px 14px;
+          font-size: 12px;
+          font-weight: 600;
+          color: white;
+          background: linear-gradient(135deg, #7a68a6 0%, #5a80b0 100%);
+          border: none;
+          border-radius: 14px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(122, 104, 166, 0.3);
+        }
+
+        .btn-upgrade:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(122, 104, 166, 0.4);
+        }
+
+        .premium-badge {
+          padding: 3px 10px;
+          font-size: 11px;
+          font-weight: 600;
+          color: #b8860b;
+          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+          border: 1px solid #f59e0b;
+          border-radius: 12px;
         }
 
         .nav-buttons {
