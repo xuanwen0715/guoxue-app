@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
-import {
-  updateUserToPremium,
-  cancelUserSubscription,
-  updateSubscriptionStatus,
-  getUserByPaddleSubscriptionId,
-} from '@/lib/supabase-admin';
 
 // Paddle Webhook 签名验证
 function verifyPaddleWebhook(rawBody: string, signature: string): boolean {
@@ -64,6 +58,14 @@ export async function POST(request: NextRequest) {
     const eventType = event.event_type;
 
     console.log(`[Paddle Webhook] Received event: ${eventType}`);
+
+    // 动态导入 supabase-admin，避免构建时初始化
+    const {
+      updateUserToPremium,
+      cancelUserSubscription,
+      updateSubscriptionStatus,
+      getUserByPaddleSubscriptionId,
+    } = await import('@/lib/supabase-admin');
 
     switch (eventType) {
       case 'subscription.created':

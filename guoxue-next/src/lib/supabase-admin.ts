@@ -1,17 +1,20 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// Supabase 管理员客户端（服务端使用）
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
 // 延迟初始化，避免构建时报错
 let _supabaseAdmin: SupabaseClient | null = null;
 
 function getSupabaseAdmin(): SupabaseClient {
   if (!_supabaseAdmin) {
+    // 在函数内部读取环境变量，确保运行时才获取
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
     if (!supabaseUrl || !supabaseServiceKey) {
-      throw new Error('Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.');
+      throw new Error(
+        'Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.'
+      );
     }
+
     _supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
       auth: {
         autoRefreshToken: false,
