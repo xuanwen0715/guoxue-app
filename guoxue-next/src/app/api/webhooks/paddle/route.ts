@@ -159,11 +159,39 @@ export async function POST(request: NextRequest) {
       case 'transaction.completed': {
         // 交易完成（首次支付或续费成功）
         const subscriptionId = event.data.subscription_id;
-        if (subscriptionId) {
+        const customData = event.data.custom_data || {};
+        const userId = customData.userId;
+
+        console.log('[Paddle Webhook] transaction.completed data:', {
+          subscriptionId,
+          customData,
+          userId,
+          hasSubscriptionId: !!subscriptionId,
+        });
+
+        // 如果有 userId（首次支付），直接通过 userId 处理
+        if (userId && subscriptionId) {
+          const customerId = event.data.customer_id;
+          // 获取订阅结束时间，如果没有则默认30天
+          let currentPeriodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
+          // 尝试从 billing_period 获取
+          if (event.data.billing_period?.ends_at) {
+            currentPeriodEnd = new Date(event.data.billing_period.ends_at);
+          }
+
+          await updateUserToPremium(userId, customerId, subscriptionId, currentPeriodEnd);
+          console.log(`[Paddle Webhook] User ${userId} upgraded to premium via transaction.completed`);
+        } else if (subscriptionId) {
+          // 续费场景：通过 subscriptionId 查找用户
           const user = await getUserByPaddleSubscriptionId(subscriptionId);
           if (user) {
             console.log(`[Paddle Webhook] Payment received for user ${user.id}`);
+          } else {
+            console.log(`[Paddle Webhook] No user found for subscription ${subscriptionId}`);
           }
+        } else {
+          console.log('[Paddle Webhook] transaction.completed without subscriptionId or userId');
         }
         break;
       }

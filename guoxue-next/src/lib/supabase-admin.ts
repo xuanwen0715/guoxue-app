@@ -103,7 +103,7 @@ export async function getUserByPaddleCustomerId(paddleCustomerId: string) {
     .from('profiles')
     .select('*')
     .eq('paddle_customer_id', paddleCustomerId)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error('[Supabase] Error fetching user by paddle customer id:', error);
@@ -119,7 +119,7 @@ export async function getUserByPaddleSubscriptionId(paddleSubscriptionId: string
     .from('profiles')
     .select('*')
     .eq('paddle_subscription_id', paddleSubscriptionId)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error('[Supabase] Error fetching user by paddle subscription id:', error);
