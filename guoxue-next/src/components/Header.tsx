@@ -16,6 +16,7 @@ export default function Header() {
   const pathname = usePathname();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isPricingOpen, setIsPricingOpen] = useState(false);
+  const [isManageOpen, setIsManageOpen] = useState(false);
   const { isLoggedIn, logout, isLoading, getDisplayName, isPremium } = useAuth();
 
   const isZh = locale === 'zh';
@@ -71,9 +72,27 @@ export default function Header() {
         ) : isLoggedIn ? (
           <div className="user-section">
             {isPremium ? (
-              <span className="premium-badge">
-                {isZh ? '会员' : 'Premium'}
-              </span>
+              <div className="premium-wrapper">
+                <button
+                  className="premium-badge"
+                  onClick={() => setIsManageOpen(!isManageOpen)}
+                >
+                  {isZh ? '会员' : 'Premium'}
+                </button>
+                {isManageOpen && (
+                  <div className="manage-dropdown">
+                    <button
+                      className="manage-item"
+                      onClick={() => {
+                        setIsManageOpen(false);
+                        setIsPricingOpen(true);
+                      }}
+                    >
+                      {isZh ? '升级年度计划' : 'Upgrade to Yearly'}
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <button onClick={handleUpgradeClick} className="btn-upgrade">
                 {isZh ? '升级会员' : 'Upgrade'}
@@ -194,6 +213,10 @@ export default function Header() {
           box-shadow: 0 4px 12px rgba(122, 104, 166, 0.4);
         }
 
+        .premium-wrapper {
+          position: relative;
+        }
+
         .premium-badge {
           padding: 3px 10px;
           font-size: 11px;
@@ -202,6 +225,45 @@ export default function Header() {
           background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
           border: 1px solid #f59e0b;
           border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .premium-badge:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+        }
+
+        .manage-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          margin-top: 8px;
+          background: white;
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          min-width: 140px;
+          z-index: 100;
+          overflow: hidden;
+        }
+
+        .manage-item {
+          display: block;
+          width: 100%;
+          padding: 10px 14px;
+          font-size: 13px;
+          color: var(--text);
+          background: transparent;
+          border: none;
+          text-align: left;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+
+        .manage-item:hover {
+          background: #f5f3ff;
+          color: var(--accent);
         }
 
         .nav-buttons {

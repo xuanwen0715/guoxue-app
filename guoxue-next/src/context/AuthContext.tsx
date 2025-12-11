@@ -78,6 +78,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // 获取用户订阅状态
+  async function fetchSubscriptionStatus(authToken: string) {
+    try {
+      const resp = await fetch('/api/user/subscription', {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+        }
+      });
+
+      if (resp.ok) {
+        const data = await resp.json();
+        const quotaInfo: Quota = {
+          is_premium: data.is_premium,
+          credits_remaining: data.credits_remaining,
+        };
+        setQuota(quotaInfo);
+        localStorage.setItem(AUTH_QUOTA_KEY, JSON.stringify(quotaInfo));
+      }
+    } catch (e) {
+      console.error('[Auth] Failed to fetch subscription status:', e);
+    }
+  }
+
   // 验证 Token
   async function validateToken(authToken: string): Promise<boolean> {
     try {
@@ -92,6 +115,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const userData = await resp.json();
         setUser(userData);
         localStorage.setItem(AUTH_USER_KEY, JSON.stringify(userData));
+
+        // 获取订阅状态
+        await fetchSubscriptionStatus(authToken);
         return true;
       }
       return false;
@@ -125,6 +151,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       localStorage.setItem(AUTH_TOKEN_KEY, data.access_token);
       localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
+
+      // 获取订阅状态
+      await fetchSubscriptionStatus(data.access_token);
 
       return { success: true };
     } catch (e: any) {
