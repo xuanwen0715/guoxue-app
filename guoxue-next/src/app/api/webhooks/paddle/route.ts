@@ -47,17 +47,12 @@ export async function POST(request: NextRequest) {
     const signature = request.headers.get('paddle-signature') || '';
 
     console.log('[Paddle Webhook] Received request');
-    console.log('[Paddle Webhook] Has signature:', !!signature);
-    console.log('[Paddle Webhook] Has webhook secret:', !!process.env.PADDLE_WEBHOOK_SECRET);
 
-    // 暂时跳过签名验证以便调试
-    // TODO: 调试完成后恢复签名验证
-    // if (process.env.NODE_ENV === 'production') {
-    //   if (!verifyPaddleWebhook(rawBody, signature)) {
-    //     console.error('[Paddle Webhook] Invalid signature');
-    //     return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
-    //   }
-    // }
+    // 验证 webhook 签名
+    if (!verifyPaddleWebhook(rawBody, signature)) {
+      console.error('[Paddle Webhook] Invalid signature');
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
+    }
 
     const event = JSON.parse(rawBody);
     const eventType = event.event_type;
