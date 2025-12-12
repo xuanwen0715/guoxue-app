@@ -47,6 +47,8 @@ export async function POST(request: NextRequest) {
     const signature = request.headers.get('paddle-signature') || '';
 
     console.log('[Paddle Webhook] Received request');
+    console.log('[Paddle Webhook] Has signature:', !!signature);
+    console.log('[Paddle Webhook] Has webhook secret:', !!process.env.PADDLE_WEBHOOK_SECRET);
 
     // 验证 webhook 签名
     if (!verifyPaddleWebhook(rawBody, signature)) {
@@ -101,7 +103,15 @@ export async function POST(request: NextRequest) {
         // 订阅更新
         const subscriptionId = event.data.id;
         const status = event.data.status;
-        const currentPeriodEnd = new Date(event.data.current_billing_period?.ends_at);
+        const periodEndRaw = event.data.current_billing_period?.ends_at;
+        const currentPeriodEnd = periodEndRaw ? new Date(periodEndRaw) : undefined;
+
+        console.log('[Paddle Webhook] subscription.updated data:', {
+          subscriptionId,
+          status,
+          periodEndRaw,
+          currentPeriodEnd: currentPeriodEnd?.toISOString(),
+        });
 
         let mappedStatus: 'active' | 'canceled' | 'past_due' | 'paused';
         switch (status) {
@@ -145,7 +155,8 @@ export async function POST(request: NextRequest) {
       case 'subscription.resumed': {
         // 订阅恢复
         const subscriptionId = event.data.id;
-        const currentPeriodEnd = new Date(event.data.current_billing_period?.ends_at);
+        const periodEndRaw = event.data.current_billing_period?.ends_at;
+        const currentPeriodEnd = periodEndRaw ? new Date(periodEndRaw) : undefined;
         await updateSubscriptionStatus(subscriptionId, 'active', currentPeriodEnd);
         console.log(`[Paddle Webhook] Subscription ${subscriptionId} resumed`);
         break;
