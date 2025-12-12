@@ -33,6 +33,7 @@ interface AuthContextType {
   register: (email: string, password: string, username?: string) => Promise<{ success: boolean; error?: string; needsConfirmation?: boolean; message?: string }>;
   logout: () => void;
   getAuthHeader: () => Record<string, string>;
+  getAccessToken: () => Promise<string | null>;
   updateQuota: (quotaInfo: Quota) => void;
   getDisplayName: () => string;
 }
@@ -237,6 +238,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { 'Authorization': `Bearer ${token}` };
   }
 
+  // 获取访问令牌
+  async function getAccessToken(): Promise<string | null> {
+    return token;
+  }
+
   // 更新配额信息
   function updateQuota(quotaInfo: Quota) {
     setQuota(quotaInfo);
@@ -269,6 +275,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         logout,
         getAuthHeader,
+        getAccessToken,
         updateQuota,
         getDisplayName,
       }}

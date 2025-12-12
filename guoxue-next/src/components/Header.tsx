@@ -17,7 +17,8 @@ export default function Header() {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [isManageOpen, setIsManageOpen] = useState(false);
-  const { isLoggedIn, logout, isLoading, getDisplayName, isPremium } = useAuth();
+  const { isLoggedIn, logout, isLoading, getDisplayName, isPremium, getAccessToken } = useAuth();
+  const [isPortalLoading, setIsPortalLoading] = useState(false);
 
   const isZh = locale === 'zh';
 
@@ -36,6 +37,40 @@ export default function Header() {
     } else {
       // 已登录时打开定价弹窗
       setIsPricingOpen(true);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    setIsManageOpen(false);
+    setIsPortalLoading(true);
+    try {
+      const token = await getAccessToken();
+      if (!token) {
+        console.error('No access token');
+        return;
+      }
+
+      const response = await fetch('/api/user/portal', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error('Failed to get portal URL:', error);
+        return;
+      }
+
+      const data = await response.json();
+      if (data.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Error opening portal:', error);
+    } finally {
+      setIsPortalLoading(false);
     }
   };
 
@@ -81,6 +116,15 @@ export default function Header() {
                 </button>
                 {isManageOpen && (
                   <div className="manage-dropdown">
+                    <button
+                      className="manage-item"
+                      onClick={handleManageSubscription}
+                      disabled={isPortalLoading}
+                    >
+                      {isPortalLoading
+                        ? (isZh ? '加载中...' : 'Loading...')
+                        : (isZh ? '管理订阅' : 'Manage Subscription')}
+                    </button>
                     <button
                       className="manage-item"
                       onClick={() => {
