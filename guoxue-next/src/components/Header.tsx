@@ -47,6 +47,7 @@ export default function Header() {
       const token = await getAccessToken();
       if (!token) {
         console.error('No access token');
+        alert(isZh ? '请先登录' : 'Please login first');
         return;
       }
 
@@ -57,18 +58,26 @@ export default function Header() {
         },
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
-        console.error('Failed to get portal URL:', error);
+        console.error('Failed to get portal URL:', data);
+        if (response.status === 404) {
+          alert(isZh ? '未找到订阅信息' : 'No subscription found');
+        } else {
+          alert(isZh ? '无法打开订阅管理页面，请稍后重试' : 'Unable to open subscription management, please try again later');
+        }
         return;
       }
 
-      const data = await response.json();
       if (data.url) {
         window.open(data.url, '_blank');
+      } else {
+        alert(isZh ? '无法获取管理链接' : 'Unable to get management link');
       }
     } catch (error) {
       console.error('Error opening portal:', error);
+      alert(isZh ? '发生错误，请稍后重试' : 'An error occurred, please try again later');
     } finally {
       setIsPortalLoading(false);
     }

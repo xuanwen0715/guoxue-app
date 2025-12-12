@@ -80,7 +80,10 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-    const portalUrl = data.data?.urls?.general?.overview;
+    console.log('[User Portal] Paddle API response:', JSON.stringify(data, null, 2));
+
+    // Paddle API 返回的 URL 可能在不同路径
+    const portalUrl = data.data?.urls?.general?.overview || data.data?.urls?.overview || data.data?.url;
 
     if (!portalUrl) {
       console.error('[User Portal] No portal URL in response:', data);
