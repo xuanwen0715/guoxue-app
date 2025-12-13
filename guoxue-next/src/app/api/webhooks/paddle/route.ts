@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
+// 禁用 body 解析，确保获取原始 body
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Paddle Webhook 签名验证
 function verifyPaddleWebhook(rawBody: string, signature: string): boolean {
   const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET;
@@ -11,25 +15,45 @@ function verifyPaddleWebhook(rawBody: string, signature: string): boolean {
   }
 
   try {
-    // Paddle 使用 ts;h1= 格式的签名
+    // Paddle Billing 使用 ts=xxx;h1=xxx 格式的签名
     const parts = signature.split(';');
     const timestampPart = parts.find((p) => p.startsWith('ts='));
     const signaturePart = parts.find((p) => p.startsWith('h1='));
 
     if (!timestampPart || !signaturePart) {
-      console.error('[Paddle Webhook] Invalid signature format');
+      console.error('[Paddle Webhook] Invalid signature format, signature:', signature);
       return false;
     }
 
     const timestamp = timestampPart.split('=')[1];
     const receivedSignature = signaturePart.split('=')[1];
 
-    // 创建签名数据
+    // 调试日志
+    console.log('[Paddle Webhook] Signature verification debug:', {
+      timestamp,
+      receivedSignatureLength: receivedSignature?.length,
+      webhookSecretPrefix: webhookSecret.substring(0, 10) + '...',
+      rawBodyLength: rawBody.length,
+    });
+
+    // 创建签名数据：timestamp:rawBody
     const signedPayload = `${timestamp}:${rawBody}`;
     const expectedSignature = crypto
       .createHmac('sha256', webhookSecret)
       .update(signedPayload)
       .digest('hex');
+
+    console.log('[Paddle Webhook] Signature comparison:', {
+      receivedLength: receivedSignature.length,
+      expectedLength: expectedSignature.length,
+      match: receivedSignature === expectedSignature,
+    });
+
+    // 确保两个签名长度相同才能使用 timingSafeEqual
+    if (receivedSignature.length !== expectedSignature.length) {
+      console.error('[Paddle Webhook] Signature length mismatch');
+      return false;
+    }
 
     return crypto.timingSafeEqual(
       Buffer.from(receivedSignature),
@@ -45,14 +69,39 @@ export async function POST(request: NextRequest) {
   try {
     const rawBody = await request.text();
     const signature = request.headers.get('paddle-signature') || '';
+    const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET || '';
 
-    console.log('[Paddle Webhook] Received request');
-    console.log('[Paddle Webhook] Has signature:', !!signature);
-    console.log('[Paddle Webhook] Has webhook secret:', !!process.env.PADDLE_WEBHOOK_SECRET);
+    // 详细调试日志 - 全部合并到一条
+    console.log('[Paddle Webhook] Debug info:', JSON.stringify({
+      hasSignature: !!signature,
+      signaturePreview: signature.substring(0, 50),
+      hasSecret: !!webhookSecret,
+      secretPrefix: webhookSecret.substring(0, 15),
+      bodyLength: rawBody.length,
+    }));
 
     // 验证 webhook 签名
-    if (!verifyPaddleWebhook(rawBody, signature)) {
-      console.error('[Paddle Webhook] Invalid signature');
+    const isValid = verifyPaddleWebhook(rawBody, signature);
+
+    if (!isValid) {
+      // 输出更多调试信息帮助定位问题
+      const parts = signature.split(';');
+      const ts = parts.find((p) => p.startsWith('ts='))?.split('=')[1] || '';
+      const h1 = parts.find((p) => p.startsWith('h1='))?.split('=')[1] || '';
+
+      const signedPayload = `${ts}:${rawBody}`;
+      const computed = require('crypto')
+        .createHmac('sha256', webhookSecret)
+        .update(signedPayload)
+        .digest('hex');
+
+      console.error('[Paddle Webhook] Signature mismatch:', JSON.stringify({
+        receivedH1: h1.substring(0, 20) + '...',
+        computedH1: computed.substring(0, 20) + '...',
+        ts,
+        secretUsed: webhookSecret.substring(0, 15) + '...',
+      }));
+
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
     }
 
