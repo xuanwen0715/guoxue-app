@@ -281,7 +281,13 @@ class handler(BaseHTTPRequestHandler):
         return {"found": False, "data": None}
 
     def _batch_lookup_chars(self, chars):
-        """批量查询多个汉字"""
+        """批量查询多个汉字
+
+        改进策略：
+        1. 首先精确匹配原始输入字符
+        2. 如果精确匹配失败，再尝试简繁变体
+        3. 保持结果顺序与输入一致
+        """
         import requests
 
         if not chars:
@@ -292,34 +298,87 @@ class handler(BaseHTTPRequestHandler):
             "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
         }
 
-        # 构建 OR 查询（同时匹配简体字段 char 及繁体字段 traditional，并加入 OpenCC 扩展变体）
-        expanded = set()
-        for c in chars:
-            expanded.update(_expand_char_variants(c))
-
-        # 确保至少包含原始输入（即使 OpenCC 不可用）
-        for c in chars:
-            if isinstance(c, str) and len(c) == 1:
-                expanded.add(c)
-
-        # 生成 OR 条件：char.eq.X 与 traditional.eq.X 都纳入
-        conditions = []
-        for v in sorted(expanded):
-            conditions.append(f"char.eq.{v}")
-            conditions.append(f"traditional.eq.{v}")
-        or_conditions = ",".join(conditions)
         base_url = f"{SUPABASE_URL}/rest/v1/dictionary"
-        params = {
-            "select": "char,traditional,pinyin,radical,total_strokes,explanation",
-            "or": f"({or_conditions})",
-            # 按变体规模放宽限制，避免漏掉仅以变体命中的字符
-            "limit": max(len(expanded), len(chars))
-        }
+        results = []
+        found_chars = set()
 
-        resp = requests.get(base_url, headers=headers, params=params, timeout=10)
-        if resp.status_code == 200:
-            return resp.json()
-        return []
+        # 第一步：精确匹配原始输入（优先级最高）
+        original_chars = [c for c in chars if isinstance(c, str) and len(c) == 1]
+        print(f"[Dictionary] Batch lookup for chars: {original_chars}")
+
+        if original_chars:
+            conditions = []
+            for c in original_chars:
+                conditions.append(f"char.eq.{c}")
+                conditions.append(f"traditional.eq.{c}")
+            or_conditions = ",".join(conditions)
+
+            params = {
+                "select": "char,traditional,pinyin,radical,total_strokes,explanation",
+                "or": f"({or_conditions})",
+                "limit": len(original_chars) * 2
+            }
+
+            resp = requests.get(base_url, headers=headers, params=params, timeout=10)
+            print(f"[Dictionary] Exact match response status: {resp.status_code}")
+
+            if resp.status_code == 200:
+                db_results = resp.json()
+                print(f"[Dictionary] Found {len(db_results)} results from DB")
+                for item in db_results:
+                    # 检查是否是原始输入的精确匹配
+                    char_val = item.get('char', '')
+                    trad_val = item.get('traditional', '')
+                    print(f"[Dictionary] DB item: char={char_val}, trad={trad_val}, pinyin={item.get('pinyin')}")
+                    if char_val in original_chars or trad_val in original_chars:
+                        if char_val not in found_chars:
+                            results.append(item)
+                            found_chars.add(char_val)
+                            print(f"[Dictionary] Added exact match: {char_val}")
+
+        # 第二步：对于未找到的字符，尝试简繁变体扩展
+        missing_chars = [c for c in original_chars if c not in found_chars]
+        # 同时检查繁体字段是否匹配
+        for item in results:
+            trad = item.get('traditional', '')
+            if trad in missing_chars:
+                missing_chars.remove(trad)
+
+        print(f"[Dictionary] Missing chars after exact match: {missing_chars}")
+
+        if missing_chars:
+            expanded = set()
+            for c in missing_chars:
+                variants = _expand_char_variants(c)
+                print(f"[Dictionary] Variants for '{c}': {variants}")
+                expanded.update(variants)
+            # 移除已找到的字符
+            expanded -= found_chars
+
+            if expanded:
+                conditions = []
+                for v in sorted(expanded):
+                    conditions.append(f"char.eq.{v}")
+                    conditions.append(f"traditional.eq.{v}")
+                or_conditions = ",".join(conditions)
+
+                params = {
+                    "select": "char,traditional,pinyin,radical,total_strokes,explanation",
+                    "or": f"({or_conditions})",
+                    "limit": len(expanded)
+                }
+
+                resp = requests.get(base_url, headers=headers, params=params, timeout=10)
+                if resp.status_code == 200:
+                    for item in resp.json():
+                        char_val = item.get('char', '')
+                        if char_val not in found_chars:
+                            results.append(item)
+                            found_chars.add(char_val)
+                            print(f"[Dictionary] Added variant match: {char_val}")
+
+        print(f"[Dictionary] Final results count: {len(results)}")
+        return results
 
     def _send_json(self, status, payload):
         self.send_response(status)
