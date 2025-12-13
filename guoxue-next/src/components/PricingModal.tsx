@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import { usePaddle } from '@/hooks/usePaddle';
 import { useAuth } from '@/context/AuthContext';
-import { SUBSCRIPTION_PLANS, PlanType, PADDLE_CONFIG } from '@/lib/paddle';
+import { SUBSCRIPTION_PLANS, PlanType } from '@/lib/paddle';
 
 interface PricingProps {
   onClose?: () => void;
@@ -16,32 +16,10 @@ export default function PricingModal({ onClose }: PricingProps) {
   const { user, isLoggedIn } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('monthly');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [debugInfo, setDebugInfo] = useState<string>('');
 
   const isZh = locale === 'zh';
 
-  // 调试：检查配置
-  useEffect(() => {
-    const info = [
-      `Paddle loaded: ${!!paddle}`,
-      `Paddle loading: ${paddleLoading}`,
-      `Client token: ${PADDLE_CONFIG.clientToken ? 'set' : 'NOT SET'}`,
-      `Environment: ${PADDLE_CONFIG.environment}`,
-      `Monthly price ID: ${SUBSCRIPTION_PLANS.monthly.priceId || 'NOT SET'}`,
-      `Yearly price ID: ${SUBSCRIPTION_PLANS.yearly.priceId || 'NOT SET'}`,
-      `User logged in: ${isLoggedIn}`,
-      `User email: ${user?.email || 'N/A'}`,
-    ];
-    setDebugInfo(info.join('\n'));
-    console.log('[PricingModal] Debug info:', info);
-  }, [paddle, paddleLoading, isLoggedIn, user]);
-
   const handleSubscribe = async (planType: PlanType) => {
-    console.log('[PricingModal] handleSubscribe called with:', planType);
-    console.log('[PricingModal] paddle:', paddle);
-    console.log('[PricingModal] isLoggedIn:', isLoggedIn);
-    console.log('[PricingModal] user:', user);
-
     if (!paddle) {
       const msg = isZh ? '支付系统加载中，请稍后重试' : 'Payment system loading, please try again';
       console.error('[PricingModal] Paddle not loaded');
@@ -69,12 +47,6 @@ export default function PricingModal({ onClose }: PricingProps) {
     setSelectedPlan(planType);
 
     try {
-      console.log('[PricingModal] Opening checkout with:', {
-        priceId: plan.priceId,
-        email: user.email,
-        userId: user.id,
-      });
-
       await paddle.Checkout.open({
         items: [{ priceId: plan.priceId, quantity: 1 }],
         customer: {
@@ -91,7 +63,6 @@ export default function PricingModal({ onClose }: PricingProps) {
           successUrl: `${window.location.origin}/${locale}?subscription=success`,
         },
       });
-      console.log('[PricingModal] Checkout opened successfully');
     } catch (error) {
       console.error('[PricingModal] Checkout error:', error);
       alert(isZh ? '打开支付页面失败，请重试' : 'Failed to open checkout, please try again');
@@ -119,13 +90,6 @@ export default function PricingModal({ onClose }: PricingProps) {
               : 'Unlock unlimited translations and OCR recognition'}
           </p>
         </div>
-
-        {/* 调试信息 - 生产环境可删除 */}
-        {process.env.NODE_ENV !== 'production' && (
-          <pre style={{ fontSize: '10px', background: '#f0f0f0', padding: '8px', margin: '8px', whiteSpace: 'pre-wrap', borderRadius: '4px' }}>
-            {debugInfo}
-          </pre>
-        )}
 
         <div className="pricing-plans">
           {/* 月度计划 */}

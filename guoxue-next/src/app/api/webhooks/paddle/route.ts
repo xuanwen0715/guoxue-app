@@ -5,6 +5,9 @@ import crypto from 'crypto';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// 最大允许的时间偏移（5分钟），防止重放攻击
+const MAX_TIMESTAMP_DRIFT_SECONDS = 300;
+
 // Paddle Webhook 签名验证
 function verifyPaddleWebhook(rawBody: string, signature: string): boolean {
   const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET;
@@ -21,20 +24,20 @@ function verifyPaddleWebhook(rawBody: string, signature: string): boolean {
     const signaturePart = parts.find((p) => p.startsWith('h1='));
 
     if (!timestampPart || !signaturePart) {
-      console.error('[Paddle Webhook] Invalid signature format, signature:', signature);
+      console.error('[Paddle Webhook] Invalid signature format');
       return false;
     }
 
     const timestamp = timestampPart.split('=')[1];
     const receivedSignature = signaturePart.split('=')[1];
 
-    // 调试日志
-    console.log('[Paddle Webhook] Signature verification debug:', {
-      timestamp,
-      receivedSignatureLength: receivedSignature?.length,
-      webhookSecretPrefix: webhookSecret.substring(0, 10) + '...',
-      rawBodyLength: rawBody.length,
-    });
+    // 验证时间戳，防止重放攻击
+    const timestampNum = parseInt(timestamp, 10);
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (Math.abs(currentTime - timestampNum) > MAX_TIMESTAMP_DRIFT_SECONDS) {
+      console.error('[Paddle Webhook] Timestamp too old or too far in future');
+      return false;
+    }
 
     // 创建签名数据：timestamp:rawBody
     const signedPayload = `${timestamp}:${rawBody}`;
@@ -42,12 +45,6 @@ function verifyPaddleWebhook(rawBody: string, signature: string): boolean {
       .createHmac('sha256', webhookSecret)
       .update(signedPayload)
       .digest('hex');
-
-    console.log('[Paddle Webhook] Signature comparison:', {
-      receivedLength: receivedSignature.length,
-      expectedLength: expectedSignature.length,
-      match: receivedSignature === expectedSignature,
-    });
 
     // 确保两个签名长度相同才能使用 timingSafeEqual
     if (receivedSignature.length !== expectedSignature.length) {
@@ -69,39 +66,10 @@ export async function POST(request: NextRequest) {
   try {
     const rawBody = await request.text();
     const signature = request.headers.get('paddle-signature') || '';
-    const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET || '';
-
-    // 详细调试日志 - 全部合并到一条
-    console.log('[Paddle Webhook] Debug info:', JSON.stringify({
-      hasSignature: !!signature,
-      signaturePreview: signature.substring(0, 50),
-      hasSecret: !!webhookSecret,
-      secretPrefix: webhookSecret.substring(0, 15),
-      bodyLength: rawBody.length,
-    }));
 
     // 验证 webhook 签名
-    const isValid = verifyPaddleWebhook(rawBody, signature);
-
-    if (!isValid) {
-      // 输出更多调试信息帮助定位问题
-      const parts = signature.split(';');
-      const ts = parts.find((p) => p.startsWith('ts='))?.split('=')[1] || '';
-      const h1 = parts.find((p) => p.startsWith('h1='))?.split('=')[1] || '';
-
-      const signedPayload = `${ts}:${rawBody}`;
-      const computed = require('crypto')
-        .createHmac('sha256', webhookSecret)
-        .update(signedPayload)
-        .digest('hex');
-
-      console.error('[Paddle Webhook] Signature mismatch:', JSON.stringify({
-        receivedH1: h1.substring(0, 20) + '...',
-        computedH1: computed.substring(0, 20) + '...',
-        ts,
-        secretUsed: webhookSecret.substring(0, 15) + '...',
-      }));
-
+    if (!verifyPaddleWebhook(rawBody, signature)) {
+      console.error('[Paddle Webhook] Invalid signature');
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
     }
 
@@ -238,10 +206,18 @@ export async function POST(request: NextRequest) {
           await updateUserToPremium(userId, customerId, subscriptionId, currentPeriodEnd);
           console.log(`[Paddle Webhook] User ${userId} upgraded to premium via transaction.completed`);
         } else if (subscriptionId) {
-          // 续费场景：通过 subscriptionId 查找用户
+          // 续费场景：通过 subscriptionId 查找用户并更新订阅期
           const user = await getUserByPaddleSubscriptionId(subscriptionId);
           if (user) {
-            console.log(`[Paddle Webhook] Payment received for user ${user.id}`);
+            // 获取新的订阅结束时间
+            let currentPeriodEnd: Date | undefined;
+            if (event.data.billing_period?.ends_at) {
+              currentPeriodEnd = new Date(event.data.billing_period.ends_at);
+            }
+
+            // 续费成功，更新状态为 active 并延长订阅期
+            await updateSubscriptionStatus(subscriptionId, 'active', currentPeriodEnd);
+            console.log(`[Paddle Webhook] Subscription renewed for user ${user.id}, new period end: ${currentPeriodEnd?.toISOString()}`);
           } else {
             console.log(`[Paddle Webhook] No user found for subscription ${subscriptionId}`);
           }

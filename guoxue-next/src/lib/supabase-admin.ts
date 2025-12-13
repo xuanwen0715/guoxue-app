@@ -80,12 +80,13 @@ export async function updateUserToPremium(
   }
 }
 
-// 取消用户订阅
+// 取消用户订阅（保留 premium 直到订阅期结束）
 export async function cancelUserSubscription(paddleSubscriptionId: string) {
+  // 取消订阅时，不立即移除 premium 状态
+  // 用户可以继续使用到 current_period_end
   const { error } = await getSupabaseAdmin()
     .from('profiles')
     .update({
-      is_premium: false,
       subscription_status: 'canceled',
       updated_at: new Date().toISOString(),
     })

@@ -4,6 +4,26 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
+// 检查订阅是否仍然有效
+function isSubscriptionActive(profile: {
+  is_premium: boolean;
+  subscription_status: string | null;
+  current_period_end: string | null;
+}): boolean {
+  if (!profile.is_premium) return false;
+
+  // 如果是活跃订阅，直接返回 true
+  if (profile.subscription_status === 'active') return true;
+
+  // 如果已取消但还在订阅期内，仍然有效
+  if (profile.subscription_status === 'canceled' && profile.current_period_end) {
+    const periodEnd = new Date(profile.current_period_end);
+    return periodEnd > new Date();
+  }
+
+  return false;
+}
+
 export async function GET(request: NextRequest) {
   try {
     // 从 Authorization header 获取 token
@@ -55,8 +75,22 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    // 检查订阅是否仍然有效（包括已取消但未到期的情况）
+    const isPremiumActive = isSubscriptionActive(profile);
+
+    // 如果订阅已过期，更新数据库
+    if (profile.is_premium && !isPremiumActive) {
+      await supabaseAdmin
+        .from('profiles')
+        .update({
+          is_premium: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', user.id);
+    }
+
     return NextResponse.json({
-      is_premium: profile.is_premium || false,
+      is_premium: isPremiumActive,
       subscription_status: profile.subscription_status,
       current_period_end: profile.current_period_end,
       credits_remaining: profile.credits_remaining ?? 5,
