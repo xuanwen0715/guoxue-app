@@ -300,15 +300,30 @@ class handler(BaseHTTPRequestHandler):
         # 如果有字典数据，强调 AI 必须使用这些数据
         dict_reference = ""
         if dict_info:
-            dict_reference = (
-                "\n\n【重要】以下是该字的字典数据，请务必使用这些准确信息：\n"
-                f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
-                f"- 繁体: {dict_info.get('traditional', '同简体')}\n"
-                f"- 部首: {dict_info.get('radical', '未知')}\n"
-                f"- 笔画: {dict_info.get('strokes', '未知')}\n"
-                f"- 基本释义: {(dict_info.get('explanation') or '无')[:200]}\n"
-                "请基于以上准确数据进行国学角度的深入解析。\n"
-            )
+            explanation = dict_info.get('explanation') or ''
+            # 根据是否有释义，调整提示策略
+            if explanation and len(explanation) > 5:
+                dict_reference = (
+                    "\n\n【重要-字典数据】以下是该字的权威字典数据，你必须严格基于这些信息回答，不要编造：\n"
+                    f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
+                    f"- 繁体: {dict_info.get('traditional') or '同简体'}\n"
+                    f"- 部首: {dict_info.get('radical', '未知')}\n"
+                    f"- 笔画: {dict_info.get('strokes', '未知')}\n"
+                    f"- 基本释义: {explanation[:500]}\n"
+                    "\n请严格基于上述字典释义进行国学角度的解析和扩展。"
+                    "explanation_zh 必须包含上述基本释义的内容，可以适当扩展但不要编造新含义。\n"
+                )
+            else:
+                # 没有详细释义时，仅提供基础信息
+                dict_reference = (
+                    "\n\n【重要-字典数据】以下是该字的基础信息：\n"
+                    f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
+                    f"- 繁体: {dict_info.get('traditional') or '同简体'}\n"
+                    f"- 部首: {dict_info.get('radical', '未知')}\n"
+                    f"- 笔画: {dict_info.get('strokes', '未知')}\n"
+                    "这是一个罕见字，请基于字形结构（部首+声旁）谨慎分析其可能的含义，"
+                    "如不确定请在 explanation_zh 中注明'此为罕见字，释义待考'。\n"
+                )
 
         instructions = (
             "根据上下文，对查询字/词进行国学角度解析，输出 JSON 格式：\n"
