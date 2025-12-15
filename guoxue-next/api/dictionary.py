@@ -113,8 +113,13 @@ class handler(BaseHTTPRequestHandler):
         }
 
         if search_by == "text":
-            # 支持简体或繁体查询
-            params["or"] = f"(char.eq.{query},traditional.eq.{query})"
+            # 支持简体或繁体查询，同时扩展简繁变体
+            variants = _expand_char_variants(query) if len(query) == 1 else {query}
+            conditions = []
+            for v in variants:
+                conditions.append(f"char.eq.{v}")
+                conditions.append(f"traditional.eq.{v}")
+            params["or"] = f"({','.join(conditions)})"
         elif search_by == "pinyin":
             # 拼音精确匹配 - 生成所有声调变体的 OR 条件
             variants = self._get_pinyin_variants(query.lower())
@@ -140,47 +145,98 @@ class handler(BaseHTTPRequestHandler):
         return []
 
     def _search_idioms(self, headers, query, search_by, limit, offset):
-        """搜索成语"""
+        """搜索成语 - 精确匹配优先，然后模糊匹配"""
         import requests
 
         base_url = f"{SUPABASE_URL}/rest/v1/idioms"
-        params = {
-            "select": "word,pinyin,explanation,derivation,example",
-            "limit": limit,
-            "offset": offset
-        }
+        results = []
 
         if search_by == "text":
-            # 成语模糊匹配
-            params["word"] = f"ilike.*{query}*"
+            # 第一步：精确匹配（优先）
+            params_exact = {
+                "select": "word,pinyin,explanation,derivation,example",
+                "word": f"eq.{query}",
+                "limit": 1
+            }
+            resp = requests.get(base_url, headers=headers, params=params_exact, timeout=10)
+            if resp.status_code == 200:
+                exact_results = resp.json()
+                results.extend(exact_results)
+
+            # 第二步：模糊匹配（排除精确匹配的结果）
+            remaining_limit = limit - len(results)
+            if remaining_limit > 0:
+                params_fuzzy = {
+                    "select": "word,pinyin,explanation,derivation,example",
+                    "word": f"ilike.*{query}*",
+                    "limit": remaining_limit + len(results),  # 多取一些，去重后保证数量
+                    "offset": offset
+                }
+                resp = requests.get(base_url, headers=headers, params=params_fuzzy, timeout=10)
+                if resp.status_code == 200:
+                    fuzzy_results = resp.json()
+                    # 去重：排除已精确匹配的
+                    existing_words = {r['word'] for r in results}
+                    for item in fuzzy_results:
+                        if item['word'] not in existing_words and len(results) < limit:
+                            results.append(item)
+                            existing_words.add(item['word'])
+
         elif search_by == "pinyin":
             # 拼音匹配（支持首字母缩写）
+            params = {
+                "select": "word,pinyin,explanation,derivation,example",
+                "limit": limit,
+                "offset": offset
+            }
             if len(query) <= 4 and query.isalpha():
                 params["abbreviation"] = f"ilike.{query}*"
             else:
                 params["pinyin"] = f"ilike.*{query}*"
 
-        resp = requests.get(base_url, headers=headers, params=params, timeout=10)
-        if resp.status_code == 200:
-            return resp.json()
-        return []
+            resp = requests.get(base_url, headers=headers, params=params, timeout=10)
+            if resp.status_code == 200:
+                results = resp.json()
+
+        return results
 
     def _search_words(self, headers, query, limit, offset):
-        """搜索词语"""
+        """搜索词语 - 精确匹配优先，然后模糊匹配"""
         import requests
 
         base_url = f"{SUPABASE_URL}/rest/v1/words"
-        params = {
-            "select": "word,explanation",
-            "word": f"ilike.*{query}*",
-            "limit": limit,
-            "offset": offset
-        }
+        results = []
 
-        resp = requests.get(base_url, headers=headers, params=params, timeout=10)
+        # 第一步：精确匹配（优先）
+        params_exact = {
+            "select": "word,explanation",
+            "word": f"eq.{query}",
+            "limit": 1
+        }
+        resp = requests.get(base_url, headers=headers, params=params_exact, timeout=10)
         if resp.status_code == 200:
-            return resp.json()
-        return []
+            exact_results = resp.json()
+            results.extend(exact_results)
+
+        # 第二步：模糊匹配（排除精确匹配的结果）
+        remaining_limit = limit - len(results)
+        if remaining_limit > 0:
+            params_fuzzy = {
+                "select": "word,explanation",
+                "word": f"ilike.*{query}*",
+                "limit": remaining_limit + len(results),
+                "offset": offset
+            }
+            resp = requests.get(base_url, headers=headers, params=params_fuzzy, timeout=10)
+            if resp.status_code == 200:
+                fuzzy_results = resp.json()
+                existing_words = {r['word'] for r in results}
+                for item in fuzzy_results:
+                    if item['word'] not in existing_words and len(results) < limit:
+                        results.append(item)
+                        existing_words.add(item['word'])
+
+        return results
 
     def do_POST(self):
         """处理 POST 请求 - 批量查询或高级搜索"""
@@ -286,7 +342,7 @@ class handler(BaseHTTPRequestHandler):
         改进策略：
         1. 首先精确匹配原始输入字符
         2. 如果精确匹配失败，再尝试简繁变体
-        3. 保持结果顺序与输入一致
+        3. 保持结果顺序与输入一致（关键改进）
         """
         import requests
 
@@ -299,11 +355,22 @@ class handler(BaseHTTPRequestHandler):
         }
 
         base_url = f"{SUPABASE_URL}/rest/v1/dictionary"
-        results = []
-        found_chars = set()
+
+        # 用字典存储结果，键为原始输入字符
+        char_result_map = {}  # input_char -> result_item
+        found_input_chars = set()  # 已找到结果的输入字符
 
         # 第一步：精确匹配原始输入（优先级最高）
         original_chars = [c for c in chars if isinstance(c, str) and len(c) == 1]
+        # 去重但保持顺序
+        seen = set()
+        unique_chars = []
+        for c in original_chars:
+            if c not in seen:
+                seen.add(c)
+                unique_chars.append(c)
+        original_chars = unique_chars
+
         print(f"[Dictionary] Batch lookup for chars: {original_chars}")
 
         if original_chars:
@@ -325,35 +392,39 @@ class handler(BaseHTTPRequestHandler):
             if resp.status_code == 200:
                 db_results = resp.json()
                 print(f"[Dictionary] Found {len(db_results)} results from DB")
+
                 for item in db_results:
-                    # 检查是否是原始输入的精确匹配
                     char_val = item.get('char', '')
                     trad_val = item.get('traditional', '')
                     print(f"[Dictionary] DB item: char={char_val}, trad={trad_val}, pinyin={item.get('pinyin')}")
-                    if char_val in original_chars or trad_val in original_chars:
-                        if char_val not in found_chars:
-                            results.append(item)
-                            found_chars.add(char_val)
-                            print(f"[Dictionary] Added exact match: {char_val}")
+
+                    # 找到这个结果对应的原始输入字符
+                    for input_char in original_chars:
+                        if input_char in found_input_chars:
+                            continue
+                        # 精确匹配：输入字符等于 char 或 traditional
+                        if char_val == input_char or trad_val == input_char:
+                            char_result_map[input_char] = item
+                            found_input_chars.add(input_char)
+                            print(f"[Dictionary] Added exact match: {input_char} -> {char_val}")
+                            break
 
         # 第二步：对于未找到的字符，尝试简繁变体扩展
-        missing_chars = [c for c in original_chars if c not in found_chars]
-        # 同时检查繁体字段是否匹配
-        for item in results:
-            trad = item.get('traditional', '')
-            if trad in missing_chars:
-                missing_chars.remove(trad)
-
+        missing_chars = [c for c in original_chars if c not in found_input_chars]
         print(f"[Dictionary] Missing chars after exact match: {missing_chars}")
 
         if missing_chars:
+            # 建立变体到原始输入的映射
+            variant_to_input = {}  # variant -> input_char
             expanded = set()
+
             for c in missing_chars:
                 variants = _expand_char_variants(c)
                 print(f"[Dictionary] Variants for '{c}': {variants}")
-                expanded.update(variants)
-            # 移除已找到的字符
-            expanded -= found_chars
+                for v in variants:
+                    if v != c:  # 排除原字符（已经查过）
+                        expanded.add(v)
+                        variant_to_input[v] = c
 
             if expanded:
                 conditions = []
@@ -365,17 +436,32 @@ class handler(BaseHTTPRequestHandler):
                 params = {
                     "select": "char,traditional,pinyin,radical,total_strokes,explanation",
                     "or": f"({or_conditions})",
-                    "limit": len(expanded)
+                    "limit": len(expanded) * 2
                 }
 
                 resp = requests.get(base_url, headers=headers, params=params, timeout=10)
                 if resp.status_code == 200:
                     for item in resp.json():
                         char_val = item.get('char', '')
-                        if char_val not in found_chars:
-                            results.append(item)
-                            found_chars.add(char_val)
-                            print(f"[Dictionary] Added variant match: {char_val}")
+                        trad_val = item.get('traditional', '')
+
+                        # 找到这个结果对应的原始输入字符
+                        input_char = None
+                        if char_val in variant_to_input:
+                            input_char = variant_to_input[char_val]
+                        elif trad_val in variant_to_input:
+                            input_char = variant_to_input[trad_val]
+
+                        if input_char and input_char not in found_input_chars:
+                            char_result_map[input_char] = item
+                            found_input_chars.add(input_char)
+                            print(f"[Dictionary] Added variant match: {input_char} -> {char_val}")
+
+        # 按原始输入顺序构建结果数组
+        results = []
+        for c in original_chars:
+            if c in char_result_map:
+                results.append(char_result_map[c])
 
         print(f"[Dictionary] Final results count: {len(results)}")
         return results
@@ -415,7 +501,8 @@ class handler(BaseHTTPRequestHandler):
         """将无声调拼音转换为所有可能的声调变体列表
 
         例如: qu -> ['qū', 'qú', 'qǔ', 'qù', 'qu']
-        例如: dao -> ['dāo', 'dáo', 'dǎo', 'dào', 'dao']
+        例如: lv -> ['lǖ', 'lǘ', 'lǚ', 'lǜ', 'lü'] (v 自动转 ü)
+        例如: nv -> ['nǖ', 'nǘ', 'nǚ', 'nǜ', 'nü']
         """
         # 元音到声调变体的映射
         tone_map = {
@@ -425,14 +512,15 @@ class handler(BaseHTTPRequestHandler):
             'o': ['ō', 'ó', 'ǒ', 'ò', 'o'],
             'u': ['ū', 'ú', 'ǔ', 'ù', 'u'],
             'ü': ['ǖ', 'ǘ', 'ǚ', 'ǜ', 'ü'],
-            'v': ['ǖ', 'ǘ', 'ǚ', 'ǜ', 'ü'],  # v 作为 ü 的替代输入
         }
+
+        pinyin = pinyin.lower()
+
+        # 预处理：将 v 替换为 ü（常见输入习惯）
+        pinyin = pinyin.replace('v', 'ü')
 
         # 找到拼音中需要加声调的元音位置
         # 声调规则：有 a/e 则在 a/e 上，有 ou 则在 o 上，否则在后面的元音上
-        pinyin = pinyin.lower()
-
-        # 找主元音位置
         main_vowel_idx = -1
         for i, char in enumerate(pinyin):
             if char in 'ae':
@@ -445,7 +533,7 @@ class handler(BaseHTTPRequestHandler):
         if main_vowel_idx == -1:
             # 找最后一个元音
             for i in range(len(pinyin) - 1, -1, -1):
-                if pinyin[i] in 'iouüv':
+                if pinyin[i] in 'iouü':
                     main_vowel_idx = i
                     break
 
