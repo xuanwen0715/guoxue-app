@@ -10,6 +10,54 @@ from .auth_utils import (
 )
 
 DASHSCOPE_API_KEY = os.environ.get("DASHSCOPE_API_KEY", "")
+SUPABASE_URL = os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "")
+SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")
+
+
+def lookup_dictionary(term):
+    """从字典数据库查询单字的基础信息（拼音、部首、笔画等）
+
+    返回: dict 或 None
+    """
+    import requests
+
+    if not SUPABASE_URL or not SUPABASE_ANON_KEY:
+        return None
+
+    # 只对单字进行字典查询
+    if len(term) != 1:
+        return None
+
+    try:
+        headers = {
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
+        }
+
+        base_url = f"{SUPABASE_URL}/rest/v1/dictionary"
+        params = {
+            "select": "char,traditional,pinyin,radical,total_strokes,explanation",
+            "or": f"(char.eq.{term},traditional.eq.{term})",
+            "limit": 1
+        }
+
+        resp = requests.get(base_url, headers=headers, params=params, timeout=5)
+        if resp.status_code == 200:
+            data = resp.json()
+            if data and len(data) > 0:
+                item = data[0]
+                return {
+                    "char": item.get("char"),
+                    "traditional": item.get("traditional"),
+                    "pinyin": item.get("pinyin"),
+                    "radical": item.get("radical"),
+                    "strokes": item.get("total_strokes"),
+                    "explanation": item.get("explanation")
+                }
+    except Exception as e:
+        print(f"[Dictionary] Lookup failed: {e}")
+
+    return None
 
 
 class handler(BaseHTTPRequestHandler):
@@ -84,6 +132,11 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(400, {"error": "Missing field: word"})
                 return
 
+            # 【关键改进】先从字典数据库查询基础信息，防止 AI 幻觉
+            dict_info = lookup_dictionary(term)
+            if dict_info:
+                print(f"[Translate] Found dictionary info for '{term}': pinyin={dict_info.get('pinyin')}, strokes={dict_info.get('strokes')}")
+
             DASHSCOPE_TXT_URL = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
             DEFAULT_TEXT_MODEL = os.environ.get("DASHSCOPE_TEXT_MODEL", "qwen-max")
 
@@ -92,7 +145,7 @@ class handler(BaseHTTPRequestHandler):
                 "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
             }
 
-            user_prompt = self._build_prompt(context, term, use_ocr)
+            user_prompt = self._build_prompt(context, term, use_ocr, dict_info)
 
             if stream:
                 # 流式输出模式
@@ -146,7 +199,7 @@ class handler(BaseHTTPRequestHandler):
                     try:
                         structured = json.loads(full_text)
                         if isinstance(structured, dict):
-                            self._normalize_response(structured)
+                            self._normalize_response(structured, dict_info)
                     except:
                         structured = {"text": full_text}
 
@@ -205,7 +258,7 @@ class handler(BaseHTTPRequestHandler):
                     deduct_credit(user_id)
 
                 if isinstance(structured, dict):
-                    self._normalize_response(structured)
+                    self._normalize_response(structured, dict_info)
                     # 添加用户配额信息到响应
                     structured["_quota"] = {
                         "is_premium": quota_info.get("is_premium", False),
@@ -219,7 +272,25 @@ class handler(BaseHTTPRequestHandler):
             import traceback
             self._send_json(500, {"error": str(e), "trace": traceback.format_exc()})
 
-    def _build_prompt(self, context, term, use_ocr):
+    def _build_prompt(self, context, term, use_ocr, dict_info=None):
+        """构建 AI 提示词
+
+        Args:
+            dict_info: 从字典数据库查到的基础信息（如果有），作为 AI 的参考依据
+        """
+        # 如果有字典数据，强调 AI 必须使用这些数据
+        dict_reference = ""
+        if dict_info:
+            dict_reference = (
+                "\n\n【重要】以下是该字的字典数据，请务必使用这些准确信息：\n"
+                f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
+                f"- 繁体: {dict_info.get('traditional', '同简体')}\n"
+                f"- 部首: {dict_info.get('radical', '未知')}\n"
+                f"- 笔画: {dict_info.get('strokes', '未知')}\n"
+                f"- 基本释义: {(dict_info.get('explanation') or '无')[:200]}\n"
+                "请基于以上准确数据进行国学角度的深入解析。\n"
+            )
+
         instructions = (
             "根据上下文，对查询字/词进行国学角度解析，输出 JSON 格式：\n"
             "{\n"
@@ -244,7 +315,7 @@ class handler(BaseHTTPRequestHandler):
             "只输出 JSON，不要其他内容。"
         )
         ctx_note = "（OCR识别）" if use_ocr else ""
-        return f"{instructions}\n\n查询: {term}\n上下文{ctx_note}: {context[:1500]}"
+        return f"{instructions}{dict_reference}\n\n查询: {term}\n上下文{ctx_note}: {context[:1500]}"
 
     def _extract_text_from_msg(self, resp_json):
         try:
@@ -260,7 +331,8 @@ class handler(BaseHTTPRequestHandler):
         except:
             return ""
 
-    def _normalize_response(self, structured):
+    def _normalize_response(self, structured, dict_info=None):
+        """规范化 AI 响应，并用字典数据覆盖基础字段（防止 AI 幻觉）"""
         for k in ["sources_zh", "sources_en", "examples_zh", "examples_en", "variants"]:
             if k in structured and not isinstance(structured[k], list):
                 structured[k] = [structured[k]] if structured[k] else []
@@ -272,6 +344,19 @@ class handler(BaseHTTPRequestHandler):
                 structured["strokes"] = int(structured["strokes"])
             except:
                 pass
+
+        # 【关键】用字典数据覆盖 AI 返回的基础信息，确保准确性
+        if dict_info:
+            if dict_info.get("pinyin"):
+                structured["pinyin"] = dict_info["pinyin"]
+            if dict_info.get("traditional"):
+                structured["traditional"] = dict_info["traditional"]
+            if dict_info.get("radical"):
+                structured["radical"] = dict_info["radical"]
+            if dict_info.get("strokes"):
+                structured["strokes"] = dict_info["strokes"]
+            # 标记数据来源
+            structured["_dict_verified"] = True
 
     def _send_json(self, status, payload):
         self.send_response(status)
