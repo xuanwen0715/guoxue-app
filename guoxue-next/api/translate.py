@@ -22,31 +22,43 @@ def lookup_dictionary(term):
     import requests
 
     if not SUPABASE_URL or not SUPABASE_ANON_KEY:
+        print(f"[Dictionary] Skipped: missing SUPABASE config")
         return None
 
     # 只对单字进行字典查询
     if len(term) != 1:
+        print(f"[Dictionary] Skipped: term '{term}' is not a single char")
         return None
 
     try:
         headers = {
             "apikey": SUPABASE_ANON_KEY,
             "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
+            "Content-Type": "application/json",
         }
 
         base_url = f"{SUPABASE_URL}/rest/v1/dictionary"
+
+        # 使用 params 字典让 requests 库自动处理编码
+        # Supabase REST API 的 or 条件格式: (condition1,condition2)
         params = {
             "select": "char,traditional,pinyin,radical,total_strokes,explanation",
             "or": f"(char.eq.{term},traditional.eq.{term})",
             "limit": 1
         }
 
+        print(f"[Dictionary] Looking up: '{term}'")
+
         resp = requests.get(base_url, headers=headers, params=params, timeout=5)
+        print(f"[Dictionary] Response status: {resp.status_code}, URL: {resp.url}")
+
         if resp.status_code == 200:
             data = resp.json()
+            print(f"[Dictionary] Results count: {len(data) if data else 0}")
+
             if data and len(data) > 0:
                 item = data[0]
-                return {
+                result = {
                     "char": item.get("char"),
                     "traditional": item.get("traditional"),
                     "pinyin": item.get("pinyin"),
@@ -54,6 +66,13 @@ def lookup_dictionary(term):
                     "strokes": item.get("total_strokes"),
                     "explanation": item.get("explanation")
                 }
+                print(f"[Dictionary] Found: char={result['char']}, pinyin={result['pinyin']}, strokes={result['strokes']}")
+                return result
+            else:
+                print(f"[Dictionary] No results found for '{term}'")
+        else:
+            print(f"[Dictionary] Error response: {resp.text[:200]}")
+
     except Exception as e:
         print(f"[Dictionary] Lookup failed: {e}")
 
