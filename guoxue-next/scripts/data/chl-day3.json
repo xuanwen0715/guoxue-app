@@ -1,0 +1,590 @@
+[
+  {
+    "char": "玚",
+    "pinyin": "chàng",
+    "strokes": 7,
+    "radical": "王",
+    "explanation": "1. 古代祭祀用的一种圭。 2. 一种玉。"
+  },
+  {
+    "char": "瑺",
+    "pinyin": "cháng",
+    "strokes": 15,
+    "radical": "王",
+    "explanation": "1. 玉名。"
+  },
+  {
+    "char": "畼",
+    "pinyin": "chàng",
+    "strokes": 14,
+    "radical": "田",
+    "explanation": "1. 荒芜。 2. 除草：“初岁祭耒，始用畼。”"
+  },
+  {
+    "char": "晿",
+    "pinyin": "chēng",
+    "strokes": 12,
+    "radical": "日",
+    "explanation": "1. 古人名用字。"
+  },
+  {
+    "char": "椙",
+    "pinyin": "chɑng",
+    "strokes": 12,
+    "radical": "木",
+    "explanation": "1. 〔椙别〕 2. 〔椙谷〕分别在德岛县和福井县。 3. 日本地名用字。"
+  },
+  {
+    "char": "牊",
+    "pinyin": "cháo",
+    "strokes": 9,
+    "radical": "片",
+    "explanation": "1. 床的别称。 2. 几。"
+  },
+  {
+    "char": "琩",
+    "pinyin": "chāng",
+    "strokes": 12,
+    "radical": "王",
+    "explanation": "1. 悬垂在耳旁作为装饰用的玉。"
+  },
+  {
+    "char": "薼",
+    "pinyin": "chén",
+    "strokes": 17,
+    "radical": "艹",
+    "explanation": "1. 〔䓰薼〕一种中药草。亦作“茵陈”。"
+  },
+  {
+    "char": "裮",
+    "pinyin": "chāng",
+    "strokes": 13,
+    "radical": "衤",
+    "explanation": "1. 披衣而不结带。"
+  },
+  {
+    "char": "掁",
+    "pinyin": "chéng",
+    "strokes": 11,
+    "radical": "扌",
+    "explanation": "1. 触碰。"
+  },
+  {
+    "char": "檙",
+    "pinyin": "chéng",
+    "strokes": 16,
+    "radical": "木",
+    "explanation": "1. 古同“朾”，撞击。"
+  },
+  {
+    "char": "溗",
+    "pinyin": "chéng",
+    "strokes": 13,
+    "radical": "氵",
+    "explanation": "1. 水不流。 2. 水波后波盖过前波。 3. 水名。"
+  },
+  {
+    "char": "畻",
+    "pinyin": "chéng",
+    "strokes": 14,
+    "radical": "田",
+    "explanation": "1. 田园间的土埂子。 2. 小堤：塘畻。"
+  },
+  {
+    "char": "碀",
+    "pinyin": "chēng",
+    "strokes": 11,
+    "radical": "石",
+    "explanation": "1. 破声。 2. 古同“琤”，玉石声。"
+  },
+  {
+    "char": "窚",
+    "pinyin": "chéng",
+    "strokes": 11,
+    "radical": "穴",
+    "explanation": "1. 古同“宬”。"
+  },
+  {
+    "char": "窢",
+    "pinyin": "huò",
+    "strokes": 13,
+    "radical": "穴",
+    "explanation": "1. 逆风声（一说迅速）：“其风窢然，恶可而言。”"
+  },
+  {
+    "char": "絾",
+    "pinyin": "chéng",
+    "strokes": 12,
+    "radical": "糹",
+    "explanation": "1. 织絾。"
+  },
+  {
+    "char": "脭",
+    "pinyin": "chéng",
+    "strokes": 11,
+    "radical": "月",
+    "explanation": "1. 精肉：“饮食则温淳甘膬，脭醲肥厚。”"
+  },
+  {
+    "char": "勶",
+    "pinyin": "chè",
+    "strokes": 17,
+    "radical": "力",
+    "explanation": "1. 发射。 2. 古同“撤”。 3. 古同“徹”。 4. 古通“轍（zhé）”。"
+  },
+  {
+    "char": "喢",
+    "pinyin": "shà",
+    "strokes": 12,
+    "radical": "口",
+    "explanation": "1. 古同“歃”，盟誓时用嘴吸取（牲血）。 2. 多话。"
+  },
+  {
+    "char": "焑",
+    "pinyin": "yān",
+    "strokes": 11,
+    "radical": "火",
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "爡",
+    "pinyin": "chè",
+    "strokes": 22,
+    "radical": "火",
+    "explanation": "1. 〔爡爡〕烧起。 2. 〔爡焥（wò）〕烟貌。"
+  },
+  {
+    "char": "瞮",
+    "pinyin": "chè",
+    "strokes": 17,
+    "radical": "目",
+    "explanation": "1. 明。"
+  },
+  {
+    "char": "硩",
+    "pinyin": "chè",
+    "strokes": 12,
+    "radical": "石",
+    "explanation": "1. 摘取；采。 2. 捣毁。"
+  },
+  {
+    "char": "緆",
+    "pinyin": "xī",
+    "strokes": 14,
+    "radical": "糹",
+    "explanation": "1. 细麻布。 2. 对麻布进行加工处理。 3. 古时裙子下缘的饰物。"
+  },
+  {
+    "char": "莗",
+    "pinyin": "chē",
+    "strokes": 10,
+    "radical": "艹",
+    "explanation": "1. 〔莗草〕即“车前草”，一种中药草。"
+  },
+  {
+    "char": "蛼",
+    "pinyin": "chē",
+    "strokes": 13,
+    "radical": "虫",
+    "explanation": "1. 〔蛼螯（áo）〕一种蛤，壳紫色，有斑点，可入药。亦作“车螯”。"
+  },
+  {
+    "char": "敐",
+    "pinyin": "chén",
+    "strokes": 11,
+    "radical": "攵",
+    "explanation": "1. 击声。 2. 古同“㲀”，喜而动。"
+  },
+  {
+    "char": "曟",
+    "pinyin": "chén",
+    "strokes": 19,
+    "radical": "日",
+    "explanation": "1. 古同“晨”，指二十八宿之一的房宿。 2. 古指二十八宿之一的心宿，或指北极星。"
+  },
+  {
+    "char": "樄",
+    "pinyin": "chén",
+    "strokes": 14,
+    "radical": "木",
+    "explanation": "1. 〔樄㯌〕经营驰逐，如“扶嵚崟以樄樄。”"
+  },
+  {
+    "char": "瘎",
+    "pinyin": "chén",
+    "strokes": 14,
+    "radical": "疒",
+    "explanation": "1. 腹病。"
+  },
+  {
+    "char": "莐",
+    "pinyin": "chén",
+    "strokes": 10,
+    "radical": "艹",
+    "explanation": "1. 〔莐藩〕一种草本植物，根茎入药，即知母。"
+  },
+  {
+    "char": "麎",
+    "pinyin": "chén",
+    "strokes": 18,
+    "radical": "鹿",
+    "explanation": "1. 母麋鹿。"
+  },
+  {
+    "char": "塻",
+    "pinyin": "mò",
+    "strokes": 13,
+    "radical": "土",
+    "explanation": "1. 尘土。"
+  },
+  {
+    "char": "墋",
+    "pinyin": "chěn",
+    "strokes": 14,
+    "radical": "土",
+    "explanation": "1. 沙土。 2. 混浊不清：“芒芒宇宙，上墋下黩。” 3. 食品中混入沙土。"
+  },
+  {
+    "char": "夦",
+    "pinyin": "chěn",
+    "strokes": 15,
+    "radical": "夕",
+    "explanation": "1. 多的样子。"
+  },
+  {
+    "char": "挰",
+    "pinyin": "chéng",
+    "strokes": 10,
+    "radical": "扌",
+    "explanation": "1. 择。 2. 举。"
+  },
+  {
+    "char": "琣",
+    "pinyin": "běng",
+    "strokes": 12,
+    "radical": "王",
+    "explanation": "1. 古同“琫”。 2. 古人名用字。"
+  },
+  {
+    "char": "諃",
+    "pinyin": "chēn",
+    "strokes": 15,
+    "radical": "言",
+    "explanation": "1. 善言。"
+  },
+  {
+    "char": "贂",
+    "pinyin": "chěn",
+    "strokes": 18,
+    "radical": "貝",
+    "explanation": "1. 赌。"
+  },
+  {
+    "char": "趻",
+    "pinyin": "chěn",
+    "strokes": 11,
+    "radical": "足",
+    "explanation": "1. 〔趻踔（chuō）〕跳跃，如“吾以一足趻趻而行。”"
+  },
+  {
+    "char": "踸",
+    "pinyin": "chěn",
+    "strokes": 16,
+    "radical": "足",
+    "explanation": "1. 〔踸踔（chuō）〕ａ．一脚跳行、跛脚走路的样子；ｂ．迅速滋长；ｃ．奔跃。"
+  },
+  {
+    "char": "騬",
+    "pinyin": "chéng",
+    "strokes": 20,
+    "radical": "馬",
+    "explanation": "1. 被割掉睾丸的马。"
+  },
+  {
+    "char": "剶",
+    "pinyin": "chuán",
+    "strokes": 11,
+    "radical": "刂",
+    "explanation": "1. 修剪；切断（枝条）：“正月到二月，可剶树枝”。剪核。"
+  },
+  {
+    "char": "卶",
+    "pinyin": "chǐ",
+    "strokes": 8,
+    "radical": "卩",
+    "explanation": "1. 度量大。"
+  },
+  {
+    "char": "恜",
+    "pinyin": "chì",
+    "strokes": 9,
+    "radical": "忄",
+    "explanation": "1. 〔恜恜〕a.从。b.慎。c.恐惧不安，如“卜得恶卦，反令恜恜。”"
+  },
+  {
+    "char": "瑏",
+    "pinyin": "chuān",
+    "strokes": 13,
+    "radical": "王",
+    "explanation": "1. 玉。"
+  },
+  {
+    "char": "翤",
+    "pinyin": "chì",
+    "strokes": 14,
+    "radical": "羽",
+    "explanation": "1. 古同“翅”。"
+  },
+  {
+    "char": "藂",
+    "pinyin": "cóng",
+    "strokes": 17,
+    "radical": "艹",
+    "explanation": "1. 古同“丛”。"
+  },
+  {
+    "char": "賩",
+    "pinyin": "cóng",
+    "strokes": 15,
+    "radical": "貝",
+    "explanation": "1. 中国古代四川、湖南等地少数民族对所交赋税的称谓。 2. 中国秦、汉时四川、湖南等地的一种少数民族。 3. 古地名，在今中国四川省渠县东北。"
+  },
+  {
+    "char": "鉳",
+    "pinyin": "běi",
+    "strokes": 13,
+    "radical": "釒",
+    "explanation": "1. 化学元素“锫”的旧译。"
+  },
+  {
+    "char": "庱",
+    "pinyin": "chěng",
+    "strokes": 11,
+    "radical": "广",
+    "explanation": "1. 〔庱亭〕古地名，在今中国江苏省丹阳市。。 2. 姓。"
+  },
+  {
+    "char": "憆",
+    "pinyin": "chēng",
+    "strokes": 14,
+    "radical": "忄",
+    "explanation": "1. 古同“瞠”。"
+  },
+  {
+    "char": "棦",
+    "pinyin": "chēng",
+    "strokes": 10,
+    "radical": "木",
+    "explanation": "1. 木束。"
+  },
+  {
+    "char": "泟",
+    "pinyin": "chēng",
+    "strokes": 8,
+    "radical": "氵",
+    "explanation": "1. 古同“浾”。"
+  },
+  {
+    "char": "浾",
+    "pinyin": "chēng",
+    "strokes": 10,
+    "radical": "氵",
+    "explanation": "1. 棠枣汁。"
+  },
+  {
+    "char": "牚",
+    "pinyin": "chèng",
+    "strokes": 12,
+    "radical": "牙",
+    "explanation": "1. 同“撑”。 2. 斜柱。 3. 桌椅等腿中间的横木。"
+  },
+  {
+    "char": "睈",
+    "pinyin": "chěng",
+    "strokes": 12,
+    "radical": "目",
+    "explanation": "1. 〔睈睈〕照视。 2. 意不尽。"
+  },
+  {
+    "char": "鏳",
+    "pinyin": "zhēng",
+    "strokes": 20,
+    "radical": "釒",
+    "explanation": "1. 古同“铮”。"
+  },
+  {
+    "char": "鏿",
+    "pinyin": "chēng",
+    "strokes": 20,
+    "radical": "釒",
+    "explanation": "1. 古同“鎗2”。"
+  },
+  {
+    "char": "阷",
+    "pinyin": "chēng",
+    "strokes": 7,
+    "radical": "阝",
+    "explanation": "1. 山丘名。 2. 吞。"
+  },
+  {
+    "char": "靗",
+    "pinyin": "chēng",
+    "strokes": 14,
+    "radical": "青",
+    "explanation": "1. 古同“竀”，正视。"
+  },
+  {
+    "char": "饓",
+    "pinyin": "chēng",
+    "strokes": 20,
+    "radical": "飠",
+    "explanation": "1. 过饱，肚胀。"
+  },
+  {
+    "char": "懘",
+    "pinyin": "zhān",
+    "strokes": 12,
+    "radical": "心",
+    "explanation": "1. 〔惉懘（chì）〕ａ．（声音）不和谐，如“五者（宫、商、角、徴、羽）不乱，则无惉惉之音矣。”ｂ．敝败，如“惉惉残疆，耻辱不恤如此。”ｃ．烦乱，如“借使小有惉惉之情，悴于胸次，忧思郁结，易以伤气。”"
+  },
+  {
+    "char": "瑉",
+    "pinyin": "mín",
+    "strokes": 13,
+    "radical": "王",
+    "explanation": "1. 古同“珉”。"
+  },
+  {
+    "char": "竩",
+    "pinyin": "yì",
+    "strokes": 13,
+    "radical": "立",
+    "explanation": "1. 古同“谊”。"
+  },
+  {
+    "char": "耣",
+    "pinyin": "lún",
+    "strokes": 14,
+    "radical": "耒",
+    "explanation": "1. 耕。 2. 古同“稐”，禾束。"
+  },
+  {
+    "char": "謘",
+    "pinyin": "chí",
+    "strokes": 17,
+    "radical": "言",
+    "explanation": "1. 说话迟钝。"
+  },
+  {
+    "char": "湁",
+    "pinyin": "chì",
+    "strokes": 12,
+    "radical": "氵",
+    "explanation": "1. 〔湁潗（jí）〕（水）涌起的样子，如“湁湁鼎沸。”"
+  },
+  {
+    "char": "灻",
+    "pinyin": "chì",
+    "strokes": 7,
+    "radical": "火",
+    "explanation": "1. 古同“赤”。"
+  },
+  {
+    "char": "痓",
+    "pinyin": "zhì",
+    "strokes": 11,
+    "radical": "疒",
+    "explanation": "1. 痉挛：“发喉痹，嗌肿，痓，治主病者。” 2. 中医病症名：“肺移热于肾，传为柔痓。”"
+  },
+  {
+    "char": "痸",
+    "pinyin": "chì",
+    "strokes": 13,
+    "radical": "疒",
+    "explanation": "1. 痴呆病。 2. 癞病。"
+  },
+  {
+    "char": "瘛",
+    "pinyin": "chì",
+    "strokes": 15,
+    "radical": "疒",
+    "explanation": "1. 〔瘛疭〕中医指手脚痉挛，因歪眼斜的症状。亦称“抽风”。"
+  },
+  {
+    "char": "翑",
+    "pinyin": "qú",
+    "strokes": 11,
+    "radical": "羽",
+    "explanation": "1. 羽毛末端的弯曲部分。 2. 后脚白色的马。 3. 箭羽。"
+  },
+  {
+    "char": "靘",
+    "pinyin": "qìng",
+    "strokes": 14,
+    "radical": "青",
+    "explanation": "1. 青黑色：“兰殿春融自靘笙。”"
+  },
+  {
+    "char": "憏",
+    "pinyin": "chì",
+    "strokes": 14,
+    "radical": "忄",
+    "explanation": "1. 〔㤞（chà）憏〕a.疑而未定。b.不得志，失意的神态。"
+  },
+  {
+    "char": "榸",
+    "pinyin": "zhāi",
+    "strokes": 14,
+    "radical": "木",
+    "explanation": "1. 枯木根。"
+  },
+  {
+    "char": "橻",
+    "pinyin": "cū",
+    "strokes": 16,
+    "radical": "木",
+    "explanation": "1. 韩国地名用字。 2. 义未详。"
+  },
+  {
+    "char": "櫉",
+    "pinyin": "chú",
+    "strokes": 18,
+    "radical": "木",
+    "explanation": "1. 古同“橱”。"
+  },
+  {
+    "char": "犓",
+    "pinyin": "chú",
+    "strokes": 14,
+    "radical": "牜",
+    "explanation": "1. 用草料喂牲畜：“故莫不犓牛羊，豢犬彘。” 2. 指牲畜：“（子墨子）非以犓豢煎炙之味以为不甘也。”"
+  },
+  {
+    "char": "簄",
+    "pinyin": "hù",
+    "strokes": 17,
+    "radical": "⺮",
+    "explanation": "1. 在江海中捕鱼的竹器。"
+  },
+  {
+    "char": "蟵",
+    "pinyin": "chu",
+    "strokes": 18,
+    "radical": "虫",
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "趎",
+    "pinyin": "chú",
+    "strokes": 13,
+    "radical": "走",
+    "explanation": "1. 古人名用字。"
+  },
+  {
+    "char": "雴",
+    "pinyin": "chì",
+    "strokes": 13,
+    "radical": "雨",
+    "explanation": "1. 〔雴霫（xí）〕大雨。"
+  }
+]

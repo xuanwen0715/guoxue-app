@@ -1,0 +1,2081 @@
+[
+  {
+    "char": "𥫶",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 同“箕”。 2. 同“簊”。"
+  },
+  {
+    "char": "𥫷",
+    "pinyin": "jiū",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥫸",
+    "pinyin": "shuǐ",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥫹",
+    "pinyin": "chén",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥫼",
+    "pinyin": "huàng",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 觅鱼具。 2. 古壮字。丹竹。"
+  },
+  {
+    "char": "𥫽",
+    "pinyin": "shi",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 同“匙”。钥匙。"
+  },
+  {
+    "char": "𥬆",
+    "pinyin": "lóng",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 同“笄”。"
+  },
+  {
+    "char": "𥬈",
+    "pinyin": "mǎn",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. “篵”的类推简化字。 2. 义未详。"
+  },
+  {
+    "char": "𥬉",
+    "pinyin": "gōu",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 同“笱”。"
+  },
+  {
+    "char": "笖",
+    "pinyin": "yǐ",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 笋。"
+  },
+  {
+    "char": "笘",
+    "pinyin": "shān",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 折竹做的鞭子。 2. 古代儿童习字用的竹片。"
+  },
+  {
+    "char": "笚",
+    "pinyin": "dā",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 竹相击。 2. 同“筪”，竹名。 3. 同“笝”，系船的竹索。"
+  },
+  {
+    "char": "笜",
+    "pinyin": "zhú",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 笋。 2. 竹笋长出来的样子。"
+  },
+  {
+    "char": "笝",
+    "pinyin": "nà",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 缆，系舟的竹索。"
+  },
+  {
+    "char": "笡",
+    "pinyin": "qiè",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 牚；牚子。 2. 方言，歪斜：嘴～。字写～。"
+  },
+  {
+    "char": "笢",
+    "pinyin": "mǐn",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 竹子的表皮，可劈成篾条。 2. 理发用的刷子。"
+  },
+  {
+    "char": "笩",
+    "pinyin": "fá",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. “茷”的讹字。"
+  },
+  {
+    "char": "笶",
+    "pinyin": "shǐ",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 同“矢”。"
+  },
+  {
+    "char": "笷",
+    "pinyin": "mǎo",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 古书上说的一种类似水竹的竹子。"
+  },
+  {
+    "char": "笻",
+    "pinyin": "qióng",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 同“筇”。"
+  },
+  {
+    "char": "笽",
+    "pinyin": "mǐn",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "◎ 义未详。"
+  },
+  {
+    "char": "𥬍",
+    "pinyin": "xiān",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥬎",
+    "pinyin": "mò",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 捕鱼竹器。"
+  },
+  {
+    "char": "𥬐",
+    "pinyin": "shěn",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥬒",
+    "pinyin": "pō",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 鱼罩。"
+  },
+  {
+    "char": "𥬓",
+    "pinyin": "yào",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 同“箹”。竹节。"
+  },
+  {
+    "char": "𥬔",
+    "pinyin": "qū",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 𥬔𥰠，即𠙴卢，筲箕。《方言》卷十三：“𥰠，南楚謂之筲，趙、魏之郊謂之𥬔𥰠。” 2. 山里遮拦禽兽用的障碍物。《玉篇•竹部》：“𥬔，關也，山谷遮獸也。”"
+  },
+  {
+    "char": "𥬕",
+    "pinyin": "rǎn",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 竹弱貌。"
+  },
+  {
+    "char": "𥬙",
+    "pinyin": "jù",
+    "radical": "竹",
+    "strokes": 10,
+    "explanation": "1. 同“炬”。火把。"
+  },
+  {
+    "char": "𥬜",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 同“笉”。"
+  },
+  {
+    "char": "𥬝",
+    "pinyin": "bái",
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 一种竹子，皮白色。"
+  },
+  {
+    "char": "𥬞",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 11,
+    "explanation": "1. 同“苶”。 2. “籋”的类推简化字。"
+  },
+  {
+    "char": "笿",
+    "pinyin": "luò",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 古代盛杯盘之类的竹器。 2. 竹笼。 3. 古通“络”，缠束。"
+  },
+  {
+    "char": "筀",
+    "pinyin": "guì",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 古书上说的一种竹。"
+  },
+  {
+    "char": "筂",
+    "pinyin": "chí",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 同“篪”。"
+  },
+  {
+    "char": "筃",
+    "pinyin": "yīn",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 同“茵”。 2. 古书上说的一种竹。"
+  },
+  {
+    "char": "筄",
+    "pinyin": "yào",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 铺在房屋椽上瓦下的席。 2. 屋栋。"
+  },
+  {
+    "char": "筎",
+    "pinyin": "rú",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 刮取竹皮而成的竹絮：竹～。～可入药。"
+  },
+  {
+    "char": "筕",
+    "pinyin": "háng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 〔～篖〕竹编的粗糙席子。"
+  },
+  {
+    "char": "筗",
+    "pinyin": "zhòng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 古书上说的一种竹。 2. 古乐器。"
+  },
+  {
+    "char": "筘",
+    "pinyin": "kòu",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 织布机上的一种机件，经线从筘齿间通过，它的作用是把纬线推到织口。"
+  },
+  {
+    "char": "筙",
+    "pinyin": "lái",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 同“箂”。"
+  },
+  {
+    "char": "𥬪",
+    "pinyin": "róng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 可做箭杆的小竹。"
+  },
+  {
+    "char": "𥬫",
+    "pinyin": "chuǎn",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 用竹穿东西。"
+  },
+  {
+    "char": "𥬬",
+    "pinyin": "niè",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 竹。 2. 同“镊”。"
+  },
+  {
+    "char": "𥬭",
+    "pinyin": "lì",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 籌。 2. 竹次，竹株的行列。"
+  },
+  {
+    "char": "𥬮",
+    "pinyin": "jiāng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 竹名。 2. 筏。"
+  },
+  {
+    "char": "𥬰",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 同“笧”。"
+  },
+  {
+    "char": "𥬱",
+    "pinyin": "chòng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 竹尖。"
+  },
+  {
+    "char": "𥬲",
+    "pinyin": "zhuā",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 同“檛”。马鞭子。 2. 竹名。"
+  },
+  {
+    "char": "𥬳",
+    "pinyin": "zǐ",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥬴",
+    "pinyin": "yáng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥬼",
+    "pinyin": "wěn",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 截竹。"
+  },
+  {
+    "char": "𥭋",
+    "pinyin": "jì",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 网罟一类的捕鱼器具。"
+  },
+  {
+    "char": "𥭌",
+    "pinyin": "jì",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "筞",
+    "pinyin": "cè",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“策”。"
+  },
+  {
+    "char": "筟",
+    "pinyin": "fū",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 络丝纺纱的工具。 2. 竹腔里的白色薄膜。"
+  },
+  {
+    "char": "筡",
+    "pinyin": "tú",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 剖析竹篾。 2. 竹篾。 3. 古书上说的一种中空的竹子。"
+  },
+  {
+    "char": "筣",
+    "pinyin": "lí",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 古书上说的一种似藤的蔓生竹。 2. 同“篱”。"
+  },
+  {
+    "char": "筨",
+    "pinyin": "hán",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 〔～隋〕同“笒隋”。"
+  },
+  {
+    "char": "筫",
+    "pinyin": "zhì",
+    "radical": "貝",
+    "strokes": 13,
+    "explanation": "1. 竹器。 2. 朴。 3. 致谨。 4. 正。"
+  },
+  {
+    "char": "筳",
+    "pinyin": "tíng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 络丝、纺纱或卷棉条的用具。 2. 小竹片，亦指小竹枝或小木枝。 3. 小簪。 4. 笼。 5. 竞。 6. 同“莛”，草茎：“以～击钟，（岂能）发其音声哉？”"
+  },
+  {
+    "char": "筶",
+    "pinyin": "gào",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 古代占卜用具，用类似于蚌壳的两半器物制成，合拢拿在手里，掷于地，观其俯仰，以占吉凶。"
+  },
+  {
+    "char": "筿",
+    "pinyin": "xiǎo",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 细竹。 2. 竹器。"
+  },
+  {
+    "char": "𥭐",
+    "pinyin": "lǜ",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 一种竹管，里面按上箭，用以射鸟。"
+  },
+  {
+    "char": "𥭑",
+    "pinyin": "qiú",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 小笼。"
+  },
+  {
+    "char": "𥭒",
+    "pinyin": "dùn",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“囤”。用竹篾等编成的盛粮器具。 2. 篪。"
+  },
+  {
+    "char": "𥭓",
+    "pinyin": "báo",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 车篷带。"
+  },
+  {
+    "char": "𥭔",
+    "pinyin": "chān",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 削薄的东西。"
+  },
+  {
+    "char": "𥭖",
+    "pinyin": "bó",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“肑”，手指足趾关节响。"
+  },
+  {
+    "char": "𥭘",
+    "pinyin": "chī",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 竹器。"
+  },
+  {
+    "char": "𥭙",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“籋”。"
+  },
+  {
+    "char": "𥭚",
+    "pinyin": "màng",
+    "radical": "竹",
+    "strokes": 12,
+    "explanation": "1. 屋箦。"
+  },
+  {
+    "char": "𥭜",
+    "pinyin": "jì",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥭝",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“篎”。"
+  },
+  {
+    "char": "𥭞",
+    "pinyin": "yuàn",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥭠",
+    "pinyin": "wú",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥭡",
+    "pinyin": "zhì",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥭢",
+    "pinyin": "pīng",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 舟车篷。"
+  },
+  {
+    "char": "𥭥",
+    "pinyin": "chōng",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“茧”。 2. 草名。"
+  },
+  {
+    "char": "𥭫",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“𥮜”。"
+  },
+  {
+    "char": "𥭬",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“䈈”。"
+  },
+  {
+    "char": "𥭭",
+    "pinyin": "cuō",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥭮",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 同“䈍”。"
+  },
+  {
+    "char": "箂",
+    "pinyin": "lái",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 古书上说的一种竹。"
+  },
+  {
+    "char": "箃",
+    "pinyin": "zōu",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹黄。 2. 竹柴。"
+  },
+  {
+    "char": "箄",
+    "pinyin": "pái",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 大的筏子。 2. 古代一种竹制的捕鱼具。"
+  },
+  {
+    "char": "箅",
+    "pinyin": "bì",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 〔～子〕有空隙而能起间隔作用的片状器具，如“竹～～”、“纱～～”。"
+  },
+  {
+    "char": "箉",
+    "pinyin": "guǎi",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 鱼笱上的竹具。 2. 竹杖。 3. 〔筛谷～〕一种竹制的农用器具。"
+  },
+  {
+    "char": "箊",
+    "pinyin": "yū",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 〔箖～〕见“箖”。"
+  },
+  {
+    "char": "箌",
+    "pinyin": "zhào",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“罩”，捕鱼器。 2. 大。"
+  },
+  {
+    "char": "箖",
+    "pinyin": "lín",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 〔～箊〕古书上说的一种竹子，叶薄而宽。 2. 古代供弋射用的掩体。"
+  },
+  {
+    "char": "箞",
+    "pinyin": "quān",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 将竹子弯曲。"
+  },
+  {
+    "char": "箟",
+    "pinyin": "jùn",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“箘”，一种竹子。"
+  },
+  {
+    "char": "箢",
+    "pinyin": "yuān",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 〔～篼〕竹篾等编成的盛东西的器具。"
+  },
+  {
+    "char": "箣",
+    "pinyin": "cè",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 一种竹子，茎高，质坚韧。 2. 同“策”。"
+  },
+  {
+    "char": "箤",
+    "pinyin": "zú",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹笼。"
+  },
+  {
+    "char": "𥮍",
+    "pinyin": "yín",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥮎",
+    "pinyin": "mǎng",
+    "radical": "竹",
+    "strokes": 13,
+    "explanation": "1. 疑同“莽③”。一种节密的竹子。"
+  },
+  {
+    "char": "𥮏",
+    "pinyin": "diǎn",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“典”。典籍。 2. 大箱。"
+  },
+  {
+    "char": "𥮐",
+    "pinyin": "diāo",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 山名用字。"
+  },
+  {
+    "char": "𥮒",
+    "pinyin": "qián",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 造纸漂浆用的竹帘。"
+  },
+  {
+    "char": "𥮕",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“笐”。"
+  },
+  {
+    "char": "𥮖",
+    "pinyin": "zhí",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 笙。"
+  },
+  {
+    "char": "𥮗",
+    "pinyin": "jú",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹根。"
+  },
+  {
+    "char": "𥮘",
+    "pinyin": "niàn",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 拉船的竹纤。"
+  },
+  {
+    "char": "𥮝",
+    "pinyin": "qū",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“䓛”。刷子。"
+  },
+  {
+    "char": "𥮣",
+    "pinyin": "zhuā",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“簻”。马鞭。"
+  },
+  {
+    "char": "𥮤",
+    "pinyin": "niè",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥮥",
+    "pinyin": "cè",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“策”。 2. 计数和计算用的竹签之类。 3. 占卜用的蓍草。 4. 䉛～。见《字汇补》。 5. 同“𥯩”。"
+  },
+  {
+    "char": "𥮧",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“䈎”。"
+  },
+  {
+    "char": "𥮨",
+    "pinyin": "còng",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹诜。"
+  },
+  {
+    "char": "𥮪",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“䈝”。 2. 同“箿”。"
+  },
+  {
+    "char": "𥮬",
+    "pinyin": "xì",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“䈪”。《刊谬补缺切韵·锡韵》：“䈪，籮属。亦作𥮬字。”"
+  },
+  {
+    "char": "𥮯",
+    "pinyin": "bō",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“磻”。系在丝绳上用以射鸟的石镞。"
+  },
+  {
+    "char": "𥮾",
+    "pinyin": "zān",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“篸”。 2. 〈见于台湾人名〉 3. 义未详。 4. 〈古壮字〉读音camj，竹编的鸡罩；罩[动词]。"
+  },
+  {
+    "char": "𥯃",
+    "pinyin": "yǎn",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 编得较密的篾篓。"
+  },
+  {
+    "char": "箮",
+    "pinyin": "xuān",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹花。"
+  },
+  {
+    "char": "箰",
+    "pinyin": "sǔn",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“筍”。"
+  },
+  {
+    "char": "箲",
+    "pinyin": "xiǎn",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“筅”。"
+  },
+  {
+    "char": "箵",
+    "pinyin": "xīng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 〔笭～〕见“笭”。"
+  },
+  {
+    "char": "箶",
+    "pinyin": "hú",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 〔～簏〕盛箭器。 2. 古书上说的一种竹。"
+  },
+  {
+    "char": "箷",
+    "pinyin": "shī",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 古书上说的一种竹。 2. 同“椸”。"
+  },
+  {
+    "char": "箹",
+    "pinyin": "yuē",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 古代的一种小管乐器。 2. 竹节。 3. 车篷带。"
+  },
+  {
+    "char": "箻",
+    "pinyin": "lǜ",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 古代一种射鸟的竹管。"
+  },
+  {
+    "char": "箼",
+    "pinyin": "wū",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹密。"
+  },
+  {
+    "char": "箽",
+    "pinyin": "dǒng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 古书上说的一种竹。 2. 竹器。 3. 姓。"
+  },
+  {
+    "char": "篂",
+    "pinyin": "xīng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 〔箳～〕见“箳”。"
+  },
+  {
+    "char": "篃",
+    "pinyin": "mèi",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 箭竹的一种。"
+  },
+  {
+    "char": "篈",
+    "pinyin": "fēng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 古书上说的一种竹。"
+  },
+  {
+    "char": "篊",
+    "pinyin": "hóng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 引水。 2. 成捆的竹木。 3. 鱼梁，用竹篾编成的捕鱼器具。"
+  },
+  {
+    "char": "篍",
+    "pinyin": "qiū",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹箫。 2. 吹筒，古代用于警戒或督役的哨子。"
+  },
+  {
+    "char": "篎",
+    "pinyin": "miǎo",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 古代的一种发音清脆的管乐器。"
+  },
+  {
+    "char": "篐",
+    "pinyin": "gū",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“箍”。"
+  },
+  {
+    "char": "篒",
+    "pinyin": "yì",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“饐”。"
+  },
+  {
+    "char": "𥯑",
+    "pinyin": "jǐn",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“䈽”。 2. 见“䇣”。"
+  },
+  {
+    "char": "𥯔",
+    "pinyin": "jǔ",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 〔～篓〕校正车轮的器具。"
+  },
+  {
+    "char": "𥯕",
+    "pinyin": "dàng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 笙箫一类的乐器。 2. 同“簜”。大竹。"
+  },
+  {
+    "char": "𥯖",
+    "pinyin": "dù",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 簪子。"
+  },
+  {
+    "char": "𥯘",
+    "pinyin": "yé",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥯙",
+    "pinyin": "jìng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥯚",
+    "pinyin": "kè",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 杯。 2. 笼。"
+  },
+  {
+    "char": "𥯛",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“笿”。 2. 〈古壮字〉读音lag，篱笆。"
+  },
+  {
+    "char": "𥯜",
+    "pinyin": "wěi",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 筐。"
+  },
+  {
+    "char": "𥯝",
+    "pinyin": "tū",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹器。 2. 喃字。读音sột，沙沙声。"
+  },
+  {
+    "char": "𥯞",
+    "pinyin": "yóu",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 水名。"
+  },
+  {
+    "char": "𥯟",
+    "pinyin": "pài",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹片。"
+  },
+  {
+    "char": "𥯡",
+    "pinyin": "pí",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 笼。"
+  },
+  {
+    "char": "𥯢",
+    "pinyin": "dìng",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹器。"
+  },
+  {
+    "char": "𥯤",
+    "pinyin": "wěi",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹名。 2. 同“葦”。芦苇 3. 喃字。同“𤿤”。"
+  },
+  {
+    "char": "𥯥",
+    "pinyin": "chè",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹叶。"
+  },
+  {
+    "char": "𥯦",
+    "pinyin": "jiàn",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 竹节。 2. 同“𨖷”。行书，汉字字体之一。"
+  },
+  {
+    "char": "𥯨",
+    "pinyin": "sī",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 一种竹子，生在海边，有毒，竹和笋有毛，刺人则死。 2. 〈古壮字〉读音she，篮子。"
+  },
+  {
+    "char": "𥯩",
+    "pinyin": "zhuó",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 漉米竹器。"
+  },
+  {
+    "char": "𥯪",
+    "pinyin": "sòu",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 小竹。 2. 喃字。读音trấu，粗糠。"
+  },
+  {
+    "char": "𥯬",
+    "pinyin": "ruǎn",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥯮",
+    "pinyin": "yú",
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 黑竹。"
+  },
+  {
+    "char": "𥯳",
+    "pinyin": "è",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥯶",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 14,
+    "explanation": "1. 同“䇢”。"
+  },
+  {
+    "char": "𥯸",
+    "pinyin": "zhú",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥯾",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“𥰶”。"
+  },
+  {
+    "char": "篕",
+    "pinyin": "hé",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 〔～棪〕粗竹席。"
+  },
+  {
+    "char": "篖",
+    "pinyin": "táng",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 〔筕～〕见“筕”。"
+  },
+  {
+    "char": "篗",
+    "pinyin": "yuè",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 络丝的用具：“累累茧满簇，绎绎丝上～。”"
+  },
+  {
+    "char": "篜",
+    "pinyin": "zhēng",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 古书上说的一种竹。"
+  },
+  {
+    "char": "篞",
+    "pinyin": "niè",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 古代一种声音柔和的管乐器。"
+  },
+  {
+    "char": "篟",
+    "pinyin": "qiàn",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 古书上说的一种竹。 2. 竹子长得茂盛的样子。"
+  },
+  {
+    "char": "篣",
+    "pinyin": "péng",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹笼。 2. 古通“搒”，笞打：“加～二百。” 3. 竹箕。 4. 竹名。"
+  },
+  {
+    "char": "篧",
+    "pinyin": "zhuó",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 捕鱼用的罩。 2. 取鱼竹器。"
+  },
+  {
+    "char": "篫",
+    "pinyin": "zhù",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 用手捣物体。"
+  },
+  {
+    "char": "篬",
+    "pinyin": "qiāng",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹名。 2. 竹色。"
+  },
+  {
+    "char": "𥰛",
+    "pinyin": "fú",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 一种有斑纹的竹子。"
+  },
+  {
+    "char": "𥰜",
+    "pinyin": "táo",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 〔～枝〕同“桃枝”，一种竹子。"
+  },
+  {
+    "char": "𥰝",
+    "pinyin": "xī",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 〔簨～〕竹器。"
+  },
+  {
+    "char": "𥰞",
+    "pinyin": "chōu",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 同“篘”。 2. 同“籔”。"
+  },
+  {
+    "char": "𥰟",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 同“榬”。"
+  },
+  {
+    "char": "𥰠",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 同“筥”。"
+  },
+  {
+    "char": "𥰡",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 同“𢿸”。"
+  },
+  {
+    "char": "𥰢",
+    "pinyin": "shàn",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹名。 2. 同“扇”。扇子。"
+  },
+  {
+    "char": "𥰣",
+    "pinyin": "liú",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥰥",
+    "pinyin": "xì",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 所以安重船。"
+  },
+  {
+    "char": "𥰦",
+    "pinyin": "jī",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹屐。"
+  },
+  {
+    "char": "𥰧",
+    "pinyin": "yǐ",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 〔～～〕粗竹席。"
+  },
+  {
+    "char": "𥰨",
+    "pinyin": "tán",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 洗刷马用的篦子。"
+  },
+  {
+    "char": "𥰪",
+    "pinyin": "hú",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 被。"
+  },
+  {
+    "char": "𥰭",
+    "pinyin": "cī",
+    "radical": "竹",
+    "strokes": 15,
+    "explanation": "1. 〔篸～〕同“参差”，长短或高低不齐。 2. 一种盛东西的竹器。"
+  },
+  {
+    "char": "𥰮",
+    "pinyin": "gě",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹笋。"
+  },
+  {
+    "char": "𥰰",
+    "pinyin": "shì",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 同“筮”。 2. 同“揲”。数蓍草占卜吉凶。"
+  },
+  {
+    "char": "𥰱",
+    "pinyin": "sāo",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 〔～～〕竹声。"
+  },
+  {
+    "char": "𥰲",
+    "pinyin": "hòng",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 烘烤东西的竹器。"
+  },
+  {
+    "char": "𥰳",
+    "pinyin": "xiàn",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥰶",
+    "pinyin": "xiá",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 拾～。"
+  },
+  {
+    "char": "𥰻",
+    "pinyin": "mù",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 盛米饭等用的圆形竹器。"
+  },
+  {
+    "char": "𥰼",
+    "pinyin": "suǒ",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹索。 2. 烤肉用的竹签。"
+  },
+  {
+    "char": "𥰾",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 同“𨢦”。"
+  },
+  {
+    "char": "𥱀",
+    "pinyin": "fū",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹子的青皮。"
+  },
+  {
+    "char": "𥱁",
+    "pinyin": "sè",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 见足。"
+  },
+  {
+    "char": "𥱂",
+    "pinyin": "nú",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 《康熙字典》𥱂：《字汇补》女除切，音袽。机𥱂也。"
+  },
+  {
+    "char": "𥱃",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 同“𥳿”。"
+  },
+  {
+    "char": "𥱧",
+    "pinyin": "qín",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 一种乐器，似筝，有七弦。"
+  },
+  {
+    "char": "𥱨",
+    "pinyin": "qìng",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "篶",
+    "pinyin": "yān",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 黑竹。"
+  },
+  {
+    "char": "篺",
+    "pinyin": "pí",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 古人名用字。"
+  },
+  {
+    "char": "篻",
+    "pinyin": "piǎo",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 一种竹子，竹杆坚硬厚实，可做矛。亦称“筋竹”。 2. 竹笋。 3. 竹门。 4. 竹子生长的样子。"
+  },
+  {
+    "char": "篿",
+    "pinyin": "tuán",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 圆形的竹器：～箕。～匾。 2. 用灵草和小竹枝占卜。"
+  },
+  {
+    "char": "簂",
+    "pinyin": "guó",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 古代妇女覆于发上用以固冠的首饰。 2. 古代妇女的丧冠。 3. 同“槶”，筐。"
+  },
+  {
+    "char": "簅",
+    "pinyin": "chǎn",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 古代一种像笛的三孔短管乐器。"
+  },
+  {
+    "char": "𥱵",
+    "pinyin": "huì",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“彗”。 2. 修船的工具。"
+  },
+  {
+    "char": "𥱶",
+    "pinyin": "shuǎng",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹貌。"
+  },
+  {
+    "char": "𥱷",
+    "pinyin": "dǎn",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“𥸡”。 2. 竹名。"
+  },
+  {
+    "char": "𥱸",
+    "pinyin": "ōu",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 养蚕的竹器。 2. 〈方言〉养蚕的竹器。古吴语。"
+  },
+  {
+    "char": "𥱹",
+    "pinyin": "mò",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 〔～～〕竹名。"
+  },
+  {
+    "char": "𥱺",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“䉦”。"
+  },
+  {
+    "char": "𥱻",
+    "pinyin": "chì",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 胡竹。 2. 杖。 3. 同“筡”。剖析竹篾。"
+  },
+  {
+    "char": "𥱼",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“箄”。"
+  },
+  {
+    "char": "𥱽",
+    "pinyin": "juàn",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 一种竹子。 2. 囤一类盛谷物的竹制器具。"
+  },
+  {
+    "char": "𥲀",
+    "pinyin": "cháo",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 大笙，有十九簧。"
+  },
+  {
+    "char": "𥲁",
+    "pinyin": "liè",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 晒干物品用的竹器。"
+  },
+  {
+    "char": "𥲂",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. “𥰅”的旧字形。"
+  },
+  {
+    "char": "𥲃",
+    "pinyin": "kòu",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“筘”。"
+  },
+  {
+    "char": "𥲄",
+    "pinyin": "dàn",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 一种竹子，即淡竹。"
+  },
+  {
+    "char": "𥲅",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“踌”。"
+  },
+  {
+    "char": "𥲆",
+    "pinyin": "tōng",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 一种竹子，即通竹。"
+  },
+  {
+    "char": "𥲇",
+    "pinyin": "dàn",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲈",
+    "pinyin": "mǎn",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 〔～～䈠〕简牍。 2. 竹器。"
+  },
+  {
+    "char": "𥲉",
+    "pinyin": "hù",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 笼。"
+  },
+  {
+    "char": "𥲊",
+    "pinyin": "liáo",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 一种竹子，似苦竹而细软。"
+  },
+  {
+    "char": "𥲋",
+    "pinyin": "xián",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 箭杆。"
+  },
+  {
+    "char": "𥲍",
+    "pinyin": "cáo",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲎",
+    "pinyin": "lù",
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲏",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“𣀔”。"
+  },
+  {
+    "char": "𥲐",
+    "pinyin": "wú",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲑",
+    "pinyin": "mán",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲕",
+    "pinyin": "zǐ",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“𥬳”。竹名。"
+  },
+  {
+    "char": "𥲗",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 16,
+    "explanation": "1. 同“𥳲”。"
+  },
+  {
+    "char": "𥲚",
+    "pinyin": "shuàng",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 用竹木刺物。"
+  },
+  {
+    "char": "𥲛",
+    "pinyin": "fù",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹篾。"
+  },
+  {
+    "char": "𥲜",
+    "pinyin": "jù",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲝",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“𥶈”。"
+  },
+  {
+    "char": "𥲟",
+    "pinyin": "diào",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲠",
+    "pinyin": "wàng",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。 2. 竹色。"
+  },
+  {
+    "char": "𥲡",
+    "pinyin": "chuāng",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 篱笆。"
+  },
+  {
+    "char": "𥲢",
+    "pinyin": "qiān",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲣",
+    "pinyin": "tuì",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“㔍”。断。"
+  },
+  {
+    "char": "𥲥",
+    "pinyin": "lián",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 鼓。疑同“籢”。"
+  },
+  {
+    "char": "𥲦",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“篻”。"
+  },
+  {
+    "char": "𥲧",
+    "pinyin": "lí",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥲪",
+    "pinyin": "lí",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 〔笊～〕同“笊篱”，用来捞东西能漏水的用具。"
+  },
+  {
+    "char": "簝",
+    "pinyin": "liáo",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 古代宗庙祭祀盛肉的竹器。 2. 竹名。"
+  },
+  {
+    "char": "簢",
+    "pinyin": "mǐn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "簤",
+    "pinyin": "dài",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 浅而长的竹篮。"
+  },
+  {
+    "char": "簩",
+    "pinyin": "láo",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 古书上说的一种有毒的竹子。"
+  },
+  {
+    "char": "簬",
+    "pinyin": "lù",
+    "radical": "竹",
+    "strokes": 19,
+    "explanation": "1. 〔箘～〕见“箘”。"
+  },
+  {
+    "char": "簭",
+    "pinyin": "shì",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“噬”，咬。 2. 同“筮”。"
+  },
+  {
+    "char": "簮",
+    "pinyin": "zān",
+    "radical": "日",
+    "strokes": 18,
+    "explanation": "1. 同“簪”。"
+  },
+  {
+    "char": "簯",
+    "pinyin": "qí",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "qí   ㄑㄧˊ ◎ 义未详。"
+  },
+  {
+    "char": "簱",
+    "pinyin": "qí",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "qí   ㄑㄧˊ ◎ 同“籏”，日本地名用字。"
+  },
+  {
+    "char": "簲",
+    "pinyin": "pái",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 筏子。"
+  },
+  {
+    "char": "𥳆",
+    "pinyin": "bì",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 用竹席或苇席遮挡车窗。 2. 古代博戏用具之一。"
+  },
+  {
+    "char": "𥳇",
+    "pinyin": "fù",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹子开花。"
+  },
+  {
+    "char": "𥳈",
+    "pinyin": "cuì",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 舂。"
+  },
+  {
+    "char": "𥳍",
+    "pinyin": "xún",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 传说中的巨竹，高千丈，截一节可造成船。"
+  },
+  {
+    "char": "𥳎",
+    "pinyin": "qióng",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 〔～笼〕车篷。"
+  },
+  {
+    "char": "𥳏",
+    "pinyin": "jī",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳐",
+    "pinyin": "qiǎn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 〔～～〕户板。 2. 喃字。同“𣛣”。"
+  },
+  {
+    "char": "𥳒",
+    "pinyin": "jiǎn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳓",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“筲”。"
+  },
+  {
+    "char": "𥳔",
+    "pinyin": "duò",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳕",
+    "pinyin": "shū",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳖",
+    "pinyin": "bù",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹器。"
+  },
+  {
+    "char": "𥳗",
+    "pinyin": "xū",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 捕鱼的竹笼，鱼可进而不可出。"
+  },
+  {
+    "char": "𥳘",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“箽”。"
+  },
+  {
+    "char": "𥳚",
+    "pinyin": "rán",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳜",
+    "pinyin": "yáng",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 见“𥰧”。"
+  },
+  {
+    "char": "𥳝",
+    "pinyin": "ruǐ",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 初生的竹笋。 2. 竹叶再生。 3. 同“蕊”。"
+  },
+  {
+    "char": "𥳞",
+    "pinyin": "lín",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 实心竹。"
+  },
+  {
+    "char": "𥳟",
+    "pinyin": "jiǎn",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳠",
+    "pinyin": "dì",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 〔～钟〕古乐器。"
+  },
+  {
+    "char": "𥳡",
+    "pinyin": "fén",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 〔帅～〕弦。"
+  },
+  {
+    "char": "𥳢",
+    "pinyin": "diàn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳣",
+    "pinyin": "zuì",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。 2. 竹制的帚。"
+  },
+  {
+    "char": "𥳥",
+    "pinyin": "níng",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 〔～～𥵝〕箱笼之类。"
+  },
+  {
+    "char": "𥳪",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 同“笇”。"
+  },
+  {
+    "char": "𥳫",
+    "pinyin": "tiǎn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“腆”。食物丰盛。"
+  },
+  {
+    "char": "𥳬",
+    "pinyin": "àn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 垢腐器。"
+  },
+  {
+    "char": "𥳯",
+    "pinyin": "cè",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 用竹篱围捕鱼。 2. 同“策”。"
+  },
+  {
+    "char": "𥳰",
+    "pinyin": "dìng",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹器。"
+  },
+  {
+    "char": "𥳱",
+    "pinyin": "shēn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹席或苇席。"
+  },
+  {
+    "char": "𥳲",
+    "pinyin": "dù",
+    "radical": "竹",
+    "strokes": 17,
+    "explanation": "1. 盛杯、盘等器皿的竹笼。"
+  },
+  {
+    "char": "𥳳",
+    "pinyin": "tí",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。 2. 疑同“𥶛”。 3. 〈古壮字〉读音dawh，筷子。"
+  },
+  {
+    "char": "𥳴",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“䉰”。"
+  },
+  {
+    "char": "𥳵",
+    "pinyin": "zuì",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 络丝。"
+  },
+  {
+    "char": "𥳶",
+    "pinyin": "zhǎng",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 竹名。"
+  },
+  {
+    "char": "𥳷",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“𥳒”。"
+  },
+  {
+    "char": "𥳸",
+    "pinyin": "dàn",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“𥳹”。 2. 笼、箱之类的器物。"
+  },
+  {
+    "char": "𥳹",
+    "pinyin": null,
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“𥱷”。"
+  },
+  {
+    "char": "𥳺",
+    "pinyin": "sǒng",
+    "radical": "竹",
+    "strokes": 18,
+    "explanation": "1. 同“檧”。盛筷子的竹笼。"
+  }
+]

@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
+import AutoComplete, { Suggestion } from '@/components/AutoComplete';
 
 // Search types
 type SearchType = 'char' | 'idiom' | 'word';
@@ -203,6 +204,13 @@ export default function DictionaryPage() {
     }
   }, [query, searchType, searchBy]);
 
+  // Handle auto-complete selection
+  const handleAutoCompleteSelect = (suggestion: Suggestion) => {
+    setQuery(suggestion.text);
+    // Trigger search automatically
+    setTimeout(() => handleSearch(), 100);
+  };
+
   // Enter key search
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -366,26 +374,31 @@ export default function DictionaryPage() {
 
           {/* Search input */}
           <div className="search-input-wrapper">
-            <input
-              type="text"
-              className="search-input"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={
-                searchBy === 'pinyin'
-                  ? t('dictionary.placeholderPinyin')
-                  : searchBy === 'strokes'
-                  ? t('dictionary.placeholderStrokes')
-                  : searchBy === 'radical'
-                  ? t('dictionary.placeholderRadical')
-                  : searchType === 'idiom'
-                  ? t('dictionary.placeholderIdiom')
-                  : searchType === 'word'
-                  ? t('dictionary.placeholderWord')
-                  : t('dictionary.placeholderChar')
-              }
-            />
+            <div className="autocomplete-container">
+              <AutoComplete
+                value={query}
+                onChange={setQuery}
+                onSelect={handleAutoCompleteSelect}
+                type={searchType}
+                placeholder={
+                  searchBy === 'pinyin'
+                    ? t('dictionary.placeholderPinyin')
+                    : searchBy === 'strokes'
+                    ? t('dictionary.placeholderStrokes')
+                    : searchBy === 'radical'
+                    ? t('dictionary.placeholderRadical')
+                    : searchType === 'idiom'
+                    ? t('dictionary.placeholderIdiom')
+                    : searchType === 'word'
+                    ? t('dictionary.placeholderWord')
+                    : t('dictionary.placeholderChar')
+                }
+                className="search-input"
+                debounceMs={300}
+                minChars={1}
+                maxSuggestions={10}
+              />
+            </div>
             <button
               className="search-btn"
               onClick={handleSearch}
@@ -748,6 +761,10 @@ export default function DictionaryPage() {
         .search-input-wrapper {
           display: flex;
           gap: 12px;
+        }
+
+        .autocomplete-container {
+          flex: 1;
         }
 
         .search-input {

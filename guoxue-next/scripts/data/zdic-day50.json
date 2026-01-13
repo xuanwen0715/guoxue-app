@@ -1,0 +1,2095 @@
+[
+  {
+    "char": "詇",
+    "pinyin": "yàng",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 早知。 2. 问。 3. 求告。"
+  },
+  {
+    "char": "詊",
+    "pinyin": "pàn",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 巧言。"
+  },
+  {
+    "char": "詌",
+    "pinyin": "gàn",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 口闭。"
+  },
+  {
+    "char": "詍",
+    "pinyin": "yì",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 多言。"
+  },
+  {
+    "char": "詓",
+    "pinyin": "qǔ",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 呼吸声：“卧之～～，起之吁吁。”"
+  },
+  {
+    "char": "詙",
+    "pinyin": "bá",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 古人名用字。"
+  },
+  {
+    "char": "詚",
+    "pinyin": "dá",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 〔兜～〕不静。"
+  },
+  {
+    "char": "詝",
+    "pinyin": "zhǔ",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 智慧；知识。"
+  },
+  {
+    "char": "𧦝",
+    "pinyin": "hū",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 呼唤。后作“呼”。《説文•言部》：“𧦝，召也。” 2. 鸣。《廣雅•釋詁二》：“𧦝，鳴也。” 3. 欺。《康熙字典•言部》引《博雅》：“𧦝，欺也。”按：《廣雅》无此音训，疑讹。"
+  },
+  {
+    "char": "𧦞",
+    "pinyin": "pù",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 同“誧”。谏。"
+  },
+  {
+    "char": "𧦟",
+    "pinyin": "fān",
+    "radical": "言",
+    "strokes": 11,
+    "explanation": "1. 言急。"
+  },
+  {
+    "char": "𧦤",
+    "pinyin": "jiā",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 诬。"
+  },
+  {
+    "char": "𧦧",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 同“訑”。"
+  },
+  {
+    "char": "𧦭",
+    "pinyin": "tā",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 同“詑”。〈方言〉〔～人〕互相欺骗；互相欺负。"
+  },
+  {
+    "char": "𧦮",
+    "pinyin": "ná",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 同“𧪕”。 2. 〔絲～〕語不解也。"
+  },
+  {
+    "char": "𧦸",
+    "pinyin": "yín",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 同“訚”。"
+  },
+  {
+    "char": "𧦹",
+    "pinyin": "yìn",
+    "radical": "言",
+    "strokes": 12,
+    "explanation": "1. 同“吟”。"
+  },
+  {
+    "char": "詯",
+    "pinyin": "huì",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 胆气盛，声在人上。 2. 休市。"
+  },
+  {
+    "char": "詴",
+    "pinyin": "wēi",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 呼喊声；呼叫人。"
+  },
+  {
+    "char": "詶",
+    "pinyin": "zhòu",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“咒（呪）”。诅咒。《玉篇•言部》：“詶《説文》：職又切，詛也。” 2. 同“酬”。《説文•言部》：“詶，譸也。”①用言语或诗文应答。《玉篇•言部》：“詶，答也。”《廣韻•尤韻》：“詶，以言答之。”②报偿。《後漢書•光武帝紀》：“其顯效未詶，名籍未立者。”③实现。宋陸游《歲暮雜感》：“初志略未詶，白髮已無那。” 3. 用同“籌”。计算。《隋書•律曆志上》：“取細毫中黍，積次詶定，令之最為詳密，長祖冲之尺校半分。”"
+  },
+  {
+    "char": "詷",
+    "pinyin": "tóng",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“同”，共同。"
+  },
+  {
+    "char": "詺",
+    "pinyin": "míng",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 辨別物名；命名。《新唐書•于志寧傳》：“昔陶弘景以《神農經》合雜家《别録》註詺之。” 2. 直言；真義。《龍龕手鑑•言部》：“詺，諦也。” 3. 用同“銘”。銘記；鏤刻。清龔自珍《漢器文録序》：“馣馤麗碩，又往往謬然，振其詺辭，可續周天府矣。”"
+  },
+  {
+    "char": "詽",
+    "pinyin": "yán",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 易怒而好与人争论。"
+  },
+  {
+    "char": "誁",
+    "pinyin": "bìng",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 说。 2. 助言；帮腔。"
+  },
+  {
+    "char": "誈",
+    "pinyin": "wū",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“诬”。"
+  },
+  {
+    "char": "𧧃",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“䛗”。"
+  },
+  {
+    "char": "𧧄",
+    "pinyin": "wàng",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“妄”。虚妄。"
+  },
+  {
+    "char": "𧧅",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“谏”。 2. 同“䛈”。"
+  },
+  {
+    "char": "𧧆",
+    "pinyin": "duī",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 谴责。"
+  },
+  {
+    "char": "𧧇",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“𧧨”。"
+  },
+  {
+    "char": "𧧉",
+    "pinyin": "tuó",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 毁谤。"
+  },
+  {
+    "char": "𧧊",
+    "pinyin": "wā",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 〔諣～〕惰。"
+  },
+  {
+    "char": "𧧋",
+    "pinyin": "lì",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 言美。"
+  },
+  {
+    "char": "𧧏",
+    "pinyin": "rè",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 如。 2. 同“喏”。"
+  },
+  {
+    "char": "𧧒",
+    "pinyin": "cì",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 列举其过失而进行规劝。"
+  },
+  {
+    "char": "𧧓",
+    "pinyin": "xù",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 静。"
+  },
+  {
+    "char": "𧧔",
+    "pinyin": "zhōu",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“䛁”。多言。"
+  },
+  {
+    "char": "𧧕",
+    "pinyin": "zì",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“字”。詺。"
+  },
+  {
+    "char": "𧧜",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“誷”。"
+  },
+  {
+    "char": "𧧟",
+    "pinyin": "jì",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 谋。疑同“䛋”。"
+  },
+  {
+    "char": "𧧠",
+    "pinyin": "chāo",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 同“诌”。弄人。"
+  },
+  {
+    "char": "𧧩",
+    "pinyin": "jí",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "誋",
+    "pinyin": "jì",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“忌”。"
+  },
+  {
+    "char": "誎",
+    "pinyin": "cù",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 促。 2. 从。 3. 饰。"
+  },
+  {
+    "char": "誏",
+    "pinyin": "lǎng",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“朗”。 2. 戏谑；戏言。 3. 闲言。"
+  },
+  {
+    "char": "誔",
+    "pinyin": "tǐng",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 欺谩。"
+  },
+  {
+    "char": "誗",
+    "pinyin": "chán",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 话讲得漂亮。"
+  },
+  {
+    "char": "誙",
+    "pinyin": "kēng",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 语言确实。 2. 〔～～〕一定要取得的样子，如“举群趋者，～～然如将不得已。” 3. 粗。"
+  },
+  {
+    "char": "誛",
+    "pinyin": "qīn",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 私语。 2. 以言语相侵犯。"
+  },
+  {
+    "char": "誜",
+    "pinyin": "shuà",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 妄言。 2. 俊言。"
+  },
+  {
+    "char": "誝",
+    "pinyin": "ān",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 语不决。"
+  },
+  {
+    "char": "誟",
+    "pinyin": "xiào",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“詨”，呼叫。"
+  },
+  {
+    "char": "誢",
+    "pinyin": "xiàn",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 诤语。"
+  },
+  {
+    "char": "誫",
+    "pinyin": "zhèn",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“震”：“罪乎不～不止。”"
+  },
+  {
+    "char": "誮",
+    "pinyin": "huā",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "huā   ㄏㄨㄚ ◎ 义未详。"
+  },
+  {
+    "char": "䛨",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“信”。"
+  },
+  {
+    "char": "𧧵",
+    "pinyin": "shǎn",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 诱言。"
+  },
+  {
+    "char": "𧧶",
+    "pinyin": "tú",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 〔䛬～〕语不了。"
+  },
+  {
+    "char": "𧧸",
+    "pinyin": "bié",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 辩论。 2. 〈方言〉“𰵬”。音〔bag4 北〕a.认识，懂，精于。b.曾经。"
+  },
+  {
+    "char": "𧧹",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“徯”。"
+  },
+  {
+    "char": "𧧺",
+    "pinyin": "pī",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“纰”。错误。"
+  },
+  {
+    "char": "𧧻",
+    "pinyin": "zhà",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 惭语。 2. 同“诈”。"
+  },
+  {
+    "char": "𧧾",
+    "pinyin": "huì",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“䛛”。 2. 言长。 3. 市～。"
+  },
+  {
+    "char": "𧨀",
+    "pinyin": "suō",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 佞。 2. 动。 3. 以言折人。"
+  },
+  {
+    "char": "𧨂",
+    "pinyin": "hè",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 〔～～〕众声。"
+  },
+  {
+    "char": "𧨄",
+    "pinyin": "yuè",
+    "radical": "言",
+    "strokes": 13,
+    "explanation": "1. 拒不回答。"
+  },
+  {
+    "char": "𧨆",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“诬”。"
+  },
+  {
+    "char": "𧨈",
+    "pinyin": "líng",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“灵”。 2. 同“诬”。"
+  },
+  {
+    "char": "𧨋",
+    "pinyin": "huá",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 顽。"
+  },
+  {
+    "char": "𧨗",
+    "pinyin": "chán",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 疑同“誗”。"
+  },
+  {
+    "char": "𧨟",
+    "pinyin": "è",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧨡",
+    "pinyin": "chén",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "誳",
+    "pinyin": "qū",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“诎”：“～寸而伸尺。” 2. 同“倔”。"
+  },
+  {
+    "char": "誵",
+    "pinyin": "xiáo",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 言不恭谨。"
+  },
+  {
+    "char": "誷",
+    "pinyin": "wǎng",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 欺骗：“饰虚功执空文以～主上。”"
+  },
+  {
+    "char": "誸",
+    "pinyin": "xián",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 急迫：“谋稽乎～。” 2. 坚正。"
+  },
+  {
+    "char": "誺",
+    "pinyin": "chī",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 不知。 2. 误。"
+  },
+  {
+    "char": "諀",
+    "pinyin": "pǐ",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 诽谤。 2. 〔～訾〕好说人是非。"
+  },
+  {
+    "char": "諈",
+    "pinyin": "zhuì",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 〔～诿（wěi）〕①累；烦重。②嘱托。"
+  },
+  {
+    "char": "諎",
+    "pinyin": "zé",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 大声。 2. 酬言。 3. 诱言。 4. 说话快。"
+  },
+  {
+    "char": "諘",
+    "pinyin": "biǎo",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 称赞。"
+  },
+  {
+    "char": "諙",
+    "pinyin": "huà",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“话”。"
+  },
+  {
+    "char": "諩",
+    "pinyin": "pǔ",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“谱”。"
+  },
+  {
+    "char": "𧨧",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“䜐”。"
+  },
+  {
+    "char": "𧨩",
+    "pinyin": "tiǎn",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 〔～䜝〕言不定。"
+  },
+  {
+    "char": "𧨰",
+    "pinyin": "zhì",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 语不正。"
+  },
+  {
+    "char": "𧨱",
+    "pinyin": "tì",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 狡猾。"
+  },
+  {
+    "char": "𧨲",
+    "pinyin": "āo",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 鸦鸣。"
+  },
+  {
+    "char": "𧨳",
+    "pinyin": "zhuó",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 人名用字。《晋书·载记》韩～等固劝攻滑台。《正字通》《字汇》训姓也，晋有～韩。按《姓谱》无～姓，是韩～误作～韩也。按《姓苑·奇姓》，隋有韩绰，无韩～，则又误晋为隋矣。"
+  },
+  {
+    "char": "𧨴",
+    "pinyin": "zì",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 言入。 2. 〈日本释义〉読音niwakani,にわかに,卒に。奄，顿时，遽然，骤然，勃然，睋，顿，猝然，猝，忽然，俄，勃。"
+  },
+  {
+    "char": "𧨵",
+    "pinyin": "kē",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 〔～～〕笑语。"
+  },
+  {
+    "char": "𧨷",
+    "pinyin": "sè",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“譅”。多言。"
+  },
+  {
+    "char": "𧨸",
+    "pinyin": "tiǎn",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 〔～詪〕很貌。"
+  },
+  {
+    "char": "𧨹",
+    "pinyin": "lù",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 开玩笑。"
+  },
+  {
+    "char": "𧨿",
+    "pinyin": "zhǎ",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 姓。"
+  },
+  {
+    "char": "𧩃",
+    "pinyin": "chōng",
+    "radical": "言",
+    "strokes": 14,
+    "explanation": "1. 同“𧬖”。贪。"
+  },
+  {
+    "char": "𧩅",
+    "pinyin": "yàn",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 语鬼。"
+  },
+  {
+    "char": "𧩒",
+    "pinyin": "mǔ",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“髯”。 2. 义未详。"
+  },
+  {
+    "char": "𧩓",
+    "pinyin": "năo",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“𧩣”。"
+  },
+  {
+    "char": "𧩚",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“䜉”。"
+  },
+  {
+    "char": "𧩝",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 同“𧪜”。"
+  },
+  {
+    "char": "諣",
+    "pinyin": "huà",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 疾言。 2. 懒；懈怠。 3. 狡猾。"
+  },
+  {
+    "char": "諥",
+    "pinyin": "zhòng",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 言相触。 2. 说话慎重。"
+  },
+  {
+    "char": "諨",
+    "pinyin": "fú",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 言备。"
+  },
+  {
+    "char": "諪",
+    "pinyin": "tíng",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 调停。"
+  },
+  {
+    "char": "諯",
+    "pinyin": "zhuān",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 数。 2. 相让。"
+  },
+  {
+    "char": "諲",
+    "pinyin": "yīn",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 敬。"
+  },
+  {
+    "char": "諹",
+    "pinyin": "yáng",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 赞扬。 2. 喧哗。 3. 谨慎。"
+  },
+  {
+    "char": "諻",
+    "pinyin": "huáng",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 快乐。 2. 语声。"
+  },
+  {
+    "char": "諽",
+    "pinyin": "gé",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 整饬。 2. 同“革”，改变。 3. 谨严，谨慎。"
+  },
+  {
+    "char": "諿",
+    "pinyin": "xǔ",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 智谋：“女不女，其心予，覆夫～。”"
+  },
+  {
+    "char": "謃",
+    "pinyin": "xīng",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "xīng   ㄒㄧㄥ ◎ 义未详。"
+  },
+  {
+    "char": "𧩣",
+    "pinyin": "năo",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 语相侮。《集韻•晧韻》：“𧩣，語相侮也。”;"
+  },
+  {
+    "char": "𧩦",
+    "pinyin": "jí",
+    "radical": "言",
+    "strokes": 15,
+    "explanation": "1. 〈方言〉同“吃⑨”。 2. 说话迟钝吃力。 3. 〈方言〉口吃；结巴。北京官话、冀鲁官话、江淮官话。"
+  },
+  {
+    "char": "𧩧",
+    "pinyin": "duó",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 欺。 2. 〈方言〉逗；哄骗。赣语。～哈巴狗哩样|莫～他，他有点神经。"
+  },
+  {
+    "char": "𧩨",
+    "pinyin": "hòu",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“护”。 2. 言貌。"
+  },
+  {
+    "char": "𧩪",
+    "pinyin": "còng",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 〔𧩪詷〕言急。"
+  },
+  {
+    "char": "𧩫",
+    "pinyin": "zhōu",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 〔～詉〕羞穷。"
+  },
+  {
+    "char": "𧩬",
+    "pinyin": "yín",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“嚚”。顽。"
+  },
+  {
+    "char": "𧩮",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“謏”。"
+  },
+  {
+    "char": "𧩰",
+    "pinyin": "biàn",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 佛经译音用字。"
+  },
+  {
+    "char": "𧩱",
+    "pinyin": "bèng",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 助。"
+  },
+  {
+    "char": "𧩲",
+    "pinyin": "là",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 〔䜎～〕语声杂乱。"
+  },
+  {
+    "char": "𧩴",
+    "pinyin": "chī",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“誺”。不知。 2. 言缓貌。"
+  },
+  {
+    "char": "𧩶",
+    "pinyin": "qià",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 〔～诟〕同“喫诟”，善于花言巧语。"
+  },
+  {
+    "char": "𧩸",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“谙”。"
+  },
+  {
+    "char": "𧩹",
+    "pinyin": "shī",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 多言。 2. 自得之语。"
+  },
+  {
+    "char": "𧩼",
+    "pinyin": "chì",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 笑。 2. 言。"
+  },
+  {
+    "char": "𧪅",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“詉”。"
+  },
+  {
+    "char": "𧪇",
+    "pinyin": "jì",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“剂”。刀。"
+  },
+  {
+    "char": "𧪓",
+    "pinyin": "ǒu",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“偶”。"
+  },
+  {
+    "char": "𧪕",
+    "pinyin": "xiā",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“詉”。"
+  },
+  {
+    "char": "謈",
+    "pinyin": "bó",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 因痛而叫喊：“舍人不胜痛，呼～。” 2. 声。"
+  },
+  {
+    "char": "謉",
+    "pinyin": "kuì",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“媿(愧)”。慚愧。《集韻•至韻》：“媿，《説文》：‘慙也。’或从言。” 2. 〔謉諢〕诙谐话。《廣韻•賄韻》：“謉，謉諢，謔言。” 3. 谦逊。《集韻•灰韻》：“囁，謉也。” 4. 同“詭”。《集韻•紙韻》：“詭，《説文》：‘責也。’一曰詐也。或从鬼。”"
+  },
+  {
+    "char": "謋",
+    "pinyin": "huò",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 骨肉迅速分裂的声音：“动刀甚微，～然已解。”"
+  },
+  {
+    "char": "謍",
+    "pinyin": "yíng",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 〔～～〕（苍蝇等）鸣叫的声音，如“～～青蝇。”"
+  },
+  {
+    "char": "謒",
+    "pinyin": "qiāng",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 语轻。"
+  },
+  {
+    "char": "謓",
+    "pinyin": "chēn",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 同“嗔”，怒。"
+  },
+  {
+    "char": "謜",
+    "pinyin": "yuán",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 〔～～〕徐徐，缓慢，如“故～～而来。”"
+  },
+  {
+    "char": "謢",
+    "pinyin": "lū",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 口头承担。"
+  },
+  {
+    "char": "𧪘",
+    "pinyin": "chài",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 异言 2. 言失。 3. 同“嗟”。"
+  },
+  {
+    "char": "𧪚",
+    "pinyin": "ái",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 谨。《玉篇•言部》：“𧪚，謹也。”"
+  },
+  {
+    "char": "𧪝",
+    "pinyin": "shèng",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 促言。"
+  },
+  {
+    "char": "𧪞",
+    "pinyin": "hé",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 静。 2. 同“嗑”。 3. 〈方言〉〔～穷〕哭穷；装穷。江淮官话。你不要～，没人跟你借钱。"
+  },
+  {
+    "char": "𧪠",
+    "pinyin": "jí",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 苦。 2. 同“嫉”。 3. 言语急。"
+  },
+  {
+    "char": "𧪡",
+    "pinyin": "chì",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 怒。 2. 〈方言〉怒而大声斥责。古方言。"
+  },
+  {
+    "char": "𧪢",
+    "pinyin": "xì",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 语气。"
+  },
+  {
+    "char": "𧪣",
+    "pinyin": "zhēng",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 〔～仍〕语烦。"
+  },
+  {
+    "char": "𧪦",
+    "pinyin": "tā",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 〔～𧪞〕多言。 2. 〈方言〉〔～𬤒〕胡诌；互相攻击。吴语。 3. 〈方言〉〔～～𬤒𬤒〕啰嗦；说话繁琐，不干脆。吴语。"
+  },
+  {
+    "char": "𧪨",
+    "pinyin": "mà",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 多言。"
+  },
+  {
+    "char": "𧪫",
+    "pinyin": "pī",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 呵斥声。"
+  },
+  {
+    "char": "𧪮",
+    "pinyin": "yú",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 同“謣”。 2. 同“譁”。"
+  },
+  {
+    "char": "𧪯",
+    "pinyin": "qiǎn",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 小息。"
+  },
+  {
+    "char": "𧪹",
+    "pinyin": "xià",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 欺騙；迷惑。"
+  },
+  {
+    "char": "𧫊",
+    "pinyin": "yù",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 同“𠸹”。"
+  },
+  {
+    "char": "𧫑",
+    "pinyin": "jié",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "謣",
+    "pinyin": "yú",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 浮夸：“～言败俗。”"
+  },
+  {
+    "char": "謤",
+    "pinyin": "biāo",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 言有所止。"
+  },
+  {
+    "char": "謥",
+    "pinyin": "còng",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“𧩪”。言急。"
+  },
+  {
+    "char": "謧",
+    "pinyin": "lí",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 〔～詍（yì）〕多言。 2. 欺慢戏弄之言。"
+  },
+  {
+    "char": "謩",
+    "pinyin": "mó",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 同“谟”。"
+  },
+  {
+    "char": "謮",
+    "pinyin": "zé",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“嘖”。大呼。《説文•口部》：“嘖，大呼也。或从言。” 2. 同“責”。責讓。《廣雅•釋詁二》：“謮，讓也。” 3. 怒。《廣雅•釋詁二》：“謮，怒也。”"
+  },
+  {
+    "char": "謯",
+    "pinyin": "jiē",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 咏。"
+  },
+  {
+    "char": "謰",
+    "pinyin": "lián",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 〔～謱（lóu）〕（言语）混乱不清，如“媒女詘兮～～”。"
+  },
+  {
+    "char": "謱",
+    "pinyin": "lóu",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 〔謰～〕见“謰”。 2. 谨。"
+  },
+  {
+    "char": "謲",
+    "pinyin": "càn",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 相怒。"
+  },
+  {
+    "char": "謵",
+    "pinyin": "xí",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 用言语威吓：“夫复～不餽而忘人。”"
+  },
+  {
+    "char": "謶",
+    "pinyin": "zhuó",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 谪。《廣雅•釋言》：“謶，謫也。” 2. 欺。《集韻•藥韻》：“謶，欺也。” 3. 同“庶”。希冀。《集韻•御韻》：“謶，冀也。通作庶。” 4. 〔囉嗻〕也作“囉嗻”。多言。《集韻•麻韻》：“嗻，囉嗻，多言。或从言。”"
+  },
+  {
+    "char": "謺",
+    "pinyin": "zhé",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 〔～讘（niè）〕多言。 2. 拾人语。"
+  },
+  {
+    "char": "謻",
+    "pinyin": "yí",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 〔～门〕①古代冰室门名，如“～～曲榭。”②古代宫殿的侧门，如“未央朝寂，～～旦空。”"
+  },
+  {
+    "char": "𧫒",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“諕”。"
+  },
+  {
+    "char": "𧫓",
+    "pinyin": "lǔ",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“讯”。 2. 〔～～〕同“鲁莽”，冒失，轻率。"
+  },
+  {
+    "char": "𧫕",
+    "pinyin": "qiè",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 正言。"
+  },
+  {
+    "char": "𧫗",
+    "pinyin": "chà",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 异言。"
+  },
+  {
+    "char": "𧫛",
+    "pinyin": "yàng",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 声变。"
+  },
+  {
+    "char": "𧫜",
+    "pinyin": "jì",
+    "radical": "言",
+    "strokes": 16,
+    "explanation": "1. 言无次。"
+  },
+  {
+    "char": "𧫝",
+    "pinyin": "shǎ",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 强语。"
+  },
+  {
+    "char": "𧫞",
+    "pinyin": "lòu",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 〔～诟〕忽然发怒。"
+  },
+  {
+    "char": "𧫠",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“諆”。"
+  },
+  {
+    "char": "𧫡",
+    "pinyin": "zhì",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. [譗～]見“譗”。"
+  },
+  {
+    "char": "𧫢",
+    "pinyin": "wàng",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 责。 2. 欺。"
+  },
+  {
+    "char": "𧫤",
+    "pinyin": "bì",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 同“跸”。 2. 敬。"
+  },
+  {
+    "char": "𧫥",
+    "pinyin": "ān",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 〔～阿〕语不快。"
+  },
+  {
+    "char": "𧫦",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“繄”。"
+  },
+  {
+    "char": "𧫧",
+    "pinyin": "ān",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“谙”。熟悉。 2. 背诵。"
+  },
+  {
+    "char": "𧫬",
+    "pinyin": "lí",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 疑同“詈”。骂。"
+  },
+  {
+    "char": "𧫹",
+    "pinyin": "xiān",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 同“仙”。"
+  },
+  {
+    "char": "譀",
+    "pinyin": "hàn",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 诞。 2. 怒吼：“（神人）袒而虓～。”"
+  },
+  {
+    "char": "譂",
+    "pinyin": "chǎn",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 妄言。"
+  },
+  {
+    "char": "譃",
+    "pinyin": "xū",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 浮夸，说大话。"
+  },
+  {
+    "char": "譄",
+    "pinyin": "zēng",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 夸大其辞。 2. 同“增”。"
+  },
+  {
+    "char": "譇",
+    "pinyin": "zhā",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 言不可解。 2. 〔～詉（nù）〕羞穷。 3. 怒。"
+  },
+  {
+    "char": "譋",
+    "pinyin": "lán",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 同“谰”。"
+  },
+  {
+    "char": "譑",
+    "pinyin": "jiǎo",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 多言。 2. 取：“而或以无礼节用之，则必有贪利纠～之名。”"
+  },
+  {
+    "char": "譒",
+    "pinyin": "bò",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 传布：“王～告之。” 2. 谣。"
+  },
+  {
+    "char": "譓",
+    "pinyin": "huì",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 顺从：“义征不～。” 2. 多智谋。 3. 辩察。"
+  },
+  {
+    "char": "譕",
+    "pinyin": "wú",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 诱词。"
+  },
+  {
+    "char": "譗",
+    "pinyin": "zhá",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 〔～𧫡〕说话无条理。"
+  },
+  {
+    "char": "𧫾",
+    "pinyin": "jiù",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 谄媚，奉承。"
+  },
+  {
+    "char": "𧫿",
+    "pinyin": "tǎn",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 〔～䜗〕言不定。"
+  },
+  {
+    "char": "𧬁",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 同“䜂”。"
+  },
+  {
+    "char": "𧬂",
+    "pinyin": "hè",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 应答语。"
+  },
+  {
+    "char": "𧬅",
+    "pinyin": "zhā",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. [～詉]語不可解。"
+  },
+  {
+    "char": "𧬆",
+    "pinyin": "zhǎn",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 格人言。"
+  },
+  {
+    "char": "𧬇",
+    "pinyin": "yì",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 〈方言〉〔～𧫚〕细察，详审。 2. 〈方言〉〔～𬤈〕审查订正。古方言、江淮官话。"
+  },
+  {
+    "char": "𧬈",
+    "pinyin": "xì",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 急言。"
+  },
+  {
+    "char": "𧬊",
+    "pinyin": "xì",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 悲声。《廣韻•齊韻》：“𧬊，悲聲。” 2. 声振。《玉篇•言部》：“𧬊，聲振也。” 3. 呻。《玉篇•言部》：“𧬊，呻也。” 4. 善。卷子本《玉篇•言部》：“𧬊，《字書》一曰善。” 5. 谅。《玉篇•言部》：“𧬊，諒也。” 6. 同“嘶”。声音沙哑。《正字通•言部》：“𧬊，與嘶通。”"
+  },
+  {
+    "char": "𧬋",
+    "pinyin": "fà",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 出言。"
+  },
+  {
+    "char": "𧬌",
+    "pinyin": "yán",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 和。 2. 戏言。 3. 〈方言〉和好。闽语。女二人过～（你两人真要好）。"
+  },
+  {
+    "char": "𧬏",
+    "pinyin": "mǎng",
+    "radical": "言",
+    "strokes": 17,
+    "explanation": "1. 见“𧫓”。"
+  },
+  {
+    "char": "𧬕",
+    "pinyin": "gū",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 同“辜”。罪。"
+  },
+  {
+    "char": "𧬞",
+    "pinyin": "yún",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 同“𧥼”。"
+  },
+  {
+    "char": "𧬤",
+    "pinyin": "zhòng",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 人名用字。 2. 同“諥”。"
+  },
+  {
+    "char": "𧬦",
+    "pinyin": "chǎn",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 同“谄”。"
+  },
+  {
+    "char": "譝",
+    "pinyin": "shéng",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 赞誉。"
+  },
+  {
+    "char": "譞",
+    "pinyin": "xuān",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 聪明。 2. 多言。"
+  },
+  {
+    "char": "譠",
+    "pinyin": "tán",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 欺。"
+  },
+  {
+    "char": "譡",
+    "pinyin": "dǎng",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 同“谠”。"
+  },
+  {
+    "char": "譣",
+    "pinyin": "xiǎn",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 問。《説文•言部》：“譣，問也。《周書》曰：‘勿以譣人。’” 2. 議。《集韻•鹽韻》：“譣，議也。” 3. 偏頗的話。《玉篇•言部》：“譣，詖也。”"
+  },
+  {
+    "char": "譧",
+    "pinyin": "zhàn",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 同“詀”，被诳。"
+  },
+  {
+    "char": "譮",
+    "pinyin": "huà",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 同“话”。"
+  },
+  {
+    "char": "譱",
+    "pinyin": "shàn",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 同“善”。《正字通•言部》：“譱，善本字。”《漢書•禮樂志》：“故孔子曰：‘安上治民，莫譱於禮；移風易俗，莫譱於樂。’”"
+  },
+  {
+    "char": "𧬧",
+    "pinyin": "chuáng",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 同“𧬖”。质。"
+  },
+  {
+    "char": "𧬩",
+    "pinyin": "zá",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 〔～～〕象声词。"
+  },
+  {
+    "char": "𧬪",
+    "pinyin": "gùn",
+    "radical": "言",
+    "strokes": 19,
+    "explanation": "1. 摩人。 2. 〈方言〉同“謴”。戏弄人。 3. 用脏话骂人。吴语。 4. 诈骗。粤语。 5. 与别人开过分的玩笑。粤语。"
+  },
+  {
+    "char": "𧬫",
+    "pinyin": "jiǎn",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 语烦。"
+  },
+  {
+    "char": "𧬬",
+    "pinyin": "yá",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 见“䛽”。"
+  },
+  {
+    "char": "𧬰",
+    "pinyin": "xiàng",
+    "radical": "言",
+    "strokes": 18,
+    "explanation": "1. 非美言。 2. 答。 3. 同“响”。声响。"
+  },
+  {
+    "char": "𧬱",
+    "pinyin": "hè",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 〔譀～〕愤怒的样子。"
+  },
+  {
+    "char": "譵",
+    "pinyin": "duì",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 同“懟”，怨。"
+  },
+  {
+    "char": "譶",
+    "pinyin": "tà",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 说话快。"
+  },
+  {
+    "char": "譺",
+    "pinyin": "ài",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 说话不流畅。 2. 欺骗；嘲弄。"
+  },
+  {
+    "char": "譻",
+    "pinyin": "yīng",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 同“嘤”：“鸣玉鸾之～～。”"
+  },
+  {
+    "char": "𧭃",
+    "pinyin": "dān",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 同“担”。担负。"
+  },
+  {
+    "char": "𧭇",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 同“𧭮”。"
+  },
+  {
+    "char": "𧭈",
+    "pinyin": "níng",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 小言。 2. 谄谀。"
+  },
+  {
+    "char": "𧭊",
+    "pinyin": "méng",
+    "radical": "言",
+    "strokes": 20,
+    "explanation": "1. 言不明。也作“𡁏”。"
+  },
+  {
+    "char": "𧭌",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 同“𡁓”。"
+  },
+  {
+    "char": "𧭍",
+    "pinyin": "zhòu",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 众言会集。"
+  },
+  {
+    "char": "𧭎",
+    "pinyin": "pū",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 以言蔽。"
+  },
+  {
+    "char": "𧭏",
+    "pinyin": "tāi",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 諟。"
+  },
+  {
+    "char": "𧭓",
+    "pinyin": "yíng",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. （感情）炽热。"
+  },
+  {
+    "char": "𧭔",
+    "pinyin": "tēng",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 同“謄”。 2. 多言。"
+  },
+  {
+    "char": "𧭕",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 同“𧭣”。"
+  },
+  {
+    "char": "𧭚",
+    "pinyin": "qiáng",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "譿",
+    "pinyin": "huì",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 同“慧”。"
+  },
+  {
+    "char": "讄",
+    "pinyin": "lěi",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 同“誄”，哀悼死者的文章。 2. 古人行善积德，以求神佛保佑、降福。"
+  },
+  {
+    "char": "𧭝",
+    "pinyin": "sà",
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 散言。"
+  },
+  {
+    "char": "𧭞",
+    "pinyin": "liè",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 〔～～〕多言。"
+  },
+  {
+    "char": "𧭟",
+    "pinyin": "chí",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 言逸。"
+  },
+  {
+    "char": "𧭠",
+    "pinyin": "xiě",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 言以写志。"
+  },
+  {
+    "char": "𧭣",
+    "pinyin": "guō",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 〔～～〕多言。"
+  },
+  {
+    "char": "𧭤",
+    "pinyin": "bào",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. [𧭤譟]惡。 2. 同“謈”。"
+  },
+  {
+    "char": "𧭥",
+    "pinyin": "lè",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 〔～詤〕狂言。"
+  },
+  {
+    "char": "𧭦",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 同“讂”。"
+  },
+  {
+    "char": "𧭪",
+    "pinyin": "è",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 声。"
+  },
+  {
+    "char": "𧭳",
+    "pinyin": "hé",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 咏唱。"
+  },
+  {
+    "char": "𧭵",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 21,
+    "explanation": "1. 〈日本释义〉同“魅”。字出《類聚名義抄(観智院本)》。"
+  },
+  {
+    "char": "讈",
+    "pinyin": "lì",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 〔䜍～〕①巧言；②言不明。"
+  },
+  {
+    "char": "讉",
+    "pinyin": "yí",
+    "radical": "言",
+    "strokes": 22,
+    "explanation": "1. 译恶言。 2. 欺诈。"
+  },
+  {
+    "char": "讏",
+    "pinyin": "wèi",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 同“讆”。"
+  },
+  {
+    "char": "𧭸",
+    "pinyin": "xiè",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 诫。"
+  },
+  {
+    "char": "𧭹",
+    "pinyin": "pín",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 匹。 2. 多言。"
+  },
+  {
+    "char": "𧭻",
+    "pinyin": "hān",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 爱。"
+  },
+  {
+    "char": "𧭼",
+    "pinyin": "chèn",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 詶言。"
+  },
+  {
+    "char": "𧭽",
+    "pinyin": "shàn",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 正。"
+  },
+  {
+    "char": "𧭾",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 同“䜋”。"
+  },
+  {
+    "char": "讑",
+    "pinyin": "yào",
+    "radical": "言",
+    "strokes": 24,
+    "explanation": "1. 谬误。 2. 喧哗。 3. 觉悟。"
+  },
+  {
+    "char": "讔",
+    "pinyin": "yǐn",
+    "radical": "言",
+    "strokes": 23,
+    "explanation": "1. 隐语。 2. 应答之言。"
+  },
+  {
+    "char": "𣌚",
+    "pinyin": "chūn",
+    "radical": "日",
+    "strokes": 24,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧮆",
+    "pinyin": "yīng",
+    "radical": "言",
+    "strokes": 24,
+    "explanation": "1. 怒。 2. 〈方言〉〔～子〕欺骗；瞒哄。吴语。"
+  },
+  {
+    "char": "𧮈",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 24,
+    "explanation": "1. 同“謇”。"
+  },
+  {
+    "char": "𧮍",
+    "pinyin": "ān",
+    "radical": "言",
+    "strokes": 24,
+    "explanation": "1. 同“谙”。"
+  },
+  {
+    "char": "讗",
+    "pinyin": "xié",
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 言壮；自夸。 2. 数相怒。 3. 疾言。"
+  },
+  {
+    "char": "讘",
+    "pinyin": "niè",
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 〔～䛟〕多言，妄语。"
+  },
+  {
+    "char": "𧮑",
+    "pinyin": "tà",
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 多言。"
+  },
+  {
+    "char": "𧮒",
+    "pinyin": "yī",
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 同“噫”。叹词。"
+  },
+  {
+    "char": "𧮓",
+    "pinyin": "tuí",
+    "radical": "言",
+    "strokes": 24,
+    "explanation": "1. 喧闹。 2. 〈吴语〉〔～～响〕胆大气粗。声音很响。"
+  },
+  {
+    "char": "𧮗",
+    "pinyin": "liú",
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "讛",
+    "pinyin": "yì",
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 同“呓”。"
+  },
+  {
+    "char": "𧮙",
+    "pinyin": "zuó",
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 责骂。"
+  },
+  {
+    "char": "𧮛",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 25,
+    "explanation": "1. 同“謧”。"
+  },
+  {
+    "char": "𧮝",
+    "pinyin": null,
+    "radical": "言",
+    "strokes": 26,
+    "explanation": "1. 同“𧭹”。"
+  },
+  {
+    "char": "讝",
+    "pinyin": "zhān",
+    "radical": "言",
+    "strokes": 26,
+    "explanation": "1. 说梦话；病人呓语：“如入梦寐中～语。”"
+  },
+  {
+    "char": "𧮞",
+    "pinyin": "xuè",
+    "radical": "言",
+    "strokes": 27,
+    "explanation": "1. 妄言。"
+  },
+  {
+    "char": "𧮠",
+    "pinyin": "nèn",
+    "radical": "言",
+    "strokes": 27,
+    "explanation": "1. 同“讱”。"
+  },
+  {
+    "char": "𧮡",
+    "pinyin": "dòu",
+    "radical": "言",
+    "strokes": 28,
+    "explanation": "1. 同“读”。"
+  },
+  {
+    "char": "𧮤",
+    "pinyin": "lǎn",
+    "radical": "言",
+    "strokes": 28,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "谉",
+    "pinyin": "shěn",
+    "radical": "讠",
+    "strokes": 10,
+    "explanation": "1. 同“审”，熟悉；详知。"
+  },
+  {
+    "char": "𧮫",
+    "pinyin": "jué",
+    "radical": "谷",
+    "strokes": 7,
+    "explanation": "1. 口内上腭曲处。 2. 同“噱”。大笑。"
+  },
+  {
+    "char": "谸",
+    "pinyin": "qiān",
+    "radical": "谷",
+    "strokes": 10,
+    "explanation": "1. 同“芊”。"
+  },
+  {
+    "char": "𧮬",
+    "pinyin": "jué",
+    "radical": "谷",
+    "strokes": 10,
+    "explanation": "1. 疲劳。"
+  },
+  {
+    "char": "𧮭",
+    "pinyin": null,
+    "radical": "谷",
+    "strokes": 10,
+    "explanation": "1. 同“𧮬”。"
+  },
+  {
+    "char": "𧮮",
+    "pinyin": "qián",
+    "radical": "谷",
+    "strokes": 10,
+    "explanation": "1. 山名。"
+  },
+  {
+    "char": "谹",
+    "pinyin": "hóng",
+    "radical": "谷",
+    "strokes": 11,
+    "explanation": "1. 山谷中的回声。 2. 宏大：“必将崇论～议，创业垂统，为万世规。”"
+  },
+  {
+    "char": "谻",
+    "pinyin": "jí",
+    "radical": "谷",
+    "strokes": 11,
+    "explanation": "1. 足相踦貌。"
+  },
+  {
+    "char": "𧮰",
+    "pinyin": null,
+    "radical": "谷",
+    "strokes": 11,
+    "explanation": "1. 同“谽”。"
+  },
+  {
+    "char": "𧮱",
+    "pinyin": "fén",
+    "radical": "谷",
+    "strokes": 11,
+    "explanation": "1. 〔～谷〕地名，在今山西省新绛县。"
+  },
+  {
+    "char": "𧮳",
+    "pinyin": null,
+    "radical": "谷",
+    "strokes": 12,
+    "explanation": "1. 同“谽”。"
+  }
+]

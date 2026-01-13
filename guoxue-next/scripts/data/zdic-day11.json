@@ -1,0 +1,702 @@
+[
+  {
+    "char": "𠮊",
+    "pinyin": "dé",
+    "radical": "又",
+    "strokes": 16,
+    "explanation": "1. 取。"
+  },
+  {
+    "char": "𠮌",
+    "pinyin": "zhuō",
+    "radical": "又",
+    "strokes": 16,
+    "explanation": "1. 小鸡出壳声。"
+  },
+  {
+    "char": "壡",
+    "pinyin": "ruǐ",
+    "radical": "土",
+    "strokes": 19,
+    "explanation": "1. 同“叡（睿）”。"
+  },
+  {
+    "char": "𠮑",
+    "pinyin": null,
+    "radical": "又",
+    "strokes": 19,
+    "explanation": "1. 同“鞠”。"
+  },
+  {
+    "char": "𠮙",
+    "pinyin": "yǐ",
+    "radical": "口",
+    "strokes": 4,
+    "explanation": "1. 鸟叫声。 2. 类似“乙”。例如，有些古代数学书籍中用“呷～𠰳”标注三角形的三个顶点。 3. 金文隶定字，义未详。 4. 〈方块布依字〉读音id，拟声词。 5. 〈越南释义〉读音ét，撞击声。"
+  },
+  {
+    "char": "𠮜",
+    "pinyin": "yà",
+    "radical": "口",
+    "strokes": 4,
+    "explanation": "1. 鸟叫声。 2. 同“𠮙”。"
+  },
+  {
+    "char": "㕥",
+    "pinyin": "yǐ",
+    "radical": "口",
+    "strokes": 5,
+    "explanation": "1. 同“以”。 2. 同“呻”。"
+  },
+  {
+    "char": "𠙼",
+    "pinyin": null,
+    "radical": "凵",
+    "strokes": 5,
+    "explanation": "1. 同“冎”。"
+  },
+  {
+    "char": "𠮟",
+    "pinyin": "chì",
+    "radical": "口",
+    "strokes": 5,
+    "explanation": "1. 同“叱”。"
+  },
+  {
+    "char": "𠮠",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 5,
+    "explanation": "1. 同“剐”。 2. 同“㗗”。"
+  },
+  {
+    "char": "𠮡",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 5,
+    "explanation": "1. 同“只”。语气词。"
+  },
+  {
+    "char": "叿",
+    "pinyin": "hōng",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 呵。 2. 同“哄”，言语嘈杂。 3. 同“䪦”。大声。"
+  },
+  {
+    "char": "吀",
+    "pinyin": "miē",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. “哶”的讹字。"
+  },
+  {
+    "char": "吂",
+    "pinyin": "máng",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 表示不肯之声。老年迟钝。"
+  },
+  {
+    "char": "吅",
+    "pinyin": "xuān",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“喧”，大声呼叫。 2. 同“讼”，诉讼。"
+  },
+  {
+    "char": "㕨",
+    "pinyin": "fàn",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 佛经音译字。"
+  },
+  {
+    "char": "𠮫",
+    "pinyin": "yōu",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 小声。 2. “叴”的讹字。见《正字通》。"
+  },
+  {
+    "char": "𠮭",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“嚗”。 2. 〈方块布依字〉读音ndodt，吸；饮；喝；嘬。 3. 〈古壮字〉读音cik，（斟）酌。"
+  },
+  {
+    "char": "𠮯",
+    "pinyin": "jǐ",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 说。 2. 平。 3. 同“己”。自己。楚国文字隶定字。"
+  },
+  {
+    "char": "𠮰",
+    "pinyin": "pǐn",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“品”。 2. “𥅈”也。"
+  },
+  {
+    "char": "𠮳",
+    "pinyin": "yīng",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 〔～𠮴(yāng)应答声。"
+  },
+  {
+    "char": "𠮴",
+    "pinyin": "yāng",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“咉”。应答声。 2. 〈日本释义〉读音fuguri〈名〉阴囊。见《法華三大部難字記》。"
+  },
+  {
+    "char": "𠮵",
+    "pinyin": "màng",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 问而不答。 2. 曾作“嚷”的简化字，后停用。"
+  },
+  {
+    "char": "𠮽",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“弄”。"
+  },
+  {
+    "char": "𠮾",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“嗯”。 2. 喃字。读音ngọt，甜，甘甜，鲜美。"
+  },
+  {
+    "char": "𠮿",
+    "pinyin": "sa",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 〈方〉句未语气助词。西南官话。 2. 古壮字。同“𰇼”。"
+  },
+  {
+    "char": "𠯀",
+    "pinyin": "chuān",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𠯂",
+    "pinyin": "cí",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𠯃",
+    "pinyin": "wǔ",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 义未详。“𠅠”的下部。"
+  },
+  {
+    "char": "𠯄",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“肕”。 2. 同“讱”。"
+  },
+  {
+    "char": "𠯈",
+    "pinyin": "dài",
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 尝。 2. 古壮字。同“𥅂”。"
+  },
+  {
+    "char": "𠯉",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 6,
+    "explanation": "1. 同“亟”。"
+  },
+  {
+    "char": "吙",
+    "pinyin": "huō",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 吐气；吐气声。 2. 方言，家。 3. 叹词，表示惊讶。"
+  },
+  {
+    "char": "吜",
+    "pinyin": "chǒu",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 象声词。"
+  },
+  {
+    "char": "吤",
+    "pinyin": "jiè",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 象声词，喉中哽塞所出声。 2. 助词，唱词中的衬字。"
+  },
+  {
+    "char": "吷",
+    "pinyin": "xuè",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 如口吹物发出的小声音：“吹剑首者，～而已矣。” 2. 同“啜”，饮；喝。 3. 鸟叫声。 4. 方言，骂：又挨打来又挨～。"
+  },
+  {
+    "char": "呁",
+    "pinyin": "jùn",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 吐。 2. 唁。"
+  },
+  {
+    "char": "呋",
+    "pinyin": "fū",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 〔～喃〕有机化合物，无色液体，供制药用，亦是化工的重要原料。 2. 同“趺”。"
+  },
+  {
+    "char": "呚",
+    "pinyin": "huá",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 尽。 2. 走路气喘。"
+  },
+  {
+    "char": "㕴",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“沉”。"
+  },
+  {
+    "char": "㕵",
+    "pinyin": "guó",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“囯（國）”。 2. 喃字。读音uống，喝。"
+  },
+  {
+    "char": "𠯍",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“呥”。"
+  },
+  {
+    "char": "𠯐",
+    "pinyin": "huò",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“𣤨”。吐声。 2. 古壮字。同“䚴”。"
+  },
+  {
+    "char": "𠯑",
+    "pinyin": "guā",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 《集韻》古活切，入末見。月部。塞口；塞。《説文·口部》：“𠯑，塞口也。”《廣雅·釋詁三》：“𠯑，塞也。”"
+  },
+  {
+    "char": "𠯓",
+    "pinyin": "zhé",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“𠯑”。 2. 塞也。"
+  },
+  {
+    "char": "𠯔",
+    "pinyin": "pì",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 〔～～〕吐唾沫的声音。 2. 〈方言〉呸：～，一啲本事冇有。 3. 〈方言〉吐。"
+  },
+  {
+    "char": "𠯘",
+    "pinyin": "bàn",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 〔～喭(yàn)〕又作“畔喭”，粗野。"
+  },
+  {
+    "char": "𠯙",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“𠯬”。"
+  },
+  {
+    "char": "𠯜",
+    "pinyin": "hōu",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“呴”。 2. 笑貌。"
+  },
+  {
+    "char": "𠯟",
+    "pinyin": "xiàn",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 见“哯”。"
+  },
+  {
+    "char": "𠯩",
+    "pinyin": "zhā",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 〔呱～〕响声词。 2. 〈方言〉读音cap，张凯拇指和食指来量长度。 3. 〈方言〉量词，张开拇指和食指两端的距离，约五寸长。"
+  },
+  {
+    "char": "𠯪",
+    "pinyin": "dāi",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“呔”。叹词。 2. 〈方〉吃。东北官话。 3. 喃字。同“𠿸”。"
+  },
+  {
+    "char": "𠯫",
+    "pinyin": "gē",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 《龍龕手鑑·口部》：“𠯫，《川篇》各何反。”《海篇·口部》：“𠯫，音歌。” 2. 疑同“𢎄”。"
+  },
+  {
+    "char": "𠯭",
+    "pinyin": "pì",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“畐”。 2. 义未详。"
+  },
+  {
+    "char": "𠯯",
+    "pinyin": "piàn",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 〈方〉谈天，闲聊。"
+  },
+  {
+    "char": "𠯰",
+    "pinyin": "shí",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 音译用字。如“喀～噶尔河”，即喀什噶尔河。"
+  },
+  {
+    "char": "𠯱",
+    "pinyin": "liǎng",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𠯲",
+    "pinyin": "yuè",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 义未详。 2. “𠱎”的讹字。见浙江古籍出版社2014年版《宋濂全集·三宋學士先生文集輯補·故丹谿先生朱公石表辭》p2336。 3. 〈古壮字〉读音yet，形容词之后附加成分：𮍴～～（甜津津）。"
+  },
+  {
+    "char": "𠯳",
+    "pinyin": "hū",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“曶”。 2. 同“吻”。"
+  },
+  {
+    "char": "𠯴",
+    "pinyin": "biàn",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 同“哢”。 2. 义未详。"
+  },
+  {
+    "char": "𠯷",
+    "pinyin": "réng",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 疑同“仍”。"
+  },
+  {
+    "char": "𠯹",
+    "pinyin": "réng",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 〈方〉[～崩]象声词，形容走得突然。"
+  },
+  {
+    "char": "𠰄",
+    "pinyin": "yī",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 呢。"
+  },
+  {
+    "char": "𠰅",
+    "pinyin": "zhī",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 拈物。"
+  },
+  {
+    "char": "𠰇",
+    "pinyin": "jīn",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 伯。"
+  },
+  {
+    "char": "呝",
+    "pinyin": "è",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 同“呃”。 2. 〈方〉喊；叫。粤语。"
+  },
+  {
+    "char": "呞",
+    "pinyin": "shī",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. （牛）反刍。"
+  },
+  {
+    "char": "呣",
+    "pinyin": "ḿ",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 叹词，表示疑问：～，你说什么？ 2. 叹词，表示应答：～，我知道了。 3. “謀”的古字。谋虑。"
+  },
+  {
+    "char": "呩",
+    "pinyin": "shì",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 同“嗜”。"
+  },
+  {
+    "char": "呾",
+    "pinyin": "dá",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 呵斥。 2. 中国元代称唱（曲子）：“什么人这般唱歌～曲的？”"
+  },
+  {
+    "char": "咃",
+    "pinyin": "tuō",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 《大日经》译音用字。"
+  },
+  {
+    "char": "𠰈",
+    "pinyin": "hóng",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 牛叫声。"
+  },
+  {
+    "char": "𠰉",
+    "pinyin": "chāo",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 喉鸣。 2. 〈越南释义〉同“𠶅”。 3. 〈古壮字〉读音ciu，招惹；惹。"
+  },
+  {
+    "char": "𠰍",
+    "pinyin": "zhǔ",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 口不正。 2. 同“咮”。鸟嘴。 3. 喃字。同“啂”。"
+  },
+  {
+    "char": "𠰏",
+    "pinyin": "zhá",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 猪吃食。 2. 喃字。读音mớm，〔咘～〕哺育。"
+  },
+  {
+    "char": "𠰐",
+    "pinyin": "pǒ",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 象声词。"
+  },
+  {
+    "char": "𠰑",
+    "pinyin": "pǒ",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 象声词。"
+  },
+  {
+    "char": "𠰓",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 同“和”。"
+  },
+  {
+    "char": "𠰕",
+    "pinyin": "chū",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 唤人声。"
+  },
+  {
+    "char": "𠰖",
+    "pinyin": "yán",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 羊鸣。《改併四聲篇海•口部》引《川篇》：“𠰖，羊鳴。”"
+  },
+  {
+    "char": "𠰚",
+    "pinyin": "shì",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 贪吃喝。 2. 喃字。同“𩜪”。"
+  },
+  {
+    "char": "𠰛",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 同“岵”。"
+  },
+  {
+    "char": "𠰜",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 同“𠱫”。"
+  },
+  {
+    "char": "𠰴",
+    "pinyin": "shí",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 英制重量单位，一～等于十四磅。 2. 古壮字。同“𭈐”。"
+  },
+  {
+    "char": "𠰹",
+    "pinyin": null,
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 同“咜”。"
+  },
+  {
+    "char": "𠰺",
+    "pinyin": "dài",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 义未详。 2. 喃字。同“𩂠”。 3. 古壮字。同“孬”。"
+  },
+  {
+    "char": "𠰻",
+    "pinyin": "wài",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 〈方〉代词。表示远指，相当于“那”。 2. 〈方〉叹词。相当于喂。 3. 语气词，用于句中或句尾，相当于“呀”、“啦”：表示感叹或陈述语气。"
+  },
+  {
+    "char": "𠰼",
+    "pinyin": "pō",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "1. 姓。<注>“𰇓”为古壮字，不可混。 2. 同“𠯗”，即“咂”。"
+  },
+  {
+    "char": "𠰽",
+    "pinyin": "rǒng",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 义未详。 2. 〈方块布依字〉读音gvaamz，拟声词，指硬物相碰撞的声音。"
+  },
+  {
+    "char": "𠰾",
+    "pinyin": "jū",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 同“啹”。 2. 义未详。"
+  },
+  {
+    "char": "𠱀",
+    "pinyin": "bō",
+    "radical": "口",
+    "strokes": 8,
+    "explanation": "1. 语气词。 2. 象声词。 3. 〈古壮字〉读音boq，（用嘴）吹。〔～～〕吹火。"
+  },
+  {
+    "char": "咞",
+    "pinyin": "xiàn",
+    "radical": "口",
+    "strokes": 7,
+    "explanation": "xiàn   ㄒㄧㄢˋ ◎ 同“哯”。 ◎ 婴儿饮乳。 xiàn   ㄒㄧㄢˋ ◎ 同“蜆”。"
+  },
+  {
+    "char": "咟",
+    "pinyin": "huò",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 叫呼。"
+  },
+  {
+    "char": "咰",
+    "pinyin": "shù",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 饮。如饮酒。 2. 同“询”。"
+  },
+  {
+    "char": "咴",
+    "pinyin": "huī",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 〔～儿（huīr）～儿（huīr）〕象声词，形容马叫的声音。"
+  },
+  {
+    "char": "咶",
+    "pinyin": "huài",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 喘息，气息。 2. 同“舐”，舔。 3. 声音嘈杂，吵闹。～噪。"
+  },
+  {
+    "char": "哃",
+    "pinyin": "tóng",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 妄言，胡说。"
+  },
+  {
+    "char": "哅",
+    "pinyin": "xiōng",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 同“訩”。"
+  },
+  {
+    "char": "哊",
+    "pinyin": "yòu",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 呕吐。 2. 呕吐或呻吟的声音。"
+  },
+  {
+    "char": "哖",
+    "pinyin": "nián",
+    "radical": "口",
+    "strokes": 9,
+    "explanation": "1. 〔噍吧～〕地名，在中国台湾省台南县玉井乡。"
+  }
+]

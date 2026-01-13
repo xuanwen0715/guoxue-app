@@ -1,0 +1,2095 @@
+[
+  {
+    "char": "𩢎",
+    "pinyin": "duō",
+    "radical": "馬",
+    "strokes": 15,
+    "explanation": "1. 见“䮩”。"
+  },
+  {
+    "char": "𩢐",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 15,
+    "explanation": "1. 同“馲”。"
+  },
+  {
+    "char": "𩥘",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 20,
+    "explanation": "1. 同“峳”。"
+  },
+  {
+    "char": "𩥠",
+    "pinyin": "dá",
+    "radical": "馬",
+    "strokes": 19,
+    "explanation": "1. 马行进的样子。"
+  },
+  {
+    "char": "𩥣",
+    "pinyin": "yáo",
+    "radical": "馬",
+    "strokes": 20,
+    "explanation": "1. 见“𩧓”。"
+  },
+  {
+    "char": "騹",
+    "pinyin": "qí",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 同“骐”。"
+  },
+  {
+    "char": "騼",
+    "pinyin": "lù",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 〔～䮷〕野马。 2. 有騼䮷图形的军旗。"
+  },
+  {
+    "char": "騽",
+    "pinyin": "xí",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 背脊黄色的黑马。 2. 马膝胫间多长毛。"
+  },
+  {
+    "char": "騿",
+    "pinyin": "zhāng",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 马名。"
+  },
+  {
+    "char": "𩥫",
+    "pinyin": "chōng",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 劣马，外形、体质、性能低劣的马。"
+  },
+  {
+    "char": "𩥬",
+    "pinyin": "lí",
+    "radical": "馬",
+    "strokes": 20,
+    "explanation": "1. 驴子。"
+  },
+  {
+    "char": "𩥭",
+    "pinyin": "yú",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 同“鱼”。两眼眶有白圈的马。"
+  },
+  {
+    "char": "𩥮",
+    "pinyin": "chǎn",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 马名。可参考“𩣹”。"
+  },
+  {
+    "char": "𩥯",
+    "pinyin": "yī",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 黑马。"
+  },
+  {
+    "char": "𩥲",
+    "pinyin": "chì",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 〔～～〕（马）快跑的样子。"
+  },
+  {
+    "char": "𩥴",
+    "pinyin": "lí",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 〔駣～〕像马的一种兽。"
+  },
+  {
+    "char": "𩥽",
+    "pinyin": "tú",
+    "radical": "馬",
+    "strokes": 20,
+    "explanation": "1. 同“駼”。"
+  },
+  {
+    "char": "𩥿",
+    "pinyin": "zú",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "驉",
+    "pinyin": "xū",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 〔駏～〕见“駏”。"
+  },
+  {
+    "char": "驎",
+    "pinyin": "lín",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 〔骐（qí）～〕①古代骏马名；②同“麒麟”，传说中的祥兽，形似鹿，独角，全身有鳞甲。"
+  },
+  {
+    "char": "驑",
+    "pinyin": "liú",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 同“骝”。"
+  },
+  {
+    "char": "驓",
+    "pinyin": "céng",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 膝下白色的马。"
+  },
+  {
+    "char": "𩦂",
+    "pinyin": "xián",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 一种眼圈周围长着白毛的马。"
+  },
+  {
+    "char": "𩦇",
+    "pinyin": "xì",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 马奔跑。"
+  },
+  {
+    "char": "𩦉",
+    "pinyin": "bié",
+    "radical": "馬",
+    "strokes": 21,
+    "explanation": "1. 马名。"
+  },
+  {
+    "char": "𩦊",
+    "pinyin": "hán",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 马多的样子。 2. 马名。"
+  },
+  {
+    "char": "𩦋",
+    "pinyin": "jī",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 马。"
+  },
+  {
+    "char": "𩦌",
+    "pinyin": "sāng",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 色黄而尾白的马。 2. 义未详。 3. 见“騯”。"
+  },
+  {
+    "char": "𩦎",
+    "pinyin": "fēi",
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 同“騑”。 2. 马名。"
+  },
+  {
+    "char": "𩦐",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 同“骟”。 2. 同“騞”。"
+  },
+  {
+    "char": "𩦘",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 22,
+    "explanation": "1. 同“驩”。"
+  },
+  {
+    "char": "驙",
+    "pinyin": "zhān",
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 脊背黑色的白马。 2. 马负重难行。"
+  },
+  {
+    "char": "驜",
+    "pinyin": "yè",
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 马高大。"
+  },
+  {
+    "char": "𩦠",
+    "pinyin": "bàng",
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 姓。"
+  },
+  {
+    "char": "𩦡",
+    "pinyin": "yú",
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 马行徐而疾。"
+  },
+  {
+    "char": "𩦤",
+    "pinyin": "jí",
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 〔～～〕马缓慢行走的样子。"
+  },
+  {
+    "char": "𩦱",
+    "pinyin": "kuài",
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 同“侩”。〔驵～〕旧时买卖马的经纪人。"
+  },
+  {
+    "char": "𩦲",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 同“騣”。"
+  },
+  {
+    "char": "驞",
+    "pinyin": "pīn",
+    "radical": "馬",
+    "strokes": 24,
+    "explanation": "1. 〔～駍（pēng）〕象声词，形容声响众盛。"
+  },
+  {
+    "char": "𩦹",
+    "pinyin": "xiàn",
+    "radical": "馬",
+    "strokes": 24,
+    "explanation": "1. 马奔跑的样子。"
+  },
+  {
+    "char": "𩦺",
+    "pinyin": "méng",
+    "radical": "馬",
+    "strokes": 23,
+    "explanation": "1. 小驴。"
+  },
+  {
+    "char": "𩧃",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 24,
+    "explanation": "1. 同“𩢾”。"
+  },
+  {
+    "char": "𩧄",
+    "pinyin": "zhì",
+    "radical": "馬",
+    "strokes": 25,
+    "explanation": "1. 马名。"
+  },
+  {
+    "char": "𩧅",
+    "pinyin": "fán",
+    "radical": "馬",
+    "strokes": 25,
+    "explanation": "1. 〔～駤〕（马）踌躇不前。"
+  },
+  {
+    "char": "𩧇",
+    "pinyin": "cài",
+    "radical": "馬",
+    "strokes": 24,
+    "explanation": "1. 马名。"
+  },
+  {
+    "char": "𩧈",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 25,
+    "explanation": "1. 同“䮷”。"
+  },
+  {
+    "char": "𩧉",
+    "pinyin": "guāng",
+    "radical": "馬",
+    "strokes": 24,
+    "explanation": "1. 〔阕～〕背上有旋毛的马。"
+  },
+  {
+    "char": "𩧊",
+    "pinyin": "xiòng",
+    "radical": "馬",
+    "strokes": 25,
+    "explanation": "1. 马怒。"
+  },
+  {
+    "char": "𩧋",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 25,
+    "explanation": "1. 同“𩥴”。"
+  },
+  {
+    "char": "𩧌",
+    "pinyin": "qì",
+    "radical": "馬",
+    "strokes": 25,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "驠",
+    "pinyin": "yàn",
+    "radical": "馬",
+    "strokes": 26,
+    "explanation": "1. 屁股毛色白的马。"
+  },
+  {
+    "char": "驡",
+    "pinyin": "lóng",
+    "radical": "馬",
+    "strokes": 27,
+    "explanation": "1. 野马。 2. 姓。"
+  },
+  {
+    "char": "驣",
+    "pinyin": "téng",
+    "radical": "馬",
+    "strokes": 26,
+    "explanation": "1. 同“腾”。"
+  },
+  {
+    "char": "𩧏",
+    "pinyin": null,
+    "radical": "馬",
+    "strokes": 26,
+    "explanation": "1. 同“䮤”。"
+  },
+  {
+    "char": "𩧐",
+    "pinyin": "tuō",
+    "radical": "馬",
+    "strokes": 26,
+    "explanation": "1. [～駝]即“駱駝”，也作“馲駝”。"
+  },
+  {
+    "char": "𩧒",
+    "pinyin": "jù",
+    "radical": "馬",
+    "strokes": 26,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩧓",
+    "pinyin": "xiāo",
+    "radical": "馬",
+    "strokes": 26,
+    "explanation": "1. 〔～～〕又作“逍遥”，马名。"
+  },
+  {
+    "char": "驧",
+    "pinyin": "jú",
+    "radical": "馬",
+    "strokes": 27,
+    "explanation": "1. 马曲脊。 2. 马跳跃。"
+  },
+  {
+    "char": "驨",
+    "pinyin": "xí",
+    "radical": "馬",
+    "strokes": 28,
+    "explanation": "1. 古书上说的像马，独角、角如鹿茸的一种兽。 2. 骐骥，良马名。"
+  },
+  {
+    "char": "𩧘",
+    "pinyin": "qú",
+    "radical": "馬",
+    "strokes": 28,
+    "explanation": "1. 马行进。"
+  },
+  {
+    "char": "𩧜",
+    "pinyin": "zhuǎn",
+    "radical": "馬",
+    "strokes": 28,
+    "explanation": "1. 疑为“驿传”之“传”的会意俗字。"
+  },
+  {
+    "char": "𩧡",
+    "pinyin": "jué",
+    "radical": "馬",
+    "strokes": 30,
+    "explanation": "1. 同“玃”。传说中的一种怪兽，像鹿，长着人手和马脚。"
+  },
+  {
+    "char": "𩧦",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 7,
+    "explanation": "1. “𩡺”的类推简化字。"
+  },
+  {
+    "char": "𩧨",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 8,
+    "explanation": "1. “駎”的类推简化字。"
+  },
+  {
+    "char": "𩧩",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 8,
+    "explanation": "1. “𩤊”的类推简化字。"
+  },
+  {
+    "char": "𩧫",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 8,
+    "explanation": "1. “駚”的类推简化字。"
+  },
+  {
+    "char": "𩧬",
+    "pinyin": "rǎn",
+    "radical": "马",
+    "strokes": 8,
+    "explanation": "1. “𩢡”的简化字。"
+  },
+  {
+    "char": "𩧯",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 8,
+    "explanation": "1. “驋”的类推简化字。"
+  },
+  {
+    "char": "𩧮",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 9,
+    "explanation": "1. “𩢾”的类推简化字。"
+  },
+  {
+    "char": "𩧱",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 9,
+    "explanation": "1. “𩥉”的类推简化字。"
+  },
+  {
+    "char": "𩧲",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 9,
+    "explanation": "1. “駧”的类推简化字。"
+  },
+  {
+    "char": "𩧳",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 9,
+    "explanation": "1. “𩢸”的类推简化字。"
+  },
+  {
+    "char": "𩧴",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 9,
+    "explanation": "1. “駩”的类推简化字。"
+  },
+  {
+    "char": "𩧵",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 9,
+    "explanation": "1. “𩢴”的类推简化字。"
+  },
+  {
+    "char": "𩧺",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 10,
+    "explanation": "1. “駶”的类推简化字。"
+  },
+  {
+    "char": "𩧼",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 11,
+    "explanation": "1. “𩣺”的类推简化字。"
+  },
+  {
+    "char": "𩨀",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 12,
+    "explanation": "1. “騔”的类推简化字。"
+  },
+  {
+    "char": "𩨃",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 11,
+    "explanation": "1. “騝”的类推简化字。"
+  },
+  {
+    "char": "𩨅",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 12,
+    "explanation": "1. “𩤸”的类推简化字。"
+  },
+  {
+    "char": "𩨆",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 12,
+    "explanation": "1. “𩤙”的类推简化字。"
+  },
+  {
+    "char": "𩨈",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 12,
+    "explanation": "1. “騟”的类推简化字。"
+  },
+  {
+    "char": "𩨉",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 12,
+    "explanation": "1. “𩤲”的类推简化字。"
+  },
+  {
+    "char": "𩨊",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 12,
+    "explanation": "1. “騚”的类推简化字。"
+  },
+  {
+    "char": "𩨄",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 12,
+    "explanation": "1. “騪”的类推简化字。"
+  },
+  {
+    "char": "𩨋",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 13,
+    "explanation": "1. “𩥄”的类推简化字。"
+  },
+  {
+    "char": "𩨌",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 13,
+    "explanation": "1. “𩥑”的类推简化字。"
+  },
+  {
+    "char": "𩨍",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 13,
+    "explanation": "1. “𩥇”的类推简化字。"
+  },
+  {
+    "char": "𩨐",
+    "pinyin": null,
+    "radical": "马",
+    "strokes": 18,
+    "explanation": "1. “𩧆”的类推简化字。"
+  },
+  {
+    "char": "骩",
+    "pinyin": "wěi",
+    "radical": "骨",
+    "strokes": 11,
+    "explanation": "1. 同“骫”。《漢書•揚雄傳下》：“車不安軔，日不靡旃，從者仿佛，骩屬而還。”"
+  },
+  {
+    "char": "𩨑",
+    "pinyin": "tīng",
+    "radical": "骨",
+    "strokes": 11,
+    "explanation": "1. 胫骨。"
+  },
+  {
+    "char": "𩨒",
+    "pinyin": "jī",
+    "radical": "骨",
+    "strokes": 11,
+    "explanation": "1. 同“肌”。"
+  },
+  {
+    "char": "𩨓",
+    "pinyin": "qiān",
+    "radical": "骨",
+    "strokes": 11,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "骫",
+    "pinyin": "wěi",
+    "radical": "骨",
+    "strokes": 12,
+    "explanation": "1. 骨弯曲。 2. 委曲；枉曲。也作“委”。 3. 集聚；积聚。 4. 树木弯曲的样子。 5. 姓。 6. 〔骫骳〕方言。顽皮。"
+  },
+  {
+    "char": "骬",
+    "pinyin": "yú",
+    "radical": "骨",
+    "strokes": 12,
+    "explanation": "1. 同“𩨗”。 2. 〔𩩲～〕①胸骨。②锁骨。"
+  },
+  {
+    "char": "骮",
+    "pinyin": "yì",
+    "radical": "骨",
+    "strokes": 12,
+    "explanation": "1. 小骨。 2. 锁骨上窝。"
+  },
+  {
+    "char": "𩨔",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 11,
+    "explanation": "1. 同“尳”。"
+  },
+  {
+    "char": "𩨗",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 12,
+    "explanation": "1. 同“骬”。"
+  },
+  {
+    "char": "𩨙",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 12,
+    "explanation": "1. 同“𩨗”。"
+  },
+  {
+    "char": "𩨚",
+    "pinyin": "wā",
+    "radical": "骨",
+    "strokes": 12,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩨜",
+    "pinyin": "bǎ",
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 同“把”。"
+  },
+  {
+    "char": "𩨝",
+    "pinyin": "qí",
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 同“跂”。慢走。"
+  },
+  {
+    "char": "𩨞",
+    "pinyin": "sǎ",
+    "radical": "骨",
+    "strokes": 12,
+    "explanation": "1. 〔～～〕头动的样子。"
+  },
+  {
+    "char": "𩨟",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 同“骹”。"
+  },
+  {
+    "char": "𩨠",
+    "pinyin": "yà",
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 髂骨。"
+  },
+  {
+    "char": "𩨡",
+    "pinyin": "sǎn",
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 骨轻～。"
+  },
+  {
+    "char": "𩨨",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 同“骴”。"
+  },
+  {
+    "char": "𩨩",
+    "pinyin": "fàn",
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩨫",
+    "pinyin": "kǔn",
+    "radical": "骨",
+    "strokes": 13,
+    "explanation": "1. 同“阃”。"
+  },
+  {
+    "char": "骵",
+    "pinyin": "tǐ",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 同“體”。"
+  },
+  {
+    "char": "𩨬",
+    "pinyin": "gǔn",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 同“鲧”。 2. 细骨。"
+  },
+  {
+    "char": "𩨮",
+    "pinyin": "è",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 〔䯋～〕骨高的样子。"
+  },
+  {
+    "char": "𩨯",
+    "pinyin": "qióng",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 脉。"
+  },
+  {
+    "char": "𩨲",
+    "pinyin": "mà",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 〔～～〕所以碍。"
+  },
+  {
+    "char": "𩨳",
+    "pinyin": "duō",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 一种鸟，古人认为它的叫声可以预知吉凶。 2. 同“窟”。"
+  },
+  {
+    "char": "𩨴",
+    "pinyin": "yǎo",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 肩骨。 2. 同“䯚”。"
+  },
+  {
+    "char": "𩨷",
+    "pinyin": "quē",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 手脚有病的样子。"
+  },
+  {
+    "char": "𩨸",
+    "pinyin": "chū",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 〔骨～〕疙瘩。 2. 同“𩨳”。一种鸟，古人认为它的叫声可以预知吉凶。"
+  },
+  {
+    "char": "𩨹",
+    "pinyin": "jiǎ",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 同“胛”。"
+  },
+  {
+    "char": "𩨻",
+    "pinyin": "zhǔ",
+    "radical": "骨",
+    "strokes": 14,
+    "explanation": "1. 疑同“柱”。"
+  },
+  {
+    "char": "骻",
+    "pinyin": "kuà",
+    "radical": "骨",
+    "strokes": 15,
+    "explanation": "1. 同“胯”。"
+  },
+  {
+    "char": "𩨽",
+    "pinyin": "duī",
+    "radical": "骨",
+    "strokes": 15,
+    "explanation": "1. 骨起。"
+  },
+  {
+    "char": "𩨾",
+    "pinyin": "wá",
+    "radical": "骨",
+    "strokes": 15,
+    "explanation": "1. 见“䯞”。 2. 古壮字。读音ngviz，骨髓。"
+  },
+  {
+    "char": "𩩀",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 15,
+    "explanation": "1. 同“脑”。"
+  },
+  {
+    "char": "𩩄",
+    "pinyin": "yán",
+    "radical": "骨",
+    "strokes": 15,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩩅",
+    "pinyin": "tóng",
+    "radical": "骨",
+    "strokes": 15,
+    "explanation": "1. 〔～骨〕腿骨。"
+  },
+  {
+    "char": "𩩋",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 16,
+    "explanation": "1. 同“胫”。"
+  },
+  {
+    "char": "𩩌",
+    "pinyin": "gǔn",
+    "radical": "骨",
+    "strokes": 16,
+    "explanation": "1. 人名用字。也作“鯀”。"
+  },
+  {
+    "char": "𩩑",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 16,
+    "explanation": "1. 同“龉”。"
+  },
+  {
+    "char": "𩩒",
+    "pinyin": "hè",
+    "radical": "骨",
+    "strokes": 16,
+    "explanation": "1. 疑同“骱”。"
+  },
+  {
+    "char": "𩩔",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 16,
+    "explanation": "1. 〈日本释义〉同“鋜”字。俗“鋜”字。類聚名義抄：俗鋜字、士角反。"
+  },
+  {
+    "char": "骿",
+    "pinyin": "pián",
+    "radical": "骨",
+    "strokes": 15,
+    "explanation": "1. 肋骨並成一片。《説文•骨部》：“骿，并脅也。” 2. 通“胼”。手腳上的老繭。《漢書•司馬相如傳下》：“心煩於慮，而身親其勞，躬傶骿胝無胈，膚不生毛。”"
+  },
+  {
+    "char": "𩩗",
+    "pinyin": "shē",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 骨名。"
+  },
+  {
+    "char": "𩩘",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 同“𩩦”。"
+  },
+  {
+    "char": "𩩛",
+    "pinyin": "jì",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 小骨。"
+  },
+  {
+    "char": "𩩝",
+    "pinyin": "qiāng",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 见“𩪘”。"
+  },
+  {
+    "char": "𩩞",
+    "pinyin": "shuì",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 用漆搀和骨灰涂抹器具。"
+  },
+  {
+    "char": "𩩟",
+    "pinyin": "chuò",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 续骨。"
+  },
+  {
+    "char": "𩩠",
+    "pinyin": "zú",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 小骨。"
+  },
+  {
+    "char": "𩩡",
+    "pinyin": "léng",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 骨高貌。"
+  },
+  {
+    "char": "𩩢",
+    "pinyin": "ní",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 骨貌。"
+  },
+  {
+    "char": "𩩤",
+    "pinyin": "wā",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩩥",
+    "pinyin": "zhōu",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 〔～筋响声〕。"
+  },
+  {
+    "char": "𩩧",
+    "pinyin": "dàn",
+    "radical": "骨",
+    "strokes": 17,
+    "explanation": "1. 同“腅”。"
+  },
+  {
+    "char": "𩩮",
+    "pinyin": "dù",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“𩔴”。头盖骨。"
+  },
+  {
+    "char": "𩩯",
+    "pinyin": "biàn",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 骨～生貌。"
+  },
+  {
+    "char": "𩩰",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“𦝨”。 2. 同“骸”。"
+  },
+  {
+    "char": "𩩱",
+    "pinyin": "qià",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“髂”。"
+  },
+  {
+    "char": "𩩲",
+    "pinyin": "hé",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 〔～骬〕a.胸骨。b.锁骨。"
+  },
+  {
+    "char": "𩩳",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“𤺄”。 2. 同“肿”。"
+  },
+  {
+    "char": "𩩴",
+    "pinyin": "yán",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 〔～～𩪢〕骨高貌。"
+  },
+  {
+    "char": "𩩶",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“餍”。"
+  },
+  {
+    "char": "𩩺",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“㞞”。"
+  },
+  {
+    "char": "𩩻",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“䯏”。"
+  },
+  {
+    "char": "𩩼",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“䯚”。"
+  },
+  {
+    "char": "𩩾",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“䯌”。"
+  },
+  {
+    "char": "髇",
+    "pinyin": "xiāo",
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 古响箭。"
+  },
+  {
+    "char": "髉",
+    "pinyin": "bó",
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 骨。 2. 骨端。 3. 骨坚白。"
+  },
+  {
+    "char": "髊",
+    "pinyin": "cī",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 同“骴”。"
+  },
+  {
+    "char": "䯡",
+    "pinyin": "jiàn",
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 肌瘦的样子。"
+  },
+  {
+    "char": "𩪀",
+    "pinyin": "zhuī",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 颈椎骨。"
+  },
+  {
+    "char": "𩪁",
+    "pinyin": "guì",
+    "radical": "骨",
+    "strokes": 18,
+    "explanation": "1. 〔～～䯟〕愚蠢的样子。 2. 姓。"
+  },
+  {
+    "char": "𩪂",
+    "pinyin": "ái",
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 见“𩓋”。"
+  },
+  {
+    "char": "𩪃",
+    "pinyin": "hài",
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 骨。"
+  },
+  {
+    "char": "𩪈",
+    "pinyin": "suǒ",
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 锁骨。 2. 同“䞆”或“锁”。"
+  },
+  {
+    "char": "髍",
+    "pinyin": "mó",
+    "radical": "骨",
+    "strokes": 20,
+    "explanation": "1. 同“䯢”。偏瘫。"
+  },
+  {
+    "char": "𩪉",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 20,
+    "explanation": "1. 同“𩔴”。"
+  },
+  {
+    "char": "𩪊",
+    "pinyin": "biāo",
+    "radical": "骨",
+    "strokes": 20,
+    "explanation": "1. 身体健壮。"
+  },
+  {
+    "char": "𩪌",
+    "pinyin": "fèng",
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 龟甲被烧灼而出现的裂缝。 2. 胸骨逢。"
+  },
+  {
+    "char": "𩪍",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 20,
+    "explanation": "1. 同“躯”。"
+  },
+  {
+    "char": "𩪎",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 同“脏”。"
+  },
+  {
+    "char": "𩪐",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 20,
+    "explanation": "1. 同“腘”。"
+  },
+  {
+    "char": "𩪖",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 19,
+    "explanation": "1. 同“髀”。"
+  },
+  {
+    "char": "髐",
+    "pinyin": "xiāo",
+    "radical": "骨",
+    "strokes": 21,
+    "explanation": "1. 〔～然〕骨骼枯空而破损的样子，如“庄子之楚，见空髑髅，～～有形。” 2. 同“髇”。"
+  },
+  {
+    "char": "𩪘",
+    "pinyin": "chuáng",
+    "radical": "骨",
+    "strokes": 21,
+    "explanation": "1. 〔～～〕尾椎骨。"
+  },
+  {
+    "char": "𩪛",
+    "pinyin": "pú",
+    "radical": "骨",
+    "strokes": 21,
+    "explanation": "1. 骨制的箭头。"
+  },
+  {
+    "char": "𩪟",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 21,
+    "explanation": "1. 同“𩪣”。"
+  },
+  {
+    "char": "𩪢",
+    "pinyin": "qiān",
+    "radical": "骨",
+    "strokes": 22,
+    "explanation": "1. 见“𩩴”。"
+  },
+  {
+    "char": "𩪣",
+    "pinyin": "yì",
+    "radical": "骨",
+    "strokes": 22,
+    "explanation": "1. 胸骨。"
+  },
+  {
+    "char": "𩪤",
+    "pinyin": "è",
+    "radical": "骨",
+    "strokes": 22,
+    "explanation": "1. 见“𩨞”。"
+  },
+  {
+    "char": "𩪥",
+    "pinyin": "líng",
+    "radical": "骨",
+    "strokes": 22,
+    "explanation": "1. 〔～䯕〕骨头长的样子。"
+  },
+  {
+    "char": "𩪧",
+    "pinyin": "bì",
+    "radical": "骨",
+    "strokes": 22,
+    "explanation": "1. 弓末弯曲处。"
+  },
+  {
+    "char": "𩪭",
+    "pinyin": "huò",
+    "radical": "骨",
+    "strokes": 22,
+    "explanation": "1. 骨声。"
+  },
+  {
+    "char": "𩪮",
+    "pinyin": "mǒ",
+    "radical": "骨",
+    "strokes": 23,
+    "explanation": "1. 漏病。 2. 同“䯢”。"
+  },
+  {
+    "char": "𩪱",
+    "pinyin": "xūn",
+    "radical": "骨",
+    "strokes": 23,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩪴",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 23,
+    "explanation": "1. 同“餍”。"
+  },
+  {
+    "char": "𩪸",
+    "pinyin": "lì",
+    "radical": "骨",
+    "strokes": 25,
+    "explanation": "1. 骨病。 2. 〔赤骨𩪸〕同“赤骨歷”。赤贫，空无所有。"
+  },
+  {
+    "char": "𩪺",
+    "pinyin": "tán",
+    "radical": "骨",
+    "strokes": 25,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩪾",
+    "pinyin": null,
+    "radical": "骨",
+    "strokes": 28,
+    "explanation": "1. 同“𤼙”。"
+  },
+  {
+    "char": "𩫀",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 13,
+    "explanation": "1. 同“䯨”。"
+  },
+  {
+    "char": "髚",
+    "pinyin": "qiào",
+    "radical": "高",
+    "strokes": 14,
+    "explanation": "1. 高。"
+  },
+  {
+    "char": "𩫁",
+    "pinyin": "mào",
+    "radical": "高",
+    "strokes": 14,
+    "explanation": "1. 氉～。"
+  },
+  {
+    "char": "𩫂",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 14,
+    "explanation": "1. 同“嚣”。"
+  },
+  {
+    "char": "𩫇",
+    "pinyin": "ǎi",
+    "radical": "高",
+    "strokes": 14,
+    "explanation": "1. 〈方〉矮。吴语、粤语、闽语。"
+  },
+  {
+    "char": "髛",
+    "pinyin": "kāo",
+    "radical": "高",
+    "strokes": 15,
+    "explanation": "1. 明。"
+  },
+  {
+    "char": "𩫊",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 15,
+    "explanation": "1. 同“塔”。"
+  },
+  {
+    "char": "𩫍",
+    "pinyin": "mèi",
+    "radical": "高",
+    "strokes": 15,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩫏",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 16,
+    "explanation": "1. 同“郭”。 2. 同“墉”。"
+  },
+  {
+    "char": "𩫓",
+    "pinyin": "gǎo",
+    "radical": "高",
+    "strokes": 16,
+    "explanation": "1. 同“槁”。干枯。"
+  },
+  {
+    "char": "𩫔",
+    "pinyin": "náo",
+    "radical": "高",
+    "strokes": 16,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩫕",
+    "pinyin": "háo",
+    "radical": "高",
+    "strokes": 17,
+    "explanation": "1. 同“豪”。①豪豬。《集韻•豪韻》：“𩫞、𩫕、豪，《説文》：‘豕鬣如筆管者。’籀从豕，或省。” ②豪強。《臨淮王造像碑》：“齊之吕禮，導之㠯德，寬大居先，威嚴次後，哀恤孤寡，誅鋤𩫕黠。”③豪爽。《字彙•高部》：“𩫕，蘇子由《嚴顔詩》：‘被擒不辱古亦有，吾愛善折張飛𩫕。’”按：宋蘇轍《欒城集•嚴顔碑》作“豪”。 ④毫毛。《臨淮王造像碑》：“𩫕如五嶺之旋，即之便覿；目似四溟之潔；驗之猶在。” ⑤古州名。《篇海類編•通用類•髙部》：“𩫕，州名。”"
+  },
+  {
+    "char": "髜",
+    "pinyin": "qiǎo",
+    "radical": "高",
+    "strokes": 18,
+    "explanation": "1. 高。"
+  },
+  {
+    "char": "𩫠",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 19,
+    "explanation": "1. 同“缺”。"
+  },
+  {
+    "char": "𩫥",
+    "pinyin": "cáo",
+    "radical": "高",
+    "strokes": 21,
+    "explanation": "1. 高。"
+  },
+  {
+    "char": "𩫦",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 21,
+    "explanation": "1. 同“髞”。 2. 喃字。读音rôm，〔～𪣰〕喧嚣的，快乐的。"
+  },
+  {
+    "char": "髝",
+    "pinyin": "láo",
+    "radical": "高",
+    "strokes": 22,
+    "explanation": "1. 〔～髞（sào）〕①高。②粗疏，急躁。"
+  },
+  {
+    "char": "𩫫",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 24,
+    "explanation": "1. 同“𡦟”。"
+  },
+  {
+    "char": "𩫲",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 28,
+    "explanation": "1. 同“蝎”。"
+  },
+  {
+    "char": "𩫳",
+    "pinyin": null,
+    "radical": "高",
+    "strokes": 31,
+    "explanation": "1. 同“嚣”。"
+  },
+  {
+    "char": "𩫴",
+    "pinyin": "jú",
+    "radical": "髟",
+    "strokes": 12,
+    "explanation": "1. 乱发。"
+  },
+  {
+    "char": "𩫹",
+    "pinyin": "chéng",
+    "radical": "髟",
+    "strokes": 13,
+    "explanation": "1. 同“𩬒”。头发。"
+  },
+  {
+    "char": "𩫺",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 13,
+    "explanation": "1. 同“𩬢”。"
+  },
+  {
+    "char": "髤",
+    "pinyin": "xiū",
+    "radical": "髟",
+    "strokes": 14,
+    "explanation": "1. 同“髹”。"
+  },
+  {
+    "char": "髨",
+    "pinyin": "kūn",
+    "radical": "髟",
+    "strokes": 14,
+    "explanation": "1. 同“髡”。《説文•髟部》：“髡，𩮜髮也。从髟，兀聲。髨，或从元。”"
+  },
+  {
+    "char": "髩",
+    "pinyin": "bìn",
+    "radical": "髟",
+    "strokes": 14,
+    "explanation": "1. 同“鬓”。"
+  },
+  {
+    "char": "𩬀",
+    "pinyin": "nèi",
+    "radical": "髟",
+    "strokes": 14,
+    "explanation": "1. 见“䯿”。"
+  },
+  {
+    "char": "𩬍",
+    "pinyin": "mǔ",
+    "radical": "髟",
+    "strokes": 14,
+    "explanation": "1. 同“髯”。"
+  },
+  {
+    "char": "𩬏",
+    "pinyin": "xiāo",
+    "radical": "髟",
+    "strokes": 14,
+    "explanation": "1. 髮覆目也。"
+  },
+  {
+    "char": "髬",
+    "pinyin": "pī",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 〔～髵（ér）〕（猛兽鬃毛）竖起的样子。"
+  },
+  {
+    "char": "髰",
+    "pinyin": "tì",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 同“鬄”，剃。"
+  },
+  {
+    "char": "𩬑",
+    "pinyin": "diān",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 〔～鬑〕a.鬓发稀疏。b.头发下垂。 2. 发髻。"
+  },
+  {
+    "char": "𩬔",
+    "pinyin": "líng",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 头发稀疏。"
+  },
+  {
+    "char": "𩬖",
+    "pinyin": "zhěn",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 白发长。"
+  },
+  {
+    "char": "𩬗",
+    "pinyin": "yǎo",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 〔～～〕同“𨱇𨲂”。长而不劲。"
+  },
+  {
+    "char": "𩬙",
+    "pinyin": "fù",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 假髻。 2. 露髻。 3. 髻本。"
+  },
+  {
+    "char": "𩬚",
+    "pinyin": "qián",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 〔髡～〕即髡钳，古代剃去头发、用铁圈束在颈上的一种刑罚。 2. 绀青。"
+  },
+  {
+    "char": "𩬛",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 同“𩬰”。"
+  },
+  {
+    "char": "𩬜",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 同“𩫴”。"
+  },
+  {
+    "char": "𩬝",
+    "pinyin": "bìng",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 毛粗。 2. 同“仿”。"
+  },
+  {
+    "char": "𩬞",
+    "pinyin": "máo",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 古代少女短发齐眉、顶心长发束扎为偏髻的一种发式。"
+  },
+  {
+    "char": "𩬟",
+    "pinyin": "zhà",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 毛发多的样子。"
+  },
+  {
+    "char": "𩬠",
+    "pinyin": "tāi",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. [～𩬳]婦女假髻。"
+  },
+  {
+    "char": "𩬤",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. “𩰀”的类推简化字。"
+  },
+  {
+    "char": "𩬫",
+    "pinyin": "zhǎi",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩬭",
+    "pinyin": "shī",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩬮",
+    "pinyin": "yòng",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 同“𩬙”。"
+  },
+  {
+    "char": "鬇",
+    "pinyin": "zhēng",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 〔～鬡（níng）〕头发或胡须散乱的样子，如“怒须犹～～。”"
+  },
+  {
+    "char": "𩬰",
+    "pinyin": "qióng",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 〔～鬆〕毛发蓬松散乱的样子。"
+  },
+  {
+    "char": "𩬱",
+    "pinyin": "dào",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 髮長。"
+  },
+  {
+    "char": "𩬲",
+    "pinyin": "tì",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 同“鬄”。假髮。 2. 頭髮。"
+  },
+  {
+    "char": "𩬳",
+    "pinyin": "zhuǐ",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 妇女的假发髻。"
+  },
+  {
+    "char": "𩬵",
+    "pinyin": "yìn",
+    "radical": "髟",
+    "strokes": 15,
+    "explanation": "1. 发乱。 2. 头发整洁。"
+  },
+  {
+    "char": "𩬷",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 同“𩬢”。"
+  },
+  {
+    "char": "𩬸",
+    "pinyin": "bō",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 同“𩯌”。妇女的大髻。"
+  },
+  {
+    "char": "𩬹",
+    "pinyin": "kuāng",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 〔～鬤（ráng）〕头发散乱的样子。"
+  },
+  {
+    "char": "𩬺",
+    "pinyin": "zhǐ",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 发美。 2. 马鬣。"
+  },
+  {
+    "char": "𩬻",
+    "pinyin": "duǒ",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 头发下垂。 2. 同“鬌”。儿童剪发时留下不剪的一部分头发。"
+  },
+  {
+    "char": "𩬼",
+    "pinyin": "cōng",
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 同“𩭤”。头发。"
+  },
+  {
+    "char": "𩬽",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 16,
+    "explanation": "1. 同“𩭼”。"
+  },
+  {
+    "char": "髼",
+    "pinyin": "péng",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 〔～鬆（sōng）〕（头发）蓬松，如“怕寒懒剔～～发。”"
+  },
+  {
+    "char": "𩭇",
+    "pinyin": "lí",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 头发卷曲。"
+  },
+  {
+    "char": "𩭊",
+    "pinyin": "jú",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 见“髷”。"
+  },
+  {
+    "char": "𩭋",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 同“髡”。"
+  },
+  {
+    "char": "𩭌",
+    "pinyin": "liè",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 头发稀疏，一说头发稠密。"
+  },
+  {
+    "char": "𩭏",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 同“䰀”。"
+  },
+  {
+    "char": "𩭐",
+    "pinyin": "shǐ",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 髻发。"
+  },
+  {
+    "char": "𩭑",
+    "pinyin": "niǎo",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 见“𩬗”。"
+  },
+  {
+    "char": "𩭒",
+    "pinyin": "máng",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 头发苍白。 2. 头发散乱。"
+  },
+  {
+    "char": "𩭓",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 同“𩮈”。"
+  },
+  {
+    "char": "𩭘",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 同“髹”。"
+  },
+  {
+    "char": "𩭝",
+    "pinyin": "wǒ",
+    "radical": "髟",
+    "strokes": 17,
+    "explanation": "1. 见“髲”。"
+  },
+  {
+    "char": "鬄",
+    "pinyin": "dì",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 假发。 2. 剃发。也作“剃”。 3. 通“剔”。 ①支解牲体。 ②治理；除去。"
+  },
+  {
+    "char": "𩭟",
+    "pinyin": "dào",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 长。"
+  },
+  {
+    "char": "𩭡",
+    "pinyin": "xī",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 头发。"
+  },
+  {
+    "char": "𩭢",
+    "pinyin": "àn",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 同“𨲊”。头发长。"
+  },
+  {
+    "char": "𩭣",
+    "pinyin": "dá",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 头发。"
+  },
+  {
+    "char": "𩭤",
+    "pinyin": "zǒng",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 〔𩭤角）也作“總角”。束髮為髻。 2. 𩭤髮。 3. 馬鬃毛。"
+  },
+  {
+    "char": "𩭥",
+    "pinyin": "hàn",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 头发短。"
+  },
+  {
+    "char": "𩭦",
+    "pinyin": "chuí",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 发髻。 2. 头发脱落。"
+  },
+  {
+    "char": "𩭧",
+    "pinyin": "bǐ",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 同“箄”。 2. 古代帽子上的一种装饰。 3. 胡须和头发斑白。"
+  },
+  {
+    "char": "𩭩",
+    "pinyin": "dòng",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 〔𩭩鬆〕頭髮蓬亂的樣子。《廣韻•送韻》：“𩭩，𩭩鬆，髮皃。”《集韻•送韻》：“𩭩，𩭩鬆，髮亂皃。”"
+  },
+  {
+    "char": "𩭫",
+    "pinyin": "zhǎng",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 头发。"
+  },
+  {
+    "char": "𩭯",
+    "pinyin": "yā",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 〔～鬟〕同“丫环”，婢女。"
+  },
+  {
+    "char": "𩭲",
+    "pinyin": "dí",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. [～髻]同“䯼髻”。"
+  },
+  {
+    "char": "𩭳",
+    "pinyin": "hǒ",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 〈方言〉尾巴动。"
+  },
+  {
+    "char": "𩭷",
+    "pinyin": "mín",
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 掘土貌。"
+  },
+  {
+    "char": "鬉",
+    "pinyin": "zōng",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 同“鬃”：“壮哉此马健且雄，玉花遍身云满～。”"
+  },
+  {
+    "char": "鬊",
+    "pinyin": "shùn",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 指梳頭時掉落的斷髮或亂髮。《儀禮·士喪禮》：“巾柶鬊蚤埋于坎。” 2. 泛指頭髮。《漢書·天文志》：“日出時有黑雲，狀如猋風亂鬊。” 3. 形容毛髮蓬亂的樣子。《龍龕手鑑·長部》：“鬊，毛皃也。”"
+  },
+  {
+    "char": "𩭺",
+    "pinyin": "fù",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 假发髻。"
+  },
+  {
+    "char": "𩭼",
+    "pinyin": "bǎo",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 发髻。 2. 发未长。"
+  },
+  {
+    "char": "𩭽",
+    "pinyin": "kè",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 头发长。“𩮠”的讹字。"
+  },
+  {
+    "char": "𩭾",
+    "pinyin": "máo",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 同“髦”。古代儿童下垂至眉的发式。《説文•髟部》：“𩭾，髪至眉也。《詩》曰：‘紞彼兩𩭾。’”段玉裁注：“許引《毛詩》作𩭾，今則《詩》、《禮》皆作髦。”清王闓運《弔舊賦》：“妙華齡于右𩭾，聲宛宛而猶尋。”"
+  },
+  {
+    "char": "𩭿",
+    "pinyin": "rè",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 细毛。"
+  },
+  {
+    "char": "𩮀",
+    "pinyin": "zōng",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 同“騣”。《齊民要術•養牛馬驢騾》：“𩮀欲戴中骨高三寸。” 2. 束发。也作“緫”。宋梅堯臣《桑鈎》：“少婦首且笄，幼女角已𩮀。” 3. 发乱貌。引申为松散。也作“鬆”。宋陳克《攤破浣溪沙》：“𩮀慢梳頭淺畫眉。”"
+  },
+  {
+    "char": "𩮁",
+    "pinyin": "qià",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 〔～𩮝(xiá)秃。"
+  },
+  {
+    "char": "𩮂",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 同“𩮝”。"
+  },
+  {
+    "char": "𩮃",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 同“鬉”。"
+  },
+  {
+    "char": "𩮄",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 同“髹”。"
+  },
+  {
+    "char": "𩮅",
+    "pinyin": "nà",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 见“䯲”。"
+  },
+  {
+    "char": "𩮉",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 同“鬘”。"
+  },
+  {
+    "char": "𩮎",
+    "pinyin": "zhā",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 须发张竖或手张开貌。元·朱庭玉《青杏子·归隐》套曲：“撚衰髯短发～。”"
+  },
+  {
+    "char": "𩮏",
+    "pinyin": "chán",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩮐",
+    "pinyin": "shè",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𩮑",
+    "pinyin": null,
+    "radical": "髟",
+    "strokes": 18,
+    "explanation": "1. 同“䰀”。"
+  },
+  {
+    "char": "𩮖",
+    "pinyin": "ái",
+    "radical": "髟",
+    "strokes": 20,
+    "explanation": "1. 头发长(zhǎng)的样子。"
+  },
+  {
+    "char": "𩮗",
+    "pinyin": "bàng",
+    "radical": "髟",
+    "strokes": 20,
+    "explanation": "1. 忽然相遇。后作“碰”《説文•髟部》：“𩮗，䰁也。”段玉裁注：“今俗謂卒然相遇曰掽。如滂去聲，字當作𩮗也。” 2. 〔𩮗鬤〕也作“䰃鬤”。发乱貌。单用义同。《龍寵手鑑•镸部》：“𩮗”，同“䰃”。《篇海類編•身體類•髟部》：“𩮗，髮亂皃。䰃本字。” 3. 〔𩮗䰁〕发乱。《集韻•養韻》：“𩮗，𩮗䰁，髮亂。”"
+  },
+  {
+    "char": "𩮘",
+    "pinyin": "hāo",
+    "radical": "髟",
+    "strokes": 20,
+    "explanation": "1. 发貌。"
+  },
+  {
+    "char": "𩮚",
+    "pinyin": "sāo",
+    "radical": "髟",
+    "strokes": 19,
+    "explanation": "1. 〔～～〕发貌。"
+  },
+  {
+    "char": "𩮛",
+    "pinyin": "suǒ",
+    "radical": "髟",
+    "strokes": 20,
+    "explanation": "1. 发坚貌。"
+  },
+  {
+    "char": "𩮜",
+    "pinyin": "tì",
+    "radical": "髟",
+    "strokes": 20,
+    "explanation": "1. 同“剃”。 2. 除去。"
+  }
+]

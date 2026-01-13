@@ -1,0 +1,2095 @@
+[
+  {
+    "char": "𧱄",
+    "pinyin": "kǎn",
+    "radical": "豕",
+    "strokes": 13,
+    "explanation": "1. 猪貌。 2. 猪。"
+  },
+  {
+    "char": "𧱆",
+    "pinyin": "sān",
+    "radical": "豕",
+    "strokes": 12,
+    "explanation": "1. 猪名。"
+  },
+  {
+    "char": "𧸪",
+    "pinyin": "zhàn",
+    "radical": "貝",
+    "strokes": 21,
+    "explanation": "1. 谋人财物。 2. 〈方言〉〔～铜钱〕赚钱。吴语。"
+  },
+  {
+    "char": "𧸫",
+    "pinyin": "gùn",
+    "radical": "貝",
+    "strokes": 20,
+    "explanation": "1. 〈方言〉〔～圆〕〈形〉滚圆。吴语。"
+  },
+  {
+    "char": "贕",
+    "pinyin": "dú",
+    "radical": "貝",
+    "strokes": 22,
+    "explanation": "1. 卵未孵出雏而坏死。"
+  },
+  {
+    "char": "贘",
+    "pinyin": "shǎng",
+    "radical": "貝",
+    "strokes": 22,
+    "explanation": "1. 同“赏”。"
+  },
+  {
+    "char": "𧸲",
+    "pinyin": "zhì",
+    "radical": "貝",
+    "strokes": 22,
+    "explanation": "1. 同“质”。抵押。"
+  },
+  {
+    "char": "𧸿",
+    "pinyin": "chài",
+    "radical": "貝",
+    "strokes": 22,
+    "explanation": "1. 别寄异物。"
+  },
+  {
+    "char": "贙",
+    "pinyin": "xuàn",
+    "radical": "貝",
+    "strokes": 23,
+    "explanation": "1. 分别。 2. 古书上说的一种似狗的野兽。"
+  },
+  {
+    "char": "贚",
+    "pinyin": "lòng",
+    "radical": "貝",
+    "strokes": 23,
+    "explanation": "1. 贫穷。 2. 龙貌。"
+  },
+  {
+    "char": "𧸽",
+    "pinyin": "wèi",
+    "radical": "貝",
+    "strokes": 22,
+    "explanation": "1. 同“遗”。赠。"
+  },
+  {
+    "char": "𧸾",
+    "pinyin": null,
+    "radical": "貝",
+    "strokes": 22,
+    "explanation": "1. 同“贙”。"
+  },
+  {
+    "char": "𧹈",
+    "pinyin": "réng",
+    "radical": "貝",
+    "strokes": 24,
+    "explanation": "1. 〈方〉憨猛。胶辽官话。"
+  },
+  {
+    "char": "𧹊",
+    "pinyin": "yuè",
+    "radical": "貝",
+    "strokes": 24,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧹌",
+    "pinyin": "zī",
+    "radical": "貝",
+    "strokes": 25,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧹐",
+    "pinyin": "luò",
+    "radical": "貝",
+    "strokes": 26,
+    "explanation": "1. 贝壳。"
+  },
+  {
+    "char": "𧹓",
+    "pinyin": null,
+    "radical": "贝",
+    "strokes": 11,
+    "explanation": "1. “𧶔”的类推简化字。"
+  },
+  {
+    "char": "𧹖",
+    "pinyin": null,
+    "radical": "贝",
+    "strokes": 12,
+    "explanation": "1. “賟”的类推简化字。"
+  },
+  {
+    "char": "赥",
+    "pinyin": "xī",
+    "radical": "赤",
+    "strokes": 11,
+    "explanation": "1. 赤。 2. 同“嘻”，笑的声音：“这大圣忍不住，～～的笑出声来。”"
+  },
+  {
+    "char": "𧹛",
+    "pinyin": "zhī",
+    "radical": "赤",
+    "strokes": 11,
+    "explanation": "1. 〔𧹬(yan1)～〕同“胭脂”，一种红色化妆品。 2. 同“杀”。"
+  },
+  {
+    "char": "𧹞",
+    "pinyin": "nǎn",
+    "radical": "赤",
+    "strokes": 12,
+    "explanation": "1. 同“赧”。 2. 〔寘～〕（笛声）缓。"
+  },
+  {
+    "char": "赨",
+    "pinyin": "tóng",
+    "radical": "赤",
+    "strokes": 13,
+    "explanation": "1. 赤色。《説文•赤部》：“赨，赤色也。” 2. 赤虫。《玉篇•虫部》：“赨，赤蟲名。” 3. 同“雄”。《字彙補•赤部》：“赨，古雄字。《孟蜀本草》‘雄黄’作‘赨黄’。”"
+  },
+  {
+    "char": "赩",
+    "pinyin": "xì",
+    "radical": "赤",
+    "strokes": 13,
+    "explanation": "1. 大红色：～光。 2. 光秃无草木。"
+  },
+  {
+    "char": "𧹣",
+    "pinyin": "hán",
+    "radical": "赤",
+    "strokes": 14,
+    "explanation": "1. 赤色。"
+  },
+  {
+    "char": "𧹨",
+    "pinyin": "xī",
+    "radical": "赤",
+    "strokes": 15,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧹩",
+    "pinyin": "lín",
+    "radical": "赤",
+    "strokes": 15,
+    "explanation": "1. 同“炼”。见《五侯鲭字海》。 2. 义未详。见《改併五音类聚四声篇海》。"
+  },
+  {
+    "char": "赮",
+    "pinyin": "xiá",
+    "radical": "赤",
+    "strokes": 16,
+    "explanation": "1. 同“霞”，彩霞。"
+  },
+  {
+    "char": "𧹬",
+    "pinyin": "yān",
+    "radical": "赤",
+    "strokes": 16,
+    "explanation": "1. 〔～𧹛(zhī)〕同“胭脂”，一种红色化妆品。"
+  },
+  {
+    "char": "𧹭",
+    "pinyin": "xù",
+    "radical": "赤",
+    "strokes": 16,
+    "explanation": "1. 赭色。"
+  },
+  {
+    "char": "赯",
+    "pinyin": "táng",
+    "radical": "赤",
+    "strokes": 17,
+    "explanation": "1. 红色，多用指人的脸色：紫～脸。"
+  },
+  {
+    "char": "𧹲",
+    "pinyin": "hù",
+    "radical": "赤",
+    "strokes": 17,
+    "explanation": "1. 朝霞。"
+  },
+  {
+    "char": "𧹳",
+    "pinyin": "gàn",
+    "radical": "赤",
+    "strokes": 17,
+    "explanation": "1. 赤色。 2. 浊。"
+  },
+  {
+    "char": "𧹴",
+    "pinyin": "xù",
+    "radical": "赤",
+    "strokes": 17,
+    "explanation": "1. 绛。 2. 赤。"
+  },
+  {
+    "char": "𧹶",
+    "pinyin": null,
+    "radical": "赤",
+    "strokes": 18,
+    "explanation": "1. 同“𧹽”。"
+  },
+  {
+    "char": "𧹺",
+    "pinyin": "cuì",
+    "radical": "赤",
+    "strokes": 19,
+    "explanation": "1. 疑为“毳”讹字。 2. 义未详。"
+  },
+  {
+    "char": "𧹽",
+    "pinyin": "xì",
+    "radical": "赤",
+    "strokes": 21,
+    "explanation": "1. 赤色。"
+  },
+  {
+    "char": "𧹾",
+    "pinyin": "hú",
+    "radical": "赤",
+    "strokes": 21,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧺅",
+    "pinyin": "yān",
+    "radical": "赤",
+    "strokes": 23,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "赲",
+    "pinyin": "lì",
+    "radical": "走",
+    "strokes": 9,
+    "explanation": "1. 〔～趩（chì）〕行走的样子。"
+  },
+  {
+    "char": "𧺎",
+    "pinyin": "yì",
+    "radical": "走",
+    "strokes": 9,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "赸",
+    "pinyin": "shàn",
+    "radical": "走",
+    "strokes": 10,
+    "explanation": "1. 跳跃。 2. 走开：“你也～，我也～，请先生休讪。”"
+  },
+  {
+    "char": "𧺏",
+    "pinyin": "chí",
+    "radical": "走",
+    "strokes": 10,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧺐",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 10,
+    "explanation": "1. 同“𧿺”。"
+  },
+  {
+    "char": "𧺒",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 10,
+    "explanation": "1. 同“踤”。"
+  },
+  {
+    "char": "𧺜",
+    "pinyin": "jiào",
+    "radical": "走",
+    "strokes": 10,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "赹",
+    "pinyin": "qióng",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 独行。"
+  },
+  {
+    "char": "赺",
+    "pinyin": "yǐn",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“趛”。"
+  },
+  {
+    "char": "赻",
+    "pinyin": "xiǎn",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“鲜”，少。 2. 走不及。"
+  },
+  {
+    "char": "赼",
+    "pinyin": "zī",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“趑”。"
+  },
+  {
+    "char": "赽",
+    "pinyin": "jué",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 马以足踢人。 2. 急速。 3. 马疾行。"
+  },
+  {
+    "char": "𧺝",
+    "pinyin": "yì",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧺟",
+    "pinyin": "tán",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 〔～踔〕且行且退。"
+  },
+  {
+    "char": "𧺠",
+    "pinyin": "chì",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 超。 2. 行。"
+  },
+  {
+    "char": "𧺡",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“䟛”。"
+  },
+  {
+    "char": "𧺢",
+    "pinyin": "tòu",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 走。 2. 自投下。 3. 见“𧽦”。"
+  },
+  {
+    "char": "𧺣",
+    "pinyin": "zōng",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 急行的样子。"
+  },
+  {
+    "char": "𧺤",
+    "pinyin": "qiú",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 足不伸。《集韻•尤韻》：“𧺤，足不伸也。” 2. 同“跔”。蜷曲不伸。清范寅《越諺》卷中：“𧺤，物屈不伸，及伸而屈脚筋。𧺤同跔。”"
+  },
+  {
+    "char": "𧺧",
+    "pinyin": "chì",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“𧺿”。超。"
+  },
+  {
+    "char": "𧺨",
+    "pinyin": "xǐ",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 移。疑同“徙”。"
+  },
+  {
+    "char": "𧺰",
+    "pinyin": "nì",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“逆”。"
+  },
+  {
+    "char": "𧺲",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“𧺼”。"
+  },
+  {
+    "char": "𧺴",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 同“啎”。"
+  },
+  {
+    "char": "趃",
+    "pinyin": "dié",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 大步快跑。 2. 走貌。"
+  },
+  {
+    "char": "趆",
+    "pinyin": "dī",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 小步快跑。"
+  },
+  {
+    "char": "趇",
+    "pinyin": "xì",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "趈",
+    "pinyin": "zhān",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 坐立不动貌。"
+  },
+  {
+    "char": "趉",
+    "pinyin": "jué",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧺶",
+    "pinyin": "chù",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧺷",
+    "pinyin": "sù",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "𧺸",
+    "pinyin": "yóng",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 急走。"
+  },
+  {
+    "char": "𧺹",
+    "pinyin": "jù",
+    "radical": "走",
+    "strokes": 11,
+    "explanation": "1. 行走的样子。"
+  },
+  {
+    "char": "𧺺",
+    "pinyin": "bá",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 行走的样子。 2. 同“跋”。"
+  },
+  {
+    "char": "𧺼",
+    "pinyin": "cǐ",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 浅渡。"
+  },
+  {
+    "char": "𧺽",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 同“趆”。"
+  },
+  {
+    "char": "𧺾",
+    "pinyin": "pǎn",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "𧺿",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 同“跇”。"
+  },
+  {
+    "char": "𧻁",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 同“䠗”。"
+  },
+  {
+    "char": "𧻃",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 同“趣”。 2. 同“𢌨”。"
+  },
+  {
+    "char": "𧻍",
+    "pinyin": "zhǎi",
+    "radical": "走",
+    "strokes": 12,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "趍",
+    "pinyin": "chí",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 〔趍趙〕行走迟缓。《説文•走部》：“趍，趍趙，夂也。” 2. 驰，奔跑。 3. 众多。 4. 同“趨”。《廣韻•虞韻》：“趨，走也。趍，俗。”《集韻•遇韻》：“趨，或作趍。”《詩•齊風•猗嗟》：“巧趨蹌兮。” 5. 偏，不正。"
+  },
+  {
+    "char": "趐",
+    "pinyin": "xuè",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 进。 2. 飞。"
+  },
+  {
+    "char": "趓",
+    "pinyin": "duǒ",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 同“躲”：“被隋兵所追，无处～藏。”"
+  },
+  {
+    "char": "𧻒",
+    "pinyin": "xiàn",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "𧻓",
+    "pinyin": "bèng",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧻔",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 同“𨀕”。"
+  },
+  {
+    "char": "𧻕",
+    "pinyin": "qì",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 侧行。"
+  },
+  {
+    "char": "𧻖",
+    "pinyin": "zhōu",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 〔～⿺辶⿱罒心〕行不进。"
+  },
+  {
+    "char": "𧻗",
+    "pinyin": "jù",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 走。 2. 踰。"
+  },
+  {
+    "char": "𧻘",
+    "pinyin": "qiè",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 跳的样子。"
+  },
+  {
+    "char": "𧻚",
+    "pinyin": "yuán",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 〔～田〕同“辕田”，古代按休耕需要分配的土地。 2. 楚国文字隶定字，同“桓”。〔～～趩趩〕，同“桓桓翼翼”。"
+  },
+  {
+    "char": "𧻜",
+    "pinyin": "guì",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 奔跑。 2. 同“跪”。"
+  },
+  {
+    "char": "𧻝",
+    "pinyin": "zuī",
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 同“𧼭”。走也。"
+  },
+  {
+    "char": "𧻧",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 13,
+    "explanation": "1. 同“䞣”。"
+  },
+  {
+    "char": "趘",
+    "pinyin": "xí",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧻰",
+    "pinyin": "hú",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 走。 2. 〈古壮字〉读音caux，开始；于是；就。"
+  },
+  {
+    "char": "𧻱",
+    "pinyin": "qiú",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 违。"
+  },
+  {
+    "char": "𧻲",
+    "pinyin": "hái",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 延擱不去。 2. 斜足。 3. 斜走。"
+  },
+  {
+    "char": "𧻳",
+    "pinyin": "fù",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 同“䞜”。 2. 到。 3. 同“仆”。"
+  },
+  {
+    "char": "𧻴",
+    "pinyin": "làng",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 〔～趤（dàng）〕逸游。"
+  },
+  {
+    "char": "𧻵",
+    "pinyin": "shà",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 〔～～〕急速行走的样子。"
+  },
+  {
+    "char": "𧻶",
+    "pinyin": "xī",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "𧻷",
+    "pinyin": "bū",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 〔～～〕匍匐，伏地而行。"
+  },
+  {
+    "char": "𧻸",
+    "pinyin": "shì",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 踰。"
+  },
+  {
+    "char": "𧻹",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 同“踊”。"
+  },
+  {
+    "char": "𧻺",
+    "pinyin": "guāng",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 行走惊慌的样子。疑同“俇②”。 2. 同“𨀕”。"
+  },
+  {
+    "char": "𧻼",
+    "pinyin": "niè",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 行。"
+  },
+  {
+    "char": "𧻿",
+    "pinyin": "hǒu",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 趋行不进貌。 2. 〈古壮字〉再，又。"
+  },
+  {
+    "char": "𧼊",
+    "pinyin": "mì",
+    "radical": "走",
+    "strokes": 14,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "趛",
+    "pinyin": "yǐn",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 低头快走。"
+  },
+  {
+    "char": "趞",
+    "pinyin": "què",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 行走轻捷的样子。 2. 同“趚”，侧行。 3. 同“踖”，践踏。"
+  },
+  {
+    "char": "趠",
+    "pinyin": "chuō",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 同“踔”。 2. 超绝；特出。 3. 远走。"
+  },
+  {
+    "char": "趢",
+    "pinyin": "lù",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 〔～趗（cù）〕步子小而急促，如“～～胡马蹄。”"
+  },
+  {
+    "char": "趤",
+    "pinyin": "dàng",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 〔𧻴～〕逸游。"
+  },
+  {
+    "char": "𧼎",
+    "pinyin": "è",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 〔𧼎䞙(za2)〕急走貌。"
+  },
+  {
+    "char": "𧼏",
+    "pinyin": "xián",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 急走。"
+  },
+  {
+    "char": "𧼐",
+    "pinyin": "yǔn",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 走意。 2. 同“䞫”，走貌。"
+  },
+  {
+    "char": "𧼑",
+    "pinyin": "xù",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 盗走。"
+  },
+  {
+    "char": "𧼒",
+    "pinyin": "qìn",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 行走的样子。"
+  },
+  {
+    "char": "𧼓",
+    "pinyin": "dōng",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 狂跑。"
+  },
+  {
+    "char": "𧼔",
+    "pinyin": "léng",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 越。"
+  },
+  {
+    "char": "𧼕",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 同“𧻕”。"
+  },
+  {
+    "char": "𧼖",
+    "pinyin": "lán",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 〔～赺〕走貌。"
+  },
+  {
+    "char": "𧼗",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 同“䞞”。"
+  },
+  {
+    "char": "𧼘",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 同“䞚”。"
+  },
+  {
+    "char": "𧼙",
+    "pinyin": "chǒng",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 小孩行走。"
+  },
+  {
+    "char": "𧼜",
+    "pinyin": "cù",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 急速。"
+  },
+  {
+    "char": "𧼠",
+    "pinyin": "bēi",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 小行。"
+  },
+  {
+    "char": "𧼤",
+    "pinyin": "dào",
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 明宗室人名用字：朱载～，南康府六世，朱厚𤑿子，封奉国将军。见《江西省大志》卷三（注：朱厚𤑿，南康府六世，封辅国将军。）。"
+  },
+  {
+    "char": "趥",
+    "pinyin": "qiū",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 行貌。 2. 蹴。 3. 藉。"
+  },
+  {
+    "char": "𧼟",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 15,
+    "explanation": "1. 同“𧻙”。"
+  },
+  {
+    "char": "𧼨",
+    "pinyin": "jié",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 越过。 2. 见“趌”。"
+  },
+  {
+    "char": "𧼩",
+    "pinyin": "chòng",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“𧽿”。 2. 〔挵(nòng)～〕邪行。"
+  },
+  {
+    "char": "𧼪",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“跇”。"
+  },
+  {
+    "char": "𧼫",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“𢔥”。"
+  },
+  {
+    "char": "𧼬",
+    "pinyin": "cuī",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“䞭”。进貌。"
+  },
+  {
+    "char": "𧼭",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“𧽏”。"
+  },
+  {
+    "char": "𧼯",
+    "pinyin": "shù",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 马跳。 2. 马～前，马前负。 3. 同“逾”。"
+  },
+  {
+    "char": "𧼰",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“䅤”。"
+  },
+  {
+    "char": "𧼱",
+    "pinyin": "fú",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“匐”。 2. 走。"
+  },
+  {
+    "char": "𧼳",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“䞣”。"
+  },
+  {
+    "char": "𧼴",
+    "pinyin": "zhì",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 〔䞵～〕缓步行走的样子。"
+  },
+  {
+    "char": "𧼵",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“䞧”。"
+  },
+  {
+    "char": "𧼶",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“𧼰”。"
+  },
+  {
+    "char": "𧽄",
+    "pinyin": "jié",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“𧾯”。 2. 走貌。"
+  },
+  {
+    "char": "𧽅",
+    "pinyin": "zhá",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 〔～洽〕路貌。"
+  },
+  {
+    "char": "𧽆",
+    "pinyin": "zhān",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“𧾡”。移。"
+  },
+  {
+    "char": "𧽉",
+    "pinyin": "yǎn",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧽊",
+    "pinyin": "hái",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧽋",
+    "pinyin": "wǔ",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 轻步行走的样子。"
+  },
+  {
+    "char": "𧽌",
+    "pinyin": "huá",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧽎",
+    "pinyin": "yáo",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 〔～～〕疾行。"
+  },
+  {
+    "char": "𧽏",
+    "pinyin": "sōu",
+    "radical": "走",
+    "strokes": 16,
+    "explanation": "1. 同“䞭”。 2. 见“𧻖”。 3. 欲跳貌。 4. 走貌。 5. 〔趜～〕体不伸。"
+  },
+  {
+    "char": "𧽐",
+    "pinyin": "qiān",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 〔～～〕（跛脚）行走的样子。"
+  },
+  {
+    "char": "𧽑",
+    "pinyin": "jí",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 疾走。"
+  },
+  {
+    "char": "𧽒",
+    "pinyin": "xiòng",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 行。"
+  },
+  {
+    "char": "𧽓",
+    "pinyin": "qì",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 走貌。疑同“趌”。"
+  },
+  {
+    "char": "𧽔",
+    "pinyin": "jūn",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 同“𧾝”。走。"
+  },
+  {
+    "char": "𧽖",
+    "pinyin": "hái",
+    "radical": "走",
+    "strokes": 17,
+    "explanation": "1. 同“𧻲”。留意。"
+  },
+  {
+    "char": "𧽞",
+    "pinyin": "yǎn",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "𧽟",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 同“𧾂”。"
+  },
+  {
+    "char": "𧽠",
+    "pinyin": "cuī",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 逼。"
+  },
+  {
+    "char": "𧽢",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 同“摶”。"
+  },
+  {
+    "char": "𧽣",
+    "pinyin": "zhāng",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧽤",
+    "pinyin": "piāo",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 行走轻捷。"
+  },
+  {
+    "char": "𧽥",
+    "pinyin": "lù",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 〔～趚（sù）〕跑动的声音。"
+  },
+  {
+    "char": "𧽦",
+    "pinyin": "zhī",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 〔～～𧺢(yì)〕走貌。"
+  },
+  {
+    "char": "𧽧",
+    "pinyin": "chù",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 直貌。"
+  },
+  {
+    "char": "𧽨",
+    "pinyin": "mì",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 〔～䞶（tì）〕狂走的样子。"
+  },
+  {
+    "char": "𧽩",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 同“蹡”。"
+  },
+  {
+    "char": "𧽫",
+    "pinyin": "liàn",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧽲",
+    "pinyin": "lì",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 义未详。 2. 〈古壮字〉读音leiq，顺便。"
+  },
+  {
+    "char": "趬",
+    "pinyin": "qiāo",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 举步轻捷。 2. 转行。 3. 举足。 4. 向上翘起。"
+  },
+  {
+    "char": "𧽶",
+    "pinyin": "é",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 蹉行。"
+  },
+  {
+    "char": "𧽷",
+    "pinyin": "sù",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧽻",
+    "pinyin": "jú",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 狂走。"
+  },
+  {
+    "char": "𧽼",
+    "pinyin": "tán",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧽽",
+    "pinyin": "liáo",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 阔步前进的样子。"
+  },
+  {
+    "char": "𧽾",
+    "pinyin": "sān",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 游动的样子。"
+  },
+  {
+    "char": "𧽿",
+    "pinyin": "dòng",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧾁",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 同“𧾓”。"
+  },
+  {
+    "char": "𧾂",
+    "pinyin": "zhí",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 同“䟈”。 2. 走貌。"
+  },
+  {
+    "char": "𧾆",
+    "pinyin": "xuàn",
+    "radical": "走",
+    "strokes": 18,
+    "explanation": "1. 始走意。"
+  },
+  {
+    "char": "𧾇",
+    "pinyin": "líng",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. 义未详。疑同“𧾮”。"
+  },
+  {
+    "char": "𧾊",
+    "pinyin": "dēng",
+    "radical": "走",
+    "strokes": 19,
+    "explanation": "1. “登”的增旁俗字。"
+  },
+  {
+    "char": "𧾍",
+    "pinyin": "zhān",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 趁。 2. 移。 3. 循。 4. 转。"
+  },
+  {
+    "char": "𧾎",
+    "pinyin": "xuān",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 急行。"
+  },
+  {
+    "char": "𧾏",
+    "pinyin": "qǐn",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 低头快步急走或跑。"
+  },
+  {
+    "char": "𧾐",
+    "pinyin": "jiào",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 偃。 2. 小道。"
+  },
+  {
+    "char": "𧾑",
+    "pinyin": "pì",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧾔",
+    "pinyin": "hǎn",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "𧾚",
+    "pinyin": "yú",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 安行。"
+  },
+  {
+    "char": "𧾛",
+    "pinyin": "guó",
+    "radical": "走",
+    "strokes": 20,
+    "explanation": "1. 〔～䞽(suǒ)〕足长在样子。"
+  },
+  {
+    "char": "𧾝",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 21,
+    "explanation": "1. 同“𧾩”。"
+  },
+  {
+    "char": "𧾠",
+    "pinyin": "xún",
+    "radical": "走",
+    "strokes": 21,
+    "explanation": "1. 同“𧾩”。走。"
+  },
+  {
+    "char": "𧾡",
+    "pinyin": "chán",
+    "radical": "走",
+    "strokes": 22,
+    "explanation": "1. 移动。"
+  },
+  {
+    "char": "𧾢",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 22,
+    "explanation": "1. 同“𧾂”。"
+  },
+  {
+    "char": "𧾣",
+    "pinyin": "jú",
+    "radical": "走",
+    "strokes": 22,
+    "explanation": "1. 走意。 2. 走貌。"
+  },
+  {
+    "char": "𧾤",
+    "pinyin": "yǎn",
+    "radical": "走",
+    "strokes": 22,
+    "explanation": "1. 走。"
+  },
+  {
+    "char": "𧾥",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 22,
+    "explanation": "1. 同“䢱”。"
+  },
+  {
+    "char": "𧾧",
+    "pinyin": "hòng",
+    "radical": "走",
+    "strokes": 22,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧾨",
+    "pinyin": "xiàn",
+    "radical": "走",
+    "strokes": 23,
+    "explanation": "1. 走意。"
+  },
+  {
+    "char": "𧾩",
+    "pinyin": "xuàn",
+    "radical": "走",
+    "strokes": 23,
+    "explanation": "1. 走。 2. 大。"
+  },
+  {
+    "char": "𧾮",
+    "pinyin": "líng",
+    "radical": "走",
+    "strokes": 24,
+    "explanation": "1. 犬走逐貌。"
+  },
+  {
+    "char": "𧾯",
+    "pinyin": "jié",
+    "radical": "走",
+    "strokes": 23,
+    "explanation": "1. 走意。"
+  },
+  {
+    "char": "𧾰",
+    "pinyin": "yì",
+    "radical": "走",
+    "strokes": 24,
+    "explanation": "1. 趋进貌。"
+  },
+  {
+    "char": "𧾱",
+    "pinyin": "qú",
+    "radical": "走",
+    "strokes": 25,
+    "explanation": "1. 走顾貌。"
+  },
+  {
+    "char": "𧾲",
+    "pinyin": "gān",
+    "radical": "走",
+    "strokes": 24,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𧾳",
+    "pinyin": "fèng",
+    "radical": "走",
+    "strokes": 25,
+    "explanation": "1. 同“麷”。 2. 义未详。"
+  },
+  {
+    "char": "𧾵",
+    "pinyin": "jué",
+    "radical": "走",
+    "strokes": 27,
+    "explanation": "1. 大步。"
+  },
+  {
+    "char": "𧾶",
+    "pinyin": null,
+    "radical": "走",
+    "strokes": 28,
+    "explanation": "1. 同“趋”。"
+  },
+  {
+    "char": "𧾻",
+    "pinyin": "jiù",
+    "radical": "足",
+    "strokes": 9,
+    "explanation": "1. 〔～～䠗〕走路跌跌撞撞的样子。"
+  },
+  {
+    "char": "𧾽",
+    "pinyin": "jì",
+    "radical": "足",
+    "strokes": 9,
+    "explanation": "1. 佛经音译字，无实义。"
+  },
+  {
+    "char": "𧾾",
+    "pinyin": "jǐ",
+    "radical": "足",
+    "strokes": 9,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "趶",
+    "pinyin": "kuà",
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 踏。 2. 同“胯”，两股间。 3. 踞。"
+  },
+  {
+    "char": "䟖",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 同“趾”。"
+  },
+  {
+    "char": "𧿅",
+    "pinyin": "xí",
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 屈膝坐。"
+  },
+  {
+    "char": "𧿆",
+    "pinyin": "pāng",
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 同“爬”。 2. ～跋。 3. 同“圯”。 4. 喃字。读音nhảy，跳舞。"
+  },
+  {
+    "char": "𧿈",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. “𨇁”的类推简化字。"
+  },
+  {
+    "char": "𧿉",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 同“趶”。"
+  },
+  {
+    "char": "𧿋",
+    "pinyin": "kù",
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 同“跨”。"
+  },
+  {
+    "char": "𧿌",
+    "pinyin": "zhā",
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 〈方〉〔跁～〕（bàzhā）。同“跁踷、跁蹠”等。①原指牲畜践踏庄稼；②引申为人胡乱踩踏：刚扫完地，别乱～｜新鞋别～泥。"
+  },
+  {
+    "char": "𧿏",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 10,
+    "explanation": "1. 同“跁”。"
+  },
+  {
+    "char": "趽",
+    "pinyin": "fāng",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 趼。 2. 曲胫马。 3. 小腿弯曲。"
+  },
+  {
+    "char": "𧿓",
+    "pinyin": "hù",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 同“𧿟”。〔～跪〕双膝着地。"
+  },
+  {
+    "char": "𧿔",
+    "pinyin": "nù",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 行。"
+  },
+  {
+    "char": "𧿕",
+    "pinyin": "è",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 大跛。"
+  },
+  {
+    "char": "𧿖",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 同“跫”。"
+  },
+  {
+    "char": "𧿗",
+    "pinyin": "dǔn",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 受钱完毕。"
+  },
+  {
+    "char": "𧿘",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 同“升”。由低向高移动。"
+  },
+  {
+    "char": "𧿙",
+    "pinyin": "wán",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 〔躜～〕蹲。"
+  },
+  {
+    "char": "𧿚",
+    "pinyin": "fēn",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 蹶。"
+  },
+  {
+    "char": "𧿝",
+    "pinyin": "xī",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 迹。疑同“蹂”。"
+  },
+  {
+    "char": "𧿞",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 同“趑”。 2. 古壮字。读音gamj，跨（过）。"
+  },
+  {
+    "char": "𧿠",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 同“䟡”。"
+  },
+  {
+    "char": "𧿥",
+    "pinyin": "bié",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 同“䟤”。"
+  },
+  {
+    "char": "𧿧",
+    "pinyin": "tuò",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 同“跅” 2. 〈古壮字〉读音gaen，跟，跟随，随，随从。"
+  },
+  {
+    "char": "𧿨",
+    "pinyin": "bǎn",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 〈方言〉蹦跶。 2. 〈方言〉挣扎。 3. 喃字。读音trở，返回；反转。"
+  },
+  {
+    "char": "𧿩",
+    "pinyin": "gé",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "跇",
+    "pinyin": "yì",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 超越：“～峦阬，超唐陂。”"
+  },
+  {
+    "char": "跉",
+    "pinyin": "líng",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 〔～䟓〕①行走的样子；②脚细长；③独行。 2. 徐行不正的样子。"
+  },
+  {
+    "char": "跊",
+    "pinyin": "mèi",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 践。"
+  },
+  {
+    "char": "跍",
+    "pinyin": "kū",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 蹲。"
+  },
+  {
+    "char": "跒",
+    "pinyin": "qiǎ",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 〔跁（bà）～〕见“跁”1。 2. 〔跁（páo）～〕见“跁”2。"
+  },
+  {
+    "char": "跓",
+    "pinyin": "zhù",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 停足。"
+  },
+  {
+    "char": "跘",
+    "pinyin": "pán",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 〔～旋〕周旋进退。 2. 足跘。 3. 交足坐，盘足开膝坐。 4. 方言，跌倒。"
+  },
+  {
+    "char": "跜",
+    "pinyin": "ní",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 〔躨～〕见“躨”。"
+  },
+  {
+    "char": "䟤",
+    "pinyin": "bì",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 蹴。 2. 足击。"
+  },
+  {
+    "char": "𧿲",
+    "pinyin": "bó",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 急行貌。 2. 同“䟺”。 3. 足不前。"
+  },
+  {
+    "char": "𧿳",
+    "pinyin": "fú",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 跳。"
+  },
+  {
+    "char": "𧿴",
+    "pinyin": "mò",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 行过。"
+  },
+  {
+    "char": "𧿵",
+    "pinyin": "jiǎ",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 同“甲”。行声。"
+  },
+  {
+    "char": "𧿶",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 同“跎”。"
+  },
+  {
+    "char": "𧿷",
+    "pinyin": "yù",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 行不正。"
+  },
+  {
+    "char": "𧿺",
+    "pinyin": "jué",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 行貌。 2. 〈方言〉徐州谓前脚掌贴着地面踢的动作为～。"
+  },
+  {
+    "char": "𧿻",
+    "pinyin": "jú",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 足。"
+  },
+  {
+    "char": "𧿼",
+    "pinyin": "guā",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 同“𬦦”。 2. 脚掌上的纹理。"
+  },
+  {
+    "char": "𧿽",
+    "pinyin": "pǒ",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 〔～躃〕跛脚。"
+  },
+  {
+    "char": "𨀀",
+    "pinyin": "nǐ",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 脚破。 2. 同“跈”。"
+  },
+  {
+    "char": "𨀄",
+    "pinyin": "wǎ",
+    "radical": "足",
+    "strokes": 11,
+    "explanation": "1. 同“𧿁”。〔～跀〕"
+  },
+  {
+    "char": "𨀅",
+    "pinyin": "yǎn",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 疾行貌。疑同“𨁹”。"
+  },
+  {
+    "char": "𨀔",
+    "pinyin": "chǒu",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 脚趾。"
+  },
+  {
+    "char": "跠",
+    "pinyin": "yí",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 踞，蹲。"
+  },
+  {
+    "char": "跢",
+    "pinyin": "dài",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 跌倒。 2. 小孩行走的样子。 3. 携幼儿行走。 4. 同“踟”。"
+  },
+  {
+    "char": "跭",
+    "pinyin": "xiáng",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 〔～𨇯〕①竖立；②行不进。"
+  },
+  {
+    "char": "跰",
+    "pinyin": "pián",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 〔～胝〕同“胼胝”。 2. 〔～𨇤〕走路偏偏跌跌的样子。 3. 〔～～〕逃跑的样子。"
+  },
+  {
+    "char": "𨀕",
+    "pinyin": "kuāng",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 〔～～〕走得很快的样子。 2. 喃字。同“𠫾”。"
+  },
+  {
+    "char": "𨀖",
+    "pinyin": "hài",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 急行。"
+  },
+  {
+    "char": "𨀘",
+    "pinyin": "xiáng",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 趋行。"
+  },
+  {
+    "char": "𨀙",
+    "pinyin": "xī",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 同“趌”。行。"
+  },
+  {
+    "char": "𨀛",
+    "pinyin": "cún",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 迹。 2. 同“蹲”。"
+  },
+  {
+    "char": "𨀜",
+    "pinyin": "tóng",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 走貌。"
+  },
+  {
+    "char": "𨀝",
+    "pinyin": "ruò",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 足掌上的纹理。"
+  },
+  {
+    "char": "𨀟",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 同“踱”。"
+  },
+  {
+    "char": "𨀠",
+    "pinyin": "chè",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 歧路。"
+  },
+  {
+    "char": "𨀥",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 同“趑”。"
+  },
+  {
+    "char": "𨀧",
+    "pinyin": "zhěng",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 足。"
+  },
+  {
+    "char": "𨀨",
+    "pinyin": "zā",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 〔蹙～〕行貌。"
+  },
+  {
+    "char": "𨀫",
+    "pinyin": "kāng",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 〔～跒〕蹀足。"
+  },
+  {
+    "char": "𨀬",
+    "pinyin": "zài",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 足。"
+  },
+  {
+    "char": "𨀮",
+    "pinyin": "yuān",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 绊倒。 2. 急疾。"
+  },
+  {
+    "char": "𨀯",
+    "pinyin": "qióng",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𨀳",
+    "pinyin": "fá",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 同“伐”。"
+  },
+  {
+    "char": "𨀴",
+    "pinyin": "xún",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 义未详。"
+  },
+  {
+    "char": "𨀶",
+    "pinyin": "jì",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 同“旡”。"
+  },
+  {
+    "char": "𨀸",
+    "pinyin": "chā",
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 佛经译音字。"
+  },
+  {
+    "char": "跾",
+    "pinyin": "shū",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 行走迅速。 2. 脚病。"
+  },
+  {
+    "char": "跿",
+    "pinyin": "tú",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 〔～跔（jū）〕光着脚，如“虎挚之士，～～科头，贯颐奋戟者，至不可胜计也。”"
+  },
+  {
+    "char": "踀",
+    "pinyin": "chuò",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 〔～～〕同“龊龊”，谨小慎微。"
+  },
+  {
+    "char": "踂",
+    "pinyin": "niè",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 一种腿病，两脚不能交替前伸行走。"
+  },
+  {
+    "char": "踃",
+    "pinyin": "xiāo",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 〔跳～〕动。 2. 跳。"
+  },
+  {
+    "char": "踄",
+    "pinyin": "bù",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 同“步”。"
+  },
+  {
+    "char": "踇",
+    "pinyin": "mǔ",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 行貌。"
+  },
+  {
+    "char": "踍",
+    "pinyin": "qiāo",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 同“骹”，小腿：“彩巾缠～幅半斜。”"
+  },
+  {
+    "char": "𨁀",
+    "pinyin": null,
+    "radical": "足",
+    "strokes": 13,
+    "explanation": "1. 同“跾”。"
+  },
+  {
+    "char": "𨁁",
+    "pinyin": "xuàn",
+    "radical": "足",
+    "strokes": 12,
+    "explanation": "1. 缓慢地走。"
+  },
+  {
+    "char": "𨁂",
+    "pinyin": "xié",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 〔～跌〕复姓。"
+  },
+  {
+    "char": "𨁃",
+    "pinyin": "tī",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 践踏。〔𨁃蹬〕同“梯蹬”。"
+  },
+  {
+    "char": "𨁄",
+    "pinyin": "hàn",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 偏立。"
+  },
+  {
+    "char": "𨁅",
+    "pinyin": "xiān",
+    "radical": "足",
+    "strokes": 14,
+    "explanation": "1. 行。"
+  }
+]

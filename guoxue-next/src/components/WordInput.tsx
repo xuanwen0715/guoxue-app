@@ -5,6 +5,7 @@ import { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@/context/QueryContext';
 import { useAuth } from '@/context/AuthContext';
 import OcrResultModal from './OcrResultModal';
+import AutoComplete, { Suggestion } from './AutoComplete';
 import Link from 'next/link';
 
 interface OcrSuggestion {
@@ -119,12 +120,9 @@ export default function WordInput() {
     setWord(text);
   };
 
-  // 处理Enter键查询
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && word.trim()) {
-      e.preventDefault();
-      handleQuery();
-    }
+  // 处理自动完成选择
+  const handleAutoCompleteSelect = (suggestion: Suggestion) => {
+    setWord(suggestion.text);
   };
 
   return (
@@ -136,16 +134,16 @@ export default function WordInput() {
             {t('input.wordLabel')}
           </label>
           <div className="input-with-dict">
-            <input
-              type="text"
-              id="word-input"
-              className="field"
+            <AutoComplete
               value={word}
-              onChange={(e) => setWord(e.target.value)}
-              onKeyDown={handleKeyDown}
-              inputMode="text"
+              onChange={setWord}
+              onSelect={handleAutoCompleteSelect}
+              type="all"
               placeholder={t('input.wordPlaceholder')}
-              aria-describedby="word-hint"
+              className="field"
+              debounceMs={300}
+              minChars={1}
+              maxSuggestions={8}
             />
             <Link href={`/${locale}/dictionary`} className="dict-shortcut" title={t('nav.dictionary')}>
               <span className="dict-icon">典</span>
