@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
+import StrokeOrderLearning from './StrokeOrderLearning';
 
 interface CharInfo {
   char: string;
@@ -23,6 +24,7 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
   const [charInfos, setCharInfos] = useState<CharInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [strokeLearningChar, setStrokeLearningChar] = useState<string | null>(null);
 
   // Extract single Chinese characters for lookup (support rare/ext chars)
   const HAN_REGEX: RegExp = (() => {
@@ -106,6 +108,13 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
                       <span className="char-trad">{info.traditional}</span>
                     )}
                     <span className="char-pinyin">{info.pinyin}</span>
+                    <button
+                      className="stroke-learn-btn"
+                      onClick={() => setStrokeLearningChar(info.char)}
+                      title="学习笔画顺序"
+                    >
+                      ✍️
+                    </button>
                   </div>
                   <div className="char-meta-row">
                     {info.radical && (
@@ -131,6 +140,15 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
             </div>
           )}
         </div>
+      )}
+
+      {/* Stroke Order Learning Modal */}
+      {strokeLearningChar && (
+        <StrokeOrderLearning
+          character={strokeLearningChar}
+          isOpen={true}
+          onClose={() => setStrokeLearningChar(null)}
+        />
       )}
 
       <style jsx>{`
@@ -269,6 +287,30 @@ export default function DictQuickCard({ word }: DictQuickCardProps) {
         .char-pinyin {
           font-size: 14px;
           color: var(--muted);
+        }
+
+        .stroke-learn-btn {
+          margin-left: auto;
+          background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.1));
+          border: 1px solid rgba(220, 38, 38, 0.2);
+          border-radius: 6px;
+          padding: 4px 8px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .stroke-learn-btn:hover {
+          background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(239, 68, 68, 0.15));
+          border-color: rgba(220, 38, 38, 0.3);
+          transform: translateY(-1px);
+        }
+
+        .stroke-learn-btn:active {
+          transform: translateY(0);
         }
 
         .char-meta-row {

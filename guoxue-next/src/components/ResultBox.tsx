@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@/context/QueryContext';
 import DictQuickCard from './DictQuickCard';
+import StrokeOrderLearning from './StrokeOrderLearning';
 
 // 转换 [b]...[/b] 为 <strong>
 function toHtmlWithBB(text: string): string {
@@ -15,6 +17,8 @@ function toHtmlWithBB(text: string): string {
 
 // 结构化结果渲染组件
 function StructuredResult({ result, word }: { result: any; word: string }) {
+  const [strokeLearningChar, setStrokeLearningChar] = useState<string | null>(null);
+
   const firstChar = (result.term || word || '').charAt(0);
   const etymologyUrl = firstChar ? `https://hanziyuan.net/#${encodeURIComponent(firstChar)}` : '';
 
@@ -77,6 +81,19 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
                     <span key={i} className="chip" role="button" tabIndex={0}>{v}</span>
                   ))}
                 </div>
+              </div>
+            )}
+            {firstChar && (
+              <div className="column">
+                <h4>笔画学习 · Stroke Order</h4>
+                <button
+                  className="stroke-order-btn"
+                  onClick={() => setStrokeLearningChar(firstChar)}
+                  title={`学习 "${firstChar}" 的笔画顺序`}
+                >
+                  <span className="btn-icon">✍️</span>
+                  <span className="btn-text">学习书写</span>
+                </button>
               </div>
             )}
           </div>
@@ -196,6 +213,15 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
             )}
           </div>
         </div>
+      )}
+
+      {/* Stroke Order Learning Modal */}
+      {strokeLearningChar && (
+        <StrokeOrderLearning
+          character={strokeLearningChar}
+          isOpen={true}
+          onClose={() => setStrokeLearningChar(null)}
+        />
       )}
     </div>
   );
