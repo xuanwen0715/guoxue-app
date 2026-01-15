@@ -1,9 +1,60 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-import StrokeOrderAnimation, { type StrokeOrderAnimationRef } from './StrokeOrderAnimation';
-import StrokeOrderControls, { sliderStyles } from './StrokeOrderControls';
+import dynamic from 'next/dynamic';
 import { BookOpen, X } from 'lucide-react';
+
+// Lazy load StrokeOrderAnimation and Controls to improve performance
+const StrokeOrderAnimation = dynamic(() => import('./StrokeOrderAnimation'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center w-70 h-70 border-2 border-gray-200 rounded-lg">
+      <div className="text-gray-500">加载动画组件...</div>
+    </div>
+  ),
+});
+
+const StrokeOrderControls = dynamic(() => import('./StrokeOrderControls'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex justify-center py-4">
+      <div className="text-gray-500">加载控制面板...</div>
+    </div>
+  ),
+});
+
+// Inline slider styles since we're using dynamic imports
+const sliderStyles = `
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #dc2626;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #b91c1c;
+  transform: scale(1.1);
+}
+
+.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #dc2626;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb:hover {
+  background: #b91c1c;
+  transform: scale(1.1);
+}
+`;
 
 interface StrokeOrderLearningProps {
   character: string;

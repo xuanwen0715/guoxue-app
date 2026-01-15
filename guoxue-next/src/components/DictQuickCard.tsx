@@ -3,7 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
-import StrokeOrderLearning from './StrokeOrderLearning';
+import dynamic from 'next/dynamic';
+
+// Lazy load StrokeOrderLearning to improve initial performance
+const StrokeOrderLearning = dynamic(() => import('./StrokeOrderLearning'), {
+  ssr: false,
+  loading: () => <div>加载中...</div>,
+});
 
 interface CharInfo {
   char: string;

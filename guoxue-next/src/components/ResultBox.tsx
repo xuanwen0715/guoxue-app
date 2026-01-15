@@ -4,7 +4,13 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@/context/QueryContext';
 import DictQuickCard from './DictQuickCard';
-import StrokeOrderLearning from './StrokeOrderLearning';
+import dynamic from 'next/dynamic';
+
+// Lazy load StrokeOrderLearning to improve initial performance
+const StrokeOrderLearning = dynamic(() => import('./StrokeOrderLearning'), {
+  ssr: false,
+  loading: () => <div>加载中...</div>,
+});
 
 // 转换 [b]...[/b] 为 <strong>
 function toHtmlWithBB(text: string): string {

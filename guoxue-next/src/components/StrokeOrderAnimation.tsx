@@ -1,7 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback, forwardRef } from 'react';
-import HanziWriter from 'hanzi-writer';
+import dynamic from 'next/dynamic';
+
+// Dynamically import HanziWriter to avoid SSR issues
+let HanziWriter: any = null;
+if (typeof window !== 'undefined') {
+  import('hanzi-writer').then(module => {
+    HanziWriter = module.default;
+  });
+}
 
 interface StrokeOrderAnimationProps {
   character: string;
@@ -41,11 +49,11 @@ export default forwardRef<SVGSVGElement, StrokeOrderAnimationProps>(function Str
         ref.current = svgRef.current;
       }
     }
-  });
+  }, [ref]);
 
   // Initialize HanziWriter
   const initializeWriter = useCallback(async () => {
-    if (!svgRef.current || !character) return;
+    if (!svgRef.current || !character || !HanziWriter) return;
 
     try {
       setIsLoading(true);
@@ -53,6 +61,11 @@ export default forwardRef<SVGSVGElement, StrokeOrderAnimationProps>(function Str
 
       // Clear previous writer
       if (writerRef.current) {
+        try {
+          writerRef.current.cancelCurrentAnimation();
+        } catch (e) {
+          // Ignore cleanup errors
+        }
         writerRef.current = null;
       }
 
@@ -76,9 +89,8 @@ export default forwardRef<SVGSVGElement, StrokeOrderAnimationProps>(function Str
 
       writerRef.current = writer;
 
-      // Wait for character data to load
-      await writer.loopCharacterAnimation();
-
+      // Just set loading to false after writer is created
+      // Don't await any animation methods
       setIsLoading(false);
     } catch (err) {
       console.error('Failed to load character:', character, err);
@@ -86,6 +98,22 @@ export default forwardRef<SVGSVGElement, StrokeOrderAnimationProps>(function Str
       setIsLoading(false);
     }
   }, [character, size, strokeColor, highlightColor, delayBetweenStrokes, strokeAnimationSpeed]);
+
+  // Wait for HanziWriter to load and then initialize
+  useEffect(() => {
+    const checkHanziWriter = () => {
+      if (HanziWriter) {
+        initializeWriter();
+      } else {
+        // Retry after a short delay
+        setTimeout(checkHanziWriter, 100);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      checkHanziWriter();
+    }
+  }, [initializeWriter]);
 
   // Animation control methods
   const playAnimation = useCallback(async () => {
