@@ -3,13 +3,17 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { BookOpen, X } from 'lucide-react';
+import type { StrokeOrderAnimationRef } from './StrokeOrderAnimation';
 
 // Lazy load StrokeOrderAnimation and Controls to improve performance
 const StrokeOrderAnimation = dynamic(() => import('./StrokeOrderAnimation'), {
   ssr: false,
   loading: () => (
-    <div className="flex items-center justify-center w-70 h-70 border-2 border-gray-200 rounded-lg">
-      <div className="text-gray-500">加载动画组件...</div>
+    <div className="flex items-center justify-center border-2 border-gray-200 rounded-lg" style={{ width: 280, height: 280 }}>
+      <div className="text-gray-500 text-center">
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-red-500 mb-2 mx-auto"></div>
+        <div>加载动画组件...</div>
+      </div>
     </div>
   ),
 });
@@ -69,7 +73,7 @@ export default function StrokeOrderLearning({
   onClose,
   className = '',
 }: StrokeOrderLearningProps) {
-  const animationRef = useRef<SVGSVGElement>(null);
+  const animationRef = useRef<StrokeOrderAnimationRef>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isCharacterVisible, setIsCharacterVisible] = useState(false);
   const [animationSpeed, setAnimationSpeed] = useState(1);
@@ -77,44 +81,37 @@ export default function StrokeOrderLearning({
   const [animationKey, setAnimationKey] = useState(0);
 
   // Animation control methods
-  const playAnimation = useCallback(async () => {
-    if (animationRef.current && (animationRef.current as any).playAnimation) {
-      setIsAnimating(true);
-      try {
-        await (animationRef.current as any).playAnimation();
-        setIsAnimating(false);
-      } catch (error) {
-        console.error('Animation failed:', error);
-        setIsAnimating(false);
-      }
+  const playAnimation = useCallback(() => {
+    if (animationRef.current?.playAnimation) {
+      animationRef.current.playAnimation();
     }
   }, []);
 
   const stopAnimation = useCallback(() => {
-    if (animationRef.current && (animationRef.current as any).stopAnimation) {
-      (animationRef.current as any).stopAnimation();
+    if (animationRef.current?.stopAnimation) {
+      animationRef.current.stopAnimation();
       setIsAnimating(false);
     }
   }, []);
 
   const resetAnimation = useCallback(() => {
-    if (animationRef.current && (animationRef.current as any).resetAnimation) {
-      (animationRef.current as any).resetAnimation();
+    if (animationRef.current?.resetAnimation) {
+      animationRef.current.resetAnimation();
       setIsCharacterVisible(false);
       setIsAnimating(false);
     }
   }, []);
 
   const showCharacter = useCallback(() => {
-    if (animationRef.current && (animationRef.current as any).showCharacter) {
-      (animationRef.current as any).showCharacter();
+    if (animationRef.current?.showCharacter) {
+      animationRef.current.showCharacter();
       setIsCharacterVisible(true);
     }
   }, []);
 
   const hideCharacter = useCallback(() => {
-    if (animationRef.current && (animationRef.current as any).hideCharacter) {
-      (animationRef.current as any).hideCharacter();
+    if (animationRef.current?.hideCharacter) {
+      animationRef.current.hideCharacter();
       setIsCharacterVisible(false);
     }
   }, []);
@@ -122,13 +119,11 @@ export default function StrokeOrderLearning({
   // Handle speed and delay changes
   const handleSpeedChange = useCallback((speed: number) => {
     setAnimationSpeed(speed);
-    // Force re-render of animation component with new settings
     setAnimationKey(prev => prev + 1);
   }, []);
 
   const handleDelayChange = useCallback((delay: number) => {
     setStrokeDelay(delay);
-    // Force re-render of animation component with new settings
     setAnimationKey(prev => prev + 1);
   }, []);
 
@@ -168,8 +163,8 @@ export default function StrokeOrderLearning({
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 bg-vermilion/10 rounded-lg">
-                <BookOpen className="w-5 h-5 text-vermilion" />
+              <div className="flex items-center justify-center w-8 h-8 bg-red-100 rounded-lg">
+                <BookOpen className="w-5 h-5 text-red-600" />
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-gray-900">笔画顺序学习</h2>
@@ -244,9 +239,9 @@ export default function StrokeOrderLearning({
               <button
                 onClick={playAnimation}
                 disabled={isAnimating}
-                className="flex-1 bg-vermilion text-white py-2 px-4 rounded-lg hover:bg-vermilion/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
               >
-                {isAnimating ? '播放中...' : '重新播放'}
+                {isAnimating ? '播放中...' : '播放动画'}
               </button>
               <button
                 onClick={onClose}
