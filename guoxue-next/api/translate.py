@@ -14,6 +14,14 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUP
 SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")
 
 
+def _get_supabase_headers():
+    return {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
+        "Content-Type": "application/json",
+    }
+
+
 def lookup_dictionary(term):
     """从字典数据库查询单字的基础信息（拼音、部首、笔画等）
 
@@ -31,11 +39,7 @@ def lookup_dictionary(term):
         return None
 
     try:
-        headers = {
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
-            "Content-Type": "application/json",
-        }
+        headers = _get_supabase_headers()
 
         base_url = f"{SUPABASE_URL}/rest/v1/dictionary"
 
@@ -59,6 +63,8 @@ def lookup_dictionary(term):
             if data and len(data) > 0:
                 item = data[0]
                 result = {
+                    "kind": "char",
+                    "term": term,
                     "char": item.get("char"),
                     "traditional": item.get("traditional"),
                     "pinyin": item.get("pinyin"),
@@ -77,6 +83,105 @@ def lookup_dictionary(term):
         print(f"[Dictionary] Lookup failed: {e}")
 
     return None
+
+
+def lookup_idiom(term):
+    """从成语表查询权威释义"""
+    import requests
+
+    if not SUPABASE_URL or not SUPABASE_ANON_KEY:
+        print(f"[Idiom] Skipped: missing SUPABASE config")
+        return None
+
+    if len(term) < 2:
+        return None
+
+    try:
+        headers = _get_supabase_headers()
+        base_url = f"{SUPABASE_URL}/rest/v1/idioms"
+        params = {
+            "select": "word,pinyin,explanation,derivation,example",
+            "word": f"eq.{term}",
+            "limit": 1
+        }
+
+        print(f"[Idiom] Looking up: '{term}'")
+        resp = requests.get(base_url, headers=headers, params=params, timeout=5)
+        print(f"[Idiom] Response status: {resp.status_code}, URL: {resp.url}")
+
+        if resp.status_code == 200:
+            data = resp.json()
+            if data and len(data) > 0:
+                item = data[0]
+                return {
+                    "kind": "idiom",
+                    "term": item.get("word") or term,
+                    "pinyin": item.get("pinyin"),
+                    "explanation": item.get("explanation"),
+                    "derivation": item.get("derivation"),
+                    "example": item.get("example"),
+                }
+            print(f"[Idiom] No results found for '{term}'")
+        else:
+            print(f"[Idiom] Error response: {resp.text[:200]}")
+    except Exception as e:
+        print(f"[Idiom] Lookup failed: {e}")
+
+    return None
+
+
+def lookup_word(term):
+    """从词语表查询权威释义"""
+    import requests
+
+    if not SUPABASE_URL or not SUPABASE_ANON_KEY:
+        print(f"[Word] Skipped: missing SUPABASE config")
+        return None
+
+    if len(term) < 2:
+        return None
+
+    try:
+        headers = _get_supabase_headers()
+        base_url = f"{SUPABASE_URL}/rest/v1/words"
+        params = {
+            "select": "word,explanation",
+            "word": f"eq.{term}",
+            "limit": 1
+        }
+
+        print(f"[Word] Looking up: '{term}'")
+        resp = requests.get(base_url, headers=headers, params=params, timeout=5)
+        print(f"[Word] Response status: {resp.status_code}, URL: {resp.url}")
+
+        if resp.status_code == 200:
+            data = resp.json()
+            if data and len(data) > 0:
+                item = data[0]
+                return {
+                    "kind": "word",
+                    "term": item.get("word") or term,
+                    "explanation": item.get("explanation"),
+                }
+            print(f"[Word] No results found for '{term}'")
+        else:
+            print(f"[Word] Error response: {resp.text[:200]}")
+    except Exception as e:
+        print(f"[Word] Lookup failed: {e}")
+
+    return None
+
+
+def lookup_reference(term):
+    """优先从字典/成语/词语表查询权威释义，作为 AI 参考底稿"""
+    if len(term) == 1:
+        return lookup_dictionary(term)
+
+    idiom_info = lookup_idiom(term)
+    if idiom_info:
+        return idiom_info
+
+    return lookup_word(term)
 
 
 class handler(BaseHTTPRequestHandler):
@@ -151,10 +256,10 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(400, {"error": "Missing field: word"})
                 return
 
-            # 【关键改进】先从字典数据库查询基础信息，防止 AI 幻觉
-            dict_info = lookup_dictionary(term)
+            # 【关键改进】先从权威字典/成语/词语库查询基础信息，防止 AI 幻觉
+            dict_info = lookup_reference(term)
             if dict_info:
-                print(f"[Translate] Found dictionary info for '{term}': pinyin={dict_info.get('pinyin')}, strokes={dict_info.get('strokes')}")
+                print(f"[Translate] Found reference for '{term}': kind={dict_info.get('kind')}, pinyin={dict_info.get('pinyin')}")
 
             DASHSCOPE_TXT_URL = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
             DEFAULT_TEXT_MODEL = os.environ.get("DASHSCOPE_TEXT_MODEL", "qwen-max")
@@ -301,29 +406,64 @@ class handler(BaseHTTPRequestHandler):
         dict_reference = ""
         if dict_info:
             explanation = dict_info.get('explanation') or ''
-            # 根据是否有释义，调整提示策略
-            if explanation and len(explanation) > 5:
-                dict_reference = (
-                    "\n\n【重要-字典数据】以下是该字的权威字典数据，你必须严格基于这些信息回答，不要编造：\n"
-                    f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
-                    f"- 繁体: {dict_info.get('traditional') or '同简体'}\n"
-                    f"- 部首: {dict_info.get('radical', '未知')}\n"
-                    f"- 笔画: {dict_info.get('strokes', '未知')}\n"
-                    f"- 基本释义: {explanation[:500]}\n"
-                    "\n请严格基于上述字典释义进行国学角度的解析和扩展。"
-                    "explanation_zh 必须包含上述基本释义的内容，可以适当扩展但不要编造新含义。\n"
-                )
-            else:
-                # 没有详细释义时，仅提供基础信息
-                dict_reference = (
-                    "\n\n【重要-字典数据】以下是该字的基础信息：\n"
-                    f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
-                    f"- 繁体: {dict_info.get('traditional') or '同简体'}\n"
-                    f"- 部首: {dict_info.get('radical', '未知')}\n"
-                    f"- 笔画: {dict_info.get('strokes', '未知')}\n"
-                    "这是一个罕见字，请基于字形结构（部首+声旁）谨慎分析其可能的含义，"
-                    "如不确定请在 explanation_zh 中注明'此为罕见字，释义待考'。\n"
-                )
+            kind = dict_info.get('kind', 'char')
+            # 根据类型和是否有释义，调整提示策略
+            if kind == "char":
+                if explanation and len(explanation) > 5:
+                    dict_reference = (
+                        "\n\n【重要-字典数据】以下是该字的权威字典数据，你必须严格基于这些信息回答，不要编造：\n"
+                        f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
+                        f"- 繁体: {dict_info.get('traditional') or '同简体'}\n"
+                        f"- 部首: {dict_info.get('radical', '未知')}\n"
+                        f"- 笔画: {dict_info.get('strokes', '未知')}\n"
+                        f"- 基本释义: {explanation[:500]}\n"
+                        "\n请严格基于上述字典释义进行国学角度的解析和扩展。"
+                        "explanation_zh 必须包含上述基本释义的内容，可以适当扩展但不要编造新含义。\n"
+                    )
+                else:
+                    # 没有详细释义时，仅提供基础信息
+                    dict_reference = (
+                        "\n\n【重要-字典数据】以下是该字的基础信息：\n"
+                        f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
+                        f"- 繁体: {dict_info.get('traditional') or '同简体'}\n"
+                        f"- 部首: {dict_info.get('radical', '未知')}\n"
+                        f"- 笔画: {dict_info.get('strokes', '未知')}\n"
+                        "这是一个罕见字，请基于字形结构（部首+声旁）谨慎分析其可能的含义，"
+                        "如不确定请在 explanation_zh 中注明'此为罕见字，释义待考'。\n"
+                    )
+            elif kind == "idiom":
+                if explanation:
+                    derivation = dict_info.get('derivation') or ''
+                    example = dict_info.get('example') or ''
+                    dict_reference = (
+                        "\n\n【重要-成语权威释义】以下为字典中的权威释义，请以此为准：\n"
+                        f"- 成语: {dict_info.get('term') or term}\n"
+                        f"- 拼音: {dict_info.get('pinyin', '未知')}\n"
+                        f"- 释义: {explanation[:800]}\n"
+                        f"{f'- 出处: {derivation[:400]}\n' if derivation else ''}"
+                        f"{f'- 例句: {example[:400]}\n' if example else ''}"
+                        "\n请先完整复述权威释义，再结合上下文做国学角度的解读。"
+                        "explanation_zh 必须包含权威释义原意，先释义后解读，不要杜撰新含义。\n"
+                    )
+                else:
+                    dict_reference = (
+                        "\n\n【重要-成语权威数据】字典未提供释义文本，请谨慎分析，"
+                        "如不确定请在 explanation_zh 中注明'释义待考'。\n"
+                    )
+            elif kind == "word":
+                if explanation:
+                    dict_reference = (
+                        "\n\n【重要-词语权威释义】以下为字典中的权威释义，请以此为准：\n"
+                        f"- 词语: {dict_info.get('term') or term}\n"
+                        f"- 释义: {explanation[:800]}\n"
+                        "\n请先完整复述权威释义，再结合上下文做国学角度的解读。"
+                        "explanation_zh 必须包含权威释义原意，先释义后解读，不要杜撰新含义。\n"
+                    )
+                else:
+                    dict_reference = (
+                        "\n\n【重要-词语权威数据】字典未提供释义文本，请谨慎分析，"
+                        "如不确定请在 explanation_zh 中注明'释义待考'。\n"
+                    )
 
         instructions = (
             "根据上下文，对查询字/词进行国学角度解析，输出 JSON 格式：\n"
@@ -365,6 +505,20 @@ class handler(BaseHTTPRequestHandler):
         except:
             return ""
 
+    def _inject_dict_explanation(self, structured, dict_info):
+        dict_expl = (dict_info.get("explanation") or "").strip()
+        if not dict_expl:
+            return
+
+        ai_text = (structured.get("explanation_zh") or structured.get("explanation") or structured.get("text") or "").strip()
+        if ai_text:
+            structured["dict_explanation_zh"] = dict_expl
+            structured["ai_explanation_zh"] = ai_text
+            structured["explanation_zh"] = f"【字典释义】{dict_expl}\n【AI解读】{ai_text}"
+        else:
+            structured["dict_explanation_zh"] = dict_expl
+            structured["explanation_zh"] = f"【字典释义】{dict_expl}"
+
     def _normalize_response(self, structured, dict_info=None):
         """规范化 AI 响应，并用字典数据覆盖基础字段（防止 AI 幻觉）"""
         for k in ["sources_zh", "sources_en", "examples_zh", "examples_en", "variants"]:
@@ -381,6 +535,8 @@ class handler(BaseHTTPRequestHandler):
 
         # 【关键】用字典数据覆盖 AI 返回的基础信息，确保准确性
         if dict_info:
+            if dict_info.get("term"):
+                structured["term"] = dict_info["term"]
             if dict_info.get("pinyin"):
                 structured["pinyin"] = dict_info["pinyin"]
             if dict_info.get("traditional"):
@@ -389,8 +545,23 @@ class handler(BaseHTTPRequestHandler):
                 structured["radical"] = dict_info["radical"]
             if dict_info.get("strokes"):
                 structured["strokes"] = dict_info["strokes"]
+            self._inject_dict_explanation(structured, dict_info)
             # 标记数据来源
+            structured["_dict_source"] = dict_info.get("kind", "unknown")
             structured["_dict_verified"] = True
+        else:
+            fallback_text = "未收录/释义待考"
+            if not structured.get("dict_explanation_zh"):
+                structured["dict_explanation_zh"] = fallback_text
+            ai_text = (structured.get("explanation_zh") or structured.get("explanation") or structured.get("text") or "").strip()
+            if ai_text and not structured.get("ai_explanation_zh"):
+                structured["ai_explanation_zh"] = ai_text
+            if structured.get("ai_explanation_zh"):
+                structured["explanation_zh"] = f"【字典释义】{fallback_text}\n【AI解读】{structured['ai_explanation_zh']}"
+            else:
+                structured["explanation_zh"] = f"【字典释义】{fallback_text}"
+            structured["_dict_source"] = "none"
+            structured["_dict_verified"] = False
 
     def _send_json(self, status, payload):
         self.send_response(status)

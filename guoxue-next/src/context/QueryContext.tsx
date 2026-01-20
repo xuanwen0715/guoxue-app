@@ -26,6 +26,10 @@ interface QueryResult {
   glyph_oracle?: string;
   glyph_bronze?: string;
   glyph_seal?: string;
+  dict_explanation_zh?: string;
+  ai_explanation_zh?: string;
+  _dict_verified?: boolean;
+  _dict_source?: string;
   text?: string;
 }
 

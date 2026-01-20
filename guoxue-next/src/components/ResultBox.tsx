@@ -21,6 +21,16 @@ function toHtmlWithBB(text: string): string {
     .replace(/\n/g, '<br/>');
 }
 
+function splitZhExplanation(text: string): { dict: string; ai: string } {
+  if (!text) return { dict: '', ai: '' };
+  const dictMatch = text.match(/【字典释义】([\s\S]*?)(?=【AI解读】|$)/);
+  const aiMatch = text.match(/【AI解读】([\s\S]*)/);
+  return {
+    dict: dictMatch ? dictMatch[1].trim() : '',
+    ai: aiMatch ? aiMatch[1].trim() : '',
+  };
+}
+
 // 结构化结果渲染组件
 function StructuredResult({ result, word }: { result: any; word: string }) {
   const [strokeLearningChar, setStrokeLearningChar] = useState<string | null>(null);
@@ -30,7 +40,11 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
 
   const pinyin = result.pinyin;
   const traditional = result.traditional;
-  const exZh = result.explanation_zh || result.explanation || result.text || '';
+  const rawZh = result.explanation_zh || result.explanation || result.text || '';
+  const parsedZh = splitZhExplanation(rawZh);
+  const dictZh = (result.dict_explanation_zh || parsedZh.dict || '').trim();
+  const aiZh = (result.ai_explanation_zh || parsedZh.ai || '').trim();
+  const exZh = !dictZh && !aiZh ? rawZh : '';
   const exEn = result.explanation_en || '';
   const sourcesZh = Array.isArray(result.sources_zh) ? result.sources_zh : (Array.isArray(result.sources) ? result.sources : []);
   const sourcesEn = Array.isArray(result.sources_en) ? result.sources_en : [];
@@ -40,6 +54,16 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
   const glyphBronze = result.glyph_bronze;
   const glyphSeal = result.glyph_seal;
   const hasGlyphs = glyphOracle || glyphBronze || glyphSeal || result.evolution_zh;
+  const dictSource = result._dict_source;
+  const dictLabel = dictSource === 'char'
+    ? '字典'
+    : dictSource === 'idiom'
+      ? '成语库'
+      : dictSource === 'word'
+        ? '词语库'
+        : '权威库';
+  const hasZh = Boolean(dictZh || aiZh || exZh);
+  const hasEn = Boolean(exEn);
 
   return (
     <div className="result-structured">
@@ -47,6 +71,11 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
       {result.term && (
         <div className="result-header">
           <h3 className="result-term">【{result.term}】</h3>
+          {result._dict_verified && (
+            <div className="result-meta">
+              权威释义已引用 · {dictLabel} / Verified
+            </div>
+          )}
         </div>
       )}
 
@@ -146,16 +175,32 @@ function StructuredResult({ result, word }: { result: any; word: string }) {
       )}
 
       {/* 释义 - 中英双列 */}
-      {(exZh || exEn) && (
+      {(hasZh || hasEn) && (
         <div className="result-section" data-kind="explanation">
           <div className="grid-2">
-            {exZh && (
+            {hasZh && (
               <div className="column">
-                <h4>释义</h4>
-                <div className="para" dangerouslySetInnerHTML={{ __html: toHtmlWithBB(exZh) }} />
+                {dictZh && (
+                  <>
+                    <h4>{result._dict_verified ? '权威释义' : '未收录/释义待考'}</h4>
+                    <div className="para" dangerouslySetInnerHTML={{ __html: toHtmlWithBB(dictZh) }} />
+                  </>
+                )}
+                {aiZh && (
+                  <>
+                    <h4>AI 解读</h4>
+                    <div className="para" dangerouslySetInnerHTML={{ __html: toHtmlWithBB(aiZh) }} />
+                  </>
+                )}
+                {!dictZh && !aiZh && exZh && (
+                  <>
+                    <h4>释义</h4>
+                    <div className="para" dangerouslySetInnerHTML={{ __html: toHtmlWithBB(exZh) }} />
+                  </>
+                )}
               </div>
             )}
-            {exEn && (
+            {hasEn && (
               <div className="column">
                 <h4>Explanation</h4>
                 <div className="para" dangerouslySetInnerHTML={{ __html: toHtmlWithBB(exEn) }} />
