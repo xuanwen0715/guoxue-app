@@ -95,20 +95,24 @@ export async function POST(request: NextRequest) {
         const customerId = event.data.customer_id;
         const customData = event.data.custom_data || {};
         const userId = customData.userId;
+        const rawStatus = event.data.status;
+        const mappedStatus: 'active' | 'trialing' = rawStatus === 'trialing' ? 'trialing' : 'active';
+        const fallbackDays = mappedStatus === 'trialing' ? 7 : 30;
         const currentPeriodEnd = event.data.current_billing_period?.ends_at
           ? new Date(event.data.current_billing_period.ends_at)
-          : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 默认30天后
+          : new Date(Date.now() + fallbackDays * 24 * 60 * 60 * 1000);
 
         console.log('[Paddle Webhook] subscription.created data:', {
           subscriptionId,
           customerId,
           customData,
           userId,
+          status: rawStatus,
           currentPeriodEnd: currentPeriodEnd.toISOString(),
         });
 
         if (userId) {
-          await updateUserToPremium(userId, customerId, subscriptionId, currentPeriodEnd);
+          await updateUserToPremium(userId, customerId, subscriptionId, currentPeriodEnd, mappedStatus);
           console.log(`[Paddle Webhook] User ${userId} upgraded to premium`);
         } else {
           console.warn('[Paddle Webhook] No userId in custom_data, customData:', customData);
@@ -130,10 +134,13 @@ export async function POST(request: NextRequest) {
           currentPeriodEnd: currentPeriodEnd?.toISOString(),
         });
 
-        let mappedStatus: 'active' | 'canceled' | 'past_due' | 'paused';
+        let mappedStatus: 'active' | 'trialing' | 'canceled' | 'past_due' | 'paused';
         switch (status) {
           case 'active':
             mappedStatus = 'active';
+            break;
+          case 'trialing':
+            mappedStatus = 'trialing';
             break;
           case 'canceled':
             mappedStatus = 'canceled';
@@ -144,8 +151,12 @@ export async function POST(request: NextRequest) {
           case 'paused':
             mappedStatus = 'paused';
             break;
+          case 'inactive':
+            mappedStatus = 'canceled';
+            break;
           default:
-            mappedStatus = 'active';
+            console.warn('[Paddle Webhook] Unrecognized subscription status:', status);
+            return NextResponse.json({ received: true });
         }
 
         await updateSubscriptionStatus(subscriptionId, mappedStatus, currentPeriodEnd);
@@ -203,7 +214,7 @@ export async function POST(request: NextRequest) {
             currentPeriodEnd = new Date(event.data.billing_period.ends_at);
           }
 
-          await updateUserToPremium(userId, customerId, subscriptionId, currentPeriodEnd);
+          await updateUserToPremium(userId, customerId, subscriptionId, currentPeriodEnd, 'active');
           console.log(`[Paddle Webhook] User ${userId} upgraded to premium via transaction.completed`);
         } else if (subscriptionId) {
           // 续费场景：通过 subscriptionId 查找用户并更新订阅期

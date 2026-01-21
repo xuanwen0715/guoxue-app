@@ -43,16 +43,16 @@ export default function TermsPage() {
                 ? <>
                     <strong>账户注册：</strong>您需要提供有效的电子邮件地址注册账户。您有责任维护账户安全并对所有账户活动负责。
                     <br /><br />
-                    <strong>订阅服务：</strong>我们提供月度和年度订阅计划。订阅费用将通过您选择的支付方式自动扣除，直到您取消订阅为止。
+                    <strong>订阅服务：</strong>我们提供月度和年度订阅计划。新订阅默认提供7天免费试用期，试用期结束后将自动扣费，直到您取消订阅为止。
                     <br /><br />
-                    <strong>取消订阅：</strong>您可以随时取消订阅。取消后，您将继续享有服务直到当前计费周期结束。
+                    <strong>取消订阅：</strong>您可以随时取消订阅。取消后，访问权限将立即终止。
                   </>
                 : <>
                     <strong>Account Registration:</strong> You need to provide a valid email address to register an account. You are responsible for maintaining account security and all account activities.
                     <br /><br />
-                    <strong>Subscription Service:</strong> We offer monthly and yearly subscription plans. Subscription fees will be automatically charged through your chosen payment method until you cancel.
+                    <strong>Subscription Service:</strong> We offer monthly and yearly subscription plans. New subscriptions include a 7-day free trial. After the trial ends, subscription fees will be automatically charged through your chosen payment method until you cancel.
                     <br /><br />
-                    <strong>Cancellation:</strong> You may cancel your subscription at any time. After cancellation, you will continue to have access until the end of the current billing period.
+                    <strong>Cancellation:</strong> You may cancel your subscription at any time. Access ends immediately after cancellation.
                   </>}
             </p>
           </section>

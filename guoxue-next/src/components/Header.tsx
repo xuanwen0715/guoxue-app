@@ -134,15 +134,6 @@ export default function Header() {
                         ? (isZh ? '加载中...' : 'Loading...')
                         : (isZh ? '管理订阅' : 'Manage Subscription')}
                     </button>
-                    <button
-                      className="manage-item"
-                      onClick={() => {
-                        setIsManageOpen(false);
-                        setIsPricingOpen(true);
-                      }}
-                    >
-                      {isZh ? '升级年度计划' : 'Upgrade to Yearly'}
-                    </button>
                   </div>
                 )}
               </div>

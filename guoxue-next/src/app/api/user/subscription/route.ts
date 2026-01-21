@@ -10,16 +10,18 @@ function isSubscriptionActive(profile: {
   subscription_status: string | null;
   current_period_end: string | null;
 }): boolean {
-  if (!profile.is_premium) return false;
-
   // 如果是活跃订阅，直接返回 true
   if (profile.subscription_status === 'active') return true;
 
-  // 如果已取消但还在订阅期内，仍然有效
-  if (profile.subscription_status === 'canceled' && profile.current_period_end) {
+  // 试用期订阅，仅在有效期内允许访问
+  if (profile.subscription_status === 'trialing') {
+    if (!profile.current_period_end) return true;
     const periodEnd = new Date(profile.current_period_end);
     return periodEnd > new Date();
   }
+
+  // 兼容历史数据：旧字段仍标记为 premium 时允许访问
+  if (!profile.subscription_status && profile.is_premium) return true;
 
   return false;
 }
@@ -75,7 +77,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // 检查订阅是否仍然有效（包括已取消但未到期的情况）
+    // 检查订阅是否仍然有效
     const isPremiumActive = isSubscriptionActive(profile);
 
     // 如果订阅已过期，更新数据库

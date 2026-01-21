@@ -33,7 +33,7 @@ export interface UserSubscription {
   paddle_subscription_id: string | null;
   is_premium: boolean;
   credits_remaining: number;
-  subscription_status: 'active' | 'canceled' | 'past_due' | 'paused' | null;
+  subscription_status: 'active' | 'trialing' | 'canceled' | 'past_due' | 'paused' | null;
   current_period_end: string | null;
   created_at: string;
   updated_at: string;
@@ -60,7 +60,8 @@ export async function updateUserToPremium(
   userId: string,
   paddleCustomerId: string,
   paddleSubscriptionId: string,
-  currentPeriodEnd: Date
+  currentPeriodEnd: Date,
+  status: 'active' | 'trialing' = 'active'
 ) {
   const { error } = await getSupabaseAdmin()
     .from('profiles')
@@ -68,8 +69,8 @@ export async function updateUserToPremium(
       id: userId,
       paddle_customer_id: paddleCustomerId,
       paddle_subscription_id: paddleSubscriptionId,
-      is_premium: true,
-      subscription_status: 'active',
+      is_premium: status === 'active' || status === 'trialing',
+      subscription_status: status,
       current_period_end: currentPeriodEnd.toISOString(),
       updated_at: new Date().toISOString(),
     });
@@ -80,14 +81,14 @@ export async function updateUserToPremium(
   }
 }
 
-// 取消用户订阅（保留 premium 直到订阅期结束）
+// 取消用户订阅（立即移除 premium）
 export async function cancelUserSubscription(paddleSubscriptionId: string) {
-  // 取消订阅时，不立即移除 premium 状态
-  // 用户可以继续使用到 current_period_end
+  // 取消订阅时立即移除 premium 状态
   const { error } = await getSupabaseAdmin()
     .from('profiles')
     .update({
       subscription_status: 'canceled',
+      is_premium: false,
       updated_at: new Date().toISOString(),
     })
     .eq('paddle_subscription_id', paddleSubscriptionId);
@@ -133,12 +134,12 @@ export async function getUserByPaddleSubscriptionId(paddleSubscriptionId: string
 // 更新订阅状态
 export async function updateSubscriptionStatus(
   paddleSubscriptionId: string,
-  status: 'active' | 'canceled' | 'past_due' | 'paused',
+  status: 'active' | 'trialing' | 'canceled' | 'past_due' | 'paused',
   currentPeriodEnd?: Date
 ) {
   const updateData: Record<string, unknown> = {
     subscription_status: status,
-    is_premium: status === 'active',
+    is_premium: status === 'active' || status === 'trialing',
     updated_at: new Date().toISOString(),
   };
 

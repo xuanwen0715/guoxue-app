@@ -190,8 +190,8 @@ export default function PricingModal({ onClose }: PricingProps) {
           </p>
           <p className="pricing-terms">
             {isZh
-              ? '订阅后可随时取消，下个计费周期生效'
-              : 'Cancel anytime, effective next billing cycle'}
+              ? '订阅后可随时取消，取消后立即停止访问'
+              : 'Cancel anytime, access ends immediately'}
           </p>
         </div>
       </div>

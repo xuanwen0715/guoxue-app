@@ -95,11 +95,12 @@ def get_user_profile(user_id: str) -> dict:
         dict: 用户档案信息
     """
     if not SUPABASE_SERVICE_KEY:
-        # 如果没有配置 service key，默认放行（开发模式）
+        # 如果没有配置 service key，按最小权限处理（生产需配置）
+        print("[Auth] Missing SUPABASE_SERVICE_KEY, falling back to limited access")
         return {
             "id": user_id,
-            "is_premium": True,
-            "credits_remaining": 999
+            "is_premium": False,
+            "credits_remaining": 0
         }
 
     try:
