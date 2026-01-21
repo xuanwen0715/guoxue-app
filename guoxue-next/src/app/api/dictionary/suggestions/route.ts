@@ -20,11 +20,77 @@ interface Suggestion {
   explanation?: string;
 }
 
+const PINYIN_TONE_REGEX = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
+const PINYIN_ALLOWED_REGEX = /^[a-züāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+$/i;
+const PINYIN_TONE_MAP: Record<string, string[]> = {
+  a: ['ā', 'á', 'ǎ', 'à', 'a'],
+  e: ['ē', 'é', 'ě', 'è', 'e'],
+  i: ['ī', 'í', 'ǐ', 'ì', 'i'],
+  o: ['ō', 'ó', 'ǒ', 'ò', 'o'],
+  u: ['ū', 'ú', 'ǔ', 'ù', 'u'],
+  ü: ['ǖ', 'ǘ', 'ǚ', 'ǜ', 'ü']
+};
+
+function getPinyinVariants(pinyin: string): string[] {
+  const normalized = pinyin.toLowerCase().replace(/v/g, 'ü').trim();
+  if (!normalized) {
+    return [];
+  }
+
+  if (PINYIN_TONE_REGEX.test(normalized)) {
+    return [normalized];
+  }
+
+  if (!PINYIN_ALLOWED_REGEX.test(normalized)) {
+    return [normalized];
+  }
+
+  let mainVowelIndex = -1;
+  for (let i = 0; i < normalized.length; i += 1) {
+    const ch = normalized[i];
+    if (ch === 'a' || ch === 'e') {
+      mainVowelIndex = i;
+      break;
+    }
+    if (ch === 'o' && i + 1 < normalized.length && normalized[i + 1] === 'u') {
+      mainVowelIndex = i;
+      break;
+    }
+  }
+
+  if (mainVowelIndex === -1) {
+    for (let i = normalized.length - 1; i >= 0; i -= 1) {
+      if ('iouü'.includes(normalized[i])) {
+        mainVowelIndex = i;
+        break;
+      }
+    }
+  }
+
+  if (mainVowelIndex === -1) {
+    return [normalized];
+  }
+
+  const mainVowel = normalized[mainVowelIndex];
+  const tones = PINYIN_TONE_MAP[mainVowel];
+  if (!tones) {
+    return [normalized];
+  }
+
+  const variants = tones.map(
+    (tone) =>
+      normalized.slice(0, mainVowelIndex) + tone + normalized.slice(mainVowelIndex + 1)
+  );
+
+  return Array.from(new Set(variants));
+}
+
 // GET /api/dictionary/suggestions - Get search suggestions
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const query = searchParams.get('q') || '';
+    const rawQuery = searchParams.get('q') || '';
+    const query = rawQuery.trim();
     const type = searchParams.get('type') || 'all'; // all | char | idiom | word
     const limit = parseInt(searchParams.get('limit') || '10');
 
@@ -34,6 +100,7 @@ export async function GET(req: NextRequest) {
 
     const supabase = getSupabaseClient();
     const suggestions: Suggestion[] = [];
+    const normalizedQuery = query.toLowerCase();
 
     // Search characters (by char, traditional, or pinyin)
     if (type === 'all' || type === 'char') {
@@ -49,7 +116,7 @@ export async function GET(req: NextRequest) {
       if (exactChars && exactChars.length > 0) {
         suggestions.push(
           ...exactChars.map((c: any) => ({
-            text: c.char,
+            text: c.traditional && c.traditional === query ? c.traditional : c.char,
             type: 'char' as const,
             pinyin: c.pinyin,
             explanation: c.explanation?.substring(0, 50)
@@ -59,11 +126,31 @@ export async function GET(req: NextRequest) {
 
       // Then try pinyin match
       if (suggestions.length < charLimit) {
-        const { data: pinyinChars } = await supabase
-          .from('dictionary')
-          .select('char, traditional, pinyin, explanation')
-          .ilike('pinyin', `${query}%`)
-          .limit(charLimit - suggestions.length);
+        const pinyinQuery = normalizedQuery.replace(/v/g, 'ü');
+        const pinyinVariants = getPinyinVariants(pinyinQuery);
+        const pinyinLimit = charLimit - suggestions.length;
+        let pinyinChars: any[] | null = null;
+
+        if (PINYIN_ALLOWED_REGEX.test(pinyinQuery)) {
+          if (pinyinVariants.length > 1) {
+            const orConditions = pinyinVariants
+              .map((variant) => `pinyin.ilike.${variant}%`)
+              .join(',');
+            const { data } = await supabase
+              .from('dictionary')
+              .select('char, traditional, pinyin, explanation')
+              .or(orConditions)
+              .limit(pinyinLimit);
+            pinyinChars = data;
+          } else {
+            const { data } = await supabase
+              .from('dictionary')
+              .select('char, traditional, pinyin, explanation')
+              .ilike('pinyin', `${pinyinQuery}%`)
+              .limit(pinyinLimit);
+            pinyinChars = data;
+          }
+        }
 
         if (pinyinChars && pinyinChars.length > 0) {
           suggestions.push(

@@ -18,6 +18,13 @@ except Exception:
     _CC_T2S = None
 
 
+def _parse_int(value, default=0):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
 def _expand_char_variants(ch: str) -> set:
     """返回输入单字的简体/繁体变体集合（仅单字符）。
 
@@ -59,8 +66,10 @@ class handler(BaseHTTPRequestHandler):
             query = params.get("q", [""])[0].strip()
             search_type = params.get("type", ["auto"])[0]  # auto, char, idiom, word
             search_by = params.get("by", ["text"])[0]  # text, pinyin, radical, strokes
-            limit = min(int(params.get("limit", ["50"])[0]), 100)
-            offset = int(params.get("offset", ["0"])[0])
+            raw_limit = _parse_int(params.get("limit", ["50"])[0], 50)
+            limit = min(max(raw_limit, 1), 100)
+            raw_offset = _parse_int(params.get("offset", ["0"])[0], 0)
+            offset = max(raw_offset, 0)
 
             if not query and search_by not in ["radical", "strokes"]:
                 self._send_json(400, {"error": "Missing query parameter: q"})
@@ -159,24 +168,31 @@ class handler(BaseHTTPRequestHandler):
                 "limit": 1
             }
             resp = requests.get(base_url, headers=headers, params=params_exact, timeout=10)
+            exact_results = []
+            exact_words = set()
             if resp.status_code == 200:
                 exact_results = resp.json()
-                results.extend(exact_results)
+                exact_words = {r['word'] for r in exact_results if r.get('word')}
+                if offset <= 0:
+                    results.extend(exact_results)
 
             # 第二步：模糊匹配（排除精确匹配的结果）
             remaining_limit = limit - len(results)
             if remaining_limit > 0:
+                adjusted_offset = offset
+                if offset > 0 and exact_results:
+                    adjusted_offset = max(offset - len(exact_results), 0)
                 params_fuzzy = {
                     "select": "word,pinyin,explanation,derivation,example",
                     "word": f"ilike.*{query}*",
-                    "limit": remaining_limit + len(results),  # 多取一些，去重后保证数量
-                    "offset": offset
+                    "limit": remaining_limit + len(exact_words),  # 多取一些，去重后保证数量
+                    "offset": adjusted_offset
                 }
                 resp = requests.get(base_url, headers=headers, params=params_fuzzy, timeout=10)
                 if resp.status_code == 200:
                     fuzzy_results = resp.json()
                     # 去重：排除已精确匹配的
-                    existing_words = {r['word'] for r in results}
+                    existing_words = exact_words if offset > 0 else {r['word'] for r in results}
                     for item in fuzzy_results:
                         if item['word'] not in existing_words and len(results) < limit:
                             results.append(item)
@@ -214,23 +230,30 @@ class handler(BaseHTTPRequestHandler):
             "limit": 1
         }
         resp = requests.get(base_url, headers=headers, params=params_exact, timeout=10)
+        exact_results = []
+        exact_words = set()
         if resp.status_code == 200:
             exact_results = resp.json()
-            results.extend(exact_results)
+            exact_words = {r['word'] for r in exact_results if r.get('word')}
+            if offset <= 0:
+                results.extend(exact_results)
 
         # 第二步：模糊匹配（排除精确匹配的结果）
         remaining_limit = limit - len(results)
         if remaining_limit > 0:
+            adjusted_offset = offset
+            if offset > 0 and exact_results:
+                adjusted_offset = max(offset - len(exact_results), 0)
             params_fuzzy = {
                 "select": "word,explanation",
                 "word": f"ilike.*{query}*",
-                "limit": remaining_limit + len(results),
-                "offset": offset
+                "limit": remaining_limit + len(exact_words),
+                "offset": adjusted_offset
             }
             resp = requests.get(base_url, headers=headers, params=params_fuzzy, timeout=10)
             if resp.status_code == 200:
                 fuzzy_results = resp.json()
-                existing_words = {r['word'] for r in results}
+                existing_words = exact_words if offset > 0 else {r['word'] for r in results}
                 for item in fuzzy_results:
                     if item['word'] not in existing_words and len(results) < limit:
                         results.append(item)
@@ -415,7 +438,7 @@ class handler(BaseHTTPRequestHandler):
 
         if missing_chars:
             # 建立变体到原始输入的映射
-            variant_to_input = {}  # variant -> input_char
+            variant_to_inputs = {}  # variant -> list of input chars
             expanded = set()
 
             for c in missing_chars:
@@ -424,7 +447,7 @@ class handler(BaseHTTPRequestHandler):
                 for v in variants:
                     if v != c:  # 排除原字符（已经查过）
                         expanded.add(v)
-                        variant_to_input[v] = c
+                        variant_to_inputs.setdefault(v, []).append(c)
 
             if expanded:
                 conditions = []
@@ -446,16 +469,19 @@ class handler(BaseHTTPRequestHandler):
                         trad_val = item.get('traditional', '')
 
                         # 找到这个结果对应的原始输入字符
-                        input_char = None
-                        if char_val in variant_to_input:
-                            input_char = variant_to_input[char_val]
-                        elif trad_val in variant_to_input:
-                            input_char = variant_to_input[trad_val]
+                        input_chars = None
+                        if char_val in variant_to_inputs:
+                            input_chars = variant_to_inputs[char_val]
+                        elif trad_val in variant_to_inputs:
+                            input_chars = variant_to_inputs[trad_val]
 
-                        if input_char and input_char not in found_input_chars:
-                            char_result_map[input_char] = item
-                            found_input_chars.add(input_char)
-                            print(f"[Dictionary] Added variant match: {input_char} -> {char_val}")
+                        if input_chars:
+                            for input_char in input_chars:
+                                if input_char in found_input_chars:
+                                    continue
+                                char_result_map[input_char] = item
+                                found_input_chars.add(input_char)
+                                print(f"[Dictionary] Added variant match: {input_char} -> {char_val}")
 
         # 按原始输入顺序构建结果数组
         results = []

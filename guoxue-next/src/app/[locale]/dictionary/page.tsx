@@ -11,6 +11,12 @@ import AutoComplete, { Suggestion } from '@/components/AutoComplete';
 type SearchType = 'char' | 'idiom' | 'word';
 type SearchBy = 'text' | 'pinyin' | 'radical' | 'strokes';
 
+const resolveSearchBy = (type: SearchType, by: SearchBy): SearchBy => {
+  if (type === 'char') return by;
+  if (type === 'idiom') return by === 'pinyin' ? 'pinyin' : 'text';
+  return 'text';
+};
+
 // Data types
 interface CharResult {
   char: string;
@@ -120,13 +126,14 @@ export default function DictionaryPage() {
       rawBy === 'text' || rawBy === 'pinyin' || rawBy === 'radical' || rawBy === 'strokes'
         ? (rawBy as SearchBy)
         : 'text';
+    const resolvedBy = resolveSearchBy(nextType, nextBy);
 
     if (qParam) setQuery(qParam);
     setSearchType(nextType);
-    setSearchBy(nextBy);
+    setSearchBy(resolvedBy);
 
     const doFetch = async () => {
-      if (!qParam && nextBy !== 'radical') {
+      if (!qParam && resolvedBy !== 'radical') {
         setInitializedFromURL(true);
         return;
       }
@@ -136,7 +143,7 @@ export default function DictionaryPage() {
         const params = new URLSearchParams({
           q: qParam,
           type: nextType,
-          by: nextBy,
+          by: resolvedBy,
           limit: '100'  // 增加限制以显示更多结果
         });
 
@@ -177,15 +184,19 @@ export default function DictionaryPage() {
   const [showRadicalPicker, setShowRadicalPicker] = useState(false);
 
   // Search function
-  const handleSearch = useCallback(async () => {
-    if (!query.trim() && searchBy !== 'radical') return;
+  const handleSearch = useCallback(async (overrides?: { query?: string; type?: SearchType; by?: SearchBy }) => {
+    const nextQuery = (overrides?.query ?? query).trim();
+    const nextType = overrides?.type ?? searchType;
+    const nextBy = resolveSearchBy(nextType, overrides?.by ?? searchBy);
+
+    if (!nextQuery && nextBy !== 'radical') return;
 
     setIsLoading(true);
     try {
       const params = new URLSearchParams({
-        q: query.trim(),
-        type: searchType,
-        by: searchBy,
+        q: nextQuery,
+        type: nextType,
+        by: nextBy,
         limit: '100'  // 增加限制以显示更多结果
       });
 
@@ -206,9 +217,15 @@ export default function DictionaryPage() {
 
   // Handle auto-complete selection
   const handleAutoCompleteSelect = (suggestion: Suggestion) => {
-    setQuery(suggestion.text);
-    // Trigger search automatically
-    setTimeout(() => handleSearch(), 100);
+    const nextQuery = suggestion.text;
+    const nextType = suggestion.type as SearchType;
+    const nextBy: SearchBy = 'text';
+
+    setQuery(nextQuery);
+    setSearchType(nextType);
+    setSearchBy(resolveSearchBy(nextType, nextBy));
+    setShowRadicalPicker(false);
+    handleSearch({ query: nextQuery, type: nextType, by: nextBy });
   };
 
   // Enter key search
@@ -325,14 +342,22 @@ export default function DictionaryPage() {
             </button>
             <button
               className={`tab-btn ${searchType === 'idiom' ? 'active' : ''}`}
-              onClick={() => setSearchType('idiom')}
+              onClick={() => {
+                setSearchType('idiom');
+                setSearchBy('text');
+                setShowRadicalPicker(false);
+              }}
             >
               <span className="tab-icon">&#25104;</span>
               {t('dictionary.tabIdiom')}
             </button>
             <button
               className={`tab-btn ${searchType === 'word' ? 'active' : ''}`}
-              onClick={() => setSearchType('word')}
+              onClick={() => {
+                setSearchType('word');
+                setSearchBy('text');
+                setShowRadicalPicker(false);
+              }}
             >
               <span className="tab-icon">&#35789;</span>
               {t('dictionary.tabWord')}
@@ -344,13 +369,19 @@ export default function DictionaryPage() {
             <div className="search-by-bar">
               <button
                 className={`search-by-btn ${searchBy === 'text' ? 'active' : ''}`}
-                onClick={() => setSearchBy('text')}
+                onClick={() => {
+                  setSearchBy('text');
+                  setShowRadicalPicker(false);
+                }}
               >
                 {t('dictionary.byText')}
               </button>
               <button
                 className={`search-by-btn ${searchBy === 'pinyin' ? 'active' : ''}`}
-                onClick={() => setSearchBy('pinyin')}
+                onClick={() => {
+                  setSearchBy('pinyin');
+                  setShowRadicalPicker(false);
+                }}
               >
                 {t('dictionary.byPinyin')}
               </button>
@@ -365,7 +396,10 @@ export default function DictionaryPage() {
               </button>
               <button
                 className={`search-by-btn ${searchBy === 'strokes' ? 'active' : ''}`}
-                onClick={() => setSearchBy('strokes')}
+                onClick={() => {
+                  setSearchBy('strokes');
+                  setShowRadicalPicker(false);
+                }}
               >
                 {t('dictionary.byStrokes')}
               </button>
@@ -401,7 +435,7 @@ export default function DictionaryPage() {
             </div>
             <button
               className="search-btn"
-              onClick={handleSearch}
+              onClick={() => handleSearch()}
               disabled={isLoading}
             >
               {isLoading ? t('dictionary.searching') : t('dictionary.search')}
