@@ -85,6 +85,7 @@ export async function POST(request: NextRequest) {
       cancelUserSubscription,
       updateSubscriptionStatus,
       getUserByPaddleSubscriptionId,
+      getUserByPaddleCustomerId,
     } = await import('@/lib/supabase-admin');
 
     switch (eventType) {
@@ -114,6 +115,14 @@ export async function POST(request: NextRequest) {
         if (userId) {
           await updateUserToPremium(userId, customerId, subscriptionId, currentPeriodEnd, mappedStatus);
           console.log(`[Paddle Webhook] User ${userId} upgraded to premium`);
+        } else if (customerId) {
+          const user = await getUserByPaddleCustomerId(customerId);
+          if (user?.id) {
+            await updateUserToPremium(user.id, customerId, subscriptionId, currentPeriodEnd, mappedStatus);
+            console.log(`[Paddle Webhook] User ${user.id} upgraded to premium via customerId fallback`);
+          } else {
+            console.warn('[Paddle Webhook] No user found for customerId:', customerId);
+          }
         } else {
           console.warn('[Paddle Webhook] No userId in custom_data, customData:', customData);
         }
@@ -195,6 +204,7 @@ export async function POST(request: NextRequest) {
         const subscriptionId = event.data.subscription_id;
         const customData = event.data.custom_data || {};
         const userId = customData.userId;
+        const customerId = event.data.customer_id;
 
         console.log('[Paddle Webhook] transaction.completed data:', {
           subscriptionId,
@@ -205,7 +215,6 @@ export async function POST(request: NextRequest) {
 
         // 如果有 userId（首次支付），直接通过 userId 处理
         if (userId && subscriptionId) {
-          const customerId = event.data.customer_id;
           // 获取订阅结束时间，如果没有则默认30天
           let currentPeriodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
@@ -229,6 +238,18 @@ export async function POST(request: NextRequest) {
             // 续费成功，更新状态为 active 并延长订阅期
             await updateSubscriptionStatus(subscriptionId, 'active', currentPeriodEnd);
             console.log(`[Paddle Webhook] Subscription renewed for user ${user.id}, new period end: ${currentPeriodEnd?.toISOString()}`);
+          } else if (customerId) {
+            const customerUser = await getUserByPaddleCustomerId(customerId);
+            if (customerUser?.id) {
+              let currentPeriodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+              if (event.data.billing_period?.ends_at) {
+                currentPeriodEnd = new Date(event.data.billing_period.ends_at);
+              }
+              await updateUserToPremium(customerUser.id, customerId, subscriptionId, currentPeriodEnd, 'active');
+              console.log(`[Paddle Webhook] User ${customerUser.id} upgraded to premium via customerId fallback`);
+            } else {
+              console.log(`[Paddle Webhook] No user found for customer ${customerId}`);
+            }
           } else {
             console.log(`[Paddle Webhook] No user found for subscription ${subscriptionId}`);
           }

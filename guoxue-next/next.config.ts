@@ -12,8 +12,16 @@ const nextConfig: NextConfig = {
     if (apiBaseUrl) {
       return [
         {
-          source: '/api/:path*',
-          destination: `${apiBaseUrl}/api/:path*`,
+          source: '/api/dictionary',
+          destination: `${apiBaseUrl}/api/dictionary`,
+        },
+        {
+          source: '/api/ocr',
+          destination: `${apiBaseUrl}/api/ocr`,
+        },
+        {
+          source: '/api/translate',
+          destination: `${apiBaseUrl}/api/translate`,
         },
       ];
     }
