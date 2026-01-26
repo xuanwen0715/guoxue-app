@@ -23,6 +23,14 @@ const nextConfig: NextConfig = {
           source: '/api/translate',
           destination: `${apiBaseUrl}/api/translate`,
         },
+        {
+          source: '/api/webhooks/paddle',
+          destination: `${apiBaseUrl}/api/webhooks/paddle`,
+        },
+        {
+          source: '/api/user/subscription',
+          destination: `${apiBaseUrl}/api/user/subscription`,
+        },
       ];
     }
     return [];

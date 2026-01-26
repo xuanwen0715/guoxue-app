@@ -28,13 +28,25 @@ function isSubscriptionActive(profile: {
 
 export async function GET(request: NextRequest) {
   try {
+    console.log('[User Subscription] === 新的订阅查询请求 ===');
+    console.log('[User Subscription] 请求头:', Object.fromEntries(request.headers.entries()));
+
     // 从 Authorization header 获取 token
     const authHeader = request.headers.get('authorization');
+    console.log('[User Subscription] Authorization header:', authHeader ? `存在 (长度: ${authHeader.length})` : '不存在');
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.error('[User Subscription] 缺少或格式错误的 Authorization header');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const token = authHeader.split(' ')[1];
+    console.log('[User Subscription] Token 长度:', token.length);
+
+    // 检查环境变量
+    console.log('[User Subscription] Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? '已配置' : '未配置');
+    console.log('[User Subscription] Supabase Anon Key:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? '已配置' : '未配置');
+    console.log('[User Subscription] Supabase Service Key:', process.env.SUPABASE_SERVICE_ROLE_KEY ? '已配置' : '未配置');
 
     // 使用 anon key 验证用户 token
     const supabaseAnon = createClient(
@@ -45,8 +57,11 @@ export async function GET(request: NextRequest) {
     const { data: { user }, error: authError } = await supabaseAnon.auth.getUser(token);
 
     if (authError || !user) {
+      console.error('[User Subscription] Token 验证失败:', authError?.message);
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
+
+    console.log('[User Subscription] 用户验证成功, User ID:', user.id);
 
     // 使用 service role 获取用户订阅信息
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {

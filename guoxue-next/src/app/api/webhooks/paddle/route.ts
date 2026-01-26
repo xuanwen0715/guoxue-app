@@ -64,12 +64,31 @@ function verifyPaddleWebhook(rawBody: string, signature: string): boolean {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('[Paddle Webhook] === 新的 Webhook 请求 ===');
+    console.log('[Paddle Webhook] 请求头:', Object.fromEntries(request.headers.entries()));
+
     const rawBody = await request.text();
+    console.log('[Paddle Webhook] Raw body length:', rawBody.length);
+    console.log('[Paddle Webhook] Raw body preview:', rawBody.substring(0, 200) + '...');
+
     const signature = request.headers.get('paddle-signature') || '';
+    console.log('[Paddle Webhook] Paddle signature:', signature);
+
+    // 检查环境变量
+    const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET;
+    console.log('[Paddle Webhook] Webhook secret 配置:', webhookSecret ? `已配置 (长度: ${webhookSecret.length})` : '未配置');
+
+    if (webhookSecret && webhookSecret.startsWith('pdl_ntfset_')) {
+      console.error('[Paddle Webhook] ⚠️  警告：使用的是 Notification ID，不是 Secret Key！');
+    }
 
     // 验证 webhook 签名
     if (!verifyPaddleWebhook(rawBody, signature)) {
       console.error('[Paddle Webhook] Invalid signature');
+      console.error('[Paddle Webhook] 签名验证失败详情:');
+      console.error('  - Raw Body:', rawBody.substring(0, 100) + '...');
+      console.error('  - Signature:', signature);
+      console.error('  - Secret configured:', !!webhookSecret);
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
     }
 
