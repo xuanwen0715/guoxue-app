@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { createClient } = require('@supabase/supabase-js');
 
 const MAX_TIMESTAMP_DRIFT_SECONDS = 300;
 
@@ -58,6 +59,127 @@ function getRawBody(req) {
   });
 }
 
+let supabaseAdmin = null;
+
+function getSupabaseAdmin() {
+  if (!supabaseAdmin) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new Error(
+        'Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.'
+      );
+    }
+
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+  }
+
+  return supabaseAdmin;
+}
+
+async function updateUserToPremium(
+  userId,
+  paddleCustomerId,
+  paddleSubscriptionId,
+  currentPeriodEnd,
+  status = 'active'
+) {
+  const { error } = await getSupabaseAdmin()
+    .from('profiles')
+    .upsert({
+      id: userId,
+      paddle_customer_id: paddleCustomerId,
+      paddle_subscription_id: paddleSubscriptionId,
+      is_premium: status === 'active' || status === 'trialing',
+      subscription_status: status,
+      current_period_end: currentPeriodEnd.toISOString(),
+      updated_at: new Date().toISOString(),
+    });
+
+  if (error) {
+    console.error('[Supabase] Error updating user to premium:', error);
+    throw error;
+  }
+}
+
+async function cancelUserSubscription(paddleSubscriptionId) {
+  const { error } = await getSupabaseAdmin()
+    .from('profiles')
+    .update({
+      subscription_status: 'canceled',
+      is_premium: false,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('paddle_subscription_id', paddleSubscriptionId);
+
+  if (error) {
+    console.error('[Supabase] Error canceling subscription:', error);
+    throw error;
+  }
+}
+
+async function getUserByPaddleCustomerId(paddleCustomerId) {
+  const { data, error } = await getSupabaseAdmin()
+    .from('profiles')
+    .select('*')
+    .eq('paddle_customer_id', paddleCustomerId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('[Supabase] Error fetching user by paddle customer id:', error);
+    return null;
+  }
+
+  return data;
+}
+
+async function getUserByPaddleSubscriptionId(paddleSubscriptionId) {
+  const { data, error } = await getSupabaseAdmin()
+    .from('profiles')
+    .select('*')
+    .eq('paddle_subscription_id', paddleSubscriptionId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('[Supabase] Error fetching user by paddle subscription id:', error);
+    return null;
+  }
+
+  return data;
+}
+
+async function updateSubscriptionStatus(
+  paddleSubscriptionId,
+  status,
+  currentPeriodEnd
+) {
+  const updateData = {
+    subscription_status: status,
+    is_premium: status === 'active' || status === 'trialing',
+    updated_at: new Date().toISOString(),
+  };
+
+  if (currentPeriodEnd) {
+    updateData.current_period_end = currentPeriodEnd.toISOString();
+  }
+
+  const { error } = await getSupabaseAdmin()
+    .from('profiles')
+    .update(updateData)
+    .eq('paddle_subscription_id', paddleSubscriptionId);
+
+  if (error) {
+    console.error('[Supabase] Error updating subscription status:', error);
+    throw error;
+  }
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
@@ -82,14 +204,6 @@ module.exports = async function handler(req, res) {
     }
 
     const eventType = event.event_type;
-
-    const {
-      updateUserToPremium,
-      cancelUserSubscription,
-      updateSubscriptionStatus,
-      getUserByPaddleSubscriptionId,
-      getUserByPaddleCustomerId,
-    } = await import('../../src/lib/supabase-admin');
 
     switch (eventType) {
       case 'subscription.created':
