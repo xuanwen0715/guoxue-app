@@ -1,5 +1,16 @@
 const { createClient } = require('@supabase/supabase-js');
 
+const ALLOWED_METHODS = new Set(['GET', 'POST', 'HEAD', 'OPTIONS']);
+
+function setCorsHeaders(res, origin) {
+  if (origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, HEAD, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+}
+
 function isSubscriptionActive(profile) {
   if (profile.subscription_status === 'active') return true;
 
@@ -15,8 +26,20 @@ function isSubscriptionActive(profile) {
 }
 
 module.exports = async function handler(req, res) {
-  if (req.method !== 'GET') {
+  setCorsHeaders(res, req.headers.origin);
+
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+
+  if (!ALLOWED_METHODS.has(req.method)) {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  if (req.method === 'HEAD') {
+    res.status(200).end();
     return;
   }
 

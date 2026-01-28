@@ -5,11 +5,11 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    // 本地开发时代理到 Vercel 部署的 API
-    // 生产环境部署到同域名时不需要代理
+    // 仅在本地开发时代理到远端 API，避免生产环境误代理
     const apiBaseUrl = process.env.API_BASE_URL || '';
+    const isDevelopment = process.env.NODE_ENV === 'development';
 
-    if (apiBaseUrl) {
+    if (isDevelopment && apiBaseUrl) {
       return [
         {
           source: '/api/dictionary',

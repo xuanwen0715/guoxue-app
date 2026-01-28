@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 // Supabase 配置
 const SUPABASE_URL = 'https://dckeajeazaxbxlqlkicl.supabase.co';
@@ -45,6 +46,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [quota, setQuota] = useState<Quota | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const quotaRef = useRef<Quota | null>(null);
+  const hasHandledSubscriptionSuccess = useRef(false);
+
+  useEffect(() => {
+    quotaRef.current = quota;
+  }, [quota]);
 
   // 从本地存储恢复会话
   useEffect(() => {
@@ -80,7 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // 获取用户订阅状态
-  async function fetchSubscriptionStatus(authToken: string) {
+  async function fetchSubscriptionStatus(authToken: string): Promise<Quota | null> {
     try {
       const resp = await fetch('/api/user/subscription', {
         headers: {
@@ -96,11 +104,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
         setQuota(quotaInfo);
         localStorage.setItem(AUTH_QUOTA_KEY, JSON.stringify(quotaInfo));
+        return quotaInfo;
       }
     } catch (e) {
       console.error('[Auth] Failed to fetch subscription status:', e);
     }
+    return null;
   }
+
+  useEffect(() => {
+    const subscriptionResult = searchParams?.get('subscription');
+    if (subscriptionResult !== 'success') return;
+    if (!token) return;
+    if (hasHandledSubscriptionSuccess.current) return;
+
+    hasHandledSubscriptionSuccess.current = true;
+    let canceled = false;
+    let attempt = 0;
+    const maxAttempts = 5;
+
+    const refresh = async () => {
+      if (canceled) return;
+      attempt += 1;
+      const latestQuota = await fetchSubscriptionStatus(token);
+      const isPremiumActive = latestQuota?.is_premium ?? quotaRef.current?.is_premium ?? false;
+
+      if (!isPremiumActive && attempt < maxAttempts) {
+        setTimeout(refresh, 3000);
+      }
+    };
+
+    refresh();
+    return () => {
+      canceled = true;
+    };
+  }, [searchParams, token]);
 
   // 验证 Token
   async function validateToken(authToken: string): Promise<boolean> {
