@@ -100,6 +100,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function fetchSubscriptionStatus(authToken: string): Promise<Quota | null> {
     try {
       const resp = await fetch('/api/user/subscription', {
+        method: 'POST',
+        cache: 'no-store',
         headers: {
           'Authorization': `Bearer ${authToken}`,
         }
