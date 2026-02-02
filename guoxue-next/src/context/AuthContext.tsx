@@ -4,8 +4,17 @@ import { createContext, useContext, useState, useEffect, ReactNode, useRef } fro
 import { useSearchParams } from 'next/navigation';
 
 // Supabase 配置
-const SUPABASE_URL = 'https://dckeajeazaxbxlqlkicl.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRja2VhamVhemF4YnhscWxraWNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyOTI3NjUsImV4cCI6MjA3OTg2ODc2NX0.kv1oVXsO9gnB3XLCFGlJiX2I9PAbn80XD1irzCDNRfI';
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+function hasSupabaseConfig() {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.error('[Auth] Missing Supabase config: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY');
+    return false;
+  }
+  return true;
+}
+
 
 // 本地存储键名
 const AUTH_TOKEN_KEY = 'gx_auth_token';
@@ -142,6 +151,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // 验证 Token
   async function validateToken(authToken: string): Promise<boolean> {
+    if (!hasSupabaseConfig()) { return false; }
     try {
       const resp = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
         headers: {
@@ -168,6 +178,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // 登录
   async function login(email: string, password: string) {
+    if (!hasSupabaseConfig()) { return { success: false, error: 'Supabase 配置缺失' }; }
     try {
       const resp = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
         method: 'POST',
@@ -203,6 +214,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // 注册
   async function register(email: string, password: string, username?: string) {
+    if (!hasSupabaseConfig()) { return { success: false, error: 'Supabase 配置缺失' }; }
     try {
       const resp = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
         method: 'POST',
