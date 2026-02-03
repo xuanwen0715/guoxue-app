@@ -418,12 +418,16 @@ export default function DictionaryPage() {
         {/* Quick entry */}
         <section className="quick-entry" aria-label={isZh ? '快捷入口' : 'Quick entry'}>
           <div className="quick-title">{isZh ? '快捷入口' : 'Quick Entry'}</div>
+          <div className="quick-hint">
+            {isZh ? '常用检索与工具，一键直达' : 'Common searches and tools, one click away'}
+          </div>
           <div className="quick-grid">
             {quickEntries.map((entry) => (
               <button
                 key={entry.id}
                 type="button"
                 className="quick-card"
+                data-quick-id={entry.id}
                 onClick={entry.action}
               >
                 <span className="quick-icon" aria-hidden="true">{entry.icon}</span>
@@ -568,7 +572,7 @@ export default function DictionaryPage() {
                       <span className="radical-group-title">{group.title}</span>
                       <span className="radical-group-desc">{group.description}</span>
                     </div>
-                    <div className="radical-grid">
+                    <div className={`radical-grid ${group.isAlias ? 'alias' : 'full'}`}>
                       {group.radicals.map((r) => (
                         <button
                           key={`${group.id}-${r}`}
@@ -802,9 +806,15 @@ export default function DictionaryPage() {
           text-transform: uppercase;
         }
 
+        .quick-hint {
+          font-size: 12px;
+          color: var(--muted);
+          margin-bottom: 12px;
+        }
+
         .quick-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           gap: 12px;
         }
 
@@ -819,12 +829,18 @@ export default function DictionaryPage() {
           cursor: pointer;
           text-align: left;
           transition: all 0.25s ease;
+          min-height: 66px;
         }
 
         .quick-card:hover {
           border-color: var(--accent);
           box-shadow: 0 6px 16px rgba(122, 104, 166, 0.15);
           transform: translateY(-1px);
+        }
+
+        .quick-card:focus-visible {
+          outline: 2px solid rgba(122, 104, 166, 0.45);
+          outline-offset: 2px;
         }
 
         .quick-icon {
@@ -839,6 +855,10 @@ export default function DictionaryPage() {
           color: white;
           background: linear-gradient(135deg, var(--accent), var(--secondary));
           flex-shrink: 0;
+        }
+
+        .quick-card[data-quick-id="convert"] .quick-icon {
+          background: linear-gradient(135deg, #b98a2d, #d8b25a);
         }
 
         .quick-text {
@@ -1075,10 +1095,26 @@ export default function DictionaryPage() {
           overflow-y: auto;
         }
 
+        .radical-grid.alias {
+          max-height: 120px;
+          grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+        }
+
+        .radical-grid.full {
+          max-height: 220px;
+        }
+
         .radical-groups {
           display: flex;
           flex-direction: column;
           gap: 14px;
+        }
+
+        .radical-group {
+          padding: 10px;
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid var(--border);
         }
 
         .radical-group-header {
