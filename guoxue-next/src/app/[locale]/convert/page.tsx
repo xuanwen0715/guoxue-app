@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 const MAX_TEXT_LENGTH = 20000;
 
@@ -11,12 +12,27 @@ type ConvertDirection = 's2t' | 't2s';
 export default function ConvertPage() {
   const locale = useLocale();
   const t = useTranslations('convert');
+  const searchParams = useSearchParams();
   const [direction, setDirection] = useState<ConvertDirection>('s2t');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const hasAppliedParams = useRef(false);
+
+  useEffect(() => {
+    if (hasAppliedParams.current) return;
+    const textParam = searchParams?.get('text');
+    const directionParam = searchParams?.get('direction');
+    if (directionParam === 's2t' || directionParam === 't2s') {
+      setDirection(directionParam);
+    }
+    if (textParam) {
+      setInput(textParam);
+    }
+    hasAppliedParams.current = true;
+  }, [searchParams]);
 
   const handleConvert = async () => {
     if (!input.trim()) {

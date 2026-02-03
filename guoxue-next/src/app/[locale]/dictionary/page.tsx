@@ -10,12 +10,19 @@ import AutoComplete, { Suggestion } from '@/components/AutoComplete';
 // Search types
 type SearchType = 'char' | 'idiom' | 'word';
 type SearchBy = 'text' | 'pinyin' | 'radical' | 'strokes';
+type ConvertDirection = 's2t' | 't2s';
 
 const resolveSearchBy = (type: SearchType, by: SearchBy): SearchBy => {
   if (type === 'char') return by;
   if (type === 'idiom') return by === 'pinyin' ? 'pinyin' : 'text';
   return 'text';
 };
+
+interface RecentQuery {
+  text: string;
+  type: SearchType;
+  by: SearchBy;
+}
 
 // Data types
 interface CharResult {
@@ -102,6 +109,19 @@ const RADICAL_ALIAS_MAP: Record<string, string> = {
 // Extra radicals (side-form aliases) for quick access
 const EXTRA_RADICALS = Object.keys(RADICAL_ALIAS_MAP);
 
+const RECENT_STORAGE_KEY = 'gx_dict_recent';
+const MAX_RECENT = 8;
+const HOT_QUERIES: RecentQuery[] = [
+  { text: '道', type: 'char', by: 'text' },
+  { text: '仁', type: 'char', by: 'text' },
+  { text: '礼', type: 'char', by: 'text' },
+  { text: '无为', type: 'word', by: 'text' },
+  { text: '中庸', type: 'word', by: 'text' },
+  { text: '天道', type: 'word', by: 'text' },
+  { text: '一鸣惊人', type: 'idiom', by: 'text' },
+  { text: '守株待兔', type: 'idiom', by: 'text' }
+];
+
 export default function DictionaryPage() {
   const t = useTranslations();
   const locale = useLocale();
@@ -152,9 +172,9 @@ export default function DictionaryPage() {
         const data = await resp.json();
 
         if (resp.ok) {
-          setCharResults(data.chars || []);
-          setIdiomResults(data.idioms || []);
-          setWordResults(data.words || []);
+          setCharResults(sortChars(data.chars || [], qParam, resolvedBy));
+          setIdiomResults(sortTerms(data.idioms || [], qParam));
+          setWordResults(sortTerms(data.words || [], qParam));
         }
       } catch (err) {
         console.error('Initial search failed:', err);
@@ -183,6 +203,42 @@ export default function DictionaryPage() {
 
   // Radical picker
   const [showRadicalPicker, setShowRadicalPicker] = useState(false);
+  const [recentQueries, setRecentQueries] = useState<RecentQuery[]>([]);
+  const recentLoadedRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || recentLoadedRef.current) return;
+    try {
+      const raw = localStorage.getItem(RECENT_STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as RecentQuery[];
+        if (Array.isArray(parsed)) {
+          setRecentQueries(parsed.slice(0, MAX_RECENT));
+        }
+      }
+    } catch (err) {
+      console.error('[Dictionary] Failed to load recent queries:', err);
+    } finally {
+      recentLoadedRef.current = true;
+    }
+  }, []);
+
+  const recordRecentQuery = (entry: RecentQuery) => {
+    const trimmed = entry.text.trim();
+    if (!trimmed) return;
+    const normalizedEntry = { ...entry, text: trimmed };
+    setRecentQueries((prev) => {
+      const filtered = prev.filter(
+        (item) =>
+          !(item.text === normalizedEntry.text && item.type === normalizedEntry.type && item.by === normalizedEntry.by)
+      );
+      const next = [normalizedEntry, ...filtered].slice(0, MAX_RECENT);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(next));
+      }
+      return next;
+    });
+  };
 
   // Search function
   const handleSearch = useCallback(async (overrides?: { query?: string; type?: SearchType; by?: SearchBy }) => {
@@ -205,16 +261,76 @@ export default function DictionaryPage() {
       const data = await resp.json();
 
       if (resp.ok) {
-        setCharResults(data.chars || []);
-        setIdiomResults(data.idioms || []);
-        setWordResults(data.words || []);
+        const sortedChars = sortChars(data.chars || [], nextQuery, nextBy);
+        const sortedIdioms = sortTerms(data.idioms || [], nextQuery);
+        const sortedWords = sortTerms(data.words || [], nextQuery);
+        setCharResults(sortedChars);
+        setIdiomResults(sortedIdioms);
+        setWordResults(sortedWords);
+        recordRecentQuery({ text: nextQuery, type: nextType, by: nextBy });
       }
     } catch (err) {
       console.error('Search failed:', err);
     } finally {
       setIsLoading(false);
     }
-  }, [query, searchType, searchBy]);
+  }, [query, searchType, searchBy, recordRecentQuery]);
+
+  const sortChars = (items: CharResult[], keyword: string, by: SearchBy) => {
+    const normalized = keyword.trim();
+    if (!normalized) return items;
+    return sortByScore(items, (item) => {
+      if (by === 'text') {
+        if (item.char === normalized || item.traditional === normalized) return 3;
+      }
+      if (by === 'pinyin' && item.pinyin) {
+        const pinyin = item.pinyin.toLowerCase();
+        const key = normalized.toLowerCase();
+        if (pinyin.startsWith(key)) return 2;
+        if (pinyin.includes(key)) return 1;
+      }
+      return 0;
+    });
+  };
+
+  const sortTerms = <T extends { word: string; pinyin?: string | null }>(items: T[], keyword: string) => {
+    const normalized = keyword.trim().toLowerCase();
+    if (!normalized) return items;
+    return sortByScore(items, (item) => {
+      const term = item.word.toLowerCase();
+      if (term === normalized) return 3;
+      if (term.startsWith(normalized)) return 2;
+      if (term.includes(normalized)) return 1;
+      if (item.pinyin) {
+        const pinyin = item.pinyin.toLowerCase();
+        if (pinyin.startsWith(normalized)) return 1;
+      }
+      return 0;
+    });
+  };
+
+  const sortByScore = <T,>(items: T[], scorer: (item: T) => number) => {
+    return items
+      .map((item, index) => ({ item, index, score: scorer(item) }))
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .map((entry) => entry.item);
+  };
+
+  const highlightText = (text: string | null, keyword: string, ignoreCase = false) => {
+    if (!text) return text;
+    const source = ignoreCase ? text.toLowerCase() : text;
+    const target = ignoreCase ? keyword.toLowerCase() : keyword;
+    if (!target) return text;
+    const index = source.indexOf(target);
+    if (index < 0) return text;
+    return (
+      <>
+        {text.slice(0, index)}
+        <mark className="highlight">{text.slice(index, index + target.length)}</mark>
+        {text.slice(index + target.length)}
+      </>
+    );
+  };
 
   // Quick entry actions
   const scrollToSearch = () => {
@@ -224,6 +340,15 @@ export default function DictionaryPage() {
       const input = document.querySelector('.autocomplete-input') as HTMLInputElement | null;
       input?.focus();
     }, 200);
+  };
+
+  const openConvert = (text?: string, direction?: ConvertDirection) => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams();
+    if (text) params.set('text', text);
+    if (direction) params.set('direction', direction);
+    const queryString = params.toString();
+    window.location.href = `/${locale}/convert${queryString ? `?${queryString}` : ''}`;
   };
 
   const handleQuickEntry = (nextType: SearchType, nextBy: SearchBy, openRadical = false) => {
@@ -274,11 +399,7 @@ export default function DictionaryPage() {
       icon: '繁',
       title: isZh ? '繁简转换' : 'S/T Convert',
       desc: isZh ? '简繁互转' : 'Simplified ↔ Traditional',
-      action: () => {
-        if (typeof window !== 'undefined') {
-          window.location.href = `/${locale}/convert`;
-        }
-      }
+      action: () => openConvert()
     }
   ];
 
@@ -324,9 +445,10 @@ export default function DictionaryPage() {
       const data = await resp.json();
 
       if (resp.ok) {
-        setCharResults(data.chars || []);
-        setIdiomResults(data.idioms || []);
-        setWordResults(data.words || []);
+        setCharResults(sortChars(data.chars || [], canonical, 'radical'));
+        setIdiomResults(sortTerms(data.idioms || [], canonical));
+        setWordResults(sortTerms(data.words || [], canonical));
+        recordRecentQuery({ text: canonical, type: searchType, by: 'radical' });
       }
     } catch (err) {
       console.error('Radical search failed:', err);
@@ -363,6 +485,25 @@ export default function DictionaryPage() {
       isAlias: false
     }
   ];
+
+  const handleTagSearch = (entry: RecentQuery) => {
+    setQuery(entry.text);
+    setSearchType(entry.type);
+    setSearchBy(resolveSearchBy(entry.type, entry.by));
+    setShowRadicalPicker(entry.by === 'radical');
+    handleSearch({ query: entry.text, type: entry.type, by: entry.by });
+  };
+
+  const getTagBadge = (entry: RecentQuery) => {
+    if (entry.type === 'char') {
+      if (entry.by === 'radical') return isZh ? '部' : 'R';
+      if (entry.by === 'pinyin') return isZh ? '拼' : 'P';
+      if (entry.by === 'strokes') return isZh ? '画' : 'S';
+      return isZh ? '字' : 'C';
+    }
+    if (entry.type === 'idiom') return isZh ? '成' : 'I';
+    return isZh ? '词' : 'W';
+  };
 
   return (
     <>
@@ -437,6 +578,45 @@ export default function DictionaryPage() {
                 </div>
               </button>
             ))}
+          </div>
+        </section>
+
+        <section className="tag-section" aria-label={isZh ? '快捷标签' : 'Quick tags'}>
+          <div className="tag-group">
+            <div className="tag-title">{isZh ? '最近查询' : 'Recent'}</div>
+            <div className="tag-list">
+              {recentQueries.length === 0 ? (
+                <span className="tag-empty">{isZh ? '暂无记录' : 'No recent searches'}</span>
+              ) : (
+                recentQueries.map((entry) => (
+                  <button
+                    key={`recent-${entry.type}-${entry.by}-${entry.text}`}
+                    type="button"
+                    className="tag-chip"
+                    onClick={() => handleTagSearch(entry)}
+                  >
+                    <span className="tag-badge">{getTagBadge(entry)}</span>
+                    <span className="tag-text">{entry.text}</span>
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
+          <div className="tag-group">
+            <div className="tag-title">{isZh ? '热门推荐' : 'Trending'}</div>
+            <div className="tag-list">
+              {HOT_QUERIES.map((entry) => (
+                <button
+                  key={`hot-${entry.type}-${entry.text}`}
+                  type="button"
+                  className="tag-chip"
+                  onClick={() => handleTagSearch(entry)}
+                >
+                  <span className="tag-badge">{getTagBadge(entry)}</span>
+                  <span className="tag-text">{entry.text}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -606,7 +786,11 @@ export default function DictionaryPage() {
                   {char.traditional && char.traditional !== char.char && (
                     <div className="char-traditional">{t('dictionary.trad')}: {char.traditional}</div>
                   )}
-                  <div className="char-pinyin">{char.pinyin}</div>
+                  <div className="char-pinyin">
+                    {searchBy === 'pinyin' && char.pinyin
+                      ? highlightText(char.pinyin, query, true)
+                      : (char.pinyin || '-')}
+                  </div>
                   <div className="char-meta">
                     {char.radical && <span>{char.radical}{t('dictionary.bu')}</span>}
                     {char.total_strokes > 0 && <span>{char.total_strokes}{t('dictionary.hua')}</span>}
@@ -622,8 +806,10 @@ export default function DictionaryPage() {
               {idiomResults.map((idiom, idx) => (
                 <div key={idx} className="idiom-card">
                   <div className="idiom-header">
-                    <h3 className="idiom-word">{idiom.word}</h3>
-                    <span className="idiom-pinyin">{idiom.pinyin}</span>
+                    <h3 className="idiom-word">{highlightText(idiom.word, query)}</h3>
+                    <span className="idiom-pinyin">
+                      {highlightText(idiom.pinyin || '', query, true)}
+                    </span>
                   </div>
                   <p className="idiom-explanation">{idiom.explanation}</p>
                   {idiom.derivation && (
@@ -636,12 +822,20 @@ export default function DictionaryPage() {
                       <strong>{t('dictionary.example')}:</strong> {idiom.example}
                     </p>
                   )}
-                  <button
-                    className="ai-query-btn"
-                    onClick={() => handleAiQuery(idiom.word)}
-                  >
-                    AI {t('dictionary.deepAnalysis')}
-                  </button>
+                  <div className="result-actions">
+                    <button
+                      className="ai-query-btn"
+                      onClick={() => handleAiQuery(idiom.word)}
+                    >
+                      AI {t('dictionary.deepAnalysis')}
+                    </button>
+                    <button
+                      className="convert-btn"
+                      onClick={() => openConvert(idiom.word)}
+                    >
+                      {isZh ? '简繁转换' : 'Convert'}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -652,14 +846,22 @@ export default function DictionaryPage() {
             <div className="result-list">
               {wordResults.map((word, idx) => (
                 <div key={idx} className="word-card">
-                  <h3 className="word-term">{word.word}</h3>
+                  <h3 className="word-term">{highlightText(word.word, query)}</h3>
                   <p className="word-explanation">{word.explanation}</p>
-                  <button
-                    className="ai-query-btn"
-                    onClick={() => handleAiQuery(word.word)}
-                  >
-                    AI {t('dictionary.deepAnalysis')}
-                  </button>
+                  <div className="result-actions">
+                    <button
+                      className="ai-query-btn"
+                      onClick={() => handleAiQuery(word.word)}
+                    >
+                      AI {t('dictionary.deepAnalysis')}
+                    </button>
+                    <button
+                      className="convert-btn"
+                      onClick={() => openConvert(word.word)}
+                    >
+                      {isZh ? '简繁转换' : 'Convert'}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -728,12 +930,20 @@ export default function DictionaryPage() {
                 <h4>{t('dictionary.explanation')}</h4>
                 <p>{selectedChar.explanation || t('dictionary.noExplanation')}</p>
               </div>
-              <button
-                className="btn-primary detail-ai-btn"
-                onClick={() => handleAiQuery(selectedChar.char)}
-              >
-                AI {t('dictionary.deepAnalysis')}
-              </button>
+              <div className="detail-actions">
+                <button
+                  className="btn-primary detail-ai-btn"
+                  onClick={() => handleAiQuery(selectedChar.char)}
+                >
+                  AI {t('dictionary.deepAnalysis')}
+                </button>
+                <button
+                  className="detail-convert-btn"
+                  onClick={() => openConvert(selectedChar.traditional || selectedChar.char)}
+                >
+                  {isZh ? '简繁转换' : 'Convert'}
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -874,6 +1084,73 @@ export default function DictionaryPage() {
         }
 
         .quick-desc {
+          font-size: 12px;
+          color: var(--muted);
+        }
+
+        .tag-section {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 12px;
+          margin: 8px 0 24px;
+        }
+
+        .tag-group {
+          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          padding: 12px;
+        }
+
+        .tag-title {
+          font-size: 13px;
+          color: var(--muted);
+          margin-bottom: 10px;
+        }
+
+        .tag-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .tag-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 10px;
+          border-radius: 999px;
+          border: 1px solid var(--border);
+          background: white;
+          font-size: 13px;
+          color: var(--text);
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .tag-chip:hover {
+          border-color: var(--accent);
+          color: var(--accent);
+        }
+
+        .tag-badge {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 18px;
+          height: 18px;
+          border-radius: 6px;
+          background: rgba(122, 104, 166, 0.12);
+          color: var(--accent);
+          font-size: 11px;
+          font-weight: 600;
+        }
+
+        .tag-text {
+          font-size: 13px;
+        }
+
+        .tag-empty {
           font-size: 12px;
           color: var(--muted);
         }
@@ -1272,6 +1549,17 @@ export default function DictionaryPage() {
           line-height: 1.6;
         }
 
+        .result-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 12px;
+        }
+
+        .result-actions .ai-query-btn {
+          margin-top: 0;
+        }
+
         .ai-query-btn {
           margin-top: 12px;
           padding: 8px 16px;
@@ -1288,6 +1576,29 @@ export default function DictionaryPage() {
           background: linear-gradient(135deg, var(--accent), var(--secondary));
           color: white;
           border-color: transparent;
+        }
+
+        .convert-btn {
+          padding: 8px 14px;
+          border-radius: 20px;
+          border: 1px solid var(--border);
+          background: white;
+          color: var(--muted);
+          font-size: 13px;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+
+        .convert-btn:hover {
+          border-color: var(--accent);
+          color: var(--accent);
+        }
+
+        mark.highlight {
+          background: rgba(122, 104, 166, 0.18);
+          color: inherit;
+          padding: 0 2px;
+          border-radius: 4px;
         }
 
         /* No results / hint */
@@ -1431,6 +1742,33 @@ export default function DictionaryPage() {
         .detail-ai-btn {
           width: 100%;
           margin-top: 20px;
+        }
+
+        .detail-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .detail-actions .detail-ai-btn {
+          margin-top: 0;
+        }
+
+        .detail-convert-btn {
+          width: 100%;
+          padding: 10px 16px;
+          border-radius: 12px;
+          border: 1px solid var(--border);
+          background: white;
+          color: var(--muted);
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .detail-convert-btn:hover {
+          border-color: var(--accent);
+          color: var(--accent);
         }
 
         /* Mobile */
