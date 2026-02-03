@@ -178,5 +178,27 @@
     "quickLookup": "字典速查",
     "viewMore": "查看更多",
     "loading": "加载中..."
+  },
+  "convert": {
+    "title": "繁简转换",
+    "subtitle": "简繁互转 · 支持成句",
+    "backToDict": "返回字典",
+    "direction": "转换方向",
+    "s2t": "简体 → 繁体",
+    "t2s": "繁体 → 简体",
+    "inputLabel": "输入内容",
+    "inputPlaceholder": "请输入需要转换的中文内容...",
+    "outputLabel": "转换结果",
+    "convert": "开始转换",
+    "converting": "转换中...",
+    "swap": "互换方向",
+    "copy": "复制结果",
+    "copied": "已复制",
+    "clear": "清空",
+    "emptyHint": "请输入内容后再转换",
+    "tooLong": "内容过长，请分段转换",
+    "error": "转换失败，请稍后重试",
+    "privacy": "转换在服务器端完成，系统不会保存你的文本",
+    "count": "字数"
   }
 }

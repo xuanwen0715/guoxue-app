@@ -178,5 +178,27 @@
     "quickLookup": "Quick Lookup",
     "viewMore": "View More",
     "loading": "Loading..."
+  },
+  "convert": {
+    "title": "S/T Converter",
+    "subtitle": "Simplified ↔ Traditional",
+    "backToDict": "Back to Dictionary",
+    "direction": "Direction",
+    "s2t": "Simplified → Traditional",
+    "t2s": "Traditional → Simplified",
+    "inputLabel": "Input",
+    "inputPlaceholder": "Type Chinese text to convert...",
+    "outputLabel": "Result",
+    "convert": "Convert",
+    "converting": "Converting...",
+    "swap": "Swap direction",
+    "copy": "Copy result",
+    "copied": "Copied",
+    "clear": "Clear",
+    "emptyHint": "Enter text before converting",
+    "tooLong": "Text is too long, please split it",
+    "error": "Conversion failed, please try again",
+    "privacy": "Conversion runs on the server and is not stored",
+    "count": "Count"
   }
 }

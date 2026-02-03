@@ -239,41 +239,46 @@ export default function DictionaryPage() {
       icon: '部',
       title: isZh ? '部首检字' : 'Radical Search',
       desc: isZh ? '按部首/偏旁快速定位' : 'Find by radical/side-form',
-      type: 'char' as SearchType,
-      by: 'radical' as SearchBy,
-      openRadical: true
+      action: () => handleQuickEntry('char', 'radical', true)
     },
     {
       id: 'pinyin',
       icon: '拼',
       title: isZh ? '拼音检字' : 'Pinyin Search',
       desc: isZh ? '拼音/首字母直达' : 'Pinyin or initials',
-      type: 'char' as SearchType,
-      by: 'pinyin' as SearchBy
+      action: () => handleQuickEntry('char', 'pinyin')
     },
     {
       id: 'strokes',
       icon: '画',
       title: isZh ? '笔画检字' : 'Stroke Search',
       desc: isZh ? '按笔画数筛选' : 'Filter by strokes',
-      type: 'char' as SearchType,
-      by: 'strokes' as SearchBy
+      action: () => handleQuickEntry('char', 'strokes')
     },
     {
       id: 'idiom',
       icon: '成',
       title: isZh ? '成语查询' : 'Idiom Search',
       desc: isZh ? '成语解释与出处' : 'Idioms and usage',
-      type: 'idiom' as SearchType,
-      by: 'text' as SearchBy
+      action: () => handleQuickEntry('idiom', 'text')
     },
     {
       id: 'word',
       icon: '词',
       title: isZh ? '词语查询' : 'Word Search',
       desc: isZh ? '现代词语释义' : 'Word meanings',
-      type: 'word' as SearchType,
-      by: 'text' as SearchBy
+      action: () => handleQuickEntry('word', 'text')
+    },
+    {
+      id: 'convert',
+      icon: '繁',
+      title: isZh ? '繁简转换' : 'S/T Convert',
+      desc: isZh ? '简繁互转' : 'Simplified ↔ Traditional',
+      action: () => {
+        if (typeof window !== 'undefined') {
+          window.location.href = `/${locale}/convert`;
+        }
+      }
     }
   ];
 
@@ -419,7 +424,7 @@ export default function DictionaryPage() {
                 key={entry.id}
                 type="button"
                 className="quick-card"
-                onClick={() => handleQuickEntry(entry.type, entry.by, entry.openRadical)}
+                onClick={entry.action}
               >
                 <span className="quick-icon" aria-hidden="true">{entry.icon}</span>
                 <div className="quick-text">
