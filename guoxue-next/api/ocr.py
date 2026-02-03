@@ -4,6 +4,7 @@ import base64
 import traceback
 import requests
 import re
+from io import BytesIO
 from http.server import BaseHTTPRequestHandler
 
 # 导入认证工具
@@ -21,6 +22,13 @@ try:
     ALIYUN_SDK_AVAILABLE = True
 except ImportError:
     ALIYUN_SDK_AVAILABLE = False
+
+# Pillow 图像处理（用于预处理增强）
+try:
+    from PIL import Image, ImageOps, ImageFilter
+    PIL_AVAILABLE = True
+except ImportError:
+    PIL_AVAILABLE = False
 
 # 阿里云 OCR 配置
 ACCESS_KEY_ID = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_ID", "")
@@ -64,7 +72,6 @@ def _call_aliyun_ocr(image_base64: str) -> str:
         image_base64 = image_base64.split(",", 1)[1]
 
     # 使用 body 方式传递图片
-    from io import BytesIO
     image_bytes = base64.b64decode(image_base64)
     body_stream = BytesIO(image_bytes)
 
@@ -132,6 +139,70 @@ def _get_dashscope_prompt(scene: str, layout: str) -> str:
         prompt += f"7. {layout_hint}"
     return prompt
 
+
+def _decode_image_bytes(image_data: str):
+    if not image_data:
+        return None
+    if image_data.startswith("http://") or image_data.startswith("https://"):
+        return None
+    try:
+        if image_data.startswith("data:"):
+            image_data = image_data.split(",", 1)[1]
+        return base64.b64decode(image_data)
+    except Exception:
+        return None
+
+
+def _otsu_threshold(gray_image) -> int:
+    histogram = gray_image.histogram()
+    total = sum(histogram)
+    sum_total = sum(i * histogram[i] for i in range(256))
+    sum_b = 0
+    w_b = 0
+    max_between = 0
+    threshold = 128
+    for i in range(256):
+        w_b += histogram[i]
+        if w_b == 0:
+            continue
+        w_f = total - w_b
+        if w_f == 0:
+            break
+        sum_b += i * histogram[i]
+        m_b = sum_b / w_b
+        m_f = (sum_total - sum_b) / w_f
+        between = w_b * w_f * (m_b - m_f) ** 2
+        if between > max_between:
+            max_between = between
+            threshold = i
+    return threshold
+
+
+def _preprocess_image_base64(image_data: str) -> str:
+    if not PIL_AVAILABLE:
+        return ""
+    image_bytes = _decode_image_bytes(image_data)
+    if not image_bytes:
+        return ""
+    try:
+        with Image.open(BytesIO(image_bytes)) as img:
+            img = ImageOps.exif_transpose(img)
+            if img.mode not in ("RGB", "L"):
+                img = img.convert("RGB")
+            gray = img.convert("L")
+            gray = ImageOps.autocontrast(gray)
+            gray = gray.filter(ImageFilter.MedianFilter(size=3))
+            gray = gray.filter(ImageFilter.UnsharpMask(radius=1, percent=160, threshold=3))
+            threshold = _otsu_threshold(gray)
+            bw = gray.point(lambda p: 255 if p > threshold else 0)
+            output = bw.convert("RGB")
+            buffer = BytesIO()
+            output.save(buffer, format="JPEG", quality=95, optimize=True)
+        encoded = base64.b64encode(buffer.getvalue()).decode("utf-8")
+        return f"data:image/jpeg;base64,{encoded}"
+    except Exception as e:
+        print(f"[OCR] Preprocess failed: {e}")
+        return ""
 
 def _call_dashscope_ocr(image_data: str, scene: str, layout: str) -> str:
     """调用 DashScope 视觉模型进行 OCR（备用方案）"""
@@ -410,18 +481,51 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(503, {"error": "No OCR API configured (missing DASHSCOPE or ALIBABA_CLOUD keys)"})
                 return
 
-            # 低置信度时尝试二次识别（只在 Aliyun 可用时）
+            # 低置信度时尝试预处理 + 多模型对比
             warning = None
-            if _is_low_confidence(text, scene) and ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
-                try:
-                    alt_text = _call_aliyun_ocr(final_image)
-                    if _score_text(alt_text, scene) > _score_text(text, scene):
-                        text = alt_text
-                        ocr_method = "aliyun_compare"
-                    warning = "LOW_CONFIDENCE"
-                except Exception as e:
-                    print(f"[OCR] Low confidence fallback failed: {e}")
-                    warning = "LOW_CONFIDENCE"
+            if _is_low_confidence(text, scene):
+                warning = "LOW_CONFIDENCE"
+                candidates = [(text, ocr_method)]
+
+                processed_image = _preprocess_image_base64(final_image)
+                if processed_image:
+                    if DASHSCOPE_API_KEY:
+                        try:
+                            pre_text = _call_dashscope_ocr(processed_image, scene, layout)
+                            candidates.append((pre_text, "dashscope_preprocess"))
+                        except Exception as e:
+                            print(f"[OCR] Preprocess DashScope failed: {e}")
+                    if ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
+                        try:
+                            pre_text = _call_aliyun_ocr(processed_image)
+                            candidates.append((pre_text, "aliyun_preprocess"))
+                        except Exception as e:
+                            print(f"[OCR] Preprocess Aliyun failed: {e}")
+
+                if (
+                    ALIYUN_SDK_AVAILABLE
+                    and ACCESS_KEY_ID
+                    and ACCESS_KEY_SECRET
+                    and not ocr_method.startswith("aliyun")
+                ):
+                    try:
+                        alt_text = _call_aliyun_ocr(final_image)
+                        candidates.append((alt_text, "aliyun_compare"))
+                    except Exception as e:
+                        print(f"[OCR] Low confidence Aliyun failed: {e}")
+
+                best_text = text
+                best_method = ocr_method
+                best_score = _score_text(text, scene)
+                for cand_text, cand_method in candidates:
+                    cand_score = _score_text(cand_text, scene)
+                    if cand_score > best_score:
+                        best_text = cand_text
+                        best_method = cand_method
+                        best_score = cand_score
+
+                text = best_text
+                ocr_method = best_method
 
             # 文本清理（按场景）
             def _normalize_text(value: str, ocr_scene: str) -> str:
