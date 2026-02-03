@@ -6,6 +6,7 @@ import { useQuery } from '@/context/QueryContext';
 import { useAuth } from '@/context/AuthContext';
 import { prepareOcrImage } from '@/lib/ocr-image';
 import OcrResultModal from './OcrResultModal';
+import OcrCropModal from './OcrCropModal';
 
 interface OcrSuggestion {
   original: string;
@@ -38,6 +39,9 @@ export default function ContextInput() {
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
   const [ocrResult, setOcrResult] = useState<OcrResponse | null>(null);
+  const [showCropper, setShowCropper] = useState(false);
+  const [pendingOcrFile, setPendingOcrFile] = useState<File | null>(null);
+  const [pendingOcrKey, setPendingOcrKey] = useState('');
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -82,7 +86,10 @@ export default function ContextInput() {
   };
 
   // 处理OCR识别
-  const processOcr = useCallback(async (file: File) => {
+  const processOcr = useCallback(async (
+    file: File,
+    options?: { sourceKey?: string }
+  ) => {
     if (isUploading) {
       setUploadStatus(t('ocr.uploadingWait'));
       return;
@@ -94,7 +101,7 @@ export default function ContextInput() {
       return;
     }
 
-    const fileKey = `${file.name}-${file.size}-${file.lastModified}`;
+    const fileKey = options?.sourceKey ?? `${file.name}-${file.size}-${file.lastModified}`;
     const now = Date.now();
     if (fileKey === lastUploadRef.current && now - lastUploadAtRef.current < 5000) {
       setUploadStatus(t('ocr.duplicateUpload'));
@@ -143,10 +150,31 @@ export default function ContextInput() {
     }
   }, [getAccessToken, t, callOcrApi, ocrLayout, setContext, isUploading]);
 
+  const openCropper = useCallback((file: File) => {
+    if (isUploading) {
+      setUploadStatus(t('ocr.uploadingWait'));
+      return;
+    }
+    const validationError = validateOcrFile(file);
+    if (validationError) {
+      setUploadStatus(validationError);
+      return;
+    }
+    if (!token) {
+      setUploadStatus(t('ocr.loginRequired'));
+      return;
+    }
+    const fileKey = `${file.name}-${file.size}-${file.lastModified}`;
+    setPendingOcrFile(file);
+    setPendingOcrKey(fileKey);
+    setUploadStatus('');
+    setShowCropper(true);
+  }, [isUploading, t, token]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      processOcr(file);
+      openCropper(file);
     }
     // 清空input以便重复选择同一文件
     e.target.value = '';
@@ -184,7 +212,7 @@ export default function ContextInput() {
     if (files.length > 0) {
       const file = files[0];
       if (file.type.startsWith('image/')) {
-        processOcr(file);
+        openCropper(file);
       }
     }
   };
@@ -198,11 +226,33 @@ export default function ContextInput() {
         e.preventDefault();
         const file = item.getAsFile();
         if (file) {
-          processOcr(file);
+          openCropper(file);
         }
         return;
       }
     }
+  };
+
+  const handleCropCancel = () => {
+    setShowCropper(false);
+    setPendingOcrFile(null);
+    setPendingOcrKey('');
+  };
+
+  const handleCropConfirm = async (file: File) => {
+    const sourceKey = pendingOcrKey;
+    setShowCropper(false);
+    setPendingOcrFile(null);
+    setPendingOcrKey('');
+    await processOcr(file, { sourceKey });
+  };
+
+  const handleUseOriginal = async (file: File) => {
+    const sourceKey = pendingOcrKey;
+    setShowCropper(false);
+    setPendingOcrFile(null);
+    setPendingOcrKey('');
+    await processOcr(file, { sourceKey });
   };
 
   return (
@@ -316,6 +366,14 @@ export default function ContextInput() {
           onSelect={handleOcrSelect}
         />
       )}
+
+      <OcrCropModal
+        isOpen={showCropper}
+        file={pendingOcrFile}
+        onCancel={handleCropCancel}
+        onConfirm={handleCropConfirm}
+        onUseOriginal={handleUseOriginal}
+      />
 
       <style jsx>{`
         .context-drop.dragging {
