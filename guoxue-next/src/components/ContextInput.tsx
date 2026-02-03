@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@/context/QueryContext';
 import { useAuth } from '@/context/AuthContext';
+import { prepareOcrImage } from '@/lib/ocr-image';
 import OcrResultModal from './OcrResultModal';
 
 interface OcrSuggestion {
@@ -28,6 +29,7 @@ export default function ContextInput() {
   const [uploadStatus, setUploadStatus] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const maxFileSize = 4 * 1024 * 1024;
+  const maxDimension = 2000;
 
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
@@ -35,16 +37,6 @@ export default function ContextInput() {
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
-  };
-
-  // 将图片文件转为base64
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
   };
 
   // 调用OCR API
@@ -98,7 +90,7 @@ export default function ContextInput() {
     setUploadStatus(t('ocr.recognizing'));
 
     try {
-      const imageBase64 = await fileToBase64(file);
+      const imageBase64 = await prepareOcrImage(file, { maxDimension });
       const result = await callOcrApi(imageBase64, authToken);
 
       if (!result.text) {
