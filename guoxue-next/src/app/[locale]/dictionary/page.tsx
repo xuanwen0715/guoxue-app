@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
@@ -99,15 +99,16 @@ const RADICAL_ALIAS_MAP: Record<string, string> = {
   '\u6535': '\u6534'  // 攵 -> 攴
 };
 
-// Merge extra radicals into the grid (UI only)
+// Extra radicals (side-form aliases) for quick access
 const EXTRA_RADICALS = Object.keys(RADICAL_ALIAS_MAP);
-const RADICALS_FOR_GRID = Array.from(new Set([...EXTRA_RADICALS, ...COMMON_RADICALS]));
 
 export default function DictionaryPage() {
   const t = useTranslations();
   const locale = useLocale();
+  const isZh = locale === 'zh';
   const searchParams = useSearchParams();
   const [initializedFromURL, setInitializedFromURL] = useState(false);
+  const searchSectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (initializedFromURL) return;
@@ -215,6 +216,67 @@ export default function DictionaryPage() {
     }
   }, [query, searchType, searchBy]);
 
+  // Quick entry actions
+  const scrollToSearch = () => {
+    if (typeof window === 'undefined') return;
+    searchSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => {
+      const input = document.querySelector('.autocomplete-input') as HTMLInputElement | null;
+      input?.focus();
+    }, 200);
+  };
+
+  const handleQuickEntry = (nextType: SearchType, nextBy: SearchBy, openRadical = false) => {
+    setSearchType(nextType);
+    setSearchBy(resolveSearchBy(nextType, nextBy));
+    setShowRadicalPicker(openRadical);
+    scrollToSearch();
+  };
+
+  const quickEntries = [
+    {
+      id: 'radical',
+      icon: '部',
+      title: isZh ? '部首检字' : 'Radical Search',
+      desc: isZh ? '按部首/偏旁快速定位' : 'Find by radical/side-form',
+      type: 'char' as SearchType,
+      by: 'radical' as SearchBy,
+      openRadical: true
+    },
+    {
+      id: 'pinyin',
+      icon: '拼',
+      title: isZh ? '拼音检字' : 'Pinyin Search',
+      desc: isZh ? '拼音/首字母直达' : 'Pinyin or initials',
+      type: 'char' as SearchType,
+      by: 'pinyin' as SearchBy
+    },
+    {
+      id: 'strokes',
+      icon: '画',
+      title: isZh ? '笔画检字' : 'Stroke Search',
+      desc: isZh ? '按笔画数筛选' : 'Filter by strokes',
+      type: 'char' as SearchType,
+      by: 'strokes' as SearchBy
+    },
+    {
+      id: 'idiom',
+      icon: '成',
+      title: isZh ? '成语查询' : 'Idiom Search',
+      desc: isZh ? '成语解释与出处' : 'Idioms and usage',
+      type: 'idiom' as SearchType,
+      by: 'text' as SearchBy
+    },
+    {
+      id: 'word',
+      icon: '词',
+      title: isZh ? '词语查询' : 'Word Search',
+      desc: isZh ? '现代词语释义' : 'Word meanings',
+      type: 'word' as SearchType,
+      by: 'text' as SearchBy
+    }
+  ];
+
   // Handle auto-complete selection
   const handleAutoCompleteSelect = (suggestion: Suggestion) => {
     const nextQuery = suggestion.text;
@@ -278,6 +340,25 @@ export default function DictionaryPage() {
     window.location.href = `/${locale}?word=${encodeURIComponent(term)}`;
   };
 
+  const radicalGroups = [
+    {
+      id: 'aliases',
+      title: isZh ? '常见偏旁（别名）' : 'Common Side-Forms',
+      description: isZh
+        ? '如 讠=言、氵=水、忄=心、扌=手、礻=示 等'
+        : 'e.g. 讠=言, 氵=水, 忄=心, 扌=手, 礻=示',
+      radicals: EXTRA_RADICALS,
+      isAlias: true
+    },
+    {
+      id: 'kangxi',
+      title: isZh ? '康熙部首' : 'Kangxi Radicals',
+      description: isZh ? '传统部首表，点击直接检字' : 'Classic radicals list',
+      radicals: COMMON_RADICALS,
+      isAlias: false
+    }
+  ];
+
   return (
     <>
       {/* Background */}
@@ -329,8 +410,29 @@ export default function DictionaryPage() {
           </ul>
         </div>
 
+        {/* Quick entry */}
+        <section className="quick-entry" aria-label={isZh ? '快捷入口' : 'Quick entry'}>
+          <div className="quick-title">{isZh ? '快捷入口' : 'Quick Entry'}</div>
+          <div className="quick-grid">
+            {quickEntries.map((entry) => (
+              <button
+                key={entry.id}
+                type="button"
+                className="quick-card"
+                onClick={() => handleQuickEntry(entry.type, entry.by, entry.openRadical)}
+              >
+                <span className="quick-icon" aria-hidden="true">{entry.icon}</span>
+                <div className="quick-text">
+                  <div className="quick-name">{entry.title}</div>
+                  <div className="quick-desc">{entry.desc}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+
         {/* Search Section */}
-        <div className="search-section">
+        <div className="search-section" ref={searchSectionRef}>
           {/* Tab bar */}
           <div className="tab-bar">
             <button
@@ -454,15 +556,26 @@ export default function DictionaryPage() {
                   &times;
                 </button>
               </div>
-              <div className="radical-grid">
-                {RADICALS_FOR_GRID.map((r) => (
-                  <button
-                    key={r}
-                    className="radical-item"
-                    onClick={() => handleRadicalSelect(r)}
-                  >
-                    {r}
-                  </button>
+              <div className="radical-groups">
+                {radicalGroups.map((group) => (
+                  <div key={group.id} className="radical-group">
+                    <div className="radical-group-header">
+                      <span className="radical-group-title">{group.title}</span>
+                      <span className="radical-group-desc">{group.description}</span>
+                    </div>
+                    <div className="radical-grid">
+                      {group.radicals.map((r) => (
+                        <button
+                          key={`${group.id}-${r}`}
+                          className="radical-item"
+                          onClick={() => handleRadicalSelect(r)}
+                          title={group.isAlias && RADICAL_ALIAS_MAP[r] ? `${r} → ${RADICAL_ALIAS_MAP[r]}` : r}
+                        >
+                          {r}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -670,6 +783,74 @@ export default function DictionaryPage() {
           color: var(--text);
           line-height: 1.6;
           font-size: 14px;
+        }
+
+        .quick-entry {
+          margin: 16px 0 24px;
+        }
+
+        .quick-title {
+          font-size: 14px;
+          color: var(--muted);
+          margin-bottom: 10px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+
+        .quick-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 12px;
+        }
+
+        .quick-card {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 14px;
+          border-radius: 14px;
+          border: 1.5px solid var(--border);
+          background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(252,250,255,0.9));
+          cursor: pointer;
+          text-align: left;
+          transition: all 0.25s ease;
+        }
+
+        .quick-card:hover {
+          border-color: var(--accent);
+          box-shadow: 0 6px 16px rgba(122, 104, 166, 0.15);
+          transform: translateY(-1px);
+        }
+
+        .quick-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px;
+          font-weight: 700;
+          color: white;
+          background: linear-gradient(135deg, var(--accent), var(--secondary));
+          flex-shrink: 0;
+        }
+
+        .quick-text {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .quick-name {
+          font-size: 15px;
+          color: var(--ink);
+          font-weight: 600;
+        }
+
+        .quick-desc {
+          font-size: 12px;
+          color: var(--muted);
         }
 
         .dict-phoenix {
@@ -887,6 +1068,31 @@ export default function DictionaryPage() {
           gap: 6px;
           max-height: 200px;
           overflow-y: auto;
+        }
+
+        .radical-groups {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .radical-group-header {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          align-items: baseline;
+          margin-bottom: 8px;
+        }
+
+        .radical-group-title {
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--ink);
+        }
+
+        .radical-group-desc {
+          font-size: 12px;
+          color: var(--muted);
         }
 
         .radical-item {
