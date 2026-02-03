@@ -40,7 +40,7 @@ export default function ContextInput() {
   };
 
   // 调用OCR API
-  const callOcrApi = useCallback(async (imageBase64: string, authToken: string) => {
+  const callOcrApi = useCallback(async (imageBase64: string, authToken: string, scene: 'context' | 'word') => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -51,7 +51,7 @@ export default function ContextInput() {
     const resp = await fetch('/api/ocr', {
       method: 'POST',
       headers,
-      body: JSON.stringify({ image: imageBase64 }),
+      body: JSON.stringify({ image: imageBase64, scene }),
     });
 
     if (!resp.ok) {
@@ -90,8 +90,12 @@ export default function ContextInput() {
     setUploadStatus(t('ocr.recognizing'));
 
     try {
-      const imageBase64 = await prepareOcrImage(file, { maxDimension });
-      const result = await callOcrApi(imageBase64, authToken);
+      const imageBase64 = await prepareOcrImage(file, {
+        maxDimension,
+        quality: 0.9,
+        preferOriginalMaxBytes: 1_800_000
+      });
+      const result = await callOcrApi(imageBase64, authToken, 'context');
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));

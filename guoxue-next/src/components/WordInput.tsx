@@ -31,7 +31,6 @@ export default function WordInput() {
   const [uploadStatus, setUploadStatus] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const maxFileSize = 4 * 1024 * 1024;
-  const maxDimension = 2000;
 
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
@@ -42,7 +41,7 @@ export default function WordInput() {
   };
 
   // 调用OCR API
-  const callOcrApi = useCallback(async (imageBase64: string, authToken: string) => {
+  const callOcrApi = useCallback(async (imageBase64: string, authToken: string, scene: 'context' | 'word') => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -53,7 +52,7 @@ export default function WordInput() {
     const resp = await fetch('/api/ocr', {
       method: 'POST',
       headers,
-      body: JSON.stringify({ image: imageBase64 }),
+      body: JSON.stringify({ image: imageBase64, scene }),
     });
 
     if (!resp.ok) {
@@ -92,8 +91,12 @@ export default function WordInput() {
     setUploadStatus(t('ocr.recognizing'));
 
     try {
-      const imageBase64 = await prepareOcrImage(file, { maxDimension });
-      const result = await callOcrApi(imageBase64, authToken);
+      const imageBase64 = await prepareOcrImage(file, {
+        maxDimension: 2400,
+        quality: 0.92,
+        preferOriginalMaxBytes: 2_200_000
+      });
+      const result = await callOcrApi(imageBase64, authToken, 'word');
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));

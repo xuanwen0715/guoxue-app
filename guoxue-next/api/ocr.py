@@ -90,7 +90,31 @@ def _call_aliyun_ocr(image_base64: str) -> str:
     return ""
 
 
-def _call_dashscope_ocr(image_data: str) -> str:
+def _get_dashscope_prompt(scene: str) -> str:
+    if scene == "word":
+        return (
+            "你是一位精通古汉语、训诂学和金石学的资深专家，擅长辨认古籍善本、碑帖拓片中的文字。\n\n"
+            "【任务】请识别图片中最清晰、最主要的 1-6 个汉字（或一个短词）。\n\n"
+            "【重要规则】\n"
+            "1. 只输出识别到的汉字，不要添加任何解释、编号或说明\n"
+            "2. 不要补字、不要扩写，模糊不清的字宁可省略\n"
+            "3. 保留繁体字原貌，不要转换为简体字\n"
+            "4. 如果有多个清晰字，请按自然顺序输出\n"
+        )
+    return (
+        "你是一位精通古汉语、训诂学和金石学的资深专家，擅长辨认古籍善本、碑帖拓片中的文字。\n\n"
+        "【任务】请仔细辨认并转录图片中的所有汉字。\n\n"
+        "【重要规则】\n"
+        "1. 古籍通常是竖排、从右到左阅读，请按正确的阅读顺序输出\n"
+        "2. 保留繁体字原貌，不要转换为简体字\n"
+        "3. 识别所有异体字、古字形、俗字，尽量还原原文\n"
+        "4. 遇到模糊或残损的字，根据上下文和字形结构推断最可能的字\n"
+        "5. 保留原文的句读标点（如有），不要添加现代标点\n"
+        "6. 只输出识别到的文字，不要添加任何解释、编号或说明"
+    )
+
+
+def _call_dashscope_ocr(image_data: str, scene: str) -> str:
     """调用 DashScope 视觉模型进行 OCR（备用方案）"""
     headers = {
         "Content-Type": "application/json",
@@ -115,17 +139,7 @@ def _call_dashscope_ocr(image_data: str) -> str:
                     "role": "user",
                     "content": [
                         {"image": image_data},
-                        {"text": (
-                            "你是一位精通古汉语、训诂学和金石学的资深专家，擅长辨认古籍善本、碑帖拓片中的文字。\n\n"
-                            "【任务】请仔细辨认并转录图片中的所有汉字。\n\n"
-                            "【重要规则】\n"
-                            "1. 古籍通常是竖排、从右到左阅读，请按正确的阅读顺序输出\n"
-                            "2. 保留繁体字原貌，不要转换为简体字\n"
-                            "3. 识别所有异体字、古字形、俗字，尽量还原原文\n"
-                            "4. 遇到模糊或残损的字，根据上下文和字形结构推断最可能的字\n"
-                            "5. 保留原文的句读标点（如有），不要添加现代标点\n"
-                            "6. 只输出识别到的文字，不要添加任何解释、编号或说明"
-                        )}
+                        {"text": _get_dashscope_prompt(scene)}
                     ]
                 }
             ]
@@ -150,7 +164,7 @@ def _call_dashscope_ocr(image_data: str) -> str:
         return ""
 
 
-def _get_ai_suggestions(ocr_text: str) -> dict:
+def _get_ai_suggestions(ocr_text: str, scene: str) -> dict:
     """调用 AI 大模型对 OCR 结果进行纠错建议"""
     if not DASHSCOPE_API_KEY or not ocr_text.strip():
         return {"corrected": "", "suggestions": []}
@@ -160,20 +174,33 @@ def _get_ai_suggestions(ocr_text: str) -> dict:
         "Authorization": f"Bearer {DASHSCOPE_API_KEY}",
     }
 
-    payload = {
-        "model": "qwen-max",
-        "input": {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": (
-                        "你是一位精通古汉语、训诂学和版本学的资深专家。"
-                        "你的任务是审校OCR识别的古籍文本，找出可能的识别错误并给出纠正建议。"
-                    )
-                },
-                {
-                    "role": "user",
-                    "content": f"""以下是OCR识别的古籍文本，请审校并给出纠错建议：
+    if scene == "word":
+        user_prompt = f"""以下是OCR识别的文字，请做轻量纠错：
+
+【OCR识别结果】
+{ocr_text}
+
+【任务要求】
+1. 只纠错明显错字，不要扩写或补字
+2. 纠正后请保持尽量简短（1-6 个字）
+3. 异体字、通假字、古字形不算错误，请保留
+
+【输出格式】请严格按以下JSON格式返回：
+{{
+  "corrected": "纠正后的完整文本（如无错误则与原文相同）",
+  "suggestions": [
+    {{
+      "original": "原字/词",
+      "suggested": "建议改为",
+      "reason": "简短理由"
+    }}
+  ]
+}}
+
+如果没有发现明显错误，suggestions 返回空数组 []。
+只返回JSON，不要其他文字。"""
+    else:
+        user_prompt = f"""以下是OCR识别的古籍文本，请审校并给出纠错建议：
 
 【OCR识别结果】
 {ocr_text}
@@ -198,6 +225,21 @@ def _get_ai_suggestions(ocr_text: str) -> dict:
 
 如果没有发现明显错误，suggestions 返回空数组 []。
 只返回JSON，不要其他文字。"""
+
+    payload = {
+        "model": "qwen-max",
+        "input": {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": (
+                        "你是一位精通古汉语、训诂学和版本学的资深专家。"
+                        "你的任务是审校OCR识别的古籍文本，找出可能的识别错误并给出纠正建议。"
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": user_prompt
                 }
             ]
         }
@@ -271,6 +313,9 @@ class handler(BaseHTTPRequestHandler):
             # 获取图片数据
             image_data = body.get("image", "").strip()
             image_url = body.get("image_url", "").strip()
+            scene = body.get("scene", "context").strip().lower()
+            if scene not in ("context", "word"):
+                scene = "context"
             final_image = image_data if image_data else image_url
 
             if not final_image:
@@ -285,7 +330,7 @@ class handler(BaseHTTPRequestHandler):
             # 阿里云 OCR 作为备用
             if DASHSCOPE_API_KEY:
                 try:
-                    text = _call_dashscope_ocr(final_image)
+                    text = _call_dashscope_ocr(final_image, scene)
                     ocr_method = "dashscope"
                 except Exception as e:
                     ocr_error = f"DashScope: {str(e)}"
@@ -313,8 +358,22 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(503, {"error": "No OCR API configured (missing DASHSCOPE or ALIBABA_CLOUD keys)"})
                 return
 
+            # 文本清理（按场景）
+            def _normalize_text(value: str, ocr_scene: str) -> str:
+                cleaned = value.strip()
+                if ocr_scene == "word":
+                    cleaned = "".join(cleaned.split())
+                    if len(cleaned) > 6:
+                        cleaned = cleaned[:6]
+                    return cleaned
+                lines = [line.strip() for line in cleaned.splitlines()]
+                lines = [line for line in lines if line]
+                return "\n".join(lines)
+
+            text = _normalize_text(text, scene)
+
             # 获取 AI 纠错建议
-            ai_result = _get_ai_suggestions(text.strip())
+            ai_result = _get_ai_suggestions(text, scene)
 
             # ========== 第三步：扣除积分（仅在 API 调用成功后） ==========
             if quota_info.get("should_deduct"):

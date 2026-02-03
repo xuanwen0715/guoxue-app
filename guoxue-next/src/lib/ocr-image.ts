@@ -3,6 +3,7 @@
 export interface OcrImageOptions {
   maxDimension?: number;
   quality?: number;
+  preferOriginalMaxBytes?: number;
 }
 
 export async function fileToBase64(file: File): Promise<string> {
@@ -40,6 +41,7 @@ export async function prepareOcrImage(
 
   const maxDimension = options.maxDimension ?? 2000;
   const quality = options.quality ?? 0.85;
+  const preferOriginalMaxBytes = options.preferOriginalMaxBytes ?? 1_500_000;
 
   try {
     const bitmap = 'createImageBitmap' in window
@@ -49,6 +51,9 @@ export async function prepareOcrImage(
     const width = 'width' in bitmap ? bitmap.width : (bitmap as HTMLImageElement).naturalWidth;
     const height = 'height' in bitmap ? bitmap.height : (bitmap as HTMLImageElement).naturalHeight;
     const scale = Math.min(1, maxDimension / Math.max(width, height));
+    if (scale === 1 && file.size <= preferOriginalMaxBytes) {
+      return fileToBase64(file);
+    }
     const targetWidth = Math.max(1, Math.round(width * scale));
     const targetHeight = Math.max(1, Math.round(height * scale));
 
