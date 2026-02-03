@@ -22,11 +22,12 @@ interface OcrResponse {
 export default function ContextInput() {
   const t = useTranslations();
   const { context, setContext } = useQuery();
-  const { token, getAuthHeader } = useAuth();
+  const { token, getAccessToken } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadStatus, setUploadStatus] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const maxFileSize = 4 * 1024 * 1024;
 
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
@@ -47,11 +48,13 @@ export default function ContextInput() {
   };
 
   // 调用OCR API
-  const callOcrApi = useCallback(async (imageBase64: string) => {
+  const callOcrApi = useCallback(async (imageBase64: string, authToken: string) => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...getAuthHeader(),
     };
+    if (authToken) {
+      headers.Authorization = `Bearer ${authToken}`;
+    }
 
     const resp = await fetch('/api/ocr', {
       method: 'POST',
@@ -65,12 +68,29 @@ export default function ContextInput() {
     }
 
     return resp.json() as Promise<OcrResponse>;
-  }, [getAuthHeader]);
+  }, []);
+
+  const validateOcrFile = (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      return t('ocr.fileNotImage');
+    }
+    if (file.size > maxFileSize) {
+      return t('ocr.fileTooLarge');
+    }
+    return '';
+  };
 
   // 处理OCR识别
   const processOcr = useCallback(async (file: File) => {
-    if (!token) {
-      setUploadStatus(t('login.errorGeneric'));
+    const validationError = validateOcrFile(file);
+    if (validationError) {
+      setUploadStatus(validationError);
+      return;
+    }
+
+    const authToken = await getAccessToken();
+    if (!authToken) {
+      setUploadStatus(t('ocr.loginRequired'));
       return;
     }
 
@@ -79,7 +99,7 @@ export default function ContextInput() {
 
     try {
       const imageBase64 = await fileToBase64(file);
-      const result = await callOcrApi(imageBase64);
+      const result = await callOcrApi(imageBase64, authToken);
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));
@@ -102,7 +122,7 @@ export default function ContextInput() {
     } finally {
       setIsUploading(false);
     }
-  }, [token, t, callOcrApi, setContext]);
+  }, [getAccessToken, t, callOcrApi, setContext]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -213,7 +233,7 @@ export default function ContextInput() {
             type="button"
             disabled={isUploading || !token}
             onClick={handleUploadClick}
-            title={!token ? '请先登录' : ''}
+            title={!token ? t('ocr.loginRequired') : ''}
           >
             <svg className="upload-icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M21 5a2 2 0 0 0-2-2h-3.2l-.6-1.2A1 1 0 0 0 14.3 1h-4.6a1 1 0 0 0-.9.8L8.2 3H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5Zm-9 10 2.03-2.71a1 1 0 0 1 1.58-.03L17 14h2l-3.23-4.3a2 2 0 0 0-3.16.05L9 14l-2-2-3 4h8Zm6-7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/>

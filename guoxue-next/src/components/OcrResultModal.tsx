@@ -49,14 +49,14 @@ export default function OcrResultModal({
           <div className="ocr-result-section">
             <div className="ocr-result-label">
               <span className="ocr-label-icon">📷</span>
-              OCR识别结果
+              {t('ocr.originalResult')}
             </div>
             <div className="ocr-result-text">{originalText}</div>
             <button
               className="ocr-select-btn"
               onClick={() => handleSelect(originalText)}
             >
-              使用此结果
+              {t('ocr.useResult')}
             </button>
           </div>
 
@@ -65,14 +65,14 @@ export default function OcrResultModal({
             <div className="ocr-result-section ocr-corrected">
               <div className="ocr-result-label">
                 <span className="ocr-label-icon">✨</span>
-                AI润色结果
+                {t('ocr.aiResult')}
               </div>
               <div className="ocr-result-text">{correctedText}</div>
 
               {/* 纠错建议详情 */}
               {suggestions && suggestions.length > 0 && (
                 <div className="ocr-suggestions">
-                  <div className="ocr-suggestions-title">修正说明：</div>
+                  <div className="ocr-suggestions-title">{t('ocr.suggestionTitle')}</div>
                   <ul className="ocr-suggestions-list">
                     {suggestions.map((s, idx) => (
                       <li key={idx}>
@@ -90,7 +90,7 @@ export default function OcrResultModal({
                 className="ocr-select-btn ocr-select-corrected"
                 onClick={() => handleSelect(correctedText)}
               >
-                使用AI润色结果
+                {t('ocr.useAiResult')}
               </button>
             </div>
           )}
