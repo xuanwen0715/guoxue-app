@@ -3,6 +3,7 @@ import json
 import base64
 import traceback
 import requests
+import re
 from http.server import BaseHTTPRequestHandler
 
 # 导入认证工具
@@ -90,9 +91,21 @@ def _call_aliyun_ocr(image_base64: str) -> str:
     return ""
 
 
-def _get_dashscope_prompt(scene: str) -> str:
+def _get_dashscope_prompt(scene: str, layout: str) -> str:
+    layout_hint = ""
+    if layout == "vertical":
+        layout_hint = "排版为竖排（从右到左），请按正确顺序输出。"
+    elif layout == "horizontal":
+        layout_hint = "排版为横排（从左到右），请按正确顺序输出。"
+
+    direction_rule = "古籍通常是竖排、从右到左阅读，请按正确的阅读顺序输出"
+    if layout == "vertical":
+        direction_rule = "文本为竖排、从右到左阅读，请按正确顺序输出"
+    elif layout == "horizontal":
+        direction_rule = "文本为横排、从左到右阅读，请按正确顺序输出"
+
     if scene == "word":
-        return (
+        prompt = (
             "你是一位精通古汉语、训诂学和金石学的资深专家，擅长辨认古籍善本、碑帖拓片中的文字。\n\n"
             "【任务】请识别图片中最清晰、最主要的 1-6 个汉字（或一个短词）。\n\n"
             "【重要规则】\n"
@@ -101,20 +114,26 @@ def _get_dashscope_prompt(scene: str) -> str:
             "3. 保留繁体字原貌，不要转换为简体字\n"
             "4. 如果有多个清晰字，请按自然顺序输出\n"
         )
-    return (
+        if layout_hint:
+            prompt += f"5. {layout_hint}"
+        return prompt
+    prompt = (
         "你是一位精通古汉语、训诂学和金石学的资深专家，擅长辨认古籍善本、碑帖拓片中的文字。\n\n"
         "【任务】请仔细辨认并转录图片中的所有汉字。\n\n"
         "【重要规则】\n"
-        "1. 古籍通常是竖排、从右到左阅读，请按正确的阅读顺序输出\n"
+        f"1. {direction_rule}\n"
         "2. 保留繁体字原貌，不要转换为简体字\n"
         "3. 识别所有异体字、古字形、俗字，尽量还原原文\n"
         "4. 遇到模糊或残损的字，根据上下文和字形结构推断最可能的字\n"
         "5. 保留原文的句读标点（如有），不要添加现代标点\n"
-        "6. 只输出识别到的文字，不要添加任何解释、编号或说明"
+        "6. 只输出识别到的文字，不要添加任何解释、编号或说明\n"
     )
+    if layout_hint:
+        prompt += f"7. {layout_hint}"
+    return prompt
 
 
-def _call_dashscope_ocr(image_data: str, scene: str) -> str:
+def _call_dashscope_ocr(image_data: str, scene: str, layout: str) -> str:
     """调用 DashScope 视觉模型进行 OCR（备用方案）"""
     headers = {
         "Content-Type": "application/json",
@@ -139,7 +158,7 @@ def _call_dashscope_ocr(image_data: str, scene: str) -> str:
                     "role": "user",
                     "content": [
                         {"image": image_data},
-                        {"text": _get_dashscope_prompt(scene)}
+                        {"text": _get_dashscope_prompt(scene, layout)}
                     ]
                 }
             ]
@@ -277,6 +296,36 @@ def _get_ai_suggestions(ocr_text: str, scene: str) -> dict:
     return {"corrected": ocr_text, "suggestions": []}
 
 
+def _count_cjk(text: str) -> int:
+    return len(re.findall(r"[\u4e00-\u9fff]", text))
+
+
+def _score_text(text: str, scene: str) -> int:
+    cleaned = text.strip().replace("\n", "")
+    if not cleaned:
+        return -10
+    cjk_count = _count_cjk(cleaned)
+    non_cjk = max(len(cleaned) - cjk_count, 0)
+    score = cjk_count * 2 - non_cjk
+    if scene == "word":
+        if 1 <= cjk_count <= 6 and non_cjk == 0:
+            score += 5
+        if cjk_count == 0:
+            score -= 10
+    return score
+
+
+def _is_low_confidence(text: str, scene: str) -> bool:
+    cleaned = text.strip().replace("\n", "")
+    if not cleaned:
+        return True
+    cjk_count = _count_cjk(cleaned)
+    if scene == "word":
+        return cjk_count == 0 or cjk_count > 6
+    ratio = cjk_count / max(len(cleaned), 1)
+    return cjk_count < 6 or ratio < 0.35
+
+
 class handler(BaseHTTPRequestHandler):
     """Vercel Serverless Function handler with authentication"""
 
@@ -316,6 +365,9 @@ class handler(BaseHTTPRequestHandler):
             scene = body.get("scene", "context").strip().lower()
             if scene not in ("context", "word"):
                 scene = "context"
+            layout = body.get("layout", "auto").strip().lower()
+            if layout not in ("auto", "vertical", "horizontal"):
+                layout = "auto"
             final_image = image_data if image_data else image_url
 
             if not final_image:
@@ -330,7 +382,7 @@ class handler(BaseHTTPRequestHandler):
             # 阿里云 OCR 作为备用
             if DASHSCOPE_API_KEY:
                 try:
-                    text = _call_dashscope_ocr(final_image, scene)
+                    text = _call_dashscope_ocr(final_image, scene, layout)
                     ocr_method = "dashscope"
                 except Exception as e:
                     ocr_error = f"DashScope: {str(e)}"
@@ -358,6 +410,19 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(503, {"error": "No OCR API configured (missing DASHSCOPE or ALIBABA_CLOUD keys)"})
                 return
 
+            # 低置信度时尝试二次识别（只在 Aliyun 可用时）
+            warning = None
+            if _is_low_confidence(text, scene) and ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
+                try:
+                    alt_text = _call_aliyun_ocr(final_image)
+                    if _score_text(alt_text, scene) > _score_text(text, scene):
+                        text = alt_text
+                        ocr_method = "aliyun_compare"
+                    warning = "LOW_CONFIDENCE"
+                except Exception as e:
+                    print(f"[OCR] Low confidence fallback failed: {e}")
+                    warning = "LOW_CONFIDENCE"
+
             # 文本清理（按场景）
             def _normalize_text(value: str, ocr_scene: str) -> str:
                 cleaned = value.strip()
@@ -384,6 +449,7 @@ class handler(BaseHTTPRequestHandler):
                 "method": ocr_method,
                 "ai_corrected": ai_result.get("corrected", ""),
                 "ai_suggestions": ai_result.get("suggestions", []),
+                "_warning": warning,
                 "_quota": {
                     "is_premium": quota_info.get("is_premium", False),
                     "credits_remaining": quota_info.get("credits_remaining", 0) - (1 if quota_info.get("should_deduct") else 0)

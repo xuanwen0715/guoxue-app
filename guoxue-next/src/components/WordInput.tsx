@@ -20,6 +20,7 @@ interface OcrResponse {
   method: string;
   ai_corrected: string;
   ai_suggestions: OcrSuggestion[];
+  _warning?: string;
 }
 
 export default function WordInput() {
@@ -31,6 +32,8 @@ export default function WordInput() {
   const [uploadStatus, setUploadStatus] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const maxFileSize = 4 * 1024 * 1024;
+  const lastUploadRef = useRef<string>('');
+  const lastUploadAtRef = useRef<number>(0);
 
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
@@ -41,7 +44,12 @@ export default function WordInput() {
   };
 
   // 调用OCR API
-  const callOcrApi = useCallback(async (imageBase64: string, authToken: string, scene: 'context' | 'word') => {
+  const callOcrApi = useCallback(async (
+    imageBase64: string,
+    authToken: string,
+    scene: 'context' | 'word',
+    layout: 'auto' | 'vertical' | 'horizontal'
+  ) => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -52,7 +60,7 @@ export default function WordInput() {
     const resp = await fetch('/api/ocr', {
       method: 'POST',
       headers,
-      body: JSON.stringify({ image: imageBase64, scene }),
+      body: JSON.stringify({ image: imageBase64, scene, layout }),
     });
 
     if (!resp.ok) {
@@ -75,11 +83,25 @@ export default function WordInput() {
 
   // 处理OCR识别
   const processOcr = useCallback(async (file: File) => {
+    if (isUploading) {
+      setUploadStatus(t('ocr.uploadingWait'));
+      return;
+    }
+
     const validationError = validateOcrFile(file);
     if (validationError) {
       setUploadStatus(validationError);
       return;
     }
+
+    const fileKey = `${file.name}-${file.size}-${file.lastModified}`;
+    const now = Date.now();
+    if (fileKey === lastUploadRef.current && now - lastUploadAtRef.current < 5000) {
+      setUploadStatus(t('ocr.duplicateUpload'));
+      return;
+    }
+    lastUploadRef.current = fileKey;
+    lastUploadAtRef.current = now;
 
     const authToken = await getAccessToken();
     if (!authToken) {
@@ -96,7 +118,7 @@ export default function WordInput() {
         quality: 0.92,
         preferOriginalMaxBytes: 2_200_000
       });
-      const result = await callOcrApi(imageBase64, authToken, 'word');
+      const result = await callOcrApi(imageBase64, authToken, 'word', 'auto');
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));
@@ -107,11 +129,11 @@ export default function WordInput() {
       if (result.ai_corrected && result.ai_corrected !== result.text) {
         setOcrResult(result);
         setShowOcrModal(true);
-        setUploadStatus(t('ocr.success'));
+        setUploadStatus(result._warning ? t('ocr.lowConfidence') : t('ocr.success'));
       } else {
         // 没有纠错，直接填入
         setWord(result.text);
-        setUploadStatus(t('ocr.success'));
+        setUploadStatus(result._warning ? t('ocr.lowConfidence') : t('ocr.success'));
       }
     } catch (err: any) {
       console.error('[OCR] Failed:', err);
@@ -119,7 +141,7 @@ export default function WordInput() {
     } finally {
       setIsUploading(false);
     }
-  }, [getAccessToken, t, callOcrApi, setWord]);
+  }, [getAccessToken, t, callOcrApi, setWord, isUploading]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

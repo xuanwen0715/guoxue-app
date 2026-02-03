@@ -18,6 +18,7 @@ interface OcrResponse {
   method: string;
   ai_corrected: string;
   ai_suggestions: OcrSuggestion[];
+  _warning?: string;
 }
 
 export default function ContextInput() {
@@ -30,6 +31,9 @@ export default function ContextInput() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const maxFileSize = 4 * 1024 * 1024;
   const maxDimension = 2000;
+  const [ocrLayout, setOcrLayout] = useState<'auto' | 'vertical' | 'horizontal'>('vertical');
+  const lastUploadRef = useRef<string>('');
+  const lastUploadAtRef = useRef<number>(0);
 
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
@@ -40,7 +44,12 @@ export default function ContextInput() {
   };
 
   // 调用OCR API
-  const callOcrApi = useCallback(async (imageBase64: string, authToken: string, scene: 'context' | 'word') => {
+  const callOcrApi = useCallback(async (
+    imageBase64: string,
+    authToken: string,
+    scene: 'context' | 'word',
+    layout: 'auto' | 'vertical' | 'horizontal'
+  ) => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -51,7 +60,7 @@ export default function ContextInput() {
     const resp = await fetch('/api/ocr', {
       method: 'POST',
       headers,
-      body: JSON.stringify({ image: imageBase64, scene }),
+      body: JSON.stringify({ image: imageBase64, scene, layout }),
     });
 
     if (!resp.ok) {
@@ -74,11 +83,25 @@ export default function ContextInput() {
 
   // 处理OCR识别
   const processOcr = useCallback(async (file: File) => {
+    if (isUploading) {
+      setUploadStatus(t('ocr.uploadingWait'));
+      return;
+    }
+
     const validationError = validateOcrFile(file);
     if (validationError) {
       setUploadStatus(validationError);
       return;
     }
+
+    const fileKey = `${file.name}-${file.size}-${file.lastModified}`;
+    const now = Date.now();
+    if (fileKey === lastUploadRef.current && now - lastUploadAtRef.current < 5000) {
+      setUploadStatus(t('ocr.duplicateUpload'));
+      return;
+    }
+    lastUploadRef.current = fileKey;
+    lastUploadAtRef.current = now;
 
     const authToken = await getAccessToken();
     if (!authToken) {
@@ -95,7 +118,7 @@ export default function ContextInput() {
         quality: 0.9,
         preferOriginalMaxBytes: 1_800_000
       });
-      const result = await callOcrApi(imageBase64, authToken, 'context');
+      const result = await callOcrApi(imageBase64, authToken, 'context', ocrLayout);
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));
@@ -106,11 +129,11 @@ export default function ContextInput() {
       if (result.ai_corrected && result.ai_corrected !== result.text) {
         setOcrResult(result);
         setShowOcrModal(true);
-        setUploadStatus(t('ocr.success'));
+        setUploadStatus(result._warning ? t('ocr.lowConfidence') : t('ocr.success'));
       } else {
         // 没有纠错，直接填入
         setContext(result.text);
-        setUploadStatus(t('ocr.success'));
+        setUploadStatus(result._warning ? t('ocr.lowConfidence') : t('ocr.success'));
       }
     } catch (err: any) {
       console.error('[OCR] Failed:', err);
@@ -118,7 +141,7 @@ export default function ContextInput() {
     } finally {
       setIsUploading(false);
     }
-  }, [getAccessToken, t, callOcrApi, setContext]);
+  }, [getAccessToken, t, callOcrApi, ocrLayout, setContext, isUploading]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -240,6 +263,32 @@ export default function ContextInput() {
             <span className="spinner" aria-hidden="true"></span>
           </button>
         </div>
+        <div className="ocr-layout">
+          <span className="ocr-layout-label">{t('ocr.layoutLabel')}</span>
+          <div className="ocr-layout-options">
+            <button
+              type="button"
+              className={`ocr-layout-btn ${ocrLayout === 'vertical' ? 'active' : ''}`}
+              onClick={() => setOcrLayout('vertical')}
+            >
+              {t('ocr.layoutVertical')}
+            </button>
+            <button
+              type="button"
+              className={`ocr-layout-btn ${ocrLayout === 'horizontal' ? 'active' : ''}`}
+              onClick={() => setOcrLayout('horizontal')}
+            >
+              {t('ocr.layoutHorizontal')}
+            </button>
+            <button
+              type="button"
+              className={`ocr-layout-btn ${ocrLayout === 'auto' ? 'active' : ''}`}
+              onClick={() => setOcrLayout('auto')}
+            >
+              {t('ocr.layoutAuto')}
+            </button>
+          </div>
+        </div>
         <details className="ocr-tips">
           <summary className="ocr-tips-toggle">💡 {t('ocr.tips')}</summary>
           <ul className="ocr-tips-list">
@@ -317,6 +366,42 @@ export default function ContextInput() {
           margin-top: 8px;
           font-size: 13px;
           color: var(--accent);
+        }
+
+        .ocr-layout {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          align-items: center;
+          margin-top: 10px;
+        }
+
+        .ocr-layout-label {
+          font-size: 12px;
+          color: var(--muted);
+        }
+
+        .ocr-layout-options {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .ocr-layout-btn {
+          padding: 6px 12px;
+          border-radius: 999px;
+          border: 1px solid var(--border);
+          background: white;
+          font-size: 12px;
+          color: var(--muted);
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .ocr-layout-btn.active {
+          background: var(--accent);
+          border-color: var(--accent);
+          color: white;
         }
       `}</style>
     </>
