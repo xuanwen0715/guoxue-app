@@ -18,6 +18,8 @@ function hasSupabaseConfig() {
 
 // 本地存储键名
 const AUTH_TOKEN_KEY = 'gx_auth_token';
+const AUTH_REFRESH_TOKEN_KEY = 'gx_auth_refresh_token';
+const AUTH_TOKEN_EXPIRES_AT_KEY = 'gx_auth_expires_at';
 const AUTH_USER_KEY = 'gx_auth_user';
 const AUTH_QUOTA_KEY = 'gx_auth_quota';
 
@@ -53,11 +55,67 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [tokenExpiresAt, setTokenExpiresAt] = useState<number | null>(null);
   const [quota, setQuota] = useState<Quota | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
   const quotaRef = useRef<Quota | null>(null);
   const hasHandledSubscriptionSuccess = useRef(false);
+  const refreshPromiseRef = useRef<Promise<string | null> | null>(null);
+
+  function getStoredNumber(value: string | null): number | null {
+    if (!value) return null;
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  function resolveExpiresAt(data: any): number | null {
+    if (typeof data?.expires_at === 'number') return data.expires_at;
+    if (typeof data?.expires_in === 'number') {
+      return Math.floor(Date.now() / 1000) + data.expires_in;
+    }
+    return null;
+  }
+
+  function persistSession(session: {
+    access_token: string;
+    refresh_token?: string | null;
+    expires_at?: number | null;
+    user?: User | null;
+  }) {
+    setToken(session.access_token);
+    if (session.user) {
+      setUser(session.user);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(session.user));
+      }
+    }
+
+    if (session.refresh_token) {
+      setRefreshToken(session.refresh_token);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, session.refresh_token);
+      }
+    }
+
+    if (typeof session.expires_at === 'number') {
+      setTokenExpiresAt(session.expires_at);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(AUTH_TOKEN_EXPIRES_AT_KEY, String(session.expires_at));
+      }
+    }
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(AUTH_TOKEN_KEY, session.access_token);
+    }
+  }
+
+  function shouldRefreshToken(expiresAt: number | null) {
+    if (!expiresAt) return false;
+    const now = Math.floor(Date.now() / 1000);
+    return now >= expiresAt - 30;
+  }
 
   useEffect(() => {
     quotaRef.current = quota;
@@ -68,19 +126,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (typeof window === 'undefined') return;
 
     const savedToken = localStorage.getItem(AUTH_TOKEN_KEY);
+    const savedRefreshToken = localStorage.getItem(AUTH_REFRESH_TOKEN_KEY);
+    const savedExpiresAt = getStoredNumber(localStorage.getItem(AUTH_TOKEN_EXPIRES_AT_KEY));
     const savedUser = localStorage.getItem(AUTH_USER_KEY);
     const savedQuota = localStorage.getItem(AUTH_QUOTA_KEY);
 
     if (savedToken && savedUser) {
       try {
         setToken(savedToken);
+        setRefreshToken(savedRefreshToken);
+        setTokenExpiresAt(savedExpiresAt);
         setUser(JSON.parse(savedUser));
         if (savedQuota) {
           setQuota(JSON.parse(savedQuota));
         }
 
         // 验证 Token 是否有效
-        validateToken(savedToken).then(valid => {
+        validateToken(savedToken, savedRefreshToken, savedExpiresAt).then(valid => {
           if (!valid) {
             logout();
           }
@@ -97,15 +159,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // 获取用户订阅状态
-  async function fetchSubscriptionStatus(authToken: string): Promise<Quota | null> {
+  async function fetchSubscriptionStatus(authToken?: string): Promise<Quota | null> {
     try {
-      const resp = await fetch('/api/user/subscription', {
+      const activeToken = authToken ?? await getAccessToken();
+      if (!activeToken) return null;
+
+      let resp = await fetch('/api/user/subscription', {
         method: 'POST',
         cache: 'no-store',
         headers: {
-          'Authorization': `Bearer ${authToken}`,
+          'Authorization': `Bearer ${activeToken}`,
         }
       });
+
+      if (resp.status === 401 && refreshToken) {
+        const refreshed = await refreshAccessToken(refreshToken);
+        if (refreshed) {
+          resp = await fetch('/api/user/subscription', {
+            method: 'POST',
+            cache: 'no-store',
+            headers: {
+              'Authorization': `Bearer ${refreshed}`,
+            }
+          });
+        }
+      }
 
       if (resp.ok) {
         const data = await resp.json();
@@ -152,12 +230,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [searchParams, token]);
 
   // 验证 Token
-  async function validateToken(authToken: string): Promise<boolean> {
+  async function validateToken(
+    authToken: string,
+    storedRefreshToken?: string | null,
+    storedExpiresAt?: number | null
+  ): Promise<boolean> {
     if (!hasSupabaseConfig()) { return false; }
     try {
+      let activeToken = authToken;
+      const effectiveRefreshToken = storedRefreshToken ?? refreshToken;
+      const effectiveExpiresAt = storedExpiresAt ?? tokenExpiresAt;
+
+      if (shouldRefreshToken(effectiveExpiresAt) && effectiveRefreshToken) {
+        const refreshed = await refreshAccessToken(effectiveRefreshToken);
+        if (refreshed) {
+          activeToken = refreshed;
+        }
+      }
+
       const resp = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
         headers: {
-          'Authorization': `Bearer ${authToken}`,
+          'Authorization': `Bearer ${activeToken}`,
           'apikey': SUPABASE_ANON_KEY
         }
       });
@@ -168,9 +261,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(AUTH_USER_KEY, JSON.stringify(userData));
 
         // 获取订阅状态
-        await fetchSubscriptionStatus(authToken);
+        await fetchSubscriptionStatus(activeToken);
         return true;
       }
+
+      if (resp.status === 401 && effectiveRefreshToken) {
+        const refreshed = await refreshAccessToken(effectiveRefreshToken);
+        if (refreshed) {
+          const retryResp = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+            headers: {
+              'Authorization': `Bearer ${refreshed}`,
+              'apikey': SUPABASE_ANON_KEY
+            }
+          });
+
+          if (retryResp.ok) {
+            const userData = await retryResp.json();
+            setUser(userData);
+            localStorage.setItem(AUTH_USER_KEY, JSON.stringify(userData));
+            await fetchSubscriptionStatus(refreshed);
+            return true;
+          }
+        }
+      }
+
       return false;
     } catch (e) {
       console.error('[Auth] Token validation failed:', e);
@@ -197,12 +311,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error(data.error_description || data.msg || '登录失败');
       }
 
-      // 保存认证信息
-      setToken(data.access_token);
-      setUser(data.user);
-
-      localStorage.setItem(AUTH_TOKEN_KEY, data.access_token);
-      localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
+      const expiresAt = resolveExpiresAt(data);
+      persistSession({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        expires_at: expiresAt,
+        user: data.user,
+      });
 
       // 获取订阅状态
       await fetchSubscriptionStatus(data.access_token);
@@ -257,11 +372,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             username: username || email.split('@')[0]
           }
         };
-        setToken(data.access_token);
-        setUser(userWithUsername);
-
-        localStorage.setItem(AUTH_TOKEN_KEY, data.access_token);
-        localStorage.setItem(AUTH_USER_KEY, JSON.stringify(userWithUsername));
+        const expiresAt = resolveExpiresAt(data);
+        persistSession({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+          expires_at: expiresAt,
+          user: userWithUsername,
+        });
+        await fetchSubscriptionStatus(data.access_token);
       }
 
       return { success: true };
@@ -274,11 +392,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // 退出登录
   function logout() {
     setToken(null);
+    setRefreshToken(null);
+    setTokenExpiresAt(null);
     setUser(null);
     setQuota(null);
 
     if (typeof window !== 'undefined') {
       localStorage.removeItem(AUTH_TOKEN_KEY);
+      localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY);
+      localStorage.removeItem(AUTH_TOKEN_EXPIRES_AT_KEY);
       localStorage.removeItem(AUTH_USER_KEY);
       localStorage.removeItem(AUTH_QUOTA_KEY);
     }
@@ -291,7 +413,55 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   // 获取访问令牌
+  async function refreshAccessToken(existingRefreshToken: string): Promise<string | null> {
+    if (!hasSupabaseConfig()) { return null; }
+    if (refreshPromiseRef.current) return refreshPromiseRef.current;
+
+    refreshPromiseRef.current = (async () => {
+      try {
+        const resp = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({ refresh_token: existingRefreshToken }),
+        });
+
+        const data = await resp.json();
+        if (!resp.ok) {
+          console.error('[Auth] Refresh token failed:', data);
+          return null;
+        }
+
+        const expiresAt = resolveExpiresAt(data);
+        persistSession({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token ?? existingRefreshToken,
+          expires_at: expiresAt,
+          user: data.user ?? user ?? undefined,
+        });
+
+        return data.access_token;
+      } catch (e) {
+        console.error('[Auth] Refresh token error:', e);
+        return null;
+      } finally {
+        refreshPromiseRef.current = null;
+      }
+    })();
+
+    return refreshPromiseRef.current;
+  }
+
   async function getAccessToken(): Promise<string | null> {
+    if (!token) return null;
+    if (!hasSupabaseConfig()) { return token; }
+
+    if (shouldRefreshToken(tokenExpiresAt) && refreshToken) {
+      const refreshed = await refreshAccessToken(refreshToken);
+      return refreshed ?? token;
+    }
     return token;
   }
 
