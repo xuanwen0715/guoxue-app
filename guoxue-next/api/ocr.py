@@ -30,6 +30,18 @@ try:
 except ImportError:
     CLASSICAL_BOOK_AVAILABLE = False
 
+# 导入高级图像增强模块
+try:
+    from .ocr_enhancement import (
+        apply_full_enhancement_pipeline,
+        deskew_image,
+        detect_skew_angle,
+        post_process_ocr_text
+    )
+    ENHANCEMENT_AVAILABLE = True
+except ImportError:
+    ENHANCEMENT_AVAILABLE = False
+
 # 阿里云 OCR SDK
 try:
     from alibabacloud_ocr_api20210707.client import Client as OcrClient
@@ -128,32 +140,63 @@ def _get_dashscope_prompt(scene: str, layout: str) -> str:
     elif layout == "horizontal":
         direction_rule = "文本为横排、从左到右阅读，请按正确顺序输出"
 
+    # 古籍OCR专项 Few-shot 示例
+    few_shot_examples = """
+【识别示例】
+示例1 - 标准楷书：
+输入图片：清晰的"子曰學而時習之"
+正确输出：子曰學而時習之
+
+示例2 - 碑帖拓片（有残缺）：
+输入图片："道而□遠人"
+正确输出：道而□遠人（□表示无法识别的字）
+
+示例3 - 异体字/古字形：
+输入图片："衆"的异体写法（衆的上半部分不同）
+正确输出：衆（输出标准字形，不输出描述）
+
+示例4 - 竖排版式：
+输入图片：三列竖排文字，从右到左为"天地人"
+正确输出：天地人（按正确阅读顺序）
+"""
+
     if scene == "word":
         prompt = (
-            "你是一位精通古汉语、训诂学和金石学的资深专家，擅长辨认古籍善本、碑帖拓片中的文字。\n\n"
-            "【任务】请识别图片中最清晰、最主要的 1-6 个汉字（或一个短词）。\n\n"
-            "【重要规则】\n"
-            "1. 只输出识别到的汉字，不要添加任何解释、编号或说明\n"
-            "2. 不要补字、不要扩写，模糊不清的字宁可省略\n"
-            "3. 保留繁体字原貌，不要转换为简体字\n"
-            "4. 如果有多个清晰字，请按自然顺序输出\n"
+            "你是一位精通古汉语、训诂学和金石学的顶级专家，擅长辨认古籍善本、碑帖拓片、金石文字。\n\n"
+            "【任务】请识别图片中最清晰的 1-6 个汉字（或一个短词）。\n\n"
+            "【核心规则 - 严格遵守】\n"
+            "1. 只输出识别到的汉字，绝对不要添加任何解释、编号、说明或标点\n"
+            "2. 不要补字、不要猜测扩写，模糊不清的字用□表示\n"
+            "3. 必须保留繁体字原貌，严禁转换为简体字\n"
+            "4. 识别异体字、古字形、俗字，输出对应的现代标准字形\n"
+            "5. 按自然阅读顺序输出（考虑版式方向）\n"
+            "6. 遇到形近字（如 未/末、己/已/巳、人/入/八），仔细辨认偏旁部首\n"
         )
         if layout_hint:
-            prompt += f"5. {layout_hint}"
+            prompt += f"7. {layout_hint}\n"
+        prompt += few_shot_examples
         return prompt
+    
+    # 段落/上下文识别模式
     prompt = (
-        "你是一位精通古汉语、训诂学和金石学的资深专家，擅长辨认古籍善本、碑帖拓片中的文字。\n\n"
+        "你是一位精通古汉语、训诂学和金石学的顶级专家，擅长辨认古籍善本、碑帖拓片、金石文字。\n\n"
         "【任务】请仔细辨认并转录图片中的所有汉字。\n\n"
-        "【重要规则】\n"
-        f"1. {direction_rule}\n"
-        "2. 保留繁体字原貌，不要转换为简体字\n"
-        "3. 识别所有异体字、古字形、俗字，尽量还原原文\n"
-        "4. 遇到模糊或残损的字，根据上下文和字形结构推断最可能的字\n"
-        "5. 保留原文的句读标点（如有），不要添加现代标点\n"
-        "6. 只输出识别到的文字，不要添加任何解释、编号或说明\n"
+        "【核心规则 - 严格遵守】\n"
+        f"1. 版式方向：{direction_rule}\n"
+        "2. 文字转录必须保留繁体字原貌，严禁转换为简体字\n"
+        "3. 识别所有异体字、古字形、俗字，输出对应的现代标准字形\n"
+        "4. 遇到模糊或残损的字，根据上下文和字形结构推断最可能的字；实在无法识别时用□表示\n"
+        "5. 保留原文的句读标点（圈点、顿号等），但不要添加现代标点\n"
+        "6. 只输出识别到的文字，绝对不要添加任何解释、编号或说明\n"
+        "7. 形近字辨析（特别注意）：\n"
+        "   - 未(上短下长) vs 末(上长下短)\n"
+        "   - 己(开口) vs 已(半开) vs 巳(闭口)\n"
+        "   - 人(撇长捺短) vs 入(撇短捺长) vs 八(撇捺分开)\n"
+        "   - 土(上横短下横长) vs 士(上横长下横短)\n"
     )
     if layout_hint:
-        prompt += f"7. {layout_hint}"
+        prompt += f"8. {layout_hint}\n"
+    prompt += few_shot_examples
     return prompt
 
 
@@ -403,6 +446,79 @@ def _score_text(text: str, scene: str) -> int:
     return score
 
 
+def _fuse_results(candidates: list, scene: str) -> tuple:
+    """
+    智能融合多个OCR结果
+    
+    策略：
+    1. 首先选择分数最高的
+    2. 如果分数相近，优先选择包含更多合理中文词汇的
+    3. 检测一致性：如果多个引擎结果相似，提高置信度
+    
+    Returns:
+        (best_text, best_method, best_score)
+    """
+    if not candidates:
+        return "", "none", -100
+    
+    if len(candidates) == 1:
+        return candidates[0]
+    
+    # 按分数排序
+    sorted_candidates = sorted(candidates, key=lambda x: x[2], reverse=True)
+    
+    # 检查前两名是否分数相近（差距在5分内）
+    if len(sorted_candidates) >= 2:
+        top1_text, top1_method, top1_score = sorted_candidates[0]
+        top2_text, top2_method, top2_score = sorted_candidates[1]
+        
+        if top1_score - top2_score <= 5:
+            # 分数相近，检查内容相似度
+            similarity = _text_similarity(top1_text, top2_text)
+            
+            if similarity > 0.8:
+                # 结果高度相似，使用更可靠的方法
+                if "enhanced" in top1_method or "dashscope" in top1_method:
+                    return sorted_candidates[0]
+                else:
+                    return sorted_candidates[1]
+            
+            # 检查哪个结果包含更多合理词汇（简单启发式）
+            top1_valid = _count_valid_chars(top1_text)
+            top2_valid = _count_valid_chars(top2_text)
+            
+            if top2_valid > top1_valid and top2_score >= top1_score - 3:
+                return sorted_candidates[1]
+    
+    return sorted_candidates[0]
+
+
+def _text_similarity(text1: str, text2: str) -> float:
+    """计算两个文本的相似度（0-1）"""
+    if not text1 or not text2:
+        return 0.0
+    
+    # 使用简单的字符集合Jaccard相似度
+    set1 = set(text1)
+    set2 = set(text2)
+    
+    if not set1 or not set2:
+        return 0.0
+    
+    intersection = len(set1 & set2)
+    union = len(set1 | set2)
+    
+    return intersection / union if union > 0 else 0.0
+
+
+def _count_valid_chars(text: str) -> int:
+    """计算有效字符数（中文、常用标点）"""
+    import re
+    # 匹配CJK字符和常用标点
+    valid_pattern = re.compile(r'[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]')
+    return len(valid_pattern.findall(text))
+
+
 def _is_low_confidence(text: str, scene: str) -> bool:
     cleaned = text.strip().replace("\n", "")
     if not cleaned:
@@ -569,30 +685,61 @@ class handler(BaseHTTPRequestHandler):
                 except Exception as e:
                     print(f"[OCR] Classical enhancement failed: {e}")
 
-            # 低置信度时尝试预处理 + 多模型对比（或用户主动增强）
+            # 高级图像预处理 + 多引擎智能融合
             warning = None
             is_low_conf = _is_low_confidence(text, scene)
             should_enhance = enhance or is_low_conf
+            
             if is_low_conf:
                 warning = "LOW_CONFIDENCE"
+            
+            # 收集所有候选结果
+            candidates = [(text, ocr_method, _score_text(text, scene))]
+            
             if should_enhance:
-                candidates = [(text, ocr_method)]
-
+                print(f"[OCR] Stage: enhance - Running advanced enhancement pipeline")
+                
+                # 1. 高级预处理流水线
+                if ENHANCEMENT_AVAILABLE:
+                    try:
+                        enhanced_image, enhance_info = apply_full_enhancement_pipeline(
+                            final_image, 
+                            detect_skew=True
+                        )
+                        print(f"[OCR] Enhancement pipeline: {enhance_info}")
+                        
+                        if enhanced_image and enhanced_image != final_image:
+                            # 用增强后的图像进行OCR
+                            if DASHSCOPE_API_KEY:
+                                try:
+                                    enhanced_text = _call_dashscope_ocr(enhanced_image, scene, layout)
+                                    enhanced_score = _score_text(enhanced_text, scene)
+                                    candidates.append((enhanced_text, f"{ocr_method}_enhanced", enhanced_score))
+                                    print(f"[OCR] Enhanced image OCR: score={enhanced_score}")
+                                except Exception as e:
+                                    print(f"[OCR] Enhanced OCR failed: {e}")
+                    except Exception as e:
+                        print(f"[OCR] Enhancement pipeline failed: {e}")
+                
+                # 2. 传统预处理（作为备选）
                 processed_image = _preprocess_image_base64(final_image)
                 if processed_image:
                     if DASHSCOPE_API_KEY:
                         try:
                             pre_text = _call_dashscope_ocr(processed_image, scene, layout)
-                            candidates.append((pre_text, "dashscope_preprocess"))
+                            pre_score = _score_text(pre_text, scene)
+                            candidates.append((pre_text, "dashscope_preprocess", pre_score))
                         except Exception as e:
                             print(f"[OCR] Preprocess DashScope failed: {e}")
                     if ALIYUN_SDK_AVAILABLE and ACCESS_KEY_ID and ACCESS_KEY_SECRET:
                         try:
                             pre_text = _call_aliyun_ocr(processed_image)
-                            candidates.append((pre_text, "aliyun_preprocess"))
+                            pre_score = _score_text(pre_text, scene)
+                            candidates.append((pre_text, "aliyun_preprocess", pre_score))
                         except Exception as e:
                             print(f"[OCR] Preprocess Aliyun failed: {e}")
-
+                
+                # 3. 阿里云OCR作为对比
                 if (
                     ALIYUN_SDK_AVAILABLE
                     and ACCESS_KEY_ID
@@ -601,22 +748,18 @@ class handler(BaseHTTPRequestHandler):
                 ):
                     try:
                         alt_text = _call_aliyun_ocr(final_image)
-                        candidates.append((alt_text, "aliyun_compare"))
+                        alt_score = _score_text(alt_text, scene)
+                        candidates.append((alt_text, "aliyun_compare", alt_score))
                     except Exception as e:
                         print(f"[OCR] Low confidence Aliyun failed: {e}")
-
-                best_text = text
-                best_method = ocr_method
-                best_score = _score_text(text, scene)
-                for cand_text, cand_method in candidates:
-                    cand_score = _score_text(cand_text, scene)
-                    if cand_score > best_score:
-                        best_text = cand_text
-                        best_method = cand_method
-                        best_score = cand_score
-
-                text = best_text
-                ocr_method = best_method
+            
+            # 智能融合：选择最佳结果
+            print(f"[OCR] Candidates: {len(candidates)}")
+            best_text, best_method, best_score = _fuse_results(candidates, scene)
+            text = best_text
+            ocr_method = best_method
+            
+            print(f"[OCR] Best result: method={best_method}, score={best_score}")
 
             # 文本清理（按场景）
             def _normalize_text(value: str, ocr_scene: str) -> str:
@@ -644,6 +787,20 @@ class handler(BaseHTTPRequestHandler):
                     text_enhancement = enhance_text_with_variants(text)
                 except Exception as e:
                     print(f"[OCR] Text enhancement failed: {e}")
+            
+            # 后处理：形近字检测
+            post_process_info = None
+            if ENHANCEMENT_AVAILABLE:
+                try:
+                    _, suspicious_chars = post_process_ocr_text(text)
+                    if suspicious_chars:
+                        post_process_info = {
+                            "suspicious_chars": suspicious_chars,
+                            "warning": "检测到可能的形近字错误，请核对原图"
+                        }
+                        print(f"[OCR] Post-process found {len(suspicious_chars)} suspicious chars")
+                except Exception as e:
+                    print(f"[OCR] Post-process failed: {e}")
 
             # ========== 第四步：存入缓存 ==========
             if image_hash and text.strip():
@@ -671,6 +828,15 @@ class handler(BaseHTTPRequestHandler):
 
             # 构建响应
             print(f"[OCR] Stage: complete - Sending response")
+            
+            # 合并警告信息
+            final_warning = warning
+            if post_process_info and post_process_info.get("warning"):
+                if final_warning:
+                    final_warning += "; " + post_process_info["warning"]
+                else:
+                    final_warning = post_process_info["warning"]
+            
             response_data = {
                 "text": text.strip(),
                 "method": ocr_method,
@@ -678,7 +844,8 @@ class handler(BaseHTTPRequestHandler):
                 "ai_suggestions": ai_result.get("suggestions", []),
                 "_classical_info": classical_info,
                 "_text_enhancement": text_enhancement,
-                "_warning": warning,
+                "_post_process": post_process_info,
+                "_warning": final_warning,
                 "_quota": {
                     "is_premium": quota_info.get("is_premium", False),
                     "credits_remaining": quota_info.get("credits_remaining", 0) - (1 if quota_info.get("should_deduct") else 0)

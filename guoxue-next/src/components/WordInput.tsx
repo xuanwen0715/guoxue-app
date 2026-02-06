@@ -17,12 +17,23 @@ interface OcrSuggestion {
   reason: string;
 }
 
+interface OcrPostProcess {
+  suspicious_chars: {
+    index: number;
+    char: string;
+    alternatives: string[];
+    reason: string;
+  }[];
+  warning?: string;
+}
+
 interface OcrResponse {
   text: string;
   method: string;
   ai_corrected: string;
   ai_suggestions: OcrSuggestion[];
   _warning?: string;
+  _post_process?: OcrPostProcess;
 }
 
 export default function WordInput() {
@@ -48,6 +59,9 @@ export default function WordInput() {
   // OCR 进度状态
   const [ocrStage, setOcrStage] = useState<string>('ocr');
   const [ocrProgress, setOcrProgress] = useState<number>(0);
+  
+  // 形近字警告
+  const [suspiciousChars, setSuspiciousChars] = useState<OcrPostProcess['suspicious_chars']>([]);
   const lastOcrFileRef = useRef<File | null>(null);
   const lastOcrKeyRef = useRef<string>('');
 
@@ -158,10 +172,16 @@ export default function WordInput() {
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));
         setIsLowConfidence(false);
+        setSuspiciousChars([]);
         return;
       }
-      const hasWarning = result._warning === 'LOW_CONFIDENCE';
-      setIsLowConfidence(hasWarning);
+      
+      // 检查警告和形近字
+      const hasWarning = result._warning?.includes('LOW_CONFIDENCE');
+      const hasSuspicious = result._post_process?.suspicious_chars && result._post_process.suspicious_chars.length > 0;
+      
+      setIsLowConfidence(hasWarning || !!hasSuspicious);
+      setSuspiciousChars(result._post_process?.suspicious_chars || []);
 
       // 如果有AI纠错建议，显示选择弹窗
       if (result.ai_corrected && result.ai_corrected !== result.text) {
@@ -171,7 +191,11 @@ export default function WordInput() {
       } else {
         // 没有纠错，直接填入
         setWord(result.text);
-        setUploadStatus(hasWarning ? t('ocr.lowConfidence') : t('ocr.success'));
+        if (hasSuspicious) {
+          setUploadStatus(`识别完成，请注意核对形近字`);
+        } else {
+          setUploadStatus(hasWarning ? t('ocr.lowConfidence') : t('ocr.success'));
+        }
       }
     } catch (err: any) {
       console.error('[OCR] Failed:', err);
@@ -332,6 +356,21 @@ export default function WordInput() {
             {uploadStatus}
           </span>
         )}
+        
+        {/* 形近字警告 */}
+        {suspiciousChars.length > 0 && (
+          <div className="suspicious-chars-warning">
+            <div className="warning-title">⚠️ 检测到形近字，请核对：</div>
+            <div className="suspicious-list">
+              {suspiciousChars.map((item, idx) => (
+                <span key={idx} className="suspicious-item">
+                  「{item.char}」可能是「{item.alternatives.join(' / ')}」
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        
         {isLowConfidence && (
           <button
             className="ocr-retry-btn"
@@ -467,6 +506,35 @@ export default function WordInput() {
           margin-top: 8px;
           font-size: 13px;
           color: var(--accent);
+        }
+
+        .suspicious-chars-warning {
+          margin-top: 12px;
+          padding: 12px 16px;
+          background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+          border: 1px solid #ffc107;
+          border-radius: 10px;
+          font-size: 13px;
+        }
+
+        .warning-title {
+          font-weight: 600;
+          color: #856404;
+          margin-bottom: 8px;
+        }
+
+        .suspicious-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .suspicious-item {
+          padding: 4px 10px;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 6px;
+          color: #856404;
+          font-family: var(--font-serif);
         }
       `}</style>
     </>
