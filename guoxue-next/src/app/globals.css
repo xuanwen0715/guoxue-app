@@ -2342,6 +2342,30 @@ body::before{
   font-family: var(--font-serif);
 }
 
+/* OCR 低置信度重试按钮 */
+.ocr-retry-btn {
+  margin-top: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--accent);
+  font-size: 12px;
+  font-family: var(--font-serif);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ocr-retry-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.ocr-retry-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* OCR 识别技巧提示 */
 .ocr-tips {
   width: 100%;

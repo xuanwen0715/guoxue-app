@@ -439,6 +439,9 @@ class handler(BaseHTTPRequestHandler):
             layout = body.get("layout", "auto").strip().lower()
             if layout not in ("auto", "vertical", "horizontal"):
                 layout = "auto"
+            enhance = body.get("enhance", False)
+            if isinstance(enhance, str):
+                enhance = enhance.lower() in ("1", "true", "yes")
             final_image = image_data if image_data else image_url
 
             if not final_image:
@@ -481,10 +484,13 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(503, {"error": "No OCR API configured (missing DASHSCOPE or ALIBABA_CLOUD keys)"})
                 return
 
-            # 低置信度时尝试预处理 + 多模型对比
+            # 低置信度时尝试预处理 + 多模型对比（或用户主动增强）
             warning = None
-            if _is_low_confidence(text, scene):
+            is_low_conf = _is_low_confidence(text, scene)
+            should_enhance = enhance or is_low_conf
+            if is_low_conf:
                 warning = "LOW_CONFIDENCE"
+            if should_enhance:
                 candidates = [(text, ocr_method)]
 
                 processed_image = _preprocess_image_base64(final_image)

@@ -29,12 +29,15 @@ export default function ContextInput() {
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadStatus, setUploadStatus] = useState('');
+  const [isLowConfidence, setIsLowConfidence] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const maxFileSize = 4 * 1024 * 1024;
   const maxDimension = 2000;
   const [ocrLayout, setOcrLayout] = useState<'auto' | 'vertical' | 'horizontal'>('vertical');
   const lastUploadRef = useRef<string>('');
   const lastUploadAtRef = useRef<number>(0);
+  const lastOcrFileRef = useRef<File | null>(null);
+  const lastOcrKeyRef = useRef<string>('');
 
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
@@ -52,7 +55,8 @@ export default function ContextInput() {
     imageBase64: string,
     authToken: string,
     scene: 'context' | 'word',
-    layout: 'auto' | 'vertical' | 'horizontal'
+    layout: 'auto' | 'vertical' | 'horizontal',
+    enhance = false
   ) => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -64,7 +68,7 @@ export default function ContextInput() {
     const resp = await fetch('/api/ocr', {
       method: 'POST',
       headers,
-      body: JSON.stringify({ image: imageBase64, scene, layout }),
+      body: JSON.stringify({ image: imageBase64, scene, layout, enhance }),
     });
 
     if (!resp.ok) {
@@ -88,7 +92,7 @@ export default function ContextInput() {
   // 处理OCR识别
   const processOcr = useCallback(async (
     file: File,
-    options?: { sourceKey?: string }
+    options?: { sourceKey?: string; enhance?: boolean; force?: boolean }
   ) => {
     if (isUploading) {
       setUploadStatus(t('ocr.uploadingWait'));
@@ -103,12 +107,16 @@ export default function ContextInput() {
 
     const fileKey = options?.sourceKey ?? `${file.name}-${file.size}-${file.lastModified}`;
     const now = Date.now();
-    if (fileKey === lastUploadRef.current && now - lastUploadAtRef.current < 5000) {
-      setUploadStatus(t('ocr.duplicateUpload'));
-      return;
+    if (!options?.force) {
+      if (fileKey === lastUploadRef.current && now - lastUploadAtRef.current < 5000) {
+        setUploadStatus(t('ocr.duplicateUpload'));
+        return;
+      }
     }
     lastUploadRef.current = fileKey;
     lastUploadAtRef.current = now;
+    lastOcrFileRef.current = file;
+    lastOcrKeyRef.current = fileKey;
 
     const authToken = await getAccessToken();
     if (!authToken) {
@@ -117,6 +125,7 @@ export default function ContextInput() {
     }
 
     setIsUploading(true);
+    setIsLowConfidence(false);
     setUploadStatus(t('ocr.recognizing'));
 
     try {
@@ -125,22 +134,31 @@ export default function ContextInput() {
         quality: 0.9,
         preferOriginalMaxBytes: 1_800_000
       });
-      const result = await callOcrApi(imageBase64, authToken, 'context', ocrLayout);
+      const result = await callOcrApi(
+        imageBase64,
+        authToken,
+        'context',
+        ocrLayout,
+        options?.enhance ?? false
+      );
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));
         return;
       }
 
+      const hasWarning = result._warning === 'LOW_CONFIDENCE';
+      setIsLowConfidence(hasWarning);
+
       // 如果有AI纠错建议，显示选择弹窗
       if (result.ai_corrected && result.ai_corrected !== result.text) {
         setOcrResult(result);
         setShowOcrModal(true);
-        setUploadStatus(result._warning ? t('ocr.lowConfidence') : t('ocr.success'));
+        setUploadStatus(hasWarning ? t('ocr.lowConfidence') : t('ocr.success'));
       } else {
         // 没有纠错，直接填入
         setContext(result.text);
-        setUploadStatus(result._warning ? t('ocr.lowConfidence') : t('ocr.success'));
+        setUploadStatus(hasWarning ? t('ocr.lowConfidence') : t('ocr.success'));
       }
     } catch (err: any) {
       console.error('[OCR] Failed:', err);
@@ -167,6 +185,7 @@ export default function ContextInput() {
     const fileKey = `${file.name}-${file.size}-${file.lastModified}`;
     setPendingOcrFile(file);
     setPendingOcrKey(fileKey);
+    setIsLowConfidence(false);
     setUploadStatus('');
     setShowCropper(true);
   }, [isUploading, t, token]);
@@ -253,6 +272,18 @@ export default function ContextInput() {
     setPendingOcrFile(null);
     setPendingOcrKey('');
     await processOcr(file, { sourceKey });
+  };
+
+  const handleEnhanceRetry = async () => {
+    const file = lastOcrFileRef.current;
+    if (!file) {
+      return;
+    }
+    await processOcr(file, {
+      sourceKey: lastOcrKeyRef.current,
+      enhance: true,
+      force: true,
+    });
   };
 
   return (
@@ -352,6 +383,16 @@ export default function ContextInput() {
           <span id="context-upload-status" className="upload-status" aria-live="polite">
             {uploadStatus}
           </span>
+        )}
+        {isLowConfidence && (
+          <button
+            className="ocr-retry-btn"
+            type="button"
+            onClick={handleEnhanceRetry}
+            disabled={isUploading}
+          >
+            {t('ocr.retryEnhance')}
+          </button>
         )}
       </div>
 

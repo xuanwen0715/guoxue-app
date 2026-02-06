@@ -37,6 +37,7 @@
     "uploadingWait": "正在识别中，请稍候",
     "duplicateUpload": "已在识别此图片，请稍候",
     "lowConfidence": "识别可能不清晰，建议裁剪放大后重试",
+    "retryEnhance": "增强识别重试",
     "cropTitle": "裁剪与旋转",
     "cropHint": "拖拽框选文字区域，能显著提升识别准确率",
     "cropSelectionHint": "拖拽画框选择识别区域",
