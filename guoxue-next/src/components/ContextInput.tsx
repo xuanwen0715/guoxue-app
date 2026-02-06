@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { prepareOcrImage } from '@/lib/ocr-image';
 import OcrResultModal from './OcrResultModal';
 import OcrCropModal from './OcrCropModal';
+import OcrProgress from './OcrProgress';
 
 interface OcrSuggestion {
   original: string;
@@ -38,6 +39,10 @@ export default function ContextInput() {
   const lastUploadAtRef = useRef<number>(0);
   const lastOcrFileRef = useRef<File | null>(null);
   const lastOcrKeyRef = useRef<string>('');
+  
+  // OCR 进度状态
+  const [ocrStage, setOcrStage] = useState<string>('ocr');
+  const [ocrProgress, setOcrProgress] = useState<number>(0);
 
   // OCR结果弹窗状态
   const [showOcrModal, setShowOcrModal] = useState(false);
@@ -127,6 +132,8 @@ export default function ContextInput() {
     setIsUploading(true);
     setIsLowConfidence(false);
     setUploadStatus(t('ocr.recognizing'));
+    setOcrStage('analysis');
+    setOcrProgress(20);
 
     try {
       const imageBase64 = await prepareOcrImage(file, {
@@ -134,6 +141,9 @@ export default function ContextInput() {
         quality: 0.9,
         preferOriginalMaxBytes: 1_800_000
       });
+      setOcrStage('ocr');
+      setOcrProgress(40);
+      
       const result = await callOcrApi(
         imageBase64,
         authToken,
@@ -141,6 +151,9 @@ export default function ContextInput() {
         ocrLayout,
         options?.enhance ?? false
       );
+      
+      setOcrStage('ai_review');
+      setOcrProgress(80);
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));
@@ -165,6 +178,13 @@ export default function ContextInput() {
       setUploadStatus(err.message || t('ocr.failed'));
     } finally {
       setIsUploading(false);
+      setOcrStage('complete');
+      setOcrProgress(100);
+      // 延迟重置进度
+      setTimeout(() => {
+        setOcrStage('ocr');
+        setOcrProgress(0);
+      }, 500);
     }
   }, [getAccessToken, t, callOcrApi, ocrLayout, setContext, isUploading]);
 
@@ -414,6 +434,12 @@ export default function ContextInput() {
         onCancel={handleCropCancel}
         onConfirm={handleCropConfirm}
         onUseOriginal={handleUseOriginal}
+      />
+
+      <OcrProgress 
+        isProcessing={isUploading}
+        stage={ocrStage}
+        progress={ocrProgress}
       />
 
       <style jsx>{`

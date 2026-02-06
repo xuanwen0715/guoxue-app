@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { prepareOcrImage } from '@/lib/ocr-image';
 import OcrResultModal from './OcrResultModal';
 import OcrCropModal from './OcrCropModal';
+import OcrProgress from './OcrProgress';
 import AutoComplete, { Suggestion } from './AutoComplete';
 import Link from 'next/link';
 
@@ -43,6 +44,10 @@ export default function WordInput() {
   const [showCropper, setShowCropper] = useState(false);
   const [pendingOcrFile, setPendingOcrFile] = useState<File | null>(null);
   const [pendingOcrKey, setPendingOcrKey] = useState('');
+  
+  // OCR 进度状态
+  const [ocrStage, setOcrStage] = useState<string>('ocr');
+  const [ocrProgress, setOcrProgress] = useState<number>(0);
   const lastOcrFileRef = useRef<File | null>(null);
   const lastOcrKeyRef = useRef<string>('');
 
@@ -127,6 +132,8 @@ export default function WordInput() {
     setIsUploading(true);
     setIsLowConfidence(false);
     setUploadStatus(t('ocr.recognizing'));
+    setOcrStage('analysis');
+    setOcrProgress(20);
 
     try {
       const imageBase64 = await prepareOcrImage(file, {
@@ -134,6 +141,9 @@ export default function WordInput() {
         quality: 0.92,
         preferOriginalMaxBytes: 2_200_000
       });
+      setOcrStage('ocr');
+      setOcrProgress(40);
+      
       const result = await callOcrApi(
         imageBase64,
         authToken,
@@ -141,6 +151,9 @@ export default function WordInput() {
         'auto',
         options?.enhance ?? false
       );
+      
+      setOcrStage('ai_review');
+      setOcrProgress(80);
 
       if (!result.text) {
         setUploadStatus(t('ocr.failed'));
@@ -165,6 +178,12 @@ export default function WordInput() {
       setUploadStatus(err.message || t('ocr.failed'));
     } finally {
       setIsUploading(false);
+      setOcrStage('complete');
+      setOcrProgress(100);
+      setTimeout(() => {
+        setOcrStage('ocr');
+        setOcrProgress(0);
+      }, 500);
     }
   }, [getAccessToken, t, callOcrApi, setWord, isUploading]);
 
@@ -343,6 +362,12 @@ export default function WordInput() {
         onCancel={handleCropCancel}
         onConfirm={handleCropConfirm}
         onUseOriginal={handleUseOriginal}
+      />
+
+      <OcrProgress 
+        isProcessing={isUploading}
+        stage={ocrStage}
+        progress={ocrProgress}
       />
 
       <style jsx>{`

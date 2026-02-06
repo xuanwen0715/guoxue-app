@@ -13,6 +13,23 @@ from .auth_utils import (
     AuthError, QuotaError
 )
 
+# 导入缓存模块
+from .ocr_cache import (
+    get_cache, set_cache, get_image_hash,
+    CACHE_ENABLED
+)
+
+# 导入古籍优化模块
+try:
+    from .classical_book_utils import (
+        enhance_classical_book,
+        enhance_text_with_variants,
+        analyze_image_quality
+    )
+    CLASSICAL_BOOK_AVAILABLE = True
+except ImportError:
+    CLASSICAL_BOOK_AVAILABLE = False
+
 # 阿里云 OCR SDK
 try:
     from alibabacloud_ocr_api20210707.client import Client as OcrClient
@@ -399,6 +416,20 @@ def _is_low_confidence(text: str, scene: str) -> bool:
 
 class handler(BaseHTTPRequestHandler):
     """Vercel Serverless Function handler with authentication"""
+    
+    # 阶段定义用于进度跟踪
+    STAGES = {
+        "auth": "身份验证",
+        "quota": "额度检查",
+        "cache": "缓存检查",
+        "analysis": "图像分析",
+        "classical": "古籍优化",
+        "ocr": "文字识别",
+        "enhance": "结果增强",
+        "ai_review": "AI审校",
+        "cache_save": "保存缓存",
+        "complete": "完成"
+    }
 
     def do_OPTIONS(self):
         self.send_response(204)
@@ -442,22 +473,54 @@ class handler(BaseHTTPRequestHandler):
             enhance = body.get("enhance", False)
             if isinstance(enhance, str):
                 enhance = enhance.lower() in ("1", "true", "yes")
+            
+            # 古籍优化模式
+            classical_mode = body.get("classical_mode", "auto").strip().lower()
+            if classical_mode not in ("auto", "none", "remove_yellow", "enhance_ink", "denoise", "high_contrast"):
+                classical_mode = "auto"
+            
             final_image = image_data if image_data else image_url
 
             if not final_image:
                 self._send_json(400, {"error": "Missing image or image_url field"})
                 return
 
+            # ========== 第三步：检查缓存 ==========
+            image_hash = get_image_hash(final_image) if final_image.startswith("data:") else ""
+            cached_result = None
+            
+            if image_hash and not enhance:  # 主动增强模式跳过缓存
+                cached_result = get_cache(image_hash)
+                if cached_result:
+                    # 缓存命中，直接返回（不扣除积分）
+                    print(f"[OCR] Cache hit for user {user_id}, saved API call")
+                    self._send_json(200, {
+                        "text": cached_result["text"],
+                        "method": cached_result["method"],
+                        "ai_corrected": cached_result.get("ai_corrected", ""),
+                        "ai_suggestions": cached_result.get("ai_suggestions", []),
+                        "_cached": True,
+                        "_quota": {
+                            "is_premium": quota_info.get("is_premium", False),
+                            "credits_remaining": quota_info.get("credits_remaining", 0)
+                        }
+                    })
+                    return
+
             text = ""
             ocr_method = "unknown"
             ocr_error = None
+            
+            print(f"[OCR] Stage: ocr - Starting OCR recognition, scene={scene}, layout={layout}")
 
             # 对于古籍和生僻字，优先使用 DashScope qwen-vl-max（视觉语言模型更擅长复杂文字）
             # 阿里云 OCR 作为备用
             if DASHSCOPE_API_KEY:
                 try:
+                    print(f"[OCR] Calling DashScope VL API...")
                     text = _call_dashscope_ocr(final_image, scene, layout)
                     ocr_method = "dashscope"
+                    print(f"[OCR] DashScope success, got {len(text)} chars")
                 except Exception as e:
                     ocr_error = f"DashScope: {str(e)}"
                     print(f"[OCR] DashScope failed: {e}, trying Aliyun OCR")
@@ -483,6 +546,28 @@ class handler(BaseHTTPRequestHandler):
             else:
                 self._send_json(503, {"error": "No OCR API configured (missing DASHSCOPE or ALIBABA_CLOUD keys)"})
                 return
+
+            # 古籍优化处理
+            classical_info = None
+            if CLASSICAL_BOOK_AVAILABLE and classical_mode != "none":
+                print(f"[OCR] Stage: classical - Applying classical book enhancement, mode={classical_mode}")
+                try:
+                    processed_image, classical_info = enhance_classical_book(
+                        final_image, 
+                        mode=classical_mode
+                    )
+                    if processed_image and processed_image != final_image:
+                        # 使用古籍优化后的图片重新识别
+                        print(f"[OCR] Applied classical book enhancement: {classical_info}")
+                        try:
+                            enhanced_text = _call_dashscope_ocr(processed_image, scene, layout)
+                            if enhanced_text and _score_text(enhanced_text, scene) > _score_text(text, scene):
+                                text = enhanced_text
+                                ocr_method = f"{ocr_method}_classical"
+                        except Exception as e:
+                            print(f"[OCR] Classical enhancement recognition failed: {e}")
+                except Exception as e:
+                    print(f"[OCR] Classical enhancement failed: {e}")
 
             # 低置信度时尝试预处理 + 多模型对比（或用户主动增强）
             warning = None
@@ -548,23 +633,59 @@ class handler(BaseHTTPRequestHandler):
             text = _normalize_text(text, scene)
 
             # 获取 AI 纠错建议
+            print(f"[OCR] Stage: ai_review - Getting AI suggestions...")
             ai_result = _get_ai_suggestions(text, scene)
+            print(f"[OCR] AI review complete, suggestions: {len(ai_result.get('suggestions', []))}")
+            
+            # 古籍文本增强（异体字检测）
+            text_enhancement = None
+            if scene == "word" and CLASSICAL_BOOK_AVAILABLE:
+                try:
+                    text_enhancement = enhance_text_with_variants(text)
+                except Exception as e:
+                    print(f"[OCR] Text enhancement failed: {e}")
 
-            # ========== 第三步：扣除积分（仅在 API 调用成功后） ==========
+            # ========== 第四步：存入缓存 ==========
+            if image_hash and text.strip():
+                print(f"[OCR] Stage: cache_save - Saving to cache...")
+                try:
+                    image_bytes = _decode_image_bytes(final_image)
+                    image_size = len(image_bytes) if image_bytes else 0
+                    
+                    set_cache(
+                        image_hash=image_hash,
+                        ocr_text=text.strip(),
+                        ai_corrected=ai_result.get("corrected", ""),
+                        ai_suggestions=ai_result.get("suggestions", []),
+                        method=ocr_method,
+                        scene=scene,
+                        image_size=image_size,
+                        char_count=_count_cjk(text)
+                    )
+                except Exception as cache_err:
+                    print(f"[OCR] Cache save error: {cache_err}")
+
+            # ========== 第五步：扣除积分（仅在 API 调用成功后） ==========
             if quota_info.get("should_deduct"):
                 deduct_credit(user_id)
 
-            self._send_json(200, {
+            # 构建响应
+            print(f"[OCR] Stage: complete - Sending response")
+            response_data = {
                 "text": text.strip(),
                 "method": ocr_method,
                 "ai_corrected": ai_result.get("corrected", ""),
                 "ai_suggestions": ai_result.get("suggestions", []),
+                "_classical_info": classical_info,
+                "_text_enhancement": text_enhancement,
                 "_warning": warning,
                 "_quota": {
                     "is_premium": quota_info.get("is_premium", False),
                     "credits_remaining": quota_info.get("credits_remaining", 0) - (1 if quota_info.get("should_deduct") else 0)
                 }
-            })
+            }
+            
+            self._send_json(200, response_data)
 
         except requests.HTTPError as http_err:
             detail = ""
