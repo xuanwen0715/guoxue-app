@@ -262,8 +262,8 @@ export default function DictionaryPage() {
 
       if (resp.ok) {
         const sortedChars = sortChars(data.chars || [], nextQuery, nextBy);
-        const sortedIdioms = sortTerms(data.idioms || [], nextQuery) as IdiomResult[];
-        const sortedWords = sortTerms(data.words || [], nextQuery) as WordResult[];
+        const sortedIdioms = sortIdioms(data.idioms || [], nextQuery);
+        const sortedWords = sortWords(data.words || [], nextQuery);
         setCharResults(sortedChars);
         setIdiomResults(sortedIdioms);
         setWordResults(sortedWords);
@@ -293,7 +293,36 @@ export default function DictionaryPage() {
     });
   };
 
-  const sortTerms = <T extends { word: string; pinyin?: string | null }>(items: T[], keyword: string) => {
+  const sortIdioms = (items: IdiomResult[], keyword: string): IdiomResult[] => {
+    const normalized = keyword.trim().toLowerCase();
+    if (!normalized) return items;
+    return sortByScore(items, (item) => {
+      const term = item.word.toLowerCase();
+      if (term === normalized) return 3;
+      if (term.startsWith(normalized)) return 2;
+      if (term.includes(normalized)) return 1;
+      if (item.pinyin) {
+        const pinyin = item.pinyin.toLowerCase();
+        if (pinyin.startsWith(normalized)) return 1;
+      }
+      return 0;
+    });
+  };
+
+  const sortWords = (items: WordResult[], keyword: string): WordResult[] => {
+    const normalized = keyword.trim().toLowerCase();
+    if (!normalized) return items;
+    return sortByScore(items, (item) => {
+      const term = item.word.toLowerCase();
+      if (term === normalized) return 3;
+      if (term.startsWith(normalized)) return 2;
+      if (term.includes(normalized)) return 1;
+      return 0;
+    });
+  };
+
+  // 保留通用函数用于其他场景
+  const sortTerms = <T extends { word: string; pinyin?: string | null }>(items: T[], keyword: string): T[] => {
     const normalized = keyword.trim().toLowerCase();
     if (!normalized) return items;
     return sortByScore(items, (item) => {
