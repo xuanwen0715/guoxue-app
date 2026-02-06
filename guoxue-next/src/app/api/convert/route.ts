@@ -1,6 +1,8 @@
-// @ts-nocheck
 import { NextRequest, NextResponse } from 'next/server';
-import * as OpenCC from 'opencc-js';
+import type { NextRequest as _NextRequest, NextResponse as _NextResponse } from 'next/server';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const OpenCC = require('opencc-js');
 
 export const runtime = 'nodejs';
 
