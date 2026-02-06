@@ -36,15 +36,15 @@ interface CharResult {
 
 interface IdiomResult {
   word: string;
-  pinyin: string | null;
-  explanation: string | null;
-  derivation: string | null;
-  example: string | null;
+  pinyin?: string | null;
+  explanation?: string | null;
+  derivation?: string | null;
+  example?: string | null;
 }
 
 interface WordResult {
   word: string;
-  explanation: string | null;
+  explanation?: string | null;
 }
 
 // Common radicals list (Kangxi radicals)
@@ -811,7 +811,9 @@ export default function DictionaryPage() {
                       {highlightText(idiom.pinyin || '', query, true)}
                     </span>
                   </div>
-                  <p className="idiom-explanation">{idiom.explanation}</p>
+                  {idiom.explanation && (
+                    <p className="idiom-explanation">{idiom.explanation}</p>
+                  )}
                   {idiom.derivation && (
                     <p className="idiom-derivation">
                       <strong>{t('dictionary.derivation')}:</strong> {idiom.derivation}
@@ -847,7 +849,7 @@ export default function DictionaryPage() {
               {wordResults.map((word, idx) => (
                 <div key={idx} className="word-card">
                   <h3 className="word-term">{highlightText(word.word, query)}</h3>
-                  <p className="word-explanation">{word.explanation}</p>
+                  {word.explanation && <p className="word-explanation">{word.explanation}</p>}
                   <div className="result-actions">
                     <button
                       className="ai-query-btn"
