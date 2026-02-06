@@ -262,8 +262,8 @@ export default function DictionaryPage() {
 
       if (resp.ok) {
         const sortedChars = sortChars(data.chars || [], nextQuery, nextBy);
-        const sortedIdioms = sortTerms(data.idioms || [], nextQuery);
-        const sortedWords = sortTerms(data.words || [], nextQuery);
+        const sortedIdioms = sortTerms(data.idioms || [], nextQuery) as IdiomResult[];
+        const sortedWords = sortTerms(data.words || [], nextQuery) as WordResult[];
         setCharResults(sortedChars);
         setIdiomResults(sortedIdioms);
         setWordResults(sortedWords);
