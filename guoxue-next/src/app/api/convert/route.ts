@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+// @ts-ignore - opencc-js has no type declarations
 import * as OpenCC from 'opencc-js';
 
 export const runtime = 'nodejs';
