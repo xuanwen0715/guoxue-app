@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    // 仅在本地开发时代理到远端 API，避免生产环境误代理
+    // 本地开发时的 API 代理配置
     const apiBaseUrl = process.env.API_BASE_URL || '';
     const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -33,6 +33,9 @@ const nextConfig: NextConfig = {
         },
       ];
     }
+    
+    // 生产环境：Next.js API 路由会自动处理
+    // Python Functions 由 vercel.json 的 rewrites 配置处理
     return [];
   },
 };
