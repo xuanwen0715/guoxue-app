@@ -4,27 +4,5 @@
     "api/*.py": {
       "maxDuration": 60
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/ocr",
-      "destination": "/api/ocr.py"
-    },
-    {
-      "source": "/api/translate",
-      "destination": "/api/translate.py"
-    },
-    {
-      "source": "/api/classical_analyze",
-      "destination": "/api/classical_analyze.py"
-    },
-    {
-      "source": "/api/ocr_cache_stats",
-      "destination": "/api/ocr_cache_stats.py"
-    },
-    {
-      "source": "/api/dictionary",
-      "destination": "/api/dictionary.py"
-    }
-  ]
+  }
 }
