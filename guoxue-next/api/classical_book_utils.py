@@ -321,6 +321,95 @@ except ImportError:
     pass
 
 
+def upscale_for_ocr(image_data: str, scale_factor: int = 2) -> str:
+    """
+    图像超分辨率放大（用于提升小字/模糊字迹识别率）
+    
+    Args:
+        image_data: Base64 图片数据
+        scale_factor: 放大倍数 (2 或 4)
+    
+    Returns:
+        放大后的 base64 图片
+    """
+    if not PIL_AVAILABLE:
+        return image_data
+    
+    image_bytes = _decode_image(image_data)
+    if not image_bytes:
+        return image_data
+    
+    try:
+        with Image.open(BytesIO(image_bytes)) as img:
+            # 获取原始尺寸
+            original_width, original_height = img.size
+            
+            # 如果图片已经很大，不需要放大
+            if original_width > 2000 or original_height > 2000:
+                return image_data
+            
+            # 转换为 RGB
+            img = img.convert('RGB')
+            
+            # 使用 LANCZOS 重采样放大（保持边缘锐利）
+            new_size = (original_width * scale_factor, original_height * scale_factor)
+            upscaled = img.resize(new_size, Image.LANCZOS)
+            
+            # 轻微锐化增强文字边缘
+            upscaled = upscaled.filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))
+            
+            # 转换为 base64
+            buffer = BytesIO()
+            upscaled.save(buffer, format='JPEG', quality=95, optimize=True)
+            encoded = base64.b64encode(buffer.getvalue()).decode('utf-8')
+            return f"data:image/jpeg;base64,{encoded}"
+            
+    except Exception as e:
+        print(f"[ClassicalBook] Upscale failed: {e}")
+        return image_data
+
+
+def remove_border(image_data: str, border_percent: float = 0.02) -> str:
+    """
+    去除古籍图像边框（扫描时常见的黑边或白边）
+    
+    Args:
+        image_data: Base64 图片数据
+        border_percent: 边框百分比 (0.02 = 2%)
+    
+    Returns:
+        裁剪后的 base64 图片
+    """
+    if not PIL_AVAILABLE:
+        return image_data
+    
+    image_bytes = _decode_image(image_data)
+    if not image_bytes:
+        return image_data
+    
+    try:
+        with Image.open(BytesIO(image_bytes)) as img:
+            width, height = img.size
+            
+            # 计算裁剪区域
+            left = int(width * border_percent)
+            top = int(height * border_percent)
+            right = int(width * (1 - border_percent))
+            bottom = int(height * (1 - border_percent))
+            
+            # 裁剪
+            cropped = img.crop((left, top, right, bottom))
+            
+            buffer = BytesIO()
+            cropped.save(buffer, format='JPEG', quality=95, optimize=True)
+            encoded = base64.b64encode(buffer.getvalue()).decode('utf-8')
+            return f"data:image/jpeg;base64,{encoded}"
+            
+    except Exception as e:
+        print(f"[ClassicalBook] Remove border failed: {e}")
+        return image_data
+
+
 def detect_defective_chars(text: str) -> list:
     """
     检测可能的残缺字（用于 OCR 结果后处理）

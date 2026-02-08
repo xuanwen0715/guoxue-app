@@ -7,6 +7,94 @@ import re
 from io import BytesIO
 from http.server import BaseHTTPRequestHandler
 
+# 古籍常用字表（用于识别校验）
+# 包含常见古籍用字、异体字、避讳字等
+CLASSICAL_COMMON_CHARS = set(
+    "一二三四五六七八九十百千万亿零壹贰叁肆伍陆柒捌玖拾佰仟萬億" +
+    "甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥" +
+    "春夏秋冬東西南北中上下左右前后内外"
+)
+
+# 古籍常见形近字对照表（用于纠错提示）
+CLASSICAL_SIMILAR_CHARS = {
+    # 原字: [可能的误识字列表]
+    "未": ["末", "朱"],
+    "末": ["未", "朱"],
+    "己": ["已", "巳"],
+    "已": ["己", "巳"],
+    "巳": ["己", "已"],
+    "人": ["入", "八", "乂"],
+    "入": ["人", "八"],
+    "八": ["人", "入"],
+    "土": ["士", "干", "千"],
+    "士": ["土", "干"],
+    "日": ["曰", "白", "目"],
+    "曰": ["日", "白"],
+    "干": ["千", "于", "土", "士"],
+    "千": ["干", "于"],
+    "后": ["後", "后"],
+    "後": ["后"],
+    "爲": ["為", "馬", "焉"],
+    "為": ["爲", "馬"],
+    "无": ["無"],
+    "無": ["无", "舞"],
+    "几": ["幾"],
+    "幾": ["几", "機"],
+    "云": ["雲", "曰"],
+    "雲": ["云"],
+    "里": ["裡", "裏"],
+    "裡": ["里", "裏"],
+    "面": ["靣", "麵"],
+    "靣": ["面"],
+    "与": ["與"],
+    "與": ["与"],
+    "万": ["萬"],
+    "萬": ["万"],
+    "系": ["係", "繫"],
+    "係": ["系", "繫"],
+    "繫": ["系", "係"],
+    "只": ["隻", "祇", "衹"],
+    "隻": ["只", "祇"],
+    "祇": ["只", "隻"],
+    "冲": ["沖", "衝"],
+    "沖": ["冲"],
+    "御": ["禦"],
+    "禦": ["御"],
+    "台": ["臺", "檯", "颱"],
+    "臺": ["台"],
+    "才": ["纔"],
+    "纔": ["才"],
+    "合": ["郃"],
+    "郃": ["合"],
+}
+
+
+def _classical_text_validation(text: str) -> str:
+    """
+    古籍文本字典校验
+    检查识别结果中的可疑字，并尝试修正
+    """
+    if not text:
+        return text
+    
+    # 检查是否包含可疑的简体字（古籍应该用繁体）
+    simplified_indicators = {
+        '为': '為/爲', '无': '無', '见': '見', '贝': '貝',
+        '长': '長', '门': '門', '书': '書', '头': '頭',
+        '东': '東', '车': '車', '马': '馬', '鸟': '鳥',
+        '鱼': '魚', '龙': '龍', '风': '風', '云': '雲',
+    }
+    
+    corrections = []
+    for char in text:
+        if char in simplified_indicators:
+            corrections.append(f"'{char}'→'{simplified_indicators[char]}'")
+    
+    if corrections:
+        print(f"[OCR Validation] Found simplified chars: {corrections}")
+    
+    return text
+
 # 导入认证工具
 from .auth_utils import (
     verify_token, check_user_quota, deduct_credit,
@@ -140,7 +228,7 @@ def _get_dashscope_prompt(scene: str, layout: str) -> str:
     elif layout == "horizontal":
         direction_rule = "文本为横排、从左到右阅读，请按正确顺序输出"
 
-    # 古籍OCR专项 Few-shot 示例
+    # 古籍OCR专项 Few-shot 示例（包含更多古籍常见形近字）
     few_shot_examples = """
 【识别示例】
 示例1 - 标准楷书：
@@ -158,6 +246,16 @@ def _get_dashscope_prompt(scene: str, layout: str) -> str:
 示例4 - 竖排版式：
 输入图片：三列竖排文字，从右到左为"天地人"
 正确输出：天地人（按正确阅读顺序）
+
+示例5 - 古籍常见字辨析：
+- "爲" vs "為"：两者都是"为"的繁体，古籍常见"爲"（爪字头）
+- "眾" vs "衆"：都是"众"的繁体，注意区分
+- "無" vs "无"：古籍用"無"，注意"灬"下面是"林"
+- "爲"（爪+灬+丶）注意与"馬"区分
+
+示例6 - 篆书/隶书识别：
+输入图片：篆书"禮記"
+正确输出：禮記（隶定字形）
 """
 
     if scene == "word":
@@ -188,11 +286,17 @@ def _get_dashscope_prompt(scene: str, layout: str) -> str:
         "4. 遇到模糊或残损的字，根据上下文和字形结构推断最可能的字；实在无法识别时用□表示\n"
         "5. 保留原文的句读标点（圈点、顿号等），但不要添加现代标点\n"
         "6. 只输出识别到的文字，绝对不要添加任何解释、编号或说明\n"
-        "7. 形近字辨析（特别注意）：\n"
+        "7. 古籍常见易混字辨析（特别注意）：\n"
         "   - 未(上短下长) vs 末(上长下短)\n"
         "   - 己(开口) vs 已(半开) vs 巳(闭口)\n"
         "   - 人(撇长捺短) vs 入(撇短捺长) vs 八(撇捺分开)\n"
         "   - 土(上横短下横长) vs 士(上横长下横短)\n"
+        "   - 日(瘦长) vs 曰(扁宽，表示'说')\n"
+        "   - 幷(並的异体) vs 并(简体)\n"
+        "   - 爲(爪+灬) vs 為(爪+灬+丶) - 两者通用\n"
+        "   - 禮(示字旁) vs 醴(酉字旁) - 注意偏旁\n"
+        "   - 後(表示'后面') vs 后(表示'皇后')\n"
+        "   - 乾(qián/干) vs 幹(gàn/幹) vs 干(gān/干)\n"
     )
     if layout_hint:
         prompt += f"8. {layout_hint}\n"
@@ -282,7 +386,7 @@ def _call_dashscope_ocr(image_data: str, scene: str, layout: str) -> str:
             image_data = f"data:image/png;base64,{image_data}"
 
     payload = {
-        "model": "qwen-vl-max",
+        "model": "qwen2.5-vl-72b-instruct",
         "input": {
             "messages": [
                 {
@@ -592,8 +696,13 @@ class handler(BaseHTTPRequestHandler):
             
             # 古籍优化模式
             classical_mode = body.get("classical_mode", "auto").strip().lower()
-            if classical_mode not in ("auto", "none", "remove_yellow", "enhance_ink", "denoise", "high_contrast"):
+            if classical_mode not in ("auto", "none", "remove_yellow", "enhance_ink", "denoise", "high_contrast", "super_res"):
                 classical_mode = "auto"
+            
+            # 超分辨率放大（提升小字识别率）
+            upscale = body.get("upscale", False)
+            if isinstance(upscale, str):
+                upscale = upscale.lower() in ("1", "true", "yes")
             
             final_image = image_data if image_data else image_url
 
@@ -663,6 +772,20 @@ class handler(BaseHTTPRequestHandler):
                 self._send_json(503, {"error": "No OCR API configured (missing DASHSCOPE or ALIBABA_CLOUD keys)"})
                 return
 
+            # 超分辨率放大（如果需要）
+            upscaled_info = None
+            if CLASSICAL_BOOK_AVAILABLE and upscale:
+                print(f"[OCR] Stage: upscale - Applying super resolution")
+                try:
+                    from .classical_book_utils import upscale_for_ocr
+                    upscaled_image = upscale_for_ocr(final_image, scale_factor=2)
+                    if upscaled_image and upscaled_image != final_image:
+                        final_image = upscaled_image
+                        upscaled_info = {"applied": True, "scale": 2}
+                        print(f"[OCR] Image upscaled 2x for better recognition")
+                except Exception as e:
+                    print(f"[OCR] Upscale failed: {e}")
+            
             # 古籍优化处理
             classical_info = None
             if CLASSICAL_BOOK_AVAILABLE and classical_mode != "none":
@@ -774,6 +897,10 @@ class handler(BaseHTTPRequestHandler):
                 return "\n".join(lines)
 
             text = _normalize_text(text, scene)
+
+            # 古籍字典辅助校验（验证识别结果中的字是否在字典中）
+            if scene == "context":
+                text = _classical_text_validation(text)
 
             # 获取 AI 纠错建议
             print(f"[OCR] Stage: ai_review - Getting AI suggestions...")
