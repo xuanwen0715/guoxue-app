@@ -3,11 +3,13 @@ OCR 图像增强高级模块
 包含倾斜校正、自适应二值化、去噪、超分辨率等
 """
 
+from __future__ import annotations
+
 import os
 import base64
 import math
 from io import BytesIO
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Any
 
 try:
     from PIL import Image, ImageOps, ImageFilter, ImageEnhance, ImageStat
@@ -15,6 +17,7 @@ try:
     PIL_AVAILABLE = True
 except ImportError:
     PIL_AVAILABLE = False
+    np = None  # type: ignore
 
 
 def _decode_image(image_data: str) -> Optional[bytes]:
@@ -272,19 +275,19 @@ def enhance_contrast_adaptive(image_data: str) -> str:
             return image_data
 
 
-def _rgb_to_lab(rgb_array: np.ndarray) -> np.ndarray:
+def _rgb_to_lab(rgb_array: 'np.ndarray') -> 'np.ndarray':
     """简化的 RGB to Lab 转换"""
     # 这是简化版，实际应该使用 skimage 或 opencv
     # 这里使用 PIL 的近似
     return rgb_array.astype(np.float32)
 
 
-def _lab_to_rgb(lab_array: np.ndarray) -> np.ndarray:
+def _lab_to_rgb(lab_array: 'np.ndarray') -> 'np.ndarray':
     """简化的 Lab to RGB 转换"""
     return np.clip(lab_array, 0, 255).astype(np.uint8)
 
 
-def _apply_clahe(channel: np.ndarray, clip_limit: float = 2.0, grid_size: int = 8) -> np.ndarray:
+def _apply_clahe(channel: 'np.ndarray', clip_limit: float = 2.0, grid_size: int = 8) -> 'np.ndarray':
     """简化版 CLAHE 实现"""
     h, w = channel.shape
     tile_h = h // grid_size
