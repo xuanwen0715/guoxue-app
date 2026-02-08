@@ -49,6 +49,8 @@
     "rotateRight": "Rotate Right 90°",
     "cropLoading": "Loading image...",
     "cropLoadFailed": "Failed to load image, please retry",
+    "cropPleaseSelect": "Please drag to select the text area first",
+    "cropFailed": "Crop failed, please try again",
     "layoutLabel": "Layout",
     "layoutAuto": "Auto",
     "layoutVertical": "Vertical",

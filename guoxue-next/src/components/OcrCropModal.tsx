@@ -290,11 +290,17 @@ export default function OcrCropModal({
     if (!file) {
       return;
     }
+    // 如果没有选择裁剪区域，提示用户
+    if (!crop || crop.w < MIN_CROP_SIZE || crop.h < MIN_CROP_SIZE) {
+      alert(t('ocr.cropPleaseSelect'));
+      return;
+    }
     const cropped = await buildCroppedFile();
     if (cropped) {
       onConfirm(cropped);
     } else {
-      onUseOriginal(file);
+      // 裁剪失败时提示用户，而不是直接使用原图
+      alert(t('ocr.cropFailed'));
     }
   };
 
@@ -365,7 +371,8 @@ export default function OcrCropModal({
                 className="ocr-crop-btn primary"
                 type="button"
                 onClick={handleConfirm}
-                disabled={controlsDisabled}
+                disabled={controlsDisabled || !crop || crop.w < MIN_CROP_SIZE || crop.h < MIN_CROP_SIZE}
+                title={!crop ? t('ocr.cropPleaseSelect') : t('ocr.cropConfirm')}
               >
                 {t('ocr.cropConfirm')}
               </button>

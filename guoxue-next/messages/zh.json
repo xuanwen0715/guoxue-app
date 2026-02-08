@@ -49,6 +49,8 @@
     "rotateRight": "右转 90°",
     "cropLoading": "图片加载中...",
     "cropLoadFailed": "图片加载失败，请重试",
+    "cropPleaseSelect": "请先拖拽选择要识别的文字区域",
+    "cropFailed": "裁剪失败，请重试",
     "layoutLabel": "版式",
     "layoutAuto": "自动",
     "layoutVertical": "竖排",
