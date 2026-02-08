@@ -188,7 +188,8 @@ export default function ContextInput() {
     }
   }, [getAccessToken, t, callOcrApi, ocrLayout, setContext, isUploading]);
 
-  const openCropper = useCallback((file: File) => {
+  // 直接开始 OCR，不强制裁剪
+  const startOcrDirectly = useCallback((file: File, sourceKey?: string) => {
     if (isUploading) {
       setUploadStatus(t('ocr.uploadingWait'));
       return;
@@ -202,18 +203,31 @@ export default function ContextInput() {
       setUploadStatus(t('ocr.loginRequired'));
       return;
     }
+    const fileKey = sourceKey ?? `${file.name}-${file.size}-${file.lastModified}`;
+    lastUploadRef.current = fileKey;
+    lastUploadAtRef.current = Date.now();
+    lastOcrFileRef.current = file;
+    lastOcrKeyRef.current = fileKey;
+    
+    // 直接处理，不弹裁剪窗
+    processOcr(file, { sourceKey: fileKey });
+  }, [isUploading, t, token, processOcr]);
+
+  // 打开裁剪器（用于低置信度时手动优化）
+  const openCropper = useCallback((file: File) => {
     const fileKey = `${file.name}-${file.size}-${file.lastModified}`;
     setPendingOcrFile(file);
     setPendingOcrKey(fileKey);
     setIsLowConfidence(false);
     setUploadStatus('');
     setShowCropper(true);
-  }, [isUploading, t, token]);
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      openCropper(file);
+      // 直接识别，不强制裁剪
+      startOcrDirectly(file);
     }
     // 清空input以便重复选择同一文件
     e.target.value = '';
@@ -251,7 +265,8 @@ export default function ContextInput() {
     if (files.length > 0) {
       const file = files[0];
       if (file.type.startsWith('image/')) {
-        openCropper(file);
+        // 直接识别，不强制裁剪
+        startOcrDirectly(file);
       }
     }
   };
@@ -265,7 +280,8 @@ export default function ContextInput() {
         e.preventDefault();
         const file = item.getAsFile();
         if (file) {
-          openCropper(file);
+          // 直接识别，不强制裁剪
+          startOcrDirectly(file);
         }
         return;
       }
@@ -404,15 +420,25 @@ export default function ContextInput() {
             {uploadStatus}
           </span>
         )}
-        {isLowConfidence && (
-          <button
-            className="ocr-retry-btn"
-            type="button"
-            onClick={handleEnhanceRetry}
-            disabled={isUploading}
-          >
-            {t('ocr.retryEnhance')}
-          </button>
+        {isLowConfidence && lastOcrFileRef.current && (
+          <div className="ocr-retry-actions">
+            <button
+              className="ocr-retry-btn"
+              type="button"
+              onClick={handleEnhanceRetry}
+              disabled={isUploading}
+            >
+              {t('ocr.retryEnhance')}
+            </button>
+            <button
+              className="ocr-crop-retry-btn"
+              type="button"
+              onClick={() => openCropper(lastOcrFileRef.current!)}
+              disabled={isUploading}
+            >
+              {t('ocr.cropRetry')}
+            </button>
+          </div>
         )}
       </div>
 
@@ -527,6 +553,37 @@ export default function ContextInput() {
           background: var(--accent);
           border-color: var(--accent);
           color: white;
+        }
+
+        .ocr-retry-actions {
+          display: flex;
+          gap: 8px;
+          margin-top: 10px;
+          flex-wrap: wrap;
+        }
+
+        .ocr-retry-btn,
+        .ocr-crop-retry-btn {
+          padding: 8px 14px;
+          border-radius: 8px;
+          border: 1px solid var(--accent);
+          background: white;
+          color: var(--accent);
+          font-size: 13px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .ocr-retry-btn:hover,
+        .ocr-crop-retry-btn:hover {
+          background: var(--accent);
+          color: white;
+        }
+
+        .ocr-retry-btn:disabled,
+        .ocr-crop-retry-btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
       `}</style>
     </>

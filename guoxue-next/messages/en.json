@@ -38,6 +38,7 @@
     "duplicateUpload": "This image is already being processed",
     "lowConfidence": "Low confidence. Try cropping or zooming in.",
     "retryEnhance": "Retry with enhancement",
+    "cropRetry": "Retry with crop",
     "cropTitle": "Crop & Rotate",
     "cropHint": "Drag to select the text area to improve accuracy.",
     "cropSelectionHint": "Drag to select the OCR area",
