@@ -8,9 +8,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const path = url.pathname;
+  const method = context.request.method;
+  
+  console.log(`[Debug] ${method} ${path}`);
   
   // 处理 CORS 预检请求
-  if (context.request.method === 'OPTIONS') {
+  if (method === 'OPTIONS') {
     return new Response(null, {
       status: 204,
       headers: {
@@ -24,9 +27,6 @@ export async function onRequest(context) {
   // 路由 /auth/* 和 /rest/* 到 Supabase
   if (path.startsWith('/auth/') || path.startsWith('/rest/')) {
     const targetUrl = `${SUPABASE_URL}${path}`;
-    const method = context.request.method;
-    
-    console.log(`[Proxy] ${method} ${path} -> ${targetUrl}`);
     
     // 构建请求头
     const headers = new Headers();
@@ -39,10 +39,10 @@ export async function onRequest(context) {
     }
     
     // 复制其他必要头
-    for (const [key, value] of context.request.headers) {
-      if (['accept', 'if-match', 'if-none-match', 'if-modified-since', 'if-unmodified-since'].includes(key.toLowerCase())) {
-        headers.set(key, value);
-      }
+    const copyHeaders = ['accept', 'if-match', 'if-none-match', 'if-modified-since', 'if-unmodified-since'];
+    for (const h of copyHeaders) {
+      const val = context.request.headers.get(h);
+      if (val) headers.set(h, val);
     }
     
     let body = null;
@@ -58,29 +58,37 @@ export async function onRequest(context) {
         redirect: 'follow'
       });
       
-      // 获取响应体
+      // 获取响应文本
       const responseText = await response.text();
+      console.log(`[Debug] Response status: ${response.status}, body length: ${responseText.length}`);
       
-      // 构建响应头
-      const responseHeaders = new Headers();
-      responseHeaders.set('Access-Control-Allow-Origin', '*');
-      responseHeaders.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      responseHeaders.set('Access-Control-Allow-Headers', 'Content-Type, apikey, Authorization');
-      
-      // 从原始响应复制头
-      const contentType = response.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        responseHeaders.set('Content-Type', 'application/json');
+      // 解析 JSON 以验证
+      let jsonBody;
+      try {
+        jsonBody = JSON.parse(responseText);
+      } catch (e) {
+        // 如果不是 JSON，直接返回文本
+        console.log(`[Debug] Not JSON, returning as text`);
+        return new Response(responseText, {
+          status: response.status,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'text/plain',
+          }
+        });
       }
       
-      return new Response(responseText, {
+      // 返回 JSON
+      return new Response(JSON.stringify(jsonBody), {
         status: response.status,
-        statusText: response.statusText,
-        headers: responseHeaders
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        }
       });
       
     } catch (error) {
-      console.error('[Proxy Error]', error);
+      console.error('[Proxy Error]', error.message);
       return new Response(JSON.stringify({ error: error.message }), {
         status: 502,
         headers: {
@@ -91,6 +99,5 @@ export async function onRequest(context) {
     }
   }
   
-  // 其他请求按正常流程处理
   return context.next();
 }
