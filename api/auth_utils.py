@@ -290,3 +290,53 @@ def auth_required(handler_func):
             return
 
     return wrapper
+
+
+# ====== 密码强度验证 ======
+def validate_password_strength(password: str) -> tuple:
+    """
+    验证密码强度
+    返回: (is_valid, message)
+    """
+    if len(password) < 6:
+        return False, "密码长度至少6位"
+    
+    if len(password) > 32:
+        return False, "密码长度不能超过32位"
+    
+    # 检查字符类型
+    has_letter = any(c.isalpha() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    
+    # 建议至少包含字母和数字
+    if not (has_letter and has_digit):
+        return True, "建议使用字母+数字组合"  # 只是建议，不强制
+    
+    return True, "密码强度良好"
+
+
+# ====== Token 管理 ======
+def create_token_payload(user_id: str, email: str) -> dict:
+    """创建 token payload"""
+    import time
+    return {
+        "user_id": user_id,
+        "email": email,
+        "iat": int(time.time()),
+        "exp": int(time.time()) + 30 * 24 * 60 * 60  # 30天过期
+    }
+
+
+def is_token_expired(token_data: dict) -> bool:
+    """检查 token 是否过期"""
+    import time
+    exp = token_data.get("exp", 0)
+    return time.time() > exp
+
+
+def get_token_remaining_time(token_data: dict) -> int:
+    """获取 token 剩余有效时间（秒）"""
+    import time
+    exp = token_data.get("exp", 0)
+    remaining = exp - time.time()
+    return max(0, int(remaining))

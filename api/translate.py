@@ -1,4 +1,5 @@
 import os
+import requests
 import json
 import sys
 from http.server import BaseHTTPRequestHandler
@@ -23,7 +24,6 @@ def lookup_dictionary(term):
         return None
 
     try:
-        import requests
 
         # 提取第一个汉字进行查询
         char = term[0] if term else ""
@@ -60,7 +60,6 @@ def lookup_idiom(term):
         return None
 
     try:
-        import requests
 
         headers = {
             "apikey": SUPABASE_SERVICE_KEY,
@@ -91,7 +90,6 @@ def lookup_word(term):
         return None
 
     try:
-        import requests
 
         headers = {
             "apikey": SUPABASE_SERVICE_KEY,
