@@ -4,6 +4,24 @@
   // 模拟模式开关 - 当API服务器不可用时启用
   const MOCK_MODE = false; // 改为false以使用真实API
 
+  // Loading 状态管理
+  const loadingState = {
+    submit: false,
+    ocr: false,
+    copy: false,
+    import: false
+  };
+
+  function setLoading(key, isLoading, btnId) {
+    loadingState[key] = isLoading;
+    const btn = document.getElementById(btnId);
+    if (btn) {
+      btn.disabled = isLoading;
+      btn.dataset.originalText = btn.textContent;
+      btn.textContent = isLoading ? "加载中..." : btn.dataset.originalText;
+    }
+  }
+
   const $ = (id) => document.getElementById(id);
   const bi = (zh, en) => `${zh} / ${en}`;
 
@@ -1162,7 +1180,7 @@
 
       } catch (err) {
         console.error('Feedback submit error:', err);
-        alert('提交失败，请稍后重试');
+        showError('提交失败，请稍后重试');
       } finally {
         submitBtn.textContent = oldText;
         submitBtn.disabled = false;
