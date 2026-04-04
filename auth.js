@@ -59,7 +59,7 @@
     if (!currentToken) return false;
 
     try {
-      const resp = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      const resp = await fetch(`/auth/v1/user`, {
         headers: {
           'Authorization': `Bearer ${currentToken}`,
           'apikey': SUPABASE_ANON_KEY
@@ -84,7 +84,7 @@
    */
   async function login(email, password) {
     try {
-      const resp = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      const resp = await fetch(`/auth/v1/token?grant_type=password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +119,7 @@
    */
   async function register(email, password) {
     try {
-      const resp = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+      const resp = await fetch(`/auth/v1/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
