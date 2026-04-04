@@ -1,0 +1,6 @@
+name = "guoxue-supabase-proxy"
+main = "index.js"
+compatibility_date = "2026-04-04"
+
+[env.production]
+name = "guoxue-supabase-proxy-prod"
