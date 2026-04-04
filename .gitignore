@@ -49,4 +49,5 @@ test-*.html
 mock-*.js
 
 # MCP
-.playwright-mcp/
+.playwright-mcp/guoxue-next/scripts/data/word.json
+guoxue-next/scripts/data/
