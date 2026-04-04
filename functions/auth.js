@@ -1,5 +1,5 @@
 /**
- * Cloudflare Pages - _worker.js 方式
+ * Cloudflare Pages Functions - 认证代理
  */
 
 const SUPABASE_URL = 'https://dckeajeazaxbxlqlkicl.supabase.co';
@@ -9,8 +9,6 @@ export async function onRequest(context) {
   const url = new URL(context.request.url);
   const path = url.pathname;
   const method = context.request.method;
-  
-  console.log(`[Worker] ${method} ${path}`);
   
   // 处理 CORS 预检请求
   if (method === 'OPTIONS') {
@@ -51,7 +49,6 @@ export async function onRequest(context) {
       });
       
       const responseText = await response.text();
-      console.log(`[Worker] Response: ${response.status}`);
       
       return new Response(responseText, {
         status: response.status,
@@ -62,7 +59,6 @@ export async function onRequest(context) {
       });
       
     } catch (error) {
-      console.error('[Worker Error]', error.message);
       return new Response(JSON.stringify({ error: error.message }), {
         status: 502,
         headers: { 'Content-Type': 'application/json' }
