@@ -4,11 +4,11 @@
  * - Translate API
  */
 
+// Supabase 配置
 const SUPABASE_URL = 'https://dckeajeazaxbxlqlkicl.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXAhYmFzZSIsInJlZiI6ImRja2VhamVhemF4YnhscWxraWNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyOTI3NjUsImV4cCI6MjA3OTg2ODc2NX0.kv1oVXsO9gnB3XLCFGlJiX2I9PAbn80XD1irzCDNRfI';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRja2VhamVhemF4YnhscWxraWNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyOTI3NjUsImV4cCI6MjA3OTg2ODc2NX0.kv1oVXsO9gnB3XLCFGlJiX2I9PAbn80XD1irzCDNRfI';
 
-// DashScope 配置 - 从环境变量获取
-const DASHSCOPE_API_KEY = DASHSCOPE_API_KEY || '';
+// DashScope 配置 - 通过 context.env 获取
 const DASHSCOPE_TXT_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
 const DEFAULT_TEXT_MODEL = 'qwen-max';
 
@@ -37,13 +37,14 @@ function corsResponse() {
 }
 
 // ========== Translate API ==========
-async function handleTranslate(request) {
+async function handleTranslate(request, env) {
   // GET 健康检查
   if (request.method === 'GET') {
+    const apiKey = env?.DASHSCOPE_API_KEY || '';
     return jsonResponse({
       status: 'ok',
       message: 'Translate API is working. Use POST to query.',
-      has_api_key: !!DASHSCOPE_API_KEY,
+      has_api_key: !!apiKey,
       auth_required: true
     });
   }
@@ -51,6 +52,7 @@ async function handleTranslate(request) {
   // POST 处理翻译请求
   if (request.method === 'POST') {
     try {
+      const apiKey = env?.DASHSCOPE_API_KEY || '';
       const body = await request.json();
       const term = body.word?.trim();
       const contextText = body.context?.trim() || '';
@@ -59,7 +61,7 @@ async function handleTranslate(request) {
         return jsonResponse({ error: 'Missing field: word' }, 400);
       }
 
-      if (!DASHSCOPE_API_KEY) {
+      if (!apiKey) {
         return jsonResponse({ error: 'API key not configured' }, 503);
       }
 
@@ -85,7 +87,7 @@ async function handleTranslate(request) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${DASHSCOPE_API_KEY}`
+          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           model: DEFAULT_TEXT_MODEL,
@@ -132,6 +134,7 @@ async function handleTranslate(request) {
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const path = url.pathname;
+  const env = context.env;
   
   // CORS 预检
   if (context.request.method === 'OPTIONS') {
@@ -140,10 +143,10 @@ export async function onRequest(context) {
   
   // 路由 /api/translate
   if (path === '/api/translate') {
-    return handleTranslate(context.request);
+    return handleTranslate(context.request, env);
   }
   
-  // 路由 /api/ocr (TODO: 以后添加)
+  // 路由 /api/ocr
   if (path === '/api/ocr') {
     return jsonResponse({ error: 'OCR API not implemented yet' }, 501);
   }
