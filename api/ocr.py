@@ -6,7 +6,7 @@ import requests
 from http.server import BaseHTTPRequestHandler
 
 # 导入认证工具
-from .auth_utils import (
+from lib.auth_utils import (
     verify_token, check_user_quota, deduct_credit,
     AuthError, QuotaError
 )
