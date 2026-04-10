@@ -1,0 +1,9 @@
+name = "guoxue-app"
+compatibility_date = "2026-04-04"
+
+[env.production]
+vars = { DASHSCOPE_API_KEY = "sk-b31dc0587f124237976856eb0dd865cb" }
+
+[[env.production.bindings]]
+name = "DASHSCOPE_API_KEY"
+text_secret = "DASHSCOPE_API_KEY"
