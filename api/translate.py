@@ -9,10 +9,11 @@ DASHSCOPE_API_KEY = os.environ.get("DASHSCOPE_API_KEY", "")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://dckeajeazaxbxlqlkicl.supabase.co")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRja2VhamVhemF4YnhscWxraWNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyOTI3NjUsImV4cCI6MjA3OTg2ODc2NX0.kv1oVXsO9gnB3XLCFGlJiX2I9PAbn80XD1irzCDNRfI")
 
-DASHSCOPE_TXT_URL = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
+DASHSCOPE_TXT_URL = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-gradient/generation"
 DEFAULT_TEXT_MODEL = os.environ.get("DASHSCOPE_TEXT_MODEL", "qwen-max")
 
-def handler(request):
+# Vercel handler - 必须是 app
+def app(request):
     """Vercel Python handler"""
     
     # CORS
@@ -26,7 +27,7 @@ def handler(request):
             'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
             'body': json.dumps({
                 'status': 'ok',
-                'message': 'Translate API is working. Use POST to query.',
+                'message': 'Translate API is working. Use POST.',
                 'has_api_key': bool(DASHSCOPE_API_KEY)
             })
         }
@@ -52,7 +53,7 @@ def handler(request):
 
 请以 JSON 格式返回：
 {{
-  "term": "查询字/词",
+  "term": "{term}",
   "pinyin": "拼音",
   "traditional": "繁体",
   "radical": "部首",
@@ -77,23 +78,15 @@ def handler(request):
             )
             
             if not resp.ok:
-                return {'statusCode': 502, 'headers': {'Content-Type': 'application/json'}, 'body': json.dumps({'error': 'API call failed', 'detail': resp.text})}
+                return {'statusCode': 502, 'headers': {'Content-Type': 'application/json'}, 'body': json.dumps({'error': 'API call failed'})}
             
             data = resp.json()
             content = data.get('output', {}).get('choices', [{}])[0].get('message', {}).get('content', '')
             
-            # 尝试解析 JSON
-            try:
-                import re
-                json_match = re.search(r'\{[\s\S]*\}', content)
-                result = json.loads(json_match.group(0)) if json_match else {'result': content}
-            except:
-                result = {'result': content}
-            
             return {
                 'statusCode': 200,
                 'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                'body': json.dumps(result)
+                'body': content
             }
             
         except Exception as e:
