@@ -51,3 +51,9 @@ mock-*.js
 # MCP
 .playwright-mcp/guoxue-next/scripts/data/word.json
 guoxue-next/scripts/data/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
